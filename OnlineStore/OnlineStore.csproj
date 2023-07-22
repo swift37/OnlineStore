@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\ProductImages\" />
+    <None Include="wwwroot\resources\productsImages\hp-laptop-victus.jpg" />
   </ItemGroup>
 
 </Project>

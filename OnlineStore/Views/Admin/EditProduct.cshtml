@@ -1,0 +1,47 @@
+﻿@model OnlineStore.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Product</h1>
+
+@using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post, new { @class = "ui form", enctype = "multipart/form-data" }))
+{
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" placeholder="Name">
+    </div>
+    <div class="field">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" rows="3" placeholder="Description"></textarea>
+    </div>
+    <div class="field">
+        <label asp-for="UnitPrice">Price</label>
+        <input asp-for="UnitPrice" type="number" class="form-control" placeholder="Price">
+    </div>
+    <div class="field">
+        <label asp-for="UnitsInStock">Units in stock</label>
+        <input asp-for="UnitsInStock" type="number" class="form-control" placeholder="Units in stock">
+    </div>
+    <div class="field">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="@Model.AvailableCategories" id="productCategorySelect" class="ui dropdown">
+            <option value="">Select a category</option>
+        </select>
+    </div>
+    <div class="field">
+        <label asp-for="SubCategoryId">Subcategory</label>
+        <select asp-for="SubCategoryId" asp-items="@Model.AvailableSubCategories" id="productSubcategorySelect" class="ui dropdown">
+            <option value="">Select a subcategory</option>
+        </select>
+    </div>
+    <img class="ui medium rounded image" src="@Model.Image">
+    <div class="field">
+        <label asp-for="ImageFile">Image</label>
+        <input asp-for="ImageFile" multiple type="file">
+    </div>
+    <button class="ui button" type="submit">Create</button>
+}
+
