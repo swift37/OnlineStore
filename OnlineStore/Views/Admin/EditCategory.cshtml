@@ -1,0 +1,22 @@
+﻿@model OnlineStore.Domain.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Category</h1>
+
+@using (Html.BeginForm("EditCategory", "Admin", FormMethod.Post, new { @class = "ui form" }))
+{
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" placeholder="Name">
+    </div>
+    <div class="field">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" rows="3" placeholder="Description"></textarea>
+    </div>
+    <button class="ui button" type="submit" value="save">Save changes</button>
+}
+

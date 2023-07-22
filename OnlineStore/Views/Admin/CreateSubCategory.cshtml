@@ -1,0 +1,31 @@
+﻿@using OnlineStore.Domain;
+@model OnlineStore.Models.SubCategoryViewModel
+
+@{
+    ViewData["Title"] = "Create Subсategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create Subсategory</h1>
+
+@using (Html.BeginForm("CreateSubCategory", "Admin", FormMethod.Post, new { @class = "ui form" }))
+{
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" placeholder="Name">
+    </div>
+    <div class="field">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" 
+                asp-items="@Model.AvailableCategories" 
+                class="ui dropdown">
+            <option value="">Select a category</option>
+            @*@foreach (var catergory in Model.AvailableCategories)
+            {
+                <option value="@category.Id">@catergory.Name</option>
+            }*@         
+        </select>
+    </div>
+    <button class="ui button" type="submit">Create</button>
+}
+

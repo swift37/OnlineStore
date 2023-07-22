@@ -15,8 +15,16 @@ namespace OnlineStore.Domain
         [NotMapped]
         public bool IsActive => UnitsInStock > 0;
 
+        public string? Image { get; set; }
+
+        public int CategoryId { get; set; }
+
         public Category? Category { get; set; }
 
+        public int SubCategoryId { get; set; }
+
         public SubCategory? SubCategory { get; set; }
+
+        public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
     }
 }

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OnlineStore.Domain.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Categories</h1>
+
+<p>
+    <a asp-action="CreateCategory" class="ui primary button">Create New</a>
+</p>
+
+<ul class="ui list">
+    @foreach (var category in Model)
+    {
+        if (category.SubCategories != null && category.SubCategories.Any())
+        {
+            <li>
+                @category.Name
+                <a asp-action="EditCategory" asp-route-id="@category.Id">Edit</a>
+                <ul>
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        <li>
+                            @subCategory.Name
+                            <a asp-action="EditSubCategory" asp-route-id="@subCategory.Id">Edit</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>
+                @category.Name 
+                <a asp-action="EditCategory" asp-route-id="@category.Id">Edit</a>
+            </li>
+        }
+    }
+</ul>
+
+
+<p>Categories count: @Model.Count()</p>
