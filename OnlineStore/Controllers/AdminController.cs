@@ -140,15 +140,11 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateProduct(ProductViewModel model)
         {
-            var product = new Product 
-            { 
-                Name = model.Name,
-                Description = model.Description,
-                UnitPrice = model.UnitPrice,
-                UnitsInStock = model.UnitsInStock,
-                CategoryId = model.CategoryId,
-                SubCategoryId = model.SubCategoryId
-            };
+            var config = new MapperConfiguration(cfg =>
+            cfg.CreateMap<ProductViewModel, Product>().ForMember(p => p.Image, opt => opt.Ignore()));
+            var mapper = config.CreateMapper();
+            var product = new Product();
+            mapper.Map(model, product);
 
             if (model.ImageFile != null && 
                 model.ImageFile.Length > 0 && 
@@ -161,7 +157,7 @@ namespace OnlineStore.Controllers
                 product.Image = "\\" + relativePath;
             }
 
-            _context.Entry(product).State = EntityState.Added;
+            _context.Add(product);
             _context.SaveChanges();
             return RedirectToAction("Categories");
         }
@@ -169,7 +165,7 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            var product = _context.Products.SingleOrDefault(p => p.Id == id);
+            var product = _context.Products.Include(p => p.ProductDetails).SingleOrDefault(p => p.Id == id);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductViewModel>());

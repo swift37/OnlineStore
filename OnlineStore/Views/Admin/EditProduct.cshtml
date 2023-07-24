@@ -42,6 +42,27 @@
         <label asp-for="ImageFile">Image</label>
         <input asp-for="ImageFile" multiple type="file">
     </div>
-    <button class="ui button" type="submit">Create</button>
+    <div class="product-specs">
+        <div class="product-specs-list">
+            @for (var i = 0; i < Model.ProductDetails.Count; i++)
+            {
+                <div class="field">
+                    <label>Specification</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input value="@Model.ProductDetails[i].PropertyName" name="ProductDetails[@i].PropertyName" type="text" placeholder="Name">
+                        </div>
+                        <div class="field">
+                            <input value="@Model.ProductDetails[i].PropertyValue" name="ProductDetails[@i].PropertyValue" type="text" placeholder="Value">
+                        </div>
+                    </div>
+                    <input type="hidden" value="@Model.ProductDetails[i].Id" name="ProductDetails[@i].Id">
+                </div>
+            }
+        </div>
+
+        <button type="button" class="ui primary button" id="add-spec">Add specification</button>
+    </div>
+    <button class="ui button" type="submit">Save Changes</button>
 }
 

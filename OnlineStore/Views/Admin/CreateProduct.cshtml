@@ -41,6 +41,23 @@
         <label asp-for="ImageFile">Image</label>
         <input asp-for="ImageFile" multiple type="file">
     </div>
+    <div class="product-specs">
+        <div class="product-specs-list">
+            <div class="field">
+                <label>Specification</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input name="ProductDetails[0].PropertyName" type="text" placeholder="Name">
+                    </div>
+                    <div class="field">
+                        <input name="ProductDetails[0].PropertyValue" type="text" placeholder="Value">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="ui primary button" id="add-spec">Add specification</button>
+    </div>
     <button class="ui button" type="submit">Create</button>
 }
 

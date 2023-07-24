@@ -25,6 +25,6 @@ namespace OnlineStore.Domain
 
         public SubCategory? SubCategory { get; set; }
 
-        public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
+        public List<ProductDetails> ProductDetails { get; set; } = new List<ProductDetails>();
     }
 }
