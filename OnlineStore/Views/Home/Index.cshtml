@@ -10,11 +10,12 @@
     @foreach (var product in Model.Products)
     {
         <div class="card">
+            <input type="hidden" value="@product.Id" id="productId">
             <div class="blurring dimmable image">
                 <div class="ui dimmer">
                     <div class="content">
                         <div class="center">
-                            <div class="ui inverted button">Buy</div>
+                            <div class="ui inverted button buy-btn">Buy</div>
                         </div>
                     </div>
                 </div>
@@ -42,14 +43,7 @@
     }
 </div>
 
-<div class="ui pagination menu">
-@*    @for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        <a href="/Home/Index?page=@i" class="@(Model.CurrentPage == i ? "active" : "") item">
-            @i
-        </a>
-    }*@
-    
+<div id="paginationMenu" class="ui pagination menu">
     @if (Model.TotalPages <= 5)
     {
         @for (int i = 1; i <= Model.TotalPages; i++)

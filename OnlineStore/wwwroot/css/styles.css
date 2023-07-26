@@ -21,6 +21,14 @@ body {
   margin-bottom: 60px;
 }
 
+#mainMenu {
+    margin-bottom: 25px;
+}
+
+#paginationMenu {
+    margin-top: 25px;
+}
+
 .hidden {
     display: none;
 }

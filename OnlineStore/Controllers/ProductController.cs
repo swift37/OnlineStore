@@ -20,7 +20,7 @@ namespace OnlineStore.Controllers
             return View(_context.Products.SingleOrDefault(p => p.Id == id.Value));
         }
 
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, int qty = 1)
         {
             var product = _context.Products.SingleOrDefault(p => p.Id == id);
             if (product is null) return RedirectToAction("NotFound", "Error");
@@ -33,13 +33,14 @@ namespace OnlineStore.Controllers
             }
 
             var item = cart.CartItems?.FirstOrDefault(i => i.Id == product.Id);
-            if (item is null) cart.CartItems?.Add(new CartItem { Product = product, Quantity = 1 });
-            else item.Quantity++;
+            if (item is null) cart.CartItems?.Add(new CartItem { Product = product, Quantity = qty });
+            else item.Quantity += qty;
 
             if (product.UnitsInStock < item?.Quantity)
                 return Json(new { error = true, message = $"You can`t buy more than {product.UnitsInStock} pcs." });
 
-            return View();
+            _context.SaveChanges();
+            return Json(new { error = false });
         }
     }
 }
