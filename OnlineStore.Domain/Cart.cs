@@ -11,13 +11,13 @@ namespace OnlineStore.Domain
 
         public DateTime? PayDate { get; set; }
 
-        public IEnumerable<CartItem>? CartItems { get; set; }
+        public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
 
         [NotMapped]  
-        public decimal TotalPrice => CartItems?.Sum(i => i.Product?.UnitPrice * i.Quantity) ?? 0;
+        public decimal TotalPrice => CartItems.Sum(i => i.Product?.UnitPrice * i.Quantity) ?? 0;
 
         [NotMapped]
-        public int TotalQuantity => CartItems?.Sum(i => i.Quantity) ?? 0;
+        public int TotalQuantity => CartItems.Sum(i => i.Quantity);
     }
 
     public enum CartStatus

@@ -227,7 +227,5 @@ namespace OnlineStore.Controllers
             var subcategories = new SelectList(category.SubCategories, nameof(SubCategory.Id), nameof(SubCategory.Name));
             return Json(subcategories);
         }
-
-
     }
 }
