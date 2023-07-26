@@ -13,6 +13,9 @@ namespace OnlineStore.Domain
         public string? Description { get; set; }
 
         [NotMapped]
+        public string? ShortDescription => Description?.Length < 100 ? Description : Description?.Substring(0, 100);
+
+        [NotMapped]
         public bool IsActive => UnitsInStock > 0;
 
         public string? Image { get; set; }

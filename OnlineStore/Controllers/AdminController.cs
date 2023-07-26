@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
@@ -187,12 +185,20 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductViewModel model)
         {
-            var product = _context.Products.SingleOrDefault(c => c.Id == model.Id);
+            var product = _context.Products.Include(p => p.ProductDetails).SingleOrDefault(c => c.Id == model.Id);
 
             if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var config = new MapperConfiguration(cfg => 
-            cfg.CreateMap<ProductViewModel, Product>().ForMember(p => p.Image, opt => opt.Ignore()));
+            var removableSpecs = product.ProductDetails.ExceptBy(model.ProductDetails.Select(p => p.Id), pd => pd.Id);
+            foreach (var spec in removableSpecs.ToArray()) product.ProductDetails.Remove(spec);
+
+            var newSpecs = model.ProductDetails.ExceptBy(product.ProductDetails.Select(p => p.Id), pd => pd.Id);
+            product.ProductDetails.AddRange(newSpecs);
+
+            var config = new MapperConfiguration(cfg =>
+            cfg.CreateMap<ProductViewModel, Product>()
+            .ForMember(p => p.Image, opt => opt.Ignore())
+            .ForMember(p => p.ProductDetails, opt => opt.Ignore()));
             var mapper = config.CreateMapper();
 
             mapper.Map(model, product);
@@ -221,5 +227,7 @@ namespace OnlineStore.Controllers
             var subcategories = new SelectList(category.SubCategories, nameof(SubCategory.Id), nameof(SubCategory.Name));
             return Json(subcategories);
         }
+
+
     }
 }

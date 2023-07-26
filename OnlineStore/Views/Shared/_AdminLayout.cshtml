@@ -15,10 +15,11 @@
             <div class="item">
                 <img src="">
             </div>
-            <a class="item" asp-controller="Home" asp-action="Index">Catalog</a>
-            <a class="item">Delivery</a>
-            <a class="item">About company</a>
-            <a class="item">Cart (<span class="cart-quantity">0</span>)</a>
+            <a class="item" asp-controller="Home" asp-action="Index">Main</a>
+            <a class="item" asp-controller="Admin" asp-action="Products">Products</a>
+            <a class="item" asp-controller="Admin" asp-action="Categories">Categories</a>
+            <a class="item" asp-controller="Admin" asp-action="Orders">Orders</a>
+            <a class="item" asp-controller="Admin" asp-action="Customers">Customers</a>
             @*<partial name="_LoginPartial" />*@
         </div>
     </header>

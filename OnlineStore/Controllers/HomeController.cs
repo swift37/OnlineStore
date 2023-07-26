@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineStore.Data;
 using OnlineStore.Models;
 using System.Diagnostics;
 
@@ -6,16 +8,25 @@ namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
+        private int _pageSize = 1;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;
+            var productsList = _context.Products
+                .Skip((page - 1) * _pageSize)
+                .Take(_pageSize)
+                .Include(p => p.SubCategory);
+            var model = new ProductsListViewModel(productsList, page, pagesCount);
+            return View(model);
         }
 
         public IActionResult Privacy()
