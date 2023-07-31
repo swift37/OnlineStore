@@ -4,6 +4,8 @@ namespace OnlineStore.Domain
 {
     public class Order : Entity
     {
+        public int CartId { get; set; }
+
         public Cart? Cart { get; set; }
 
         public string? FirstName { get; set; }

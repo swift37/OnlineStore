@@ -1,0 +1,37 @@
+﻿@model OnlineStore.Domain.Cart
+
+@{
+    ViewData["Title"] = "ViewCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your purchases</h2>
+
+<table class="ui fixed single line celled table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.Product?.Name</td>
+                <td>
+                    <div class="ui input">
+                        <input data-itemid="@item.Product?.Id" class="cart-line-qty" type="number" value="@item.Quantity" />
+                    </div>
+                </td>
+                <td class="line-total">@item.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Total: <span class="cart-total">@Model.TotalPrice</span></h3>
+<a href="/Order/PersonalInfo?cartId=@Model.Id" class="ui primary button">
+    Checkout
+</a>

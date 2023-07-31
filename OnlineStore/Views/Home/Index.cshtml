@@ -1,7 +1,7 @@
 ﻿@model OnlineStore.Models.ProductsListViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Catalog";
 }
 
 <h1>Catalog</h1>
@@ -10,12 +10,11 @@
     @foreach (var product in Model.Products)
     {
         <div class="card">
-            <input type="hidden" value="@product.Id" id="productId">
             <div class="blurring dimmable image">
                 <div class="ui dimmer">
                     <div class="content">
                         <div class="center">
-                            <div class="ui inverted button buy-btn">Buy</div>
+                            <div data-itemid="@product.Id" class="ui inverted button buy-btn">Buy</div>
                         </div>
                     </div>
                 </div>

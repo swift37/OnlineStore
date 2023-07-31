@@ -78,7 +78,7 @@
             dataType: 'json',
             data:
             {
-                id: 1, //$(this).closest('.product-id').val(),
+                id: $(this).data('itemid'),
                 qty: 1
             },
             error: function ()
@@ -96,6 +96,26 @@
                     let newQty = parseInt($('.cart-quantity').text()) + 1;
                     $('.cart-quantity').text(newQty);
                 }
+            }
+        });
+    });
+
+    $('.cart-line-qty').bind('keyup click', function () {
+        $.ajax({
+            url: '/Order/UpdateCart',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+                qty: $(this).val()
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                $('.cart-total').text(result.CartPrice);
+                $(this).closest('tr').find('td.line-total').text(result.LinePrice);
             }
         });
     });

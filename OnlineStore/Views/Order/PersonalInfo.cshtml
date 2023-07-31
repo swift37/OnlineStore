@@ -1,0 +1,32 @@
+﻿@model OnlineStore.Domain.Order;
+
+@{
+    ViewData["Title"] = "PersonalInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post, new { @class = "ui form" }))
+{
+    <div class="field">
+        <label>First Name</label>
+        <input type="text" name="FirstName" placeholder="First Name">
+    </div>
+    <div class="field">
+        <label>Last Name</label>
+        <input type="text" name="LastName" placeholder="Last Name">
+    </div>
+    <div class="field">
+        <label>Phone Number</label>
+        <input type="text" name="Phone" placeholder="Phone">
+    </div>
+    <div class="field">
+        <label>Postcode</label>
+        <input type="text" name="Postcode" placeholder="Postcode">
+    </div>
+    <div class="field">
+        <label>Address</label>
+        <input type="text" name="Address" placeholder="Address">
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+    <input name="CartId" type="hidden" value="@ViewBag.Cart" />
+}

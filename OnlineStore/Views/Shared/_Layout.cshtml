@@ -17,9 +17,8 @@
                     <img src="">
                 </div>
                 <a class="item" asp-controller="Home" asp-action="Index">Catalog</a>
-                <a class="item">Delivery</a>
-                <a class="item">About company</a>
-                @*<partial name="_CartStatus"/>*@
+                <a class="item" asp-controller="Home" asp-action="Delivery">Delivery</a>
+                <a class="item" asp-controller="Home" asp-action="About">About company</a>
                 @Component.InvokeAsync("CartStatus").Result
                 @*<partial name="_LoginPartial" />*@
             </div>
