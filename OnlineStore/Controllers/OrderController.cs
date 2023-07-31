@@ -2,17 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
+using OnlineStore.Services;
 
 namespace OnlineStore.Controllers
 {
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
-        //private readonly EmailSender _sender;
-        public OrderController(ApplicationDbContext context /*EmailSender sender*/)
+        private readonly EmailSenderService _emailSender;
+        public OrderController(ApplicationDbContext context, EmailSenderService emailSender)
         {
             _context = context;
-            //_sender = sender;
+            _emailSender = emailSender;
         }
 
         public IActionResult ViewCart()
@@ -63,7 +64,7 @@ namespace OnlineStore.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            //_sender.SendMail("", "Новый заказ", "");
+            _emailSender.SendMail("To", "New order", "Message");
 
             return RedirectToAction("OrderSuccess");
         }
