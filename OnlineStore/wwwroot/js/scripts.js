@@ -6,19 +6,19 @@
         on: 'hover'
     });
 
-    $.ajax({
-        url: '/Home/CartStatus',
-        type: 'post',
-        dataType: 'json',
-        error: function ()
-        {
-            alert('Error occurred.');
-        },
-        success: function (result)
-        {
-            $('.cart-quantity').text(result.qty);
-        }
-    });
+    //$.ajax({
+    //    url: '/Home/CartStatus',
+    //    type: 'post',
+    //    dataType: 'json',
+    //    error: function ()
+    //    {
+    //        alert('Error occurred.');
+    //    },
+    //    success: function (result)
+    //    {
+    //        $('.cart-quantity').text(result.qty);
+    //    }
+    //});
 
     $('#productCategorySelect').change(function () {
         var categoryId = $(this).val();

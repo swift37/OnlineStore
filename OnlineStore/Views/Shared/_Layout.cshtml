@@ -19,7 +19,8 @@
                 <a class="item" asp-controller="Home" asp-action="Index">Catalog</a>
                 <a class="item">Delivery</a>
                 <a class="item">About company</a>
-                <a class="item">Cart (<span class="cart-quantity">0</span>)</a>
+                @*<partial name="_CartStatus"/>*@
+                @Component.InvokeAsync("CartStatus").Result
                 @*<partial name="_LoginPartial" />*@
             </div>
         </nav>

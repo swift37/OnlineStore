@@ -29,15 +29,6 @@ namespace OnlineStore.Controllers
             return View(model);
         }
 
-        public IActionResult CartStatus()
-        {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefault(c => c.Status == Domain.CartStatus.Active);
-
-            return Json(new { qty = cart?.TotalQuantity ?? 0 });
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
