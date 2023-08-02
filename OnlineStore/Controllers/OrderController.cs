@@ -69,6 +69,11 @@ namespace OnlineStore.Controllers
             return RedirectToAction("OrderSuccess");
         }
 
+        public IActionResult Payment()
+        {
+            return View();
+        }
+
         public IActionResult OrderSuccess()
         {
             return View();
