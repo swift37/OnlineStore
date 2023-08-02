@@ -1,10 +1,13 @@
-﻿using OnlineStore.Domain.Base;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using OnlineStore.Domain.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
 {
     public class Cart : Entity
     {
+        //public ApplicationUser? User { get; set; }
+
         public CartStatus Status { get; set; } = CartStatus.Active;
 
         public DateTime CreateDate { get; set; } = DateTime.Now;

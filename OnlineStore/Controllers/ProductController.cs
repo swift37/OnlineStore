@@ -25,7 +25,9 @@ namespace OnlineStore.Controllers
             var product = _context.Products.SingleOrDefault(p => p.Id == id);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var cart = _context.Carts.Include(c => c.CartItems).FirstOrDefault(c => c.Status == CartStatus.Active);
+            var cart = _context.Carts
+                .Include(c => c.CartItems)
+                .FirstOrDefault(c => /*c.User.Id == User.Identity.GetUserId() &&*/ c.Status == CartStatus.Active);
             if (cart is null)
             {
                 cart = new Cart();

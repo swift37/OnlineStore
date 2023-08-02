@@ -20,7 +20,7 @@
                 <a class="item" asp-controller="Home" asp-action="Delivery">Delivery</a>
                 <a class="item" asp-controller="Home" asp-action="About">About company</a>
                 @Component.InvokeAsync("CartStatus").Result
-                @*<partial name="_LoginPartial" />*@
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
