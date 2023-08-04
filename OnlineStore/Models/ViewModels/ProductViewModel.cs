@@ -3,9 +3,9 @@ using OnlineStore.Domain;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.ViewModels
 {
-    
+
     public class ProductViewModel : Product
     {
         public IEnumerable<SelectListItem> AvailableCategories { get; set; } = new HashSet<SelectListItem>();

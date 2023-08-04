@@ -1,12 +1,12 @@
 ﻿using OnlineStore.Domain;
 
-namespace OnlineStore.Models
+namespace OnlineStore.Models.ViewModels
 {
-    public class ProductsListViewModel 
+    public class ProductsListViewModel
     {
         public ProductsListViewModel(
-            IEnumerable<Product> products, 
-            int currentPage, 
+            IEnumerable<Product> products,
+            int currentPage,
             int totalPages)
         {
             Products = products;

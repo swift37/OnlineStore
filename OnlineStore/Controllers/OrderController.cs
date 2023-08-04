@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
+using OnlineStore.Models;
 using OnlineStore.Services;
+using Stripe;
+using Stripe.Checkout;
 
 namespace OnlineStore.Controllers
 {
@@ -10,6 +15,7 @@ namespace OnlineStore.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly EmailSenderService _emailSender;
+
         public OrderController(ApplicationDbContext context, EmailSenderService emailSender)
         {
             _context = context;
@@ -66,15 +72,69 @@ namespace OnlineStore.Controllers
 
             _emailSender.SendMail("To", "New order", "Message");
 
-            return RedirectToAction("OrderSuccess");
+            return RedirectToAction("Payment");
         }
 
-        public IActionResult Payment()
+        [HttpGet]
+        public IActionResult Checkout()
         {
+            var stripePublishKey = "pk_test_51NactwFJ49wekJ8Os9PXUEqkNEx1uVNwNBDtkk9Z1THTOK9KLriuiIBOxdwgEvly1bdmquaTsuu3mvTdzapgePw7003wR3jSQQ";
+            ViewBag.StripePublishKey = stripePublishKey;
             return View();
         }
 
-        public IActionResult OrderSuccess()
+        [HttpPost]
+        public async Task<string> Checkout(Domain.Product product)
+        {
+            var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            var options = new SessionCreateOptions
+            {
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmountDecimal = 210000/*product.UnitPrice*/,
+                            Currency = "USD",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = "Name"/*product.Name*/,
+                                Description = "Desc"/*product.Description*/,
+                                //Images = new List<string?> { product.Image }
+                            }
+                        },
+                        Quantity = 1
+                    }
+                },
+                Mode = "payment",
+                PaymentMethodTypes = new List<string>
+                {
+                    "card"
+                },
+                SuccessUrl = domain + $"/order/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}",
+                CancelUrl = domain + "/order/checkoutfailed.html"
+            };
+            var service = new SessionService();
+            Session session = await service.CreateAsync(options);
+
+            Response.Headers.Add("Location", session.Url);
+            return session.Id; //new StatusCodeResult(303);
+        }
+
+        public IActionResult CheckoutSuccess(string sessionId)
+        {
+            var sessionService = new SessionService();
+            var session = sessionService.Get(sessionId);
+
+            // Save order and customer details to your database.
+            var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
+            var customerEmail = session.CustomerDetails.Email;
+
+            return View();
+        }
+
+        public IActionResult CheckoutFailed()
         {
             return View();
         }

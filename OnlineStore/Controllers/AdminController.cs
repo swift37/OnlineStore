@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
-using OnlineStore.Models;
+using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Controllers
 {

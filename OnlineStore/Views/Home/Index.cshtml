@@ -1,11 +1,10 @@
-﻿@model OnlineStore.Models.ProductsListViewModel
+﻿@model OnlineStore.Models.ViewModels.ProductsListViewModel
 
 @{
     ViewData["Title"] = "Catalog";
 }
 
 <h1>Catalog</h1>
-
 <div class="ui special cards">
     @foreach (var product in Model.Products)
     {

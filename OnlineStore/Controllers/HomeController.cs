@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
-using OnlineStore.Models;
+using OnlineStore.Models.ViewModels;
 using System.Diagnostics;
 
 namespace OnlineStore.Controllers
