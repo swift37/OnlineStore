@@ -2,10 +2,10 @@ html {
     font-size: 14px;
 }
 
-@media (min-width: 700px) {
-  html {
-    font-size: 16px;
-  }
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 html, body {
@@ -13,18 +13,17 @@ html, body {
     min-height: 100vh;
 }
 
-/*html {
-    position: relative;
-    min-height: 100%;
-}*/
+h1 {
+    font-size: 38px;
+    line-height: 44px;
+    margin-top: 20px;
+}
 
-/*/*.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}*/
-
-/*body {
-    margin-bottom: 60px;
-}*/
+a {
+    transition: color 200ms ease;
+    color: #626a72;
+    text-decoration: none;
+}
 
 #mainMenu #menuMiddlePart {
     margin: auto;
@@ -38,7 +37,7 @@ html, body {
     display: none;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
     #mainMenu #menuRightPart {
         margin-left: auto;
         margin-right: 5%;
@@ -74,15 +73,255 @@ html, body {
     justify-content: space-between;
 }
 
-.masthead.segment {
-    margin-top: -20px;
+.ui.menu {
+    margin-bottom: 0;
+}
+
+.w-layout-grid {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-row-gap: 16px;
+    grid-column-gap: 16px;
+}
+
+.footer {
+    position: relative;
+    z-index: 0;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    background-color: #f5f6f7;
+}
+
+.footer-container {
+    display: block;
     width: 100%;
-    min-height: 700px;
+    max-width: 1230px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 40px 50px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media screen and (max-width: 991px) {
+    .footer-container {
+        padding-right: 30px;
+        padding-left: 30px;
+    } 
+}
+
+.footer-grid {
+    grid-template-columns: 3fr 1fr 1fr 0.8fr;
+    grid-template-rows: auto;
+}
+
+@media screen and (max-width: 991px) { 
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 0.8fr;
+    }
+}
+
+.footer-logo-block {
+    position: relative;
+    display: flex;
+    max-width: 650px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+    .footer-logo-block .footer-logo {
+        margin-bottom: 20px;
+    }
+
+.w-nav-brand {
+    position: relative;
+    float: left;
+    text-decoration: none;
+    color: #333333;
+}
+
+.paragraph-small {
+    margin-bottom: 6px;
+    opacity: 0.75;
+    font-size: 14px;
+    line-height: 1.4em;
+}
+
+.spacer._16 {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    background-color: transparent;
+}
+
+.footer-links-container {
+    display: flex;
+    flex-direction: column;
+}
+
+    .footer-links-container .footer-header {
+        color: #99a4af;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+    }
+
+    .footer-links-container h5 {
+        margin-top: 0px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 1.5em;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .footer-links-container .footer-link.w--current {
+        opacity: 1;
+    }
+
+    .footer-links-container .footer-link {
+        display: block;
+        margin-bottom: 0px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        -webkit-transition: color 200ms ease-in-out;
+        transition: color 200ms ease-in-out;
+        color: #626a72;
+        font-size: 15px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .footer-links-container a {
+        background-color: transparent;
+    }
+
+@media screen and (max-width: 991px) {
+    .footer-links-container {
+        display: flex;
+        align-items: flex-start;
+    }
+}
+
+.masthead.segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 655px;
     padding: 1em 0em;
 }
 
-.footer.segment {
-    padding: 5em 0em;
+.main-heading-wrap {
+    margin-top: 100px;
+    margin-bottom: 60px;
+}
+
+    .main-heading-wrap h1 {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-size: 44px;
+        line-height: 62px;
+        font-weight: 400;
+    }
+
+.paragraph-header {
+    margin-bottom: 10px;
+    opacity: 1;
+    font-size: 20px;
+    line-height: 34px;
+    font-weight: 400;
+}
+
+    .paragraph-header.opacity-light {
+        opacity: 0.6;
+    }
+
+.paragraph-light {
+    opacity: 0.6;
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: 0px;
+    text-transform: none;
+}
+
+.divider {
+    height: 1px;
+    background-color: #eee;
+}
+
+.main-paragraph-wrap {
+    margin-top: 60px;
+    margin-bottom: 150px;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+    grid-template-areas: ". .";
+    grid-template-rows: auto;
+}
+
+.products-header {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+    .products-header h3 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 30px;
+        line-height: 46px;
+        font-weight: 400;
+    }
+
+.subscribe-section {
+    margin-top: 50px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    /*background-color: #f4f4f4;*/
+    background-color: #1d1d1d;
+    background-image: radial-gradient(circle farthest-corner at 0% 50%, rgba(255, 1, 1, 0.15), transparent 47%), radial-gradient(circle farthest-corner at 40% 130%, rgba(122, 167, 255, 0.41), transparent 58%);
+    color: #fff;
+}
+
+    .subscribe-section .content-container {
+        display: flex;
+        width: 100%;
+        max-width: 1140px;
+        margin-right: auto;
+        margin-left: auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+.content-container .ui.input {
+    margin-top: 20px;
+}
+
+.subscribe-header {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 36px;
+    line-height: 50px;
+    font-weight: 400;
+    text-transform: none;
+}
+
+.subscribe-paragraph {
+    width: 40%;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+@media screen and (max-width: 991px) {
+    .subscribe-paragraph {
+        width: 60%;
+        font-size: 16px;
+        line-height: 1.5em;
+    }
 }
 
 .cart-line-qty {
@@ -93,12 +332,12 @@ html, body {
     display: flex;
 }
 
-.cart-line .right-part {
-    display: flex;
-    margin-left: auto;
-    align-items: center;
-    gap: 15px;
-}
+    .cart-line .right-part {
+        display: flex;
+        margin-left: auto;
+        align-items: center;
+        gap: 15px;
+    }
 
 /*.hidden {
     display: none;
