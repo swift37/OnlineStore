@@ -13,13 +13,22 @@
     <header>
         <div class="ui stackable menu">
             <div class="item">
-                <img src="">
+                <img src="~/resources/images/mainMenuLogo.png">
             </div>
             <a class="item" asp-controller="Home" asp-action="Index">Main</a>
             <a class="item" asp-controller="Admin" asp-action="Products">Products</a>
             <a class="item" asp-controller="Admin" asp-action="Categories">Categories</a>
             <a class="item" asp-controller="Admin" asp-action="Orders">Orders</a>
             <a class="item" asp-controller="Admin" asp-action="Customers">Customers</a>
+            <div class="ui dropdown item">
+                Create
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item"><i class="edit icon"></i> Edit Profile</a>
+                    <a class="item"><i class="globe icon"></i> Choose Language</a>
+                    <a class="item"><i class="settings icon"></i> Account Settings</a>
+                </div>
+            </div>
             <partial name="_LoginPartial" />
         </div>
     </header>

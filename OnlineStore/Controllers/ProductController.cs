@@ -27,14 +27,16 @@ namespace OnlineStore.Controllers
 
             var cart = _context.Carts
                 .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
                 .FirstOrDefault(c => /*c.User.Id == User.Identity.GetUserId() &&*/ c.Status == CartStatus.Active);
+
             if (cart is null)
             {
                 cart = new Cart();
                 _context.Carts.Add(cart);
             }
 
-            var item = cart.CartItems?.FirstOrDefault(i => i.Id == product.Id);
+            var item = cart.CartItems?.FirstOrDefault(i => i.Product?.Id == product.Id);
             if (item is null) cart.CartItems?.Add(new CartItem { Product = product, Quantity = qty });
             else item.Quantity += qty;
 

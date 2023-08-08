@@ -4,8 +4,11 @@
 }
 
 <h1>Checkout</h1>
-<form asp-controller="Order" asp-action="Checkout" method="post">
-    <button class="ui primary button" type="submit">Pay</button>
+<form asp-action="/Order/Checkout" method="post" class="ui form">
+    <button class="ui teal labeled icon button" type="submit">
+        <i class="cart icon"></i>
+        Checkout
+    </button>
 </form>
 
 @*<form asp-controller="Order" asp-action="Checkout" method="post">

@@ -18,7 +18,12 @@ namespace OnlineStore.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Catalog(int page = 1)
         {
             var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;
             var productsList = _context.Products

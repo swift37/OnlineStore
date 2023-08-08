@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
-using OnlineStore.Models;
 using OnlineStore.Services;
-using Stripe;
 using Stripe.Checkout;
 
 namespace OnlineStore.Controllers
@@ -33,25 +29,41 @@ namespace OnlineStore.Controllers
         }
 
 
-        public IActionResult UpdateCart(int productId, int qty)
+        public async Task<IActionResult> UpdateCart(int productId, int qty)
         {
-            var cart = _context.Carts
+            var cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(i => i.Product)
-                .FirstOrDefault(c => c.Status == CartStatus.Active);
+                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
 
             var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
 
             if (cart is null || cartItem is null) return Json(null);
 
             cartItem.Quantity = qty;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Json(new
             {
                 CartPrice = cart.TotalPrice,
                 CartItems = cart.TotalQuantity,
                 LinePrice = cartItem.Price
             });
+        }
+
+        public async Task<IActionResult> RemoveFromCart(int productId)
+        {
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
+
+            var cartItem = cart?.CartItems.SingleOrDefault(p => p.ProductId == productId);
+
+            if (cart is null || cartItem is null) return Json( new { removeSuccess = false } );
+
+            cart.CartItems.Remove(cartItem);
+            _context.Entry(cart).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Json(new { removeSuccess = true } );
         }
 
         public IActionResult PersonalInfo(int cartId)
@@ -62,67 +74,72 @@ namespace OnlineStore.Controllers
 
         public IActionResult CreateOrder(Order order)
         {
-            var cart = _context.Carts.SingleOrDefault(x => x.Id == order.CartId);
+            var cart = _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
+                .SingleOrDefault(x => x.Id == order.CartId);
             if (cart is null) return RedirectToAction("NotFound", "Error");
             order.Cart = cart;
             cart.Status = CartStatus.Completed;
+            cart.PayDate = DateTime.Now;
 
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            _emailSender.SendMail("To", "New order", "Message");
+            //_emailSender.SendMail("To", "New order", "Message");
 
-            return RedirectToAction("Payment");
+            return RedirectToAction("Checkout", new { cartId = cart.Id });
         }
 
-        [HttpGet]
-        public IActionResult Checkout()
-        {
-            var stripePublishKey = "pk_test_51NactwFJ49wekJ8Os9PXUEqkNEx1uVNwNBDtkk9Z1THTOK9KLriuiIBOxdwgEvly1bdmquaTsuu3mvTdzapgePw7003wR3jSQQ";
-            ViewBag.StripePublishKey = stripePublishKey;
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Checkout(Cart cart)
+        //{
+        //    return View(cart);
+        //}
 
-        [HttpPost]
-        public async Task<string> Checkout(Domain.Product product)
+        public IActionResult Checkout(int cartId)
         {
+            var cart = _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
+                .SingleOrDefault(c => c.Id == cartId);
+            if (cart is null) return RedirectToAction("NotFound", "Error");
+
             var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
             var options = new SessionCreateOptions
             {
-                LineItems = new List<SessionLineItemOptions>
-                {
-                    new SessionLineItemOptions
-                    {
-                        PriceData = new SessionLineItemPriceDataOptions
-                        {
-                            UnitAmountDecimal = 210000/*product.UnitPrice*/,
-                            Currency = "USD",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
-                            {
-                                Name = "Name"/*product.Name*/,
-                                Description = "Desc"/*product.Description*/,
-                                //Images = new List<string?> { product.Image }
-                            }
-                        },
-                        Quantity = 1
-                    }
-                },
+                LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                PaymentMethodTypes = new List<string>
-                {
-                    "card"
-                },
-                SuccessUrl = domain + $"/order/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}",
+                PaymentMethodTypes = new List<string>{ "card" },
+                SuccessUrl = domain + $"/order/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&cartId=" + cart.Id,
                 CancelUrl = domain + "/order/checkoutfailed.html"
             };
+
+            foreach (var cartItem in cart.CartItems)
+            {
+                options.LineItems.Add(new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmountDecimal = cartItem.Product?.UnitPrice,
+                        Currency = "USD",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = cartItem.Product?.Name,
+                        }
+                    },
+                    Quantity = cartItem.Quantity
+                });
+            }
+
             var service = new SessionService();
-            Session session = await service.CreateAsync(options);
+            Session session = service.Create(options);
 
             Response.Headers.Add("Location", session.Url);
-            return session.Id; //new StatusCodeResult(303);
+            return new StatusCodeResult(303);
         }
 
-        public IActionResult CheckoutSuccess(string sessionId)
+        public IActionResult CheckoutSuccess(string sessionId, int cartId)
         {
             var sessionService = new SessionService();
             var session = sessionService.Get(sessionId);
@@ -130,6 +147,16 @@ namespace OnlineStore.Controllers
             // Save order and customer details to your database.
             var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
             var customerEmail = session.CustomerDetails.Email;
+
+            var order = _context.Orders.SingleOrDefault(o => o.CartId == cartId);
+
+            if (order is null) return RedirectToAction("NotFound", "Error");
+
+            order.Status = OrderStatus.Paid;
+            order.Email = customerEmail;
+            order.Total = total / 100;
+
+            _context.SaveChanges();
 
             return View();
         }

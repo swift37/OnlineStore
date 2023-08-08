@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using OnlineStore.Domain.Base;
+﻿using OnlineStore.Domain.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
 {
     public class Cart : Entity
     {
-        //public ApplicationUser? User { get; set; }
+        //public int UserId { get; set; }
+
+        public ApplicationUser? User { get; set; }
 
         public CartStatus Status { get; set; } = CartStatus.Active;
 
@@ -16,7 +17,7 @@ namespace OnlineStore.Domain
 
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
 
-        [NotMapped]  
+        [NotMapped]
         public decimal TotalPrice => CartItems.Sum(i => i.Product?.UnitPrice * i.Quantity) ?? 0;
 
         [NotMapped]

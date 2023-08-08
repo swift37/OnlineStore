@@ -12,7 +12,7 @@ namespace OnlineStore.Services
 
         public void SendMail(string to, string subject, string message)
         {
-            MailMessage mail = new MailMessage("ivantestivan41@gmail.com", to);
+            MailMessage mail = new MailMessage("ivantestivan41@gmail.com", "to");
             SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.UseDefaultCredentials = false;

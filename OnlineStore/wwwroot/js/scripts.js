@@ -2,23 +2,11 @@
 
     $('.ui.dropdown').dropdown();
 
+    $('select.dropdown').dropdown();
+
     $('.special.cards .image').dimmer({
         on: 'hover'
     });
-
-    //$.ajax({
-    //    url: '/Home/CartStatus',
-    //    type: 'post',
-    //    dataType: 'json',
-    //    error: function ()
-    //    {
-    //        alert('Error occurred.');
-    //    },
-    //    success: function (result)
-    //    {
-    //        $('.cart-quantity').text(result.qty);
-    //    }
-    //});
 
     $('#productCategorySelect').change(function () {
         var categoryId = $(this).val();
@@ -69,7 +57,7 @@
         });
     });
 
-    $('.buy-btn').click(function () {
+    $('.buy-ref').click(function () {
         //let qty = $('.buy-qty').val();
 
         $.ajax({
@@ -115,13 +103,50 @@
             },
             success: function (result) {
                 $('.cart-total').text(result.CartPrice);
-                $(this).closest('tr').find('td.line-total').text(result.LinePrice);
+                location.reload();
+                //$(this).closest('tr').find('td.line-total').text(result.LinePrice);
             }
         });
     });
 
-    $(document).ready(function () {
-        card = new Skeuocard($("#skeuocard"));
+    $('.remove-cart-item-btn').click(function () {
+        $.ajax({
+            url: '/Order/RemoveFromCart',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                if (result) location.reload();
+            }
+        });
+    });
+
+    //$(document).ready(function () {
+    //    card = new Skeuocard($("#skeuocard"));
+    //});
+
+    $('#termsCheckbox').click(function () {
+        if ($(this).is(':checked')) {
+            $('#checkoutBtn').removeAttr('disabled');
+        }
+        else {
+            $('#checkoutBtn').attr('disabled', true);
+        }
+    });
+
+    $('.products.item').popup({
+        popup: '.products.popup',
+        hoverable: true,
+        delay: {
+            show: 0,
+            hide: 100
+        }
     });
 
 });
