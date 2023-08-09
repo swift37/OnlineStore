@@ -22,17 +22,25 @@
                     <a class="item" asp-controller="Home" asp-action="Index">Home</a>
                     <a class="products item">Products</a>
                     <a class="item" asp-controller="Home" asp-action="Delivery">Delivery</a>
-                    <a class="item" asp-controller="Home" asp-action="Contact">Contact</a>
-                    <div class="ui dropdown item">
+                    <a class="item" asp-controller="Home" asp-action="About">About</a>
+                    <div class="contact ui item">
                         Contact
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item">Applications</div>
-                            <div class="item">International Students</div>
-                            <div class="item">Scholarships</div>
+                        <div class="contact ui flowing basic admission popup">
+                            <div class="ui secondary vertical menu">
+                                <a class="item" asp-controller="Home" asp-action="Contact">Main Contacts</a>
+                                <a class="item" asp-controller="Home" asp-action="Contact">Our shops</a>
+                                <a class="item" asp-controller="Home" asp-action="Contact">Get in touch</a>
+                                <a class="item">
+                                    <h4 class="ui header">
+                                        <div class="content">
+                                            +21343124325
+                                            <div class="sub header">from 9:00 to 21:00</div>
+                                        </div>
+                                    </h4>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <a class="item" asp-controller="Home" asp-action="About">About</a>
                 </div>
                 <div class="products ui flowing basic admission popup">
                     <div class="ui three column relaxed divided grid">
@@ -88,7 +96,7 @@
     </main>
 
     <footer>
-        @Html.RenderPartialAsync("_Footer");
+        <partial name="_Footer"/>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

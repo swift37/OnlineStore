@@ -149,4 +149,13 @@
         }
     });
 
+    $('.contact.item').popup({
+        popup: '.contact.popup',
+        hoverable: true,
+        delay: {
+            show: 0,
+            hide: 100
+        }
+    });
+
 });
