@@ -53,6 +53,17 @@ a {
         color: #1d1d1d;
     }
 
+ul {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
 #mainMenu #menuMiddlePart {
     margin: auto;
 }
@@ -111,6 +122,11 @@ a {
 
 .ui.secondary.vertical.menu .item {
     padding-left: 10%;
+}
+
+.w-list-unstyled {
+    padding-left: 0;
+    list-style: none;
 }
 
 .w-layout-grid {
@@ -373,6 +389,11 @@ a {
     background-color: #eee;
 }
 
+    .divider.dark-divider {
+        height: 1px;
+        background-color: #202020;
+    }
+
 .main-paragraph-wrap {
     margin-top: 60px;
     margin-bottom: 150px;
@@ -514,8 +535,9 @@ a {
     margin-bottom: 100px;
 }
 
-.cart-line-qty {
-    width: 75px;
+.cart-container {
+    margin-top: 50px;
+    margin-bottom: 100px;
 }
 
 .cart-line {
@@ -528,6 +550,20 @@ a {
         align-items: center;
         gap: 15px;
     }
+
+.cart-line-qty {
+    width: 75px;
+}
+
+.next-link {
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.next-btn {
+    width: 90%;
+}
 
 /*.hidden {
     display: none;
@@ -549,4 +585,146 @@ a {
 .map {
     height: 480px;
     line-height: 20px;
+}
+
+.section.product-details {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 991px) {
+    .section.product-details {
+        flex-direction: column;
+        margin-top: 30px;
+    }
+}
+
+.product-image {
+    display: flex;
+    width: 50%;
+    height: 620px;
+    margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
+    /*background-color: #f4f4f4;*/
+    background-image: url(/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg);
+    background-position: 50% 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 991px) {
+    .product-image {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+}
+
+.product-details-wrap {
+    width: 50%;
+    max-width: 470px;
+    margin-bottom: 20px;
+    margin-left: 100px;
+}
+
+@media screen and (max-width: 991px) {
+    .product-details-wrap {
+        width: 100%;
+        margin-right: auto;
+        margin-bottom: 80px;
+        margin-left: auto;
+        text-align: center;
+    }
+}
+
+.product-details-header {
+    margin-bottom: 30px;
+}
+
+.product-details-name {
+    margin-bottom: 10px;
+    font-size: 36px;
+    line-height: 52px;
+}
+
+.product-details-price {
+    margin-bottom: 20px;
+    opacity: 0.6;
+    font-size: 30px;
+    line-height: 52px;
+}
+
+.product-specs {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.list-item {
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    justify-content: space-between;
+}
+
+.product-detail-measurement {
+    display: flex;
+    align-items: center;
+}
+
+.product-detail-unit-text {
+    margin-left: 6px;
+}
+
+    .product-detail-unit-text.middle-text {
+        margin-right: 6px;
+    }
+
+.add-to-cart {
+    margin-top: 30px;
+}
+
+.add-to-cart-form {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+}
+
+.quantity-field-label {
+    margin-bottom: 0px;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.product-detail-cta-wrap {
+    display: flex;
+    margin-top: 0px;
+}
+
+@media screen and (max-width: 991px) {
+    .product-detail-cta-wrap {
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.quantity-field {
+    width: 80px;
+    height: auto;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 991px) {
+    .quantity-field {
+        width: auto;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 }

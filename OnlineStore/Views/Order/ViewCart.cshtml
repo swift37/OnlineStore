@@ -5,54 +5,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="ui grid">
-    <div class="eleven wide column">
-        <h2>Your purchases (<span>@Model.TotalQuantity</span>)</h2>
+<div class="container">
+    <div class="cart-container">
+        <div class="ui grid">
+            <div class="eleven wide column">
+                <h2>Your purchases (<span>@Model.TotalQuantity</span>)</h2>
 
-        <div class="ui divided items">
-            @if (Model.CartItems != null && Model.CartItems.Count() > 0)
-            {
-                foreach (var cartItem in Model.CartItems)
-                {
-                    <div class="item cart-line">
-                        <div class="ui tiny image">
-                            <img src="@cartItem.Product?.Image">
-                        </div>
-                        <div class="middle aligned content">
-                            @cartItem.Product?.Name
-                        </div>
-                        <div class="right-part">
-                            <span>$@cartItem.Product?.UnitPrice</span>
-                            <div class="ui input">
-                                <input data-itemid="@cartItem.ProductId" class="cart-line-qty" type="number"
-                                       value="@cartItem.Quantity" max="999" min="1">
+                <div class="ui divided items">
+                    @if (Model.CartItems != null && Model.CartItems.Count() > 0)
+                    {
+                        foreach (var cartItem in Model.CartItems)
+                        {
+                            <div class="item cart-line">
+                                <div class="ui tiny image">
+                                    <img src="@cartItem.Product?.Image">
+                                </div>
+                                <div class="middle aligned content">
+                                    @cartItem.Product?.Name
+                                </div>
+                                <div class="right-part">
+                                    <span>$@cartItem.Product?.UnitPrice</span>
+                                    <div class="ui input">
+                                        <input data-itemid="@cartItem.ProductId" class="cart-line-qty" type="number"
+                                               value="@cartItem.Quantity" max="999" min="1">
+                                    </div>
+                                    <button data-itemid="@cartItem.ProductId" class="mini ui icon button remove-cart-item-btn">
+                                        <i class="icon trash alternate outline"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <button data-itemid="@cartItem.ProductId" class="mini ui icon button remove-cart-item-btn">
-                                <i class="icon trash alternate outline"></i>
-                            </button>
-                        </div>
-                    </div>
-                }
-            }
-            else
-            {
-                <h4 class="centered">Your cart is empty.</h4>
-            }
-        </div>
-    </div>
-    <div class="five wide column">
-        <div class="ui card">
-            <div class="content">
-                <div id="cartTotal" class="header">Total <span class="cart-total">$@Model.TotalPrice</span></div>
-            </div>
-            <a asp-controller="Order" asp-action="PersonalInfo" asp-route-cartId="@Model.Id">
-                <div class="ui bottom attached animated primary button" tabindex="0">
-                    <div class="visible content">Next</div>
-                    <div class="hidden content">
-                        <i class="right arrow icon"></i>
-                    </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="paragraph-header opacity-light">Your cart is empty.</div>
+                    }
                 </div>
-            </a>
+            </div>
+            <div class="five wide column">
+                <div class="ui card">
+                    <div class="content">
+                        <div id="cartTotal" class="paragraph-header">Subtotal <span class="cart-total">$@Model.TotalPrice</span></div>
+                    </div>
+                    <a asp-controller="Order" asp-action="PersonalInfo" asp-route-cartId="@Model.Id" class="next-link">
+                        <div class="ui animated primary button next-btn" tabindex="0">
+                            <div class="visible content">Next</div>
+                            <div class="hidden content">
+                                <i class="right arrow icon"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
