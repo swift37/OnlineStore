@@ -41,15 +41,15 @@
                 </div>
                 <div class="divider"></div>
                 <div class="add-to-cart">
-                    <form class="add-to-cart-form">
+                    <div class="add-to-cart-form">
                         <label class="quantity-field-label">Quantity</label>
                         <div class="product-details-cta-wrap">
                             <div class="ui input quantity-field">
-                                <input type="number" pattern="^[0-9]+$" inputmode="numeric" min="1" value="1">
+                                <input id="productQuantity" type="number" pattern="^[0-9]+$" inputmode="numeric" min="1" value="1">
                             </div>
-                            <input type="submit" value="Add to Cart" aria-busy="false" aria-haspopup="dialog" class="ui black button add-to-cart-btn">
+                            <input type="submit" data-itemid="@Model.Id" value="Add to Cart" class="ui black button add-to-cart-btn">
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

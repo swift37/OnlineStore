@@ -284,14 +284,6 @@ li {
     }
 }
 
-.masthead.segment {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 655px;
-    padding: 1em 0em;
-}
-
 .intro-header {
     display: flex;
     height: 655px;
@@ -325,6 +317,10 @@ li {
     .intro-text {
         width: auto;
     }
+}
+
+.featured-products-section {
+    margin-bottom: 100px;
 }
 
 .main-heading-wrap {

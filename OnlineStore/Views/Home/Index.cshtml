@@ -15,7 +15,8 @@
     </div>
 </div>
 
-<div class="ui container">
+<div class="section">
+    <div class="container">
         <div class="main-heading-wrap">
             <h1>This is your space</h1>
             <div class="paragraph-header opacity-light">
@@ -32,104 +33,108 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
             </p>
         </div>
+    </div>
+</div>
 
-        <div class="products-header">
-            <h3>Featured Products</h3>
-            <div class="paragraph-header opacity-light">
-                Check out new and popular products
+<div class="section">
+    <div class="container">
+        <div class="featured-products-section">
+            <div class="products-header">
+                <h3>Featured Products</h3>
+                <div class="paragraph-header opacity-light">
+                    Check out new and popular products
+                </div>
             </div>
-        </div>
 
-        <div class="ui three column grid">
-            <div class="column">
-                <div class="ui fluid card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div @*data-itemid="@product.Id"*@ class="ui inverted button details-btn">
-                                        Details
+            <div class="ui three column grid">
+                <div class="column special-card-column">
+                    <div class="ui fluid card">
+                        <div class="blurring dimmable image">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
+                                            <div class="ui inverted button">
+                                                Details
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
                         </div>
-                        <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
-                    </div>
-                    <div class="content">
-                        <div class="header">Product</div>
-                        <div class="meta">
-                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                        </div>
-                        <div class="description">
-                            Desc@*@product.ShortDescription*@... (<a class="more-info">more</a>)
+                        <div class="content">
+                            <div class="header">Product</div>
+                            <div class="meta">
+                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="column">
-                <div class="ui fluid card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div @*data-itemid="@product.Id"*@ class="ui inverted button details-btn">
-                                        Details
+                <div class="column special-card-column">
+                    <div class="ui fluid card">
+                        <div class="blurring dimmable image">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="6">
+                                            <div class="ui inverted button">
+                                                Details
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <img src="\resources\productsImages\hp-laptop-victus.jpg">
                         </div>
-                        <img src="\resources\productsImages\hp-laptop-victus.jpg">
-                    </div>
-                    <div class="content">
-                        <div class="header">Product</div>
-                        <div class="meta">
-                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                        </div>
-                        <div class="description">
-                            Desc@*@product.ShortDescription*@... (<a class="more-info">more</a>)
+                        <div class="content">
+                            <div class="header">Product</div>
+                            <div class="meta">
+                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="column">
-                <div class="ui fluid card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div @*data-itemid="@product.Id"*@ class="ui inverted button details-btn">
-                                        Details
+                <div class="column special-card-column">
+                    <div class="ui fluid card">
+                        <div class="blurring dimmable image">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
+                                            <div class="ui inverted button">
+                                                Details
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
                         </div>
-                        <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
-                    </div>
-                    <div class="content">
-                        <div class="header">Product</div>
-                        <div class="meta">
-                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                        </div>
-                        <div class="description">
-                            Desc@*@product.ShortDescription*@... (<a class="more-info">more</a>)
+                        <div class="content">
+                            <div class="header">Product</div>
+                            <div class="meta">
+                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-        <div class="subscribe-section">
-            <div class="content-container">
-                <div class="subscribe-header">
-                    Newsletter
-                </div>
-                <div class="paragraph-light subscribe-paragraph">
-                    Sign up to receive updates from our shop, including new tea selections and upcoming events.
-                </div>
-                <div class="ui action input">
-                    <input type="text" value="" placeholder="Enter your email">
-                    <div class="ui black button">Subscribe</div>
-                </div>
-            </div>
+<div class="subscribe-section">
+    <div class="content-container">
+        <div class="subscribe-header">
+            Newsletter
         </div>
+        <div class="paragraph-light subscribe-paragraph">
+            Sign up to receive updates from our shop, including new tea selections and upcoming events.
+        </div>
+        <div class="ui action input">
+            <input type="text" value="" placeholder="Enter your email">
+            <div class="ui black button">Subscribe</div>
+        </div>
+    </div>
+</div>
