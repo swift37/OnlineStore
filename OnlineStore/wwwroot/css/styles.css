@@ -394,6 +394,10 @@ li {
         background-color: #202020;
     }
 
+.ui.divider {
+    background-color: transparent;
+}
+
 .main-paragraph-wrap {
     margin-top: 60px;
     margin-bottom: 150px;
@@ -597,16 +601,18 @@ li {
     line-height: 20px;
 }
 
-.section.product-details {
+.product-details-section {
     display: flex;
     align-items: center;
     margin-top: 30px;
+    margin-bottom: 65px;
 }
 
 @media screen and (max-width: 991px) {
-    .section.product-details {
+    .product-details-section {
         flex-direction: column;
         margin-top: 30px;
+        margin-bottom: 65px;
     }
 }
 
@@ -618,7 +624,7 @@ li {
     justify-content: center;
     align-items: center;
     /*background-color: #f4f4f4;*/
-    background-image: url(/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg);
+    /*background-image: url(/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg);*/
     background-position: 50% 50%;
     background-size: contain;
     background-repeat: no-repeat;
@@ -737,6 +743,10 @@ li {
         margin-bottom: 10px;
         text-align: center;
     }
+}
+
+.description-section {
+    margin-bottom: 50px;
 }
 
 .why-company-section {
@@ -903,4 +913,39 @@ li {
     .need-help-paragraph {
         width: 55%;
     }
+}
+
+.description-section {
+    margin-bottom: 65px;
+}
+
+    .description-section .ui.header {
+        font-size: 22px;
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+    }
+
+.full-specs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 65px;
+}
+
+    .full-specs-section .ui.header {
+        font-size: 22px;
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+    }
+
+    .full-specs-section .ui.table {
+        width: 95%;
+    }
+
+.decription-paragraph {
+    width: 95%;
+    margin-left: 25px;
+    font-size: 18px;
+    line-height: 1.5em;
+    font-weight: 400;
 }

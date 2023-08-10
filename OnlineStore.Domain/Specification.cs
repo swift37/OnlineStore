@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Domain
 {
-    public class ProductDetails : Entity
+    public class Specification : Entity
     {
-        public string? PropertyName { get; set; }
+        public string? SpecificationName { get; set; }
 
-        public string? PropertyValue { get; set; }
+        public string? SpecificationValue { get; set; }
     }
 }

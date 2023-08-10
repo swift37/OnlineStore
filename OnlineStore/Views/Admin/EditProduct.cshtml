@@ -44,20 +44,20 @@
     </div>
     <div class="product-specs">
         <div class="product-specs-list">
-            @for (var i = 0; i < Model.ProductDetails.Count; i++)
+            @for (var i = 0; i < Model.Specification.Count; i++)
             {
                 <div class="field spec-field">
                     <label>Specification</label>
                     <div class="two fields">
                         <div class="field">
-                            <input class="property-name" value="@Model.ProductDetails[i].PropertyName" name="ProductDetails[@i].PropertyName" type="text" placeholder="Name">
+                            <input class="property-name" value="@Model.Specification[i].SpecificationName" name="ProductDetails[@i].SpecificationName" type="text" placeholder="Name">
                         </div>
                         <div class="field">
-                            <input class="property-value" value="@Model.ProductDetails[i].PropertyValue" name="ProductDetails[@i].PropertyValue" type="text" placeholder="Value">
+                            <input class="property-value" value="@Model.Specification[i].SpecificationValue" name="ProductDetails[@i].SpecificationValue" type="text" placeholder="Value">
                         </div>
                         <i class="remove circle icon remove-spec"></i>
                     </div>
-                    <input class="property-id" type="hidden" value="@Model.ProductDetails[i].Id" name="ProductDetails[@i].Id">
+                    <input class="property-id" type="hidden" value="@Model.Specification[i].Id" name="ProductDetails[@i].Id">
                 </div>
             }
         </div>

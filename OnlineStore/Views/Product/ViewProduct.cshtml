@@ -5,49 +5,84 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="section product-details">
-    <div @*style="background-image:url(&quot;@Model.Image&quot;)"*@ class="product-image">
-    </div>
-    <div class="product-details-wrap">
-        <div class="product-details-header">
-            <h1 class="product-details-name">@Model.Name</h1>
-            <div class="product-details-price">$ @Model.UnitPrice USD</div>
-            <div class="paragraph-light">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.</div>
-        </div>
-        <div class="divider dark-divider"></div>
-        <div class="product-specs">
-            <ul role="list" class="w-list-unstyled">
-                <li class="list-item">
-                    <div class="paragraph-light">Dimensions</div>
-                    <div class="product-detail-measurement">
-                        <div>32</div>
-                        <div class="product-detail-unit-text middle-text">in x</div>
-                        <div>36</div>
-                        <div class="product-detail-unit-text middle-text">in x</div>
-                        <div>54</div>
-                        <div class="product-detail-unit-text">in</div>
-                    </div>
-                </li>
-                <li class="list-item">
-                    <div class="paragraph-light">Weight</div>
-                    <div class="product-detail-measurement">
-                        <div>45</div>
-                        <div class="product-detail-unit-text">oz</div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="divider"></div>
-        <div class="add-to-cart">
-            <form class="add-to-cart-form">
-                <label class="quantity-field-label">Quantity</label>
-                <div class="product-details-cta-wrap">
-                    <div class="ui input quantity-field">
-                        <input type="number" pattern="^[0-9]+$" inputmode="numeric" min="1" value="1">
-                    </div>
-                    <input type="submit" value="Add to Cart" aria-busy="false" aria-haspopup="dialog" class="ui black button add-to-cart-btn">
+<div class="section">
+    <div class="container">
+        <div class="product-details-section">
+            <div style="background-image:url(@Model.Image?.Replace('\\','/'))" class="product-image">
+            </div>
+            <div class="product-details-wrap">
+                <div class="product-details-header">
+                    <h1 class="product-details-name">@Model.Name</h1>
+                    <div class="product-details-price">$ @Model.UnitPrice USD</div>
+                    <div class="paragraph-light">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.</div>
                 </div>
-            </form>
+                <div class="divider dark-divider"></div>
+                <div class="product-specs">
+                    <ul role="list" class="w-list-unstyled">
+                        <li class="list-item">
+                            <div class="paragraph-light">Dimensions</div>
+                            <div class="product-detail-measurement">
+                                <div>32</div>
+                                <div class="product-detail-unit-text middle-text">in x</div>
+                                <div>36</div>
+                                <div class="product-detail-unit-text middle-text">in x</div>
+                                <div>54</div>
+                                <div class="product-detail-unit-text">in</div>
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="paragraph-light">Weight</div>
+                            <div class="product-detail-measurement">
+                                <div>45</div>
+                                <div class="product-detail-unit-text">oz</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class="add-to-cart">
+                    <form class="add-to-cart-form">
+                        <label class="quantity-field-label">Quantity</label>
+                        <div class="product-details-cta-wrap">
+                            <div class="ui input quantity-field">
+                                <input type="number" pattern="^[0-9]+$" inputmode="numeric" min="1" value="1">
+                            </div>
+                            <input type="submit" value="Add to Cart" aria-busy="false" aria-haspopup="dialog" class="ui black button add-to-cart-btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="section">
+    <div class="container">
+        <div class="description-section">
+            <h3 class="ui horizontal divider header">Description</h3>
+            <p class="decription-paragraph">@Model.Description</p>
+        </div>
+    </div>
+</div>
+
+@if (Model.Specification != null && Model.Specification.Count > 0)
+{
+    <div class="section">
+        <div class="container">
+            <div class="full-specs-section">
+                <h3 class="ui horizontal divider header">Specifications</h3>
+                <table class="ui definition table">
+                    <tbody>
+                        @foreach (var spec in Model.Specification)
+                        {
+                            <tr>
+                                <td>@spec.SpecificationName</td>
+                                <td>@spec.SpecificationValue</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

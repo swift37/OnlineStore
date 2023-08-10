@@ -28,6 +28,12 @@ namespace OnlineStore.Domain
 
         public SubCategory? SubCategory { get; set; }
 
-        public List<ProductDetails> ProductDetails { get; set; } = new List<ProductDetails>();
+        public List<Specification> Specification { get; set; } = new List<Specification>();
+
+        public string? Manufacturer { get; set; }
+
+        public string? ManufacturersCode { get; set; }
+
+        public string? StoreCode { get; set; }
     }
 }
