@@ -10,7 +10,7 @@ namespace OnlineStore.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
-        private int _pageSize = 1;
+        private int _pageSize = 25;
 
         public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
@@ -40,7 +40,7 @@ namespace OnlineStore.Controllers
                 .Skip((page - 1) * _pageSize)
                 .Take(_pageSize)
                 .Include(p => p.SubCategory);
-            var model = new ProductsListViewModel(productsList, page, pagesCount);
+            var model = new ProductsCollectionViewModel(productsList, null, null, page, pagesCount);
             return View(model);
         }
 

@@ -2,19 +2,49 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Domain;
+using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private int _pageSize = 25;
 
         public ProductController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public ActionResult ViewProduct(int? id)
+        [Route("products")]
+        public IActionResult GetProductsBySubCategory(int? subCategoryId, int page = 1)
+        {
+            if (subCategoryId is null) return RedirectToAction("Index", "Home");
+
+            var subCategory = _context.SubCategories
+                .Include(sc => sc.Category)
+                .SingleOrDefault(sc => sc.Id == subCategoryId);
+
+            if (subCategory is null) return RedirectToAction("Error", "NotFound");
+
+            var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;
+            var productsList = _context.Products
+                .Skip((page - 1) * _pageSize)
+                .Take(_pageSize)
+                .Include(p => p.SubCategory);
+            var model = new ProductsCollectionViewModel(
+                productsList, 
+                subCategory.Category, 
+                subCategory, 
+                page, 
+                pagesCount
+                );
+
+            return View(model);
+        }
+
+        [Route("product")]
+        public IActionResult ViewProduct(int? id)
         {
             if (id is null) return RedirectToAction("Index", "Home");
             return View(_context.Products.Include(p => p.Specification).SingleOrDefault(p => p.Id == id));
