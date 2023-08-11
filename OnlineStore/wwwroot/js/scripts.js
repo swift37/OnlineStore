@@ -1,8 +1,10 @@
 ﻿$(document).ready(function () {
 
-    $('.ui.dropdown').dropdown();
+    /*$('.ui.dropdown').dropdown();*/
 
-    $('select.dropdown').dropdown();
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
 
     $('.special.cards .image').dimmer({
         on: 'hover'
@@ -11,6 +13,24 @@
     $('.special-card-column .image').dimmer({
         on: 'hover'
     });
+
+    $('.menu-button').click(function () {
+        if ($('.menu-button').hasClass('w--open'))
+        {
+            $('.menu-button').removeClass('w--open');
+            $('w-nav-overlay').css('display', 'none');
+        }
+        else
+        {
+            $('.menu-button').addClass('w--open');
+            $('w-nav-overlay').css('display', 'block');
+        }
+    });
+
+    //$('.nav-link').click(function () {
+    //    $(this).addClass('w--current');
+    //    $(this).siblings().removeClass('w--current');
+    //});
 
     $('#productCategorySelect').change(function () {
         var categoryId = $(this).val();
@@ -131,10 +151,6 @@
         });
     });
 
-    //$(document).ready(function () {
-    //    card = new Skeuocard($("#skeuocard"));
-    //});
-
     $('#termsCheckbox').click(function () {
         if ($(this).is(':checked')) {
             $('#checkoutBtn').removeAttr('disabled');
@@ -153,8 +169,17 @@
         }
     });
 
-    $('.contact.item').popup({
-        popup: '.contact.popup',
+    $('.products.nav-link').popup({
+        popup: $('.products.popup'),
+        hoverable: true,
+        delay: {
+            show: 0,
+            hide: 100
+        }
+    });
+
+    $('.contact.nav-link').popup({
+        popup: $('.contact.popup'),
         hoverable: true,
         delay: {
             show: 0,

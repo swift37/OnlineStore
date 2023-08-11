@@ -4,114 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OnlineStore</title>
-  @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/lib/semantic-ui/dist/css/semantic.min.css" />
-  @*<link rel="stylesheet" href="~/css/skeuocard/skeuocard.reset.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/skeuocard/skeuocard.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/OnlineStore.styles.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/OnlineStore.styles.css" asp-append-version="true" />*@
 </head>
 <body>
     <header>
-        <nav id="mainMenu">
-            <div class="ui menu">
-                <a class="header item" asp-controller="Home" asp-action="Index">
-                    Company Name
-                </a>
-                <div id="menuMiddlePart" class="ui secondary menu">
-                    <a class="item" asp-controller="Home" asp-action="Index">Home</a>
-                    <a class="products item">Products</a>
-                    <a class="item" asp-controller="Home" asp-action="About">About</a>
-                    <div class="contact ui item">
-                        Contact
-                        <div class="contact ui flowing basic admission popup">
-                            <div class="ui secondary vertical menu">
-                                <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="main-contacts">Main Contacts</a>
-                                <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="our-shops">Our shops</a>
-                                <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="get-in-touch">Get in touch</a>
-                                <a class="item">
-                                    <h4 class="ui header">
-                                        <div class="content">
-                                            +21343124325
-                                            <div class="sub header">from 9:00 to 21:00</div>
-                                        </div>
-                                    </h4>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="products ui flowing basic admission popup">
-                    <div class="ui three column relaxed divided grid">
-                        <div class="column">
-                            <h4 class="ui header">Business</h4>
-                            <div class="ui link list">
-                                <a class="item">Design &amp; Urban Ecologies</a>
-                                <a class="item">Fashion Design</a>
-                                <a class="item">Fine Art</a>
-                                <a class="item">Strategic Design</a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <h4 class="ui header">Liberal Arts</h4>
-                            <div class="ui link list">
-                                <a class="item">Anthropology</a>
-                                <a class="item">Economics</a>
-                                <a class="item">Media Studies</a>
-                                <a class="item">Philosophy</a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <h4 class="ui header">Social Sciences</h4>
-                            <div class="ui link list">
-                                <a class="item">Food Studies</a>
-                                <a class="item">Journalism</a>
-                                <a class="item">Non Profit Management</a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <h4 class="ui header">Social Sciences</h4>
-                            <div class="ui link list">
-                                <a class="item">Food Studies</a>
-                                <a class="item">Journalism</a>
-                                <a class="item">Non Profit Management</a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <h4 class="ui header">Social Sciences</h4>
-                            <div class="ui link list">
-                                <a class="item">Food Studies</a>
-                                <a class="item">Journalism</a>
-                                <a class="item">Non Profit Management</a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <h4 class="ui header">Social Sciences</h4>
-                            <div class="ui link list">
-                                <a class="item">Food Studies</a>
-                                <a class="item">Journalism</a>
-                                <a class="item">Non Profit Management</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="menuRightPart" class="ui secondary menu">
-                    @Component.InvokeAsync("CartStatus").Result
-                    <a class="item">
-                        <i class="icon heart outline"></i>
-                    </a>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-            
-            <div id="secondaryStackedMenu" class="ui secondary stackable menu">
-                <a class="item" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="item" asp-controller="Home" asp-action="Catalog">Catalog</a>
-                <a class="item" asp-controller="Home" asp-action="Delivery">Delivery</a>
-                <a class="item" asp-controller="Home" asp-action="Contact">Contact</a>
-                <a class="item" asp-controller="Home" asp-action="About">About</a>
-            </div>
-        </nav>
+        <partial name="_Header" />
     </header>
 
     <main>
@@ -119,14 +19,12 @@
     </main>
 
     <footer>
-        <partial name="_Footer"/>
+        <partial name="_Footer" />
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/lib/semantic-ui/dist/js/semantic.min.js"></script>
-  @*<script src="~/js/skeuocard/skeuocard.min.js" asp-append-version="true"></script>
-    <script src="~/js/skeuocard/vendor/cssua.min.js" asp-append-version="true"></script>*@
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -1,6 +1,6 @@
-﻿<a class="item" asp-controller="Order" asp-action="ViewCart">
-    <i class="shopping cart icon"></i>
-    <div id="cartNum" class="floating ui circular label">
-        <span class="cart-quantity">@ViewBag.CartItems</span>
-    </div>
-</a>
+﻿<div class="cart">
+    <a class="cart-button" asp-controller="Order" asp-action="ViewCart">
+        <img src="~/resources/images/shopping-cart.png" width="20" alt="">
+        <div class="cart-quantity">@ViewBag.CartItems</div>
+    </a>
+</div>
