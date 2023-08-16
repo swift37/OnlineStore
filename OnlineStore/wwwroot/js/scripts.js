@@ -16,6 +16,8 @@
 
     checkCartQuantity();
 
+    checkWishlistQuantity();
+
     $('.menu-button').click(function () {
         if ($('.menu-button').hasClass('w--open'))
         {
@@ -82,6 +84,14 @@
             $(item).find('.property-id').attr('name', 'ProductDetails[' + index + '].Id');
         });
     });
+
+    function checkWishlistQuantity() {
+        let qty = parseInt($('#wishlistQuantity').text());
+        if (qty > 9) {
+            let counter = $('#wishlistQuantity').parent('.counter');
+            if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+        }
+    }
 
     function checkCartQuantity() {
         let qty = parseInt($('#cartQuantity').text());

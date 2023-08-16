@@ -1,128 +1,246 @@
-﻿@*<nav id="mainMenu">
-    <div class="ui menu">
-        <a class="header item" asp-controller="Home" asp-action="Index">
-            Company Name
-        </a>
-        <div id="menuMiddlePart" class="ui secondary menu">
-            <a class="item" asp-controller="Home" asp-action="Index">Home</a>
-            <a class="products item">Products</a>
-            <a class="item" asp-controller="Home" asp-action="About">About</a>
-            <div class="contact ui item">
-                Contact
-                <div class="contact ui flowing basic admission popup">
-                    <div class="ui secondary vertical menu">
-                        <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="main-contacts">Main Contacts</a>
-                        <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="our-shops">Our shops</a>
-                        <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="get-in-touch">Get in touch</a>
-                        <a class="item">
-                            <h4 class="ui header">
-                                <div class="content">
-                                    +21343124325
-                                    <div class="sub header">from 9:00 to 21:00</div>
-                                </div>
-                            </h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="products ui flowing basic admission popup">
-            <div class="ui three column relaxed divided grid">
-                <div class="column">
-                    <h4 class="ui header">Business</h4>
-                    <div class="ui link list">
-                        <a class="item">Design &amp; Urban Ecologies</a>
-                        <a class="item">Fashion Design</a>
-                        <a class="item">Fine Art</a>
-                        <a class="item">Strategic Design</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Liberal Arts</h4>
-                    <div class="ui link list">
-                        <a class="item">Anthropology</a>
-                        <a class="item">Economics</a>
-                        <a class="item">Media Studies</a>
-                        <a class="item">Philosophy</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Social Sciences</h4>
-                    <div class="ui link list">
-                        <a class="item">Food Studies</a>
-                        <a class="item">Journalism</a>
-                        <a class="item">Non Profit Management</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Social Sciences</h4>
-                    <div class="ui link list">
-                        <a class="item">Food Studies</a>
-                        <a class="item">Journalism</a>
-                        <a class="item">Non Profit Management</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Social Sciences</h4>
-                    <div class="ui link list">
-                        <a class="item">Food Studies</a>
-                        <a class="item">Journalism</a>
-                        <a class="item">Non Profit Management</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Social Sciences</h4>
-                    <div class="ui link list">
-                        <a class="item">Food Studies</a>
-                        <a class="item">Journalism</a>
-                        <a class="item">Non Profit Management</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="menuRightPart" class="ui secondary menu">
-            @Component.InvokeAsync("CartStatus").Result
-            <a class="item">
-                <i class="icon heart outline"></i>
-            </a>
-            <partial name="_LoginPartial" />
-        </div>
-    </div>
-
-    <div id="secondaryStackedMenu" class="ui secondary stackable menu">
-        <a class="item" asp-controller="Home" asp-action="Index">Home</a>
-        <a class="item" asp-controller="Home" asp-action="Catalog">Catalog</a>
-        <a class="item" asp-controller="Home" asp-action="Delivery">Delivery</a>
-        <a class="item" asp-controller="Home" asp-action="Contact">Contact</a>
-        <a class="item" asp-controller="Home" asp-action="About">About</a>
-    </div>
-</nav>*@
-
-<div data-collapse="medium" data-animation="default" data-duration="400" data-no-scroll="1" data-easing="ease" data-easing2="ease" role="banner" class="navbar active-nav w-nav">
+﻿<div class="nav-main active-nav">
     <div class="nav-wrap">
-        <a asp-controller="Home" asp-action="Index" class="brand w-nav-brand">
+        <a asp-controller="Home" asp-action="Index" class="nav-brand">
             <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5dc47bd5d6111e71656e871f_LUMA.svg" alt="">
         </a>
         <div class="nav-menu-wrap">
-            <nav class="nav-menu w-nav-menu">
-                <a class="nav-link w-nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="products nav-link w-nav-link" asp-controller="Home" asp-action="Catalog">Products</a>
-                <div class="products ui flowing basic admission popup">
-                    <div class="ui vertical menu">
-                        <a class="item">Main Products</a>
-                        <div class="ui dropdown item">
-                            More
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                                <a class="item"><i class="globe icon"></i> Choose Language</a>
-                                <a class="item"><i class="settings icon"></i> Account Settings</a>
+            <nav class="nav-menu">
+                <div class="category-link nav-link">
+                    Category
+                    <div class="mega-menu">
+                        <div class="mega-menu-container">
+                            <div class="wrapper">
+                                <div class="flex-column">
+                                    <div class="row">
+                                        <h4>Category</h4>
+                                        <div class="links">
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-column">
+                                    <div class="row">
+                                        <h4>Category</h4>
+                                        <div class="links">
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-column">
+                                    <div class="row">
+                                        <h4>Category</h4>
+                                        <div class="links">
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-column">
+                                    <div class="row">
+                                        <h4>Category</h4>
+                                        <div class="links two-columns">
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                            <a href="/">Item</a>
+                                        </div>
+                                        <a href="/" class="view-all">
+                                            View all brands<i class="icon angle right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex-column products">
+                                    <div class="row">
+                                        <div class="media">
+                                            <div class="tumbnail object-cover">
+                                                <a href="/">
+                                                    <img src="/resources/images/slide-3.png" alt="" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="text-content">
+                                            <h4>Most wanted!</h4>
+                                            <a href="/" class="primary-button">Order Now</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="nav-link w-nav-link" asp-controller="Home" asp-action="About">About</a>
-                <a class="contact nav-link w-nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                <div class="dropdown-link nav-link">
+                    Category
+                    <div class="dpt-menu">
+                        <div class="second-links">
+                            <div class="link-item has-child beauty">
+                                <a class="main-link" href="/">
+                                    Subcategory <i class="icon angle right"></i>
+                                </a>
+                                <div class="child-menu">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                            <div class="link-item has-child electric">
+                                <a class="main-link" href="/">
+                                    Subcategory <i class="icon angle right"></i>
+                                </a>
+                                <div class="child-menu">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                            <div class="link-item has-child fashion">
+                                <a class="main-link" href="/">
+                                    Subcategory <i class="icon angle right"></i>
+                                </a>
+                                <div class="child-menu">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                            <div class="link-item has-child homekit">
+                                <a class="main-link" href="/">
+                                    Subcategory <i class="icon angle right"></i>
+                                </a>
+                                <div class="mega-menu">
+                                    <div class="flex-column">
+                                        <div class="row">
+                                            <h4><a href="/">Cat 1</a></h4>
+                                            <div class="links">
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <h4><a href="/">Cat 2</a></h4>
+                                            <div class="links">
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-column">
+                                        <div class="row">
+                                            <h4><a href="/">Cat 3</a></h4>
+                                            <div class="links">
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <h4><a href="/">Cat 4</a></h4>
+                                            <div class="links">
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                                <a href="/">Item2</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-column">
+                                        <div class="row">
+                                            <h4><a href="/">Cat 5</a></h4>
+                                            <div class="links">
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                                <a href="/">Item1</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="link-item">
+                                <a class="main-link" href="/">Subcategory</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="nav-link">Category</a>
+                <a class="nav-link">Category</a>
+                <a class="nav-link">Category</a>
+                <a class="nav-link">Category</a>
+                <a class="nav-link">Category</a>
+                @*<a class="products nav-link" asp-controller="Home" asp-action="Catalog">Products</a>
+                <div class="products ui flowing basic admission popup">
+                <div class="ui vertical menu">
+                <a class="item">Main Products</a>
+                <div class="ui dropdown item">
+                More
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                <a class="item"><i class="edit icon"></i> Edit Profile</a>
+                <a class="item"><i class="globe icon"></i> Choose Language</a>
+                <a class="item"><i class="settings icon"></i> Account Settings</a>
+                </div>
+                </div>
+                </div>
+                </div>*@
+            </nav>
+            <nav class="nav-menu right">
+                <a class="nav-link" asp-controller="Home" asp-action="Catalog">Store</a>
+                <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                <a class="contact nav-link" asp-controller="Home" asp-action="Contact">Support</a>
                 <div class="contact ui flowing basic admission popup">
                     <div class="ui vertical menu">
                         <a class="item" asp-controller="Home" asp-action="Contact" asp-fragment="main-contacts">Main Contacts</a>
@@ -138,22 +256,35 @@
                         </a>
                     </div>
                 </div>
+                @Component.InvokeAsync("CartStatus").Result
+                <div class="header-icon">
+                    <a asp-controller="Product" asp-action="Wishlist">
+                        <img src="~/resources/icons/like.png" width="20" alt="">
+                        <div class="counter">
+                            <span id="wishlistQuantity" class="number">0</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="header-icon">
+                    <a href="/">
+                        <img src="~/resources/icons/user.png" width="20" alt="">
+                    </a>
+                </div>
+                <div class="side-menu-button">
+                    <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="side-menu-icon">
+                </div>
             </nav>
-            @Component.InvokeAsync("CartStatus").Result
-            <div class="menu-button w-nav-button">
-                <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="menu-icon">
-            </div>
         </div>
     </div>
-    <div class="w-nav-overlay" style="display: none;">
-        <nav class="nav-menu w-nav-menu w--nav-menu-open" style="transform: translateY(0px) translateX(0px); transition: transform 400ms ease 0s;">
-            <a href="/" aria-current="page" class="nav-link w-nav-link w--current w--nav-link-open">Home</a>
-            <a href="/all-products" class="nav-link w-nav-link w--nav-link-open">Our Products</a>
-            <a href="/about" class="nav-link w-nav-link w--nav-link-open">About</a>
-            <a href="/contact" class="nav-link w-nav-link w--nav-link-open">Contact</a>
-            <a href="/blog" class="nav-link w-nav-link w--nav-link-open">Blog</a>
-            <a href="/help/styleguide" class="nav-link w-nav-link w--nav-link-open">Styleguide</a>
-            <a href="/help/license" class="nav-link w-nav-link w--nav-link-open">License</a>
-        </nav>
-    </div>
+    @*    <div class="w-nav-overlay" style="display: none;">
+    <nav class="nav-menu w-nav-menu w--nav-menu-open" style="transform: translateY(0px) translateX(0px); transition: transform 400ms ease 0s;">
+    <a href="/" aria-current="page" class="nav-link w--current w--nav-link-open">Home</a>
+    <a href="/all-products" class="nav-link w--nav-link-open">Our Products</a>
+    <a href="/about" class="nav-link w--nav-link-open">About</a>
+    <a href="/contact" class="nav-link w--nav-link-open">Contact</a>
+    <a href="/blog" class="nav-link w--nav-link-open">Blog</a>
+    <a href="/help/styleguide" class="nav-link w--nav-link-open">Styleguide</a>
+    <a href="/help/license" class="nav-link w--nav-link-open">License</a>
+    </nav>
+    </div>*@
 </div>

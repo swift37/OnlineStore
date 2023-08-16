@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="main-slaider">
+<section class="main-slider">
     <div class="slider-wrapper swiper-wrapper">
         <div class="slide swiper-slide">
             <img class="slide-img" src="~/resources/images/slide-1.png" />
@@ -69,7 +69,7 @@
     <div class="swiper-scrollbar"></div>
 </section>
 
-<div class="section">
+@*<section>
     <div class="container">
         <div class="main-heading-wrap">
             <h1>This is your space</h1>
@@ -88,97 +88,169 @@
             </p>
         </div>
     </div>
-</div>
+</section>*@
 
-<div class="section">
+<section class="featured-products-section">
     <div class="container">
-        <div class="featured-products-section">
-            <div class="products-header">
-                <h3>Featured Products</h3>
-                <div class="paragraph-header opacity-light">
-                    Check out new and popular products
+        <div class="products-header">
+            <h3>Featured Products</h3>
+            <div class="paragraph-header opacity-light">
+                Check out new and popular products
+            </div>
+        </div>
+
+        <div class="ui three column grid">
+            <div class="column special-card-column">
+                <div class="ui fluid card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
+                                        <div class="ui inverted button">
+                                            Details
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
+                    </div>
+                    <div class="content">
+                        <div class="header">Product</div>
+                        <div class="meta">
+                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="ui three column grid">
-                <div class="column special-card-column">
-                    <div class="ui fluid card">
-                        <div class="blurring dimmable image">
-                            <div class="ui dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
-                                            <div class="ui inverted button">
-                                                Details
-                                            </div>
-                                        </a>
-                                    </div>
+            <div class="column special-card-column">
+                <div class="ui fluid card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="6">
+                                        <div class="ui inverted button">
+                                            Details
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
                         </div>
-                        <div class="content">
-                            <div class="header">Product</div>
-                            <div class="meta">
-                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                            </div>
+                        <img src="\resources\productsImages\hp-laptop-victus.jpg">
+                    </div>
+                    <div class="content">
+                        <div class="header">Product</div>
+                        <div class="meta">
+                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
                         </div>
                     </div>
                 </div>
-                <div class="column special-card-column">
-                    <div class="ui fluid card">
-                        <div class="blurring dimmable image">
-                            <div class="ui dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="6">
-                                            <div class="ui inverted button">
-                                                Details
-                                            </div>
-                                        </a>
-                                    </div>
+            </div>
+            <div class="column special-card-column">
+                <div class="ui fluid card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
+                                        <div class="ui inverted button">
+                                            Details
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                            <img src="\resources\productsImages\hp-laptop-victus.jpg">
                         </div>
-                        <div class="content">
-                            <div class="header">Product</div>
-                            <div class="meta">
-                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                            </div>
-                        </div>
+                        <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
                     </div>
-                </div>
-                <div class="column special-card-column">
-                    <div class="ui fluid card">
-                        <div class="blurring dimmable image">
-                            <div class="ui dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                        <a class="product-details-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="1">
-                                            <div class="ui inverted button">
-                                                Details
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg">
-                        </div>
-                        <div class="content">
-                            <div class="header">Product</div>
-                            <div class="meta">
-                                <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
-                            </div>
+                    <div class="content">
+                        <div class="header">Product</div>
+                        <div class="meta">
+                            <a>Category@*@(product.SubCategory?.Name ?? product.Category?.Name)*@</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="subscribe-section">
+<section class="events-section">
+    <div class="container">
+        <div class="events-header">
+            <h3>Special events and sales</h3>
+            <div class="paragraph-header opacity-light">
+                <a>Check out our event and hot sales <i class="icon angle right"></i></a>
+            </div>
+        </div>
+
+        <div class="events-slider">
+            <div class="swiper-wrapper">
+                <div class="slide swiper-slide">
+                    <div class="slide-img">
+                        <a href="/">
+                            <img src="~/resources/images/slide-1.png" />
+                        </a>
+                    </div>
+                    <div class="slide-data">
+                        Information about your event or sale.    
+                        Information about your event or sale.    
+                    </div>
+                </div>
+
+                <div class="slide swiper-slide">
+                    <div class="slide-img">
+                        <a href="/">
+                            <img src="~/resources/images/slide-2.png" />
+                        </a>
+                    </div>
+                    <div class="slide-data">
+                        Information about your event or sale.
+                    </div>
+                </div>
+
+                <div class="slide swiper-slide">
+                    <div class="slide-img">
+                        <a href="/">
+                            <img src="~/resources/images/slide-3.png" />
+                        </a>
+                    </div>
+                    <div class="slide-data">
+                        Information about your event or sale.
+                    </div>
+                </div>
+
+                <div class="slide swiper-slide">
+                    <div class="slide-img">
+                        <a href="/">
+                            <img src="~/resources/images/slide-4.png" />
+                        </a>
+                    </div>
+                    <div class="slide-data">
+                        Information about your event or sale.
+                    </div>
+                </div>
+
+                <div class="slide swiper-slide">
+                    <div class="slide-img">
+                        <a href="/">
+                            <img src="~/resources/images/slide-5.png" />
+                        </a>
+                    </div>
+                    <div class="slide-data">
+                        Information about your event or sale.
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</section>
+
+<section class="subscribe-section">
     <div class="content-container">
         <div class="subscribe-header">
             Newsletter
@@ -191,4 +263,4 @@
             <div class="ui black button">Subscribe</div>
         </div>
     </div>
-</div>
+</section>
