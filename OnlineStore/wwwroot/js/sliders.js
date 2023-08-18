@@ -14,8 +14,46 @@ var swiper = new Swiper(".main-slider", {
 var swiper = new Swiper(".events-slider", {
     slidesPerView: 3,
     spaceBetween: 15,
+    loop: true,
+    grabCursor: true,
     navigation: {
         nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        prevEl: ".swiper-button-prev"
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 1,
+        },
+        768: {
+            slidesPerView: 2,
+        },
+        991: {
+            slidesPerView: 3,
+        }
+    }
+});
+
+var swiper = new Swiper(".products-slider", {
+    slidesPerView: 4,
+    spaceBetween: 15,
+    centerSlide: true,
+    grabCursor: true,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 1,
+        },
+        768: {
+            slidesPerView: 2,
+        },
+        1080: {
+            slidesPerView: 3,
+        },
+        1430: {
+            slidesPerView: 4,
+        }
     }
 });

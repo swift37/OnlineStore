@@ -1,0 +1,77 @@
+﻿@model OnlineStore.Domain.Product
+
+<div class="product-card">
+    <div class="card-content">
+        <div class="special-status">
+            <div class="flags">
+                <div class="new-flag">NEW</div>
+                <div class="sale-flag">SALE</div>
+            </div>
+        </div>
+        <div class="product-image">
+            <a class="image-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.Id">
+                <img src="@Model.Image" loading="lazy" alt="">
+            </a>
+        </div>
+        <div class="product-name">
+            <a class="product-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.Id">
+                @Model.Name
+            </a>
+        </div>
+        <div class="product-rating">
+            <a class="rating-link" href="/">
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                </span>
+                <span class="reviews-quantity">
+                    (58)
+                </span>
+            </a>
+        </div>
+        <hr class="card-divider">
+        <ul class="product-main-specs">
+            @if (Model.Specification != null)
+            {
+                foreach (var spec in Model.Specification)
+                {
+                    <li class="product-spec">
+                        @spec.SpecificationName: @spec.SpecificationValue
+                    </li>
+                }
+            }
+        </ul>
+        <div class="product-info">
+            <div class="info-container">
+                <div class="product-price">
+                    <span class="discount">$1199</span>
+                    <span class="price">$@Model.UnitPrice</span>
+                </div>
+                <div class="product-status">
+                    Available
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-to-wishlist">
+        <button class="add-to-wishlist-btn" data-itemid="@Model.Id">
+            <img src="~/resources/icons/like.png" alt="" />
+        </button>
+    </div>
+    <div class="add-to-cart">
+        <div class="add-to-cart-btn">
+            <img src="~/resources/icons/shopping-cart.png" data-itemid="@Model.Id" />
+        </div>
+    </div>
+</div>
