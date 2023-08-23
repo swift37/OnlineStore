@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
 
-    /*$('.ui.dropdown').dropdown();*/
-
     $('.ui.dropdown').dropdown({
         on: 'hover'
     });
@@ -18,23 +16,35 @@
 
     checkWishlistQuantity();
 
-    $('.menu-button').click(function () {
-        if ($('.menu-button').hasClass('w--open'))
+    copyMenu();
+
+    $('.side-menu-button').click(function () {
+        $('.site-off').addClass('show-menu');
+    });
+
+    $('.t-close').click(function () {
+        $('.site-off').removeClass('show-menu');
+    })
+
+    function copyMenu() {
+        let dptCategories = $('.dpt-categories').html();
+        $('.departments').html(dptCategories);
+
+        let rightMenu = $('.nav-menu.right').html();
+        $('.off-canvas nav').html(rightMenu);
+    }
+
+    $('.link-item.has-child').click(function () {
+        $(this).siblings().removeClass('expand');
+        if ($(this).hasClass('expand'))
         {
-            $('.menu-button').removeClass('w--open');
-            $('w-nav-overlay').css('display', 'none');
+            $(this).removeClass('expand');
         }
         else
         {
-            $('.menu-button').addClass('w--open');
-            $('w-nav-overlay').css('display', 'block');
+            $(this).addClass('expand');
         }
     });
-
-    //$('.nav-link').click(function () {
-    //    $(this).addClass('w--current');
-    //    $(this).siblings().removeClass('w--current');
-    //});
 
     $('#productCategorySelect').change(function () {
         var categoryId = $(this).val();

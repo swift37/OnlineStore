@@ -16,9 +16,10 @@ var swiper = new Swiper(".products-slider", {
     spaceBetween: 15,
     centerSlide: true,
     grabCursor: true,
+    speed: 500,
     navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
+        nextEl: "#ftProductsSlNext",
+        prevEl: "#ftProductsSlPrev"
     },
     breakpoints: {
         0: {
@@ -41,9 +42,10 @@ var swiper = new Swiper(".events-slider", {
     spaceBetween: 15,
     loop: true,
     grabCursor: true,
+    speed: 500,
     navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
+        nextEl: "#eventsSlNext",
+        prevEl: "#eventsSlPrev"
     },
     breakpoints: {
         0: {
