@@ -13,8 +13,40 @@
             <div class="product-details-wrap">
                 <div class="product-details-header">
                     <h1 class="product-details-name">@Model.Name</h1>
-                    <div class="product-details-price">$ @Model.UnitPrice USD</div>
-                    <div class="paragraph-light">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.</div>
+                    <div class="product-rating">
+                        <a class="rating-link" href="/">
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="reviews-quantity">58 reviews</span>
+                        </a>
+                    </div>
+                    <div class="product-details-price">$@Model.UnitPrice USD</div>
+                    <div class="paragraph-light">
+                        @if (Model.Manufacturer != null) {
+                            <span>Manufacturer: @Model.Manufacturer | </span>
+                        }
+                        @if (Model.ManufacturersCode != null)
+                        {
+                            <span>ManufacturersCode: @Model.ManufacturersCode | </span><br/>
+                        }
+                        @if (Model.StoreCode != null)
+                        {
+                            <span>Code: @Model.StoreCode</span>
+                        }
+                    </div>
                 </div>
                 <div class="divider dark-divider"></div>
                 <div class="product-specs">
@@ -40,15 +72,22 @@
                     </ul>
                 </div>
                 <div class="divider"></div>
-                <div class="add-to-cart">
-                    <div class="add-to-cart-form">
-                        <label class="quantity-field-label">Quantity</label>
-                        <div class="product-details-cta-wrap">
-                            <div class="ui input quantity-field">
-                                <input id="productQuantity" type="number" pattern="^[0-9]+$" inputmode="numeric" min="1" value="1">
-                            </div>
-                            <input type="submit" data-itemid="@Model.Id" value="Add to Cart" class="ui black button add-to-cart-btn">
-                        </div>
+                <div class="actions">
+                    <div class="qty-control">
+                        <button class="qty-minus">-</button>
+                        <input id="productQuantity" type="text" value="1" min="1" pattern="^[0-9]+$">
+                        <button class="qty-plus">+</button>
+                    </div>
+                    <input type="submit" data-itemid="@Model.Id" value="Add to Cart" class="ui black button add-to-cart-btn">
+                    <div class="wish-share">
+                        <a>
+                            <img src="~/resources/icons/like.png" alt="">
+                            <span>Wishlist</span>
+                        </a>
+                        <a>
+                            <img src="~/resources/icons/share.png" alt="">
+                            <span>Share</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -56,33 +95,163 @@
     </div>
 </div>
 
-<div class="section">
+<section class="description-section">
     <div class="container">
-        <div class="description-section">
-            <h3 class="ui horizontal divider header">Description</h3>
-            <p class="decription-paragraph">@Model.Description</p>
-        </div>
+        <h3 class="ui horizontal divider header">Description</h3>
+        <p class="decription-paragraph">@Model.Description</p>
     </div>
-</div>
+</section>
 
 @if (Model.Specification != null && Model.Specification.Count > 0)
 {
-    <div class="section">
+    <section class="full-specs-section">
         <div class="container">
-            <div class="full-specs-section">
-                <h3 class="ui horizontal divider header">Specifications</h3>
-                <table class="ui definition table">
-                    <tbody>
-                        @foreach (var spec in Model.Specification)
-                        {
-                            <tr>
-                                <td>@spec.SpecificationName</td>
-                                <td>@spec.SpecificationValue</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <h3 class="ui horizontal divider header">Specifications</h3>
+            <table class="ui definition table">
+                <tbody>
+                    @foreach (var spec in Model.Specification)
+                    {
+                        <tr>
+                            <td>@spec.SpecificationName</td>
+                            <td>@spec.SpecificationValue</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
+<section class="reviews-section">
+    <div class="container">
+        <h3 class="ui horizontal divider header">Reviews</h3>
+        <div class="reviews-block">
+            <div class="reviews-block-head">
+                <div class="left-part">
+                    <div class="rate-block">
+                        <span class="rate-sum">4.5 </span>
+                        <span class="full-rate"> / 5.0</span>
+                    </div>
+                    <div class="product-rating">
+                        <span class="rating-star">
+                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                        </span>
+                        <span class="rating-star">
+                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                        </span>
+                        <span class="rating-star">
+                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                        </span>
+                        <span class="rating-star">
+                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                        </span>
+                        <span class="rating-star">
+                            <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                        </span>
+                    </div>
+                    <span class="reviews-quantity">(58 reviews)</span>
+                </div>
+                <a asp-fragment="reviews-form" class="secondary-button">Write review</a>
+            </div>
+            <div class="reviews-block-body">
+                <div class="reviews-list">
+                    <div class="review-item">
+                        <div class="review-form">
+                            <p class="person">Review by John</p>
+                            <p class="paragraph-light">On 21.08.2023</p>
+                        </div>
+                        <div class="review-rating">
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                            </span>
+                        </div>
+                        <div class="review-title">
+                            <p>Good!</p>
+                        </div>
+                        <div class="review-text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-form">
+                            <p class="person">Review by Alex</p>
+                            <p class="paragraph-light">On 21.08.2023</p>
+                        </div>
+                        <div class="review-rating">
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                            <span class="rating-star">
+                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                            </span>
+                        </div>
+                        <div class="review-title">
+                            <p>Good!</p>
+                        </div>
+                        <div class="review-text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-form">
+                <h4>Write a review</h4>
+                <div class="rating">
+                    <div class="form-field">Are you satisfied enought?</div>
+                    <div class="rate-this">
+                        <input type="radio" name="rating" id="star5">
+                        <label for="star5"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="star4">
+                        <label for="star4"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="star3">
+                        <label for="star3"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="star2">
+                        <label for="star2"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="star1">
+                        <label for="star1"><img src="~/resources/icons/empty-star.png"></label>
+                    </div>
+                </div>
+                <form class="review-fields">
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-field">
+                        <label>Summary</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-field">
+                        <label>Review</label>
+                        <textarea cols="30" rows="7" type="text"></textarea>
+                    </div>
+                    <button type="submit" class="secondary-button">Submit Review</button>
+                </form>
             </div>
         </div>
     </div>
-}
+</section>
