@@ -4,14 +4,6 @@
         on: 'hover'
     });
 
-    $('.special.cards .image').dimmer({
-        on: 'hover'
-    });
-
-    $('.special-card-column .image').dimmer({
-        on: 'hover'
-    });
-
     checkCartQuantity();
 
     checkWishlistQuantity();
@@ -43,6 +35,20 @@
         else
         {
             $(this).addClass('expand');
+        }
+    });
+
+    $('.filter-trigger').click(function () {
+        setTimeout(function () {
+            $('.filter').addClass('show');
+            console.log('add');
+        }, 250);
+    });
+
+    $(document).click(function (e) {
+        if (!$('.filter').has(e.target).length && $('.filter').hasClass('show')) {
+            $('.filter').removeClass('show');
+            console.log('remove');
         }
     });
 
