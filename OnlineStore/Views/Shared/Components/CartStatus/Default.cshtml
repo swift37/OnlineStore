@@ -1,8 +1,77 @@
 ﻿<div class="header-icon cart-button">
-    <a asp-controller="Order" asp-action="ViewCart">
+    <div class="icon-container">
         <img src="~/resources/icons/shopping-cart.png" width="20" alt="">
         <div class="counter">
             <span id="cartQuantity" class="number">@ViewBag.CartItems</span>
         </div>
-    </a>
+    </div>
+
+    <div class="mini-cart">
+        <div class="content">
+            <div class="cart-head">
+                Cart (@ViewBag.CartItems)
+            </div>
+            <div class="cart-body">
+                <ul class="products mini">
+                    <li class="mini-cart-item">
+                        <div class="thumbnail object-cover">
+                            <a href="#"><img src="~/resources/productsImages/hp-laptop-victus.jpg" alt=""></a>
+                        </div>
+                        <div class="item-content">
+                            <p><a href="#">HP Victus 16'</a></p>
+                            <span class="price">
+                                <span>$1379.99</span>
+                                <span class="fly-item"><span>2x</span></span>
+                            </span>
+                        </div>
+                        <div class="item-remove">
+                            <a href="#"><img src="~/resources/icons/close.png" alt=""></a>
+                        </div>
+                    </li>
+
+                    <li class="mini-cart-item">
+                        <div class="thumbnail object-cover">
+                            <a href="#"><img src="~/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt=""></a>
+                        </div>
+                        <div class="item-content">
+                            <p><a href="#">Asus ROG Strix G15 15.6'</a></p>
+                            <span class="price">
+                                <span>$1199.99</span>
+                                <span class="fly-item"><span>5x</span></span>
+                            </span>
+                        </div>
+                        <div class="item-remove">
+                            <a href="#"><img src="~/resources/icons/close.png" alt=""></a>
+                        </div>
+                    </li>
+
+                    <li class="mini-cart-item">
+                        <div class="thumbnail object-cover">
+                            <a href="#"><img src="~/resources/productsImages/hp-laptop-victus-front.jpg" alt=""></a>
+                        </div>
+                        <div class="item-content">
+                            <p><a href="#">HP Victus 17'</a></p>
+                            <span class="price">
+                                <span>$1599.99</span>
+                                <span class="fly-item"><span>5x</span></span>
+                            </span>
+                        </div>
+                        <div class="item-remove">
+                            <a href="#"><img src="~/resources/icons/close.png" alt=""></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="cart-footer">
+                <div class="subtotal">
+                    <p>Subtotal</p>
+                    <p><strong>$7437.97</strong></p>
+                </div>
+                <div class="actions">
+                    <a asp-controller="Product" asp-action="PersonalInfo" class="primary-button">Checkout</a>
+                    <a asp-controller="Product" asp-action="ViewCart" class="secondary-button">View Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

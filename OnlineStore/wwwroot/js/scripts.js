@@ -45,10 +45,19 @@
         }, 250);
     });
 
+    $('.cart-button').click(function () {
+        setTimeout(function () {
+            $('.mini-cart').addClass('show');
+        }, 250);
+    });
+
     $(document).click(function (e) {
         if (!$('.filter').has(e.target).length && $('.filter').hasClass('show')) {
             $('.filter').removeClass('show');
-            console.log('remove');
+        }
+
+        if (!$('.mini-cart').has(e.target).length && $('.mini-cart').hasClass('show')) {
+            $('.mini-cart').removeClass('show');
         }
     });
 

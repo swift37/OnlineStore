@@ -1,7 +1,7 @@
 ﻿<div class="nav-main active-nav">
     <div class="nav-wrap">
         <a asp-controller="Home" asp-action="Index" class="nav-brand">
-            <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5dc47bd5d6111e71656e871f_LUMA.svg" alt="">
+            <img src="~/resources/images/store-logo.png" alt="">
         </a>
         <div class="nav-menu-wrap">
             <nav class="nav-menu mobile-hide">
@@ -254,17 +254,21 @@
             <nav class="nav-buttons">
                 @Component.InvokeAsync("CartStatus").Result
                 <div class="header-icon wishlist-button">
-                    <a asp-controller="Product" asp-action="Wishlist">
-                        <img src="~/resources/icons/like.png" width="20" alt="">
-                        <div class="counter">
-                            <span id="wishlistQuantity" class="number">0</span>
-                        </div>
-                    </a>
+                    <div class="icon-container">
+                        <a asp-controller="Product" asp-action="Wishlist">
+                            <img src="~/resources/icons/like.png" width="20" alt="">
+                            <div class="counter">
+                                <span id="wishlistQuantity" class="number">0</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
                 <div class="header-icon account-button mobile-hide">
-                    <a href="/">
-                        <img src="~/resources/icons/user.png" width="20" alt="">
-                    </a>
+                    <div class="icon-container">
+                        <a href="/">
+                            <img src="~/resources/icons/user.png" width="20" alt="">
+                        </a>
+                    </div>
                 </div>
                 <div class="header-icon side-menu-button desktop-hide">
                     <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="side-menu-icon">
@@ -278,7 +282,7 @@
     <div class="off-canvas">
         <div class="canvas-head">
             <a asp-controller="Home" asp-action="Index" class="nav-brand">
-                <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5dc47bd5d6111e71656e871f_LUMA.svg" alt="">
+                <img src="/resources/images/store-logo.png" alt="">
             </a>
             <div class="t-close">
                 <img src="~/resources/icons/close.png" alt=""/>
