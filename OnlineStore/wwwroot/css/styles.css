@@ -60,6 +60,11 @@ ul {
     margin: 0;
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 .flexitem{
     display: flex;
     align-items: center;
@@ -128,11 +133,19 @@ ul {
 }
 
 .object-cover img {
+    display: block;
     position: absolute;
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+.object-contain img {
     display: block;
+    position: absolute;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 
 .nav-main {
@@ -581,7 +594,7 @@ ul {
                 font-size: 2em;
                 font-weight: 800;
                 text-align: center;
-                color: #453c5c;
+                color: #ffffff;
             }
 
     .store-link:hover .mega-menu {
@@ -2514,7 +2527,9 @@ ul {
         }
 
 .page-title h1 {
+    font-size: 36px;
     font-weight: 600;
+    line-height: 42px;
     margin-top: 0;
     margin-bottom: 0.75em;
 }
@@ -2667,11 +2682,6 @@ ul {
     visibility: hidden;
     opacity: 0;
 }
-    
-    .mini-cart .products img {
-        transform: none;
-        opacity: 1;
-    }
 
     .mini-cart ul :where(li, .price) {
         position: relative;
@@ -2700,18 +2710,10 @@ ul {
         overflow: auto;
     }
 
-    .mini-cart .mini-cart-item {
+    .mini-cart .item {
         display: flex;
         position: relative;
         margin-bottom: 2em;
-    }
-
-    .mini-cart .thumbnail {
-        position: relative;
-        width: 80px;
-        height: 80px;
-        flex-shrink: 0;
-        margin-right: 1em;
     }
 
     .mini-cart .item-content p {
@@ -2808,25 +2810,376 @@ ul {
             transition: transform 0.4s 0s, visibility 0s 0s;
         }
 }
-    
 
+:where(.mini-cart, .products.cart) .thumbnail {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    margin-right: 1em;
+}
 
+:where(.mini-cart .products, .products.cart) .thumbnail img {
+    transform: none;
+    opacity: 1;
+}
 
+.products .content {
+    display: flex;
+    flex-direction: column;
+}
 
+.products:where(.main, .one) .content {
+    gap: 1em;
+    margin-top: 1.25em;
+}
 
+.products .variant .item-content {
+    display: flex;
+    margin-top: 0.5em;
+}
 
+    .products .variant .item-content p {
+        position: relative;
+        margin: 0 0.5em 0.5em;
+    }
 
+.circle {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #f2f3f5;
+    z-index: -1;
+}
 
+.circle::before {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #794afa;
+    bottom: 5px;
+    right: 5px;
+    z-index: -1;
+    opacity: 0.4;
+}
 
+.products .variant .circle {
+    display: block;
+    position: static;
+    top: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 1;
+}
 
+.products .variant input {
+    position: absolute;
+    height: 0;
+    width: 0;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+}
 
+.products .collapse .has-child > a {
+    position: relative;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1em 1.25em;
+    border-top: 1px solid #e5e8ec;
+}
 
+    .products .collapse .has-child > a::before {
+        content: '+';
+        position: absolute;
+        left: 0;
+    }
 
+.products .collapse .content {
+    margin: 0 0 1.5em 2em;
+    font-size: 14px;
+}
 
+    .products .collapse .content li span:first-child {
+        min-width: 100px;
+        display: inline-flex;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
 
+    .products .collapse table {
+        line-height: 3em;
+    }
 
+        .products .collapse table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #0a021c;
+        }
 
+        .products .collapse table :where(th, td) {
+            border-bottom: 1px solid #e5e8ec;
+            padding-left: 2em;
+        }
 
+.products .collapse .content {
+    display: none;
+}
+
+.products .collapse .expand .content {
+    display: flex;
+}
+
+.products .collapse .expand > a::before {
+    content: '-';
+}
+
+.icon-small {
+    display: flex;
+    align-items: center;
+    font-size: 1.25em;
+    margin-left: auto;
+}
+
+.single-cart {
+    margin-top: 2em;
+}
+
+.products.cart .form-cart, .item-content {
+    width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+    .products.cart .form-cart {
+        width: 66%;
+    }
+
+    .products.cart .cart-summary {
+        width: 34%;
+        padding-left: 2.5em;
+        margin-top: 0;
+    }
+}
+
+.products.cart table {
+    width: 100%;
+}
+
+.products.cart table thead th {
+    vertical-align: middle;
+    background-color: #f2f3f5;
+}
+
+.products.cart table :where(th, td) {
+    padding: 2em 1em;
+    text-align: center;
+}
+
+.products.cart table :where(th, td):first-child {
+    text-align: left;
+    padding-left: 2em;
+}
+
+.products.cart table tbody td:first-child {
+    padding-left: 0;
+}
+
+.products.cart table td :where(.content, .qty-control, p) {
+    margin: 0;
+    padding: 0;
+}
+
+.products.cart table td .content a {
+    color: #000000;
+}
+
+.products.cart table td .content p {
+    font-size: 14px;
+}
+
+.products.cart .qty-control {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.2em 0.3em;
+    border: 1px solid #e5e8ec;
+}
+
+    .products.cart .qty-control :where(button, input) {
+        width: 32px;
+        height: 32px;
+        padding: 0.2em;
+        text-align: center;
+        outline: 0;
+        border: 0;
+        background-color: transparent;
+    }
+
+    .products.cart .qty-control button {
+        cursor: pointer;
+    }
+
+.products.cart table tbody tr {
+    border-bottom: 1px solid #e5e8ec;
+}
+
+.products.cart .item-remove img {
+    width: 10px;
+    height: 10px;
+    object-fit: cover;
+}
+
+.cart-summary {
+    width: 100%;
+    margin: 2.5em 0 4em;
+}
+
+.cart-summary .item {
+    background-color: #f2f3f5;
+}
+
+    .cart-summary .coupon {
+        position: relative;
+    }
+
+        .cart-summary .coupon input {
+            font-size: 1.1em;
+            outline: 0;
+            width: 100%;
+            padding: 0 1.5em;
+            line-height: 51px;
+            background-color: #ffffff;
+            border: 3px solid #0a021c;
+        }
+
+        .cart-summary .coupon button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 0;
+            outline: 0;
+            font-size: 1em;
+            padding: 0 2.5em;
+            line-height: 56px;
+            background-color: #0a021c;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+    .cart-summary .shipping-rate {
+        padding: 0 2em 0 1em;
+    }
+
+        .cart-summary .shipping-rate .has-child a {
+            font-size: 1em;
+            margin: 1.25em 0;
+            border: 0;
+        }
+
+.cart-summary .content .item-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.styled :where(input, select, textarea) {
+    padding: 0.75em;
+    outline: 0;
+    background-color: #ffffff;
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: #e5e8ec;
+}
+
+.products .cart-summary .variant .item-content label {
+    position: relative;
+    border: 0;
+    background-color: #ffffff;
+    transform: scale(0.5) translateX(-25px);
+}
+
+.cart-summary .variant p span {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    font-size: 14px;
+    line-height: 39px;
+}
+
+.cart-summary .variant input:checked + label::before {
+    opacity: 1;
+}
+
+.products.cart .cart-total table tr * {
+    padding: 0;
+}
+
+.products.cart .cart-total table td {
+    text-align: right;
+}
+
+.cart-summary .cart-total {
+    padding: 2em;
+    background-color: #e5e8ec;
+    line-height: 2em;
+}
+
+    .cart-summary .cart-total table {
+        width: 100%;
+    }
+
+        .cart-summary .cart-total table tr {
+            display: flex;
+            justify-content: space-between;
+        }
+
+.cart-summary .grand-total td {
+    font-size: 2em;
+    font-weight: 800;
+    line-height: 2em;
+}
+
+.cart-summary .cart-total a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 2em;
+    font-size: 1.25em;
+}
+
+@media screen and (max-width: 639px) {
+    #cart-table thead {
+        display: none;
+    }
+
+    #cart-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        align-items: center;
+    }
+
+        #cart-table tbody tr td:first-child {
+            position: relative;
+            width: 100%;
+            min-width: 100%;
+        }
+
+        #cart-table tbody tr td:not(:first-child) {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        #cart-table tbody tr td:last-child {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+}
 
 
 

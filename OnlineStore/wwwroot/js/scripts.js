@@ -38,6 +38,16 @@
         }
     });
 
+    $('.has-child .icon-small').click(function () {
+        $(this).parent('.has-child').siblings().removeClass('expand');
+        if ($(this).parent('.has-child').hasClass('expand')) {
+            $(this).parent('.has-child').removeClass('expand');
+        }
+        else {
+            $(this).parent('.has-child').addClass('expand');
+        }
+    });
+
     $('.filter-trigger').click(function () {
         setTimeout(function () {
             $('.filter').addClass('show');
