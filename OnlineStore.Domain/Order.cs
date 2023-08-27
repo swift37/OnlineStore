@@ -27,15 +27,19 @@ namespace OnlineStore.Domain
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
 
-        public string? State { get; set; }
+        public string? Country { get; set; }
 
         public string? City { get; set; }
+
+        public string? State { get; set; }
 
         public string? Postcode { get; set; }
 
         public string? StreetAddress { get; set; }
 
         public string? Apartment { get; set; }
+
+        public string? Notes { get; set; }
     }
 
     public enum OrderStatus

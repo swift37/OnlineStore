@@ -76,5 +76,36 @@ namespace OnlineStore.Controllers
             _context.SaveChanges();
             return Json(new { error = false });
         }
+
+        public IActionResult AddToWishlist(int id) 
+        {
+            var product = _context.Products.SingleOrDefault(p => p.Id == id);
+            if (product is null) return RedirectToAction("NotFound", "Error");
+
+            var wishlist = _context.Wishlists
+                .Include(c => c.Products)
+                .FirstOrDefault(/*c => c.User.Id == User.Identity.GetUserId() &&*/);
+
+            if (wishlist is null)
+            {
+                wishlist = new Wishlist();
+                _context.Wishlists.Add(wishlist);
+            }
+
+            var item = wishlist.Products?.FirstOrDefault(p => p.Id == product.Id);
+            if (item is null) wishlist.Products?.Add(product);
+
+            _context.SaveChanges();
+            return Json(new { error = false });
+        }
+
+        public IActionResult ViewWishlist()
+        {
+            var wishlist = _context.Wishlists
+                .Include(c => c.Products)
+                .FirstOrDefault(/*c => c.User.Id == User.Identity.GetUserId() &&*/);
+
+            return View(wishlist);
+        }
     }
 }

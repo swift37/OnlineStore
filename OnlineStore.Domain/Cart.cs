@@ -18,7 +18,13 @@ namespace OnlineStore.Domain
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
 
         [NotMapped]
-        public decimal TotalPrice => CartItems.Sum(i => i.Product?.UnitPrice * i.Quantity) ?? 0;
+        public decimal SubtotalPrice => CartItems.Sum(i => i.Product?.UnitPrice * i.Quantity) ?? default;
+
+        [NotMapped]
+        public decimal TotalDiscount => CartItems.Sum(i => i.Product?.Discount * i.Quantity) ?? default;
+
+        [NotMapped]
+        public decimal TotalPrice => SubtotalPrice - TotalDiscount;
 
         [NotMapped]
         public int TotalQuantity => CartItems.Sum(i => i.Quantity);

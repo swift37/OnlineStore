@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Domain.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
@@ -7,6 +8,12 @@ namespace OnlineStore.Domain
     {
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Discount { get; set; }
+
+        [NotMapped]
+        public decimal PriceBeforeDiscount => UnitPrice - Discount;
 
         public int UnitsInStock { get; set; }
 
@@ -30,10 +37,21 @@ namespace OnlineStore.Domain
 
         public List<Specification> Specification { get; set; } = new List<Specification>();
 
+        [Range(0.0, 5.0)]
+        public double Rating { get; set; }
+
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+
         public string? Manufacturer { get; set; }
 
         public string? ManufacturersCode { get; set; }
 
         public string? StoreCode { get; set; }
+
+        public string? IsNewProduct { get; set; }
+
+        public string? IsSale { get; set; }
+
+        public bool IsFeaturedProduct { get; set; }
     }
 }

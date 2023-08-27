@@ -172,6 +172,30 @@
         });
     });
 
+    $('.add-to-wishlist-btn').click(function () {
+        $.ajax({
+            url: '/Product/AddToWishlist',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                id: $(this).data('itemid')
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                let newQty = parseInt($('#wishlistQuantity').text()) + parseInt(qty);
+                if (newQty > 9) {
+                    let counter = $('#wishlistQuantity').parent('.counter');
+                    if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+                }
+                $('#wishlistQuantity').text(newQty);
+                checkWishlistQuantity();
+            }
+        });
+    });
+
     $('.cart-line-qty').bind('keyup click', function () {
         $.ajax({
             url: '/Order/UpdateCart',
