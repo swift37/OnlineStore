@@ -40,7 +40,6 @@ var swiper = new Swiper(".products-slider", {
 var swiper = new Swiper(".events-slider", {
     slidesPerView: 3,
     spaceBetween: 15,
-    loop: true,
     grabCursor: true,
     speed: 500,
     navigation: {
