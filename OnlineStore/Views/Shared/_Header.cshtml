@@ -253,16 +253,7 @@
             </nav>
             <nav class="nav-buttons">
                 @Component.InvokeAsync("CartStatus").Result
-                <div class="header-icon wishlist-button">
-                    <div class="icon-container">
-                        <a asp-controller="Product" asp-action="ViewWishlist">
-                            <img src="~/resources/icons/like.png" width="20" alt="">
-                            <div class="counter">
-                                <span id="wishlistQuantity" class="number">0</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                @Component.InvokeAsync("WishlistStatus").Result
                 <div class="header-icon account-button mobile-hide">
                     <div class="icon-container">
                         <a href="/">
