@@ -77,29 +77,45 @@ namespace OnlineStore.Controllers
             return Json(new { error = false });
         }
 
-        public IActionResult AddToWishlist(int productId) 
+        public async Task<IActionResult> AddToWishlist(int productId) 
         {
-            var product = _context.Products.SingleOrDefault(p => p.Id == productId);
+            var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var wishlist = _context.Wishlists
+            var wishlist = await _context.Wishlists
                 .Include(c => c.Products)
-                .FirstOrDefault(/*c => c.User.Id == User.Identity.GetUserId() &&*/);
+                .FirstOrDefaultAsync(/*c => c.User.Id == User.Identity.GetUserId() &&*/);
 
             if (wishlist is null)
             {
                 wishlist = new Wishlist();
-                _context.Wishlists.Add(wishlist);
+                await _context.Wishlists.AddAsync(wishlist);
             }
 
             if (wishlist.Products.Any(p => p.Id == productId)) 
                 return Json(new { error = true, message = "The product is already on your wishlist." });
 
-            var item = wishlist.Products?.FirstOrDefault(p => p.Id == product.Id);
+            var item = wishlist.Products.FirstOrDefault(p => p.Id == product.Id);
             if (item is null) wishlist.Products?.Add(product);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Json(new { error = false });
+        }
+
+        public async Task<IActionResult> RemoveFromWishlist(int productId)
+        {
+            var wishlist = await _context.Wishlists
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync();
+
+            var item = wishlist?.Products.SingleOrDefault(p => p.Id == productId);
+
+            if (wishlist is null || item is null) return Json(new { removeSuccess = false });
+
+            wishlist.Products.Remove(item);
+            _context.Entry(wishlist).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Json(new { removeSuccess = true });
         }
 
         [Route("wishlist")]
@@ -107,7 +123,7 @@ namespace OnlineStore.Controllers
         {
             var wishlist = _context.Wishlists
                 .Include(c => c.Products)
-                .FirstOrDefault(/*c => c.User.Id == User.Identity.GetUserId() &&*/);
+                .FirstOrDefault();
 
             return View(wishlist);
         }

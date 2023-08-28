@@ -1,9 +1,5 @@
 ﻿$(document).ready(function () {
 
-    $('.ui.dropdown').dropdown({
-        on: 'hover'
-    });
-
     checkCartQuantity();
 
     checkWishlistQuantity();
@@ -71,6 +67,8 @@
         }
     });
 
+
+
     $('#productCategorySelect').change(function () {
         var categoryId = $(this).val();
 
@@ -119,6 +117,8 @@
             $(item).find('.property-id').attr('name', 'ProductDetails[' + index + '].Id');
         });
     });
+
+
 
     function checkWishlistQuantity() {
         let qty = parseInt($('#wishlistQuantity').text());
@@ -221,9 +221,29 @@
         });
     });
 
-    $('.remove-cart-item-btn').click(function () {
+    $('.item-remove.from-cart').click(function () {
+        console.log(34324);
         $.ajax({
             url: '/Order/RemoveFromCart',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                if (result) location.reload();
+            }
+        });
+    });
+
+    $('.item-remove.from-wishlist').click(function () {
+        console.log(34324);
+        $.ajax({
+            url: '/Product/RemoveFromWishlist',
             type: 'post',
             dataType: 'json',
             data:
@@ -245,24 +265,6 @@
         }
         else {
             $('#checkoutBtn').attr('disabled', true);
-        }
-    });
-
-    $('.products.nav-link').popup({
-        popup: $('.products.popup'),
-        hoverable: true,
-        delay: {
-            show: 0,
-            hide: 100
-        }
-    });
-
-    $('.contact.nav-link').popup({
-        popup: $('.contact.popup'),
-        hoverable: true,
-        delay: {
-            show: 0,
-            hide: 100
         }
     });
 

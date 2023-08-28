@@ -1373,44 +1373,6 @@ table {
     margin-bottom: 100px;
 }
 
-.cart-container {
-    margin-top: 50px;
-    margin-bottom: 100px;
-}
-
-.cart-line {
-    display: flex;
-}
-
-    .cart-line .right-part {
-        display: flex;
-        margin-left: auto;
-        align-items: center;
-        gap: 15px;
-    }
-
-.cart-line-qty {
-    width: 75px;
-}
-
-.next-link {
-    display: flex;
-    margin-bottom: 15px;
-    justify-content: center;
-}
-
-.next-btn {
-    width: 90%;
-}
-
-/*.hidden {
-    display: none;
-}*/
-
-.product-card-footer span {
-    font-size: 12pt;
-}
-
 .w-widget {
     position: relative;
 }
@@ -3012,10 +2974,6 @@ table {
 .products.cart table :where(th, td):first-child {
     text-align: left;
     padding-left: 2em;
-}
-
-.products.cart table tbody td:first-child {
-    padding-left: 0;
 }
 
 .products.cart table td :where(.content, .qty-control, p) {

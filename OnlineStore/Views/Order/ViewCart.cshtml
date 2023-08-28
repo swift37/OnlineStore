@@ -50,13 +50,13 @@
                                                 <td>
                                                     <div class="qty-control flexitem">
                                                         <button class="qty-minus">-</button>
-                                                        <input id="productQuantity" type="text" value="@cartItem.Quantity" min="1" pattern="^[0-9]+$">
+                                                        <input class="qty-value" type="text" value="@cartItem.Quantity" min="1" pattern="^[0-9]+$">
                                                         <button class="qty-plus">+</button>
                                                     </div>
                                                 </td>
                                                 <td>@cartItem.Price</td>
                                                 <td>
-                                                    <a href="#" class="item-remove" data-itemid="@cartItem.ProductId">
+                                                    <a class="item-remove from-cart" data-itemid="@cartItem.ProductId">
                                                         <img src="~/resources/icons/close.png" alt="">
                                                     </a>
                                                 </td>

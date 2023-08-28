@@ -70,410 +70,89 @@
             <div class="products-slider-container">
                 <div class="products-slider">
                     <div class="swiper-wrapper">
-                        <div class="slide swiper-slide">
-                            <div class="product-card">
-                                <div class="card-content">
-                                    <div class="special-status">
-                                        <div class="flags">
-                                            <div class="new-flag">NEW</div>
-                                            <div class="sale-flag">SALE</div>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a class="image-link" href="/">
-                                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-name">
-                                        <a class="product-link" href="/">
-                                            ASUS Laptop
-                                        </a>
-                                    </div>
-                                    <div class="product-rating">
-                                        <a class="rating-link" href="/">
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="reviews-quantity">
-                                                (58)
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <hr class="card-divider">
-                                    <ul class="product-main-specs">
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                    </ul>
-                                    <div class="product-info">
-                                        <div class="info-container">
-                                            <div class="product-price">
-                                                <span class="discount">$1199</span>
-                                                <span class="price">$999</span>
-                                            </div>
-                                            <div class="product-status">
-                                                Available
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <div class="slide swiper-slide">
+                                <div class="product-card">
+                                    <div class="card-content">
+                                        <div class="special-status">
+                                            <div class="flags">
+                                                <div class="new-flag">NEW</div>
+                                                <div class="sale-flag">SALE</div>
                                             </div>
                                         </div>
+                                        <div class="product-image">
+                                            <a class="image-link" href="/">
+                                                <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-name">
+                                            <a class="product-link" href="/">
+                                                ASUS ROG G15 15.6'
+                                            </a>
+                                        </div>
+                                        <div class="product-rating">
+                                            <a class="rating-link" href="/">
+                                                <span class="rating-star">
+                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                                </span>
+                                                <span class="rating-star">
+                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                                </span>
+                                                <span class="rating-star">
+                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                                </span>
+                                                <span class="rating-star">
+                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                                </span>
+                                                <span class="rating-star">
+                                                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                                                </span>
+                                                <span class="reviews-quantity">
+                                                    (58)
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <hr class="card-divider">
+                                        <ul class="product-main-specs">
+                                            <li class="product-spec">
+                                                Spec name: spec value
+                                            </li>
+                                            <li class="product-spec">
+                                                Spec name: spec value
+                                            </li>
+                                            <li class="product-spec">
+                                                Spec name: spec value
+                                            </li>
+                                            <li class="product-spec">
+                                                Spec name: spec value
+                                            </li>
+                                        </ul>
+                                        <div class="product-info">
+                                            <div class="info-container">
+                                                <div class="product-price">
+                                                    <span class="discount">$1199</span>
+                                                    <span class="price">$999</span>
+                                                </div>
+                                                <div class="product-status">
+                                                    Available
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="add-to-wishlist">
-                                    <button class="add-to-wishlist-btn" data-itemid="1">
-                                        <img src="~/resources/icons/like.png" alt="" />
-                                    </button>
-                                </div>
-                                <div class="add-to-cart">
-                                    <div class="add-to-cart-btn" data-itemid="1">
-                                        <img src="~/resources/icons/shopping-cart.png" />
+                                    <div class="add-to-wishlist">
+                                        <button class="add-to-wishlist-btn" data-itemid="1">
+                                            <img src="~/resources/icons/like.png" alt="" />
+                                        </button>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <div class="add-to-cart-btn" data-itemid="1">
+                                            <img src="~/resources/icons/shopping-cart.png" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="slide swiper-slide">
-                            <div class="product-card">
-                                <div class="card-content">
-                                    <div class="special-status">
-                                        <div class="flags">
-                                            <div class="new-flag">NEW</div>
-                                            <div class="sale-flag">SALE</div>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a class="image-link" href="/">
-                                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-name">
-                                        <a class="product-link" href="/">
-                                            ASUS Laptop
-                                        </a>
-                                    </div>
-                                    <div class="product-rating">
-                                        <a class="rating-link" href="/">
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="reviews-quantity">
-                                                (58)
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <hr class="card-divider">
-                                    <ul class="product-main-specs">
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                    </ul>
-                                    <div class="product-info">
-                                        <div class="info-container">
-                                            <div class="product-price">
-                                                <span class="discount">$1199</span>
-                                                <span class="price">$999</span>
-                                            </div>
-                                            <div class="product-status">
-                                                Available
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="add-to-wishlist">
-                                    <button class="add-to-wishlist-btn" data-itemid="1">
-                                        <img src="~/resources/icons/like.png" alt="" />
-                                    </button>
-                                </div>
-                                <div class="add-to-cart">
-                                    <div class="add-to-cart-btn" data-itemid="1">
-                                        <img src="~/resources/icons/shopping-cart.png"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide swiper-slide">
-                            <div class="product-card">
-                                <div class="card-content">
-                                    <div class="special-status">
-                                        <div class="flags">
-                                            <div class="new-flag">NEW</div>
-                                            <div class="sale-flag">SALE</div>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a class="image-link" href="/">
-                                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-name">
-                                        <a class="product-link" href="/">
-                                            ASUS Laptop
-                                        </a>
-                                    </div>
-                                    <div class="product-rating">
-                                        <a class="rating-link" href="/">
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="reviews-quantity">
-                                                (58)
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <hr class="card-divider">
-                                    <ul class="product-main-specs">
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                    </ul>
-                                    <div class="product-info">
-                                        <div class="info-container">
-                                            <div class="product-price">
-                                                <span class="discount">$1199</span>
-                                                <span class="price">$999</span>
-                                            </div>
-                                            <div class="product-status">
-                                                Available
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="add-to-wishlist">
-                                    <button class="add-to-wishlist-btn" data-itemid="1">
-                                        <img src="~/resources/icons/like.png" alt="" />
-                                    </button>
-                                </div>
-                                <div class="add-to-cart">
-                                    <div class="add-to-cart-btn" data-itemid="1">
-                                        <img src="~/resources/icons/shopping-cart.png"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide swiper-slide">
-                            <div class="product-card">
-                                <div class="card-content">
-                                    <div class="special-status">
-                                        <div class="flags">
-                                            <div class="new-flag">NEW</div>
-                                            <div class="sale-flag">SALE</div>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a class="image-link" href="/">
-                                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-name">
-                                        <a class="product-link" href="/">
-                                            ASUS Laptop
-                                        </a>
-                                    </div>
-                                    <div class="product-rating">
-                                        <a class="rating-link" href="/">
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="reviews-quantity">
-                                                (58)
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <hr class="card-divider">
-                                    <ul class="product-main-specs">
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                    </ul>
-                                    <div class="product-info">
-                                        <div class="info-container">
-                                            <div class="product-price">
-                                                <span class="discount">$1199</span>
-                                                <span class="price">$999</span>
-                                            </div>
-                                            <div class="product-status">
-                                                Available
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="add-to-wishlist">
-                                    <button class="add-to-wishlist-btn" data-itemid="1">
-                                        <img src="~/resources/icons/like.png" alt="" />
-                                    </button>
-                                </div>
-                                <div class="add-to-cart">
-                                    <div class="add-to-cart-btn" data-itemid="1">
-                                        <img src="~/resources/icons/shopping-cart.png"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide swiper-slide">
-                            <div class="product-card">
-                                <div class="card-content">
-                                    <div class="special-status">
-                                        <div class="flags">
-                                            <div class="new-flag">NEW</div>
-                                            <div class="sale-flag">SALE</div>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a class="image-link" href="/">
-                                            <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-name">
-                                        <a class="product-link" href="/">
-                                            ASUS Laptop
-                                        </a>
-                                    </div>
-                                    <div class="product-rating">
-                                        <a class="rating-link" href="/">
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="rating-star">
-                                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                            </span>
-                                            <span class="reviews-quantity">
-                                                (58)
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <hr class="card-divider">
-                                    <ul class="product-main-specs">
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                        <li class="product-spec">
-                                            Spec name: spec value
-                                        </li>
-                                    </ul>
-                                    <div class="product-info">
-                                        <div class="info-container">
-                                            <div class="product-price">
-                                                <span class="discount">$1199</span>
-                                                <span class="price">$999</span>
-                                            </div>
-                                            <div class="product-status">
-                                                Available
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="add-to-wishlist">
-                                    <button class="add-to-wishlist-btn" data-itemid="1">
-                                        <img src="~/resources/icons/like.png" alt="" />
-                                    </button>
-                                </div>
-                                <div class="add-to-cart">
-                                    <div class="add-to-cart-btn" data-itemid="1">
-                                        <img src="~/resources/icons/shopping-cart.png"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
 
