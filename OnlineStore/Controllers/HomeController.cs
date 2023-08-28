@@ -33,6 +33,11 @@ namespace OnlineStore.Controllers
             return View();
         }
 
+        public IActionResult Events()
+        {
+            return View();
+        }
+
         public IActionResult Catalog(int page = 1)
         {
             var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;

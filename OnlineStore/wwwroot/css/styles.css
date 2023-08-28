@@ -3418,6 +3418,110 @@ table {
     }
 }
 
+.all-events {
+    margin-top: 1.5em;
+}
+
+.events.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+}
+
+    .events.main .event-card {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 330px;
+        background-color: #ffffff;
+        color: #000000;
+        cursor: pointer;
+    }
+
+        .events.main .event-card:hover {
+            background-color: #f5f5f5;
+        }
+
+        .events.main .event-card .event-head {
+            width: 100%;
+            height: 70%;
+            overflow: hidden;
+        }
+
+            .events.main .event-card .event-head img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: all 0.7s ease-in-out;
+            }
+
+            .events.main .event-card .event-head:hover img {
+                transform: scale(1.1);
+            }
+
+        .events.main .event-card .content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+            .events.main .event-card .content .event-title {
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.4;
+                min-height: 2em;
+                max-height: 4.2em;
+            }
+
+            .events.main .event-card .content .event-footer {
+                display: flex;
+                vertical-align: middle;
+                font-size: 12px;
+                font-weight: 400;
+                color: #727272;
+                margin-left: auto;
+                margin-right: 5px;
+            }
+
+                .events.main .event-card .content .event-footer span:nth-child(2) {
+                    margin: 0 4px;
+                }
+
+@media screen and (max-width: 1140px) {
+    .events.main {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .all-events .container {
+        padding: 0 80px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .all-events .container {
+        padding: 0 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .events.main {
+        grid-template-columns: 1fr;
+    }
+
+        .events.main .event-card {
+            height: auto;
+        }
+
+            .events.main .event-card .event-head {
+                height: auto;
+            }
+
+    .all-events .container {
+        padding: 0 15px;
+    }
+}
 
 
 
