@@ -136,8 +136,9 @@
         }
     }
 
-    $('.add-to-cart-btn').click(function () {
+    $('.add-to-cart-btn, item-add-to-cart').click(function () {
         let qty = $('#productQuantity').val();
+        if (!qty) qty = 1;
 
         $.ajax({
             url: '/Product/AddToCart',
@@ -145,22 +146,20 @@
             dataType: 'json',
             data:
             {
-                id: $(this).data('itemid'),
+                productId: $(this).data('itemid'),
                 qty: qty
             },
-            error: function ()
-            {
+            error: function () {
                 alert('Error occurred.');
             },
-            success: function (result)
-            {
-                if (result.error == true)
-                {
-                    $('.buy-result').text(result.message);
+            success: function (result) {
+                if (result.error == true) {
+                    alert(result.message);
                 }
-                else
-                {
+                else {
                     let newQty = parseInt($('#cartQuantity').text()) + parseInt(qty);
+                    console.log(qty);
+                    console.log(newQty);
                     if (newQty > 9) {
                         let counter = $('#cartQuantity').parent('.counter');
                         if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
@@ -179,19 +178,24 @@
             dataType: 'json',
             data:
             {
-                id: $(this).data('itemid')
+                productId: $(this).data('itemid')
             },
             error: function () {
                 alert('Error occurred.');
             },
             success: function (result) {
-                let newQty = parseInt($('#wishlistQuantity').text()) + parseInt(qty);
-                if (newQty > 9) {
-                    let counter = $('#wishlistQuantity').parent('.counter');
-                    if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+                if (result.error == true) {
+                    alert(result.message);
                 }
-                $('#wishlistQuantity').text(newQty);
-                checkWishlistQuantity();
+                else {
+                    let newQty = parseInt($('#wishlistQuantity').text()) + 1;
+                    if (newQty > 9) {
+                        let counter = $('#wishlistQuantity').parent('.counter');
+                        if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+                    }
+                    $('#wishlistQuantity').text(newQty);
+                    checkWishlistQuantity();
+                }
             }
         });
     });

@@ -1433,10 +1433,8 @@ table {
 }
 
 @media screen and (max-width: 991px) {
-    .product-details-section {
+    .product-details-section .wrapper {
         flex-direction: column;
-        margin-top: 30px;
-        margin-bottom: 65px;
     }
 }
 
@@ -2974,6 +2972,7 @@ table {
 
 .single-cart {
     margin-top: 2em;
+    min-height: 578px;
 }
 
 .products.cart .form-cart, .item-content {
@@ -3058,10 +3057,34 @@ table {
     border-bottom: 1px solid #e5e8ec;
 }
 
+.products.cart :where(.item-add-to-cart, .item-remove) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+    .products.cart :where(.item-add-to-cart, .item-remove):hover {
+        background-color: #ebebeb;
+    }
+
+.products.cart .item-remove {
+    margin-left: 15px;
+}
+
 .products.cart .item-remove img {
-    width: 10px;
-    height: 10px;
-    object-fit: cover;
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+}
+
+.products.cart .item-add-to-cart img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
 }
 
 .cart-summary {

@@ -18,6 +18,7 @@ namespace OnlineStore.Controllers
             _emailSender = emailSender;
         }
 
+        [Route("cart")]
         public IActionResult ViewCart()
         {
             var cart = _context.Carts

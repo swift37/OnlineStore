@@ -50,9 +50,9 @@ namespace OnlineStore.Controllers
             return View(_context.Products.Include(p => p.Specification).SingleOrDefault(p => p.Id == id));
         }
 
-        public IActionResult AddToCart(int id, int qty = 1)
+        public IActionResult AddToCart(int productId, int qty = 1)
         {
-            var product = _context.Products.SingleOrDefault(p => p.Id == id);
+            var product = _context.Products.SingleOrDefault(p => p.Id == productId);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
             var cart = _context.Carts
@@ -77,9 +77,9 @@ namespace OnlineStore.Controllers
             return Json(new { error = false });
         }
 
-        public IActionResult AddToWishlist(int id) 
+        public IActionResult AddToWishlist(int productId) 
         {
-            var product = _context.Products.SingleOrDefault(p => p.Id == id);
+            var product = _context.Products.SingleOrDefault(p => p.Id == productId);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
             var wishlist = _context.Wishlists
@@ -92,6 +92,9 @@ namespace OnlineStore.Controllers
                 _context.Wishlists.Add(wishlist);
             }
 
+            if (wishlist.Products.Any(p => p.Id == productId)) 
+                return Json(new { error = true, message = "The product is already on your wishlist." });
+
             var item = wishlist.Products?.FirstOrDefault(p => p.Id == product.Id);
             if (item is null) wishlist.Products?.Add(product);
 
@@ -99,6 +102,7 @@ namespace OnlineStore.Controllers
             return Json(new { error = false });
         }
 
+        [Route("wishlist")]
         public IActionResult ViewWishlist()
         {
             var wishlist = _context.Wishlists
@@ -107,5 +111,20 @@ namespace OnlineStore.Controllers
 
             return View(wishlist);
         }
+
+        public IActionResult AddAllWishlistToCart(int wishlistId)
+        {
+            var wishlist = _context.Wishlists.Include(w => w.Products).FirstOrDefault(w => w.Id == wishlistId);
+
+            if (wishlist is null) return RedirectToAction("NotFound", "Error");
+
+            foreach (var item in wishlist.Products) 
+                AddToCart(item.Id);
+
+            _context.Wishlists.Remove(wishlist);
+            _context.SaveChanges();
+
+            return Redirect("/cart");
+        } 
     }
 }

@@ -48,9 +48,11 @@ namespace OnlineStore.Domain
 
         public string? StoreCode { get; set; }
 
-        public string? IsNewProduct { get; set; }
+        public bool IsAvailable { get; set; }
 
-        public string? IsSale { get; set; }
+        public bool IsNewProduct { get; set; }
+
+        public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
     }
