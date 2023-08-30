@@ -4,17 +4,23 @@
     <div class="card-content">
         <div class="special-status">
             <div class="flags">
-                <div class="new-flag">NEW</div>
-                <div class="sale-flag">SALE</div>
+                @if (Model.IsNewProduct)
+                {
+                    <div class="new-flag">NEW</div>
+                }
+                @if (Model.IsSale)
+                {
+                    <div class="sale-flag">SALE</div>
+                }
             </div>
         </div>
         <div class="product-image">
-            <a class="image-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.Id">
+            <a class="image-link" href="product?id=@Model.Id">
                 <img src="@Model.Image" loading="lazy" alt="">
             </a>
         </div>
         <div class="product-name">
-            <a class="product-link" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.Id">
+            <a class="product-link" href="product?id=@Model.Id">
                 @Model.Name
             </a>
         </div>
@@ -40,7 +46,6 @@
                 </span>
             </a>
         </div>
-        <hr class="card-divider">
         <ul class="product-main-specs">
             @if (Model.Specification != null)
             {
@@ -55,11 +60,20 @@
         <div class="product-info">
             <div class="info-container">
                 <div class="product-price">
-                    <span class="discount">$1199</span>
-                    <span class="price">$@Model.UnitPrice</span>
+                    @if (Model.Discount > 0)
+                    {
+                        <span class="discount">$@Model.UnitPrice</span>
+                    }
+                    <span class="price">$@Model.PriceBeforeDiscount</span>
                 </div>
                 <div class="product-status">
-                    Available
+                    @if (Model.IsAvailable)
+                    {
+                        <span>Available</span>
+                    } else
+                    {
+                        <span>Not Available</span>
+                    }
                 </div>
             </div>
         </div>
@@ -69,9 +83,12 @@
             <img src="~/resources/icons/like.png" alt="" />
         </button>
     </div>
-    <div class="add-to-cart">
-        <div class="add-to-cart-btn">
-            <img src="~/resources/icons/shopping-cart.png" data-itemid="@Model.Id" />
+    @if (Model.IsAvailable)
+    {
+        <div class="add-to-cart">
+            <div class="add-to-cart-btn">
+                <img src="~/resources/icons/shopping-cart.png" data-itemid="@Model.Id" />
+            </div>
         </div>
-    </div>
+    }
 </div>
