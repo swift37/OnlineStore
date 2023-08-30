@@ -77,6 +77,11 @@ namespace OnlineStore.Controllers
             return Json(new { error = false });
         }
 
+        public IActionResult UpdateMiniCart()
+        {
+            return ViewComponent("MiniCart");
+        }
+
         public async Task<IActionResult> AddToWishlist(int productId) 
         {
             var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId);

@@ -252,8 +252,12 @@
                 </div>
             </nav>
             <nav class="nav-buttons">
-                @Component.InvokeAsync("CartStatus").Result
-                @Component.InvokeAsync("WishlistStatus").Result
+                <div id="miniCart" class="header-icon cart-button">
+                    @await Component.InvokeAsync("MiniCart")
+                </div>
+                <div class="header-icon wishlist-button">
+                    @await Component.InvokeAsync("WishlistStatus")
+                </div>
                 <div class="header-icon account-button mobile-hide">
                     <div class="icon-container">
                         <a href="/">

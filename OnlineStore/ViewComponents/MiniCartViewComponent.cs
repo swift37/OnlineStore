@@ -4,11 +4,11 @@ using OnlineStore.Data;
 
 namespace OnlineStore.ViewComponents
 {
-    public class CartStatusViewComponent : ViewComponent
+    public class MiniCartViewComponent : ViewComponent
     {
         private readonly ApplicationDbContext _context;
 
-        public CartStatusViewComponent(ApplicationDbContext context)
+        public MiniCartViewComponent(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -17,11 +17,10 @@ namespace OnlineStore.ViewComponents
         {
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
                 .FirstOrDefaultAsync(c => c.Status == Domain.CartStatus.Active);
 
-            ViewBag.CartItems = cart?.TotalQuantity ?? 0;
-
-            return View();
+            return View(cart);
         }
     }
 }
