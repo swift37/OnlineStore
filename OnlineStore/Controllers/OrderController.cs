@@ -18,8 +18,7 @@ namespace OnlineStore.Controllers
             _emailSender = emailSender;
         }
 
-        [Route("cart")]
-        public IActionResult ViewCart()
+        public IActionResult PersonalInfo(int cartId)
         {
             var cart = _context.Carts
                 .Include(c => c.CartItems)
@@ -27,53 +26,6 @@ namespace OnlineStore.Controllers
                 .FirstOrDefault(c => c.Status == CartStatus.Active);
 
             return View(cart);
-        }
-
-
-        public async Task<IActionResult> UpdateCart(int productId, int qty)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
-
-            var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
-
-            if (cart is null || cartItem is null) return Json(new { error = true, message = "Error occurred." });
-
-            cartItem.Quantity = qty;
-            await _context.SaveChangesAsync();
-            return Json(new
-            {
-                error = false,
-                SubtotalPrice = cart.SubtotalPrice,
-                TotalPrice = cart.TotalPrice,
-                TotalDiscount = cart.TotalDiscount,
-                TotalQuantity = cart.TotalQuantity,
-                LinePrice = cartItem.Price
-            });
-        }
-
-        public async Task<IActionResult> RemoveFromCart(int productId)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
-
-            var cartItem = cart?.CartItems.SingleOrDefault(p => p.ProductId == productId);
-
-            if (cart is null || cartItem is null) return Json( new { removeSuccess = false } );
-
-            cart.CartItems.Remove(cartItem);
-            _context.Entry(cart).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return Json(new { removeSuccess = true } );
-        }
-
-        public IActionResult PersonalInfo(int cartId)
-        {
-            ViewBag.Cart = cartId;
-            return View();
         }
 
         public IActionResult CreateOrder(Order order)
@@ -84,6 +36,7 @@ namespace OnlineStore.Controllers
                 .SingleOrDefault(x => x.Id == order.CartId);
             if (cart is null) return RedirectToAction("NotFound", "Error");
             order.Cart = cart;
+            order.Total = cart.TotalPrice;
             cart.Status = CartStatus.Completed;
             cart.PayDate = DateTime.Now;
 
@@ -92,21 +45,12 @@ namespace OnlineStore.Controllers
 
             //_emailSender.SendMail("To", "New order", "Message");
 
-            return RedirectToAction("Checkout", new { cartId = cart.Id });
+            //return RedirectToAction("Checkout", new { cartId = cart.Id });
+            return Checkout(cart);
         }
 
-        //[HttpGet]
-        //public IActionResult Checkout(Cart cart)
-        //{
-        //    return View(cart);
-        //}
-
-        public IActionResult Checkout(int cartId)
+        public IActionResult Checkout(Cart cart)
         {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .SingleOrDefault(c => c.Id == cartId);
             if (cart is null) return RedirectToAction("NotFound", "Error");
 
             var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";

@@ -3245,6 +3245,10 @@ table {
         font-family: inherit;
     }
 
+        .checkout .field:nth-child(5) input:nth-child(2) {
+            margin-bottom: 0.7em;
+        }
+
     .checkout .field input:focus {
         background-color: #ffffff;
     }

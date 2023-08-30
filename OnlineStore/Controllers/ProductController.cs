@@ -50,6 +50,27 @@ namespace OnlineStore.Controllers
             return View(_context.Products.Include(p => p.Specification).SingleOrDefault(p => p.Id == id));
         }
 
+        [Route("cart")]
+        public IActionResult ViewCart()
+        {
+            var cart = _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefault(c => c.Status == CartStatus.Active);
+
+            return View(cart);
+        }
+
+        [Route("wishlist")]
+        public IActionResult ViewWishlist()
+        {
+            var wishlist = _context.Wishlists
+                .Include(c => c.Products)
+                .FirstOrDefault();
+
+            return View(wishlist);
+        }
+
         public IActionResult AddToCart(int productId, int qty = 1)
         {
             var product = _context.Products.SingleOrDefault(p => p.Id == productId);
@@ -75,6 +96,46 @@ namespace OnlineStore.Controllers
 
             _context.SaveChanges();
             return Json(new { error = false });
+        }
+
+        public async Task<IActionResult> UpdateCart(int productId, int qty)
+        {
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
+
+            var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
+
+            if (cart is null || cartItem is null) return Json(new { error = true, message = "Error occurred." });
+
+            cartItem.Quantity = qty;
+            await _context.SaveChangesAsync();
+            return Json(new
+            {
+                error = false,
+                SubtotalPrice = cart.SubtotalPrice,
+                TotalPrice = cart.TotalPrice,
+                TotalDiscount = cart.TotalDiscount,
+                TotalQuantity = cart.TotalQuantity,
+                LinePrice = cartItem.Price
+            });
+        }
+
+        public async Task<IActionResult> RemoveFromCart(int productId)
+        {
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
+
+            var cartItem = cart?.CartItems.SingleOrDefault(p => p.ProductId == productId);
+
+            if (cart is null || cartItem is null) return Json(new { removeSuccess = false });
+
+            cart.CartItems.Remove(cartItem);
+            _context.Entry(cart).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Json(new { removeSuccess = true });
         }
 
         public IActionResult UpdateMiniCart()
@@ -121,16 +182,6 @@ namespace OnlineStore.Controllers
             _context.Entry(wishlist).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return Json(new { removeSuccess = true });
-        }
-
-        [Route("wishlist")]
-        public IActionResult ViewWishlist()
-        {
-            var wishlist = _context.Wishlists
-                .Include(c => c.Products)
-                .FirstOrDefault();
-
-            return View(wishlist);
         }
 
         public IActionResult AddAllWishlistToCart(int wishlistId)

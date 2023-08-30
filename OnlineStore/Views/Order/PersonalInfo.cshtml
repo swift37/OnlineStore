@@ -1,4 +1,4 @@
-﻿@*@model OnlineStore.Domain.Order;*@
+﻿@model OnlineStore.Domain.Cart;
 
 @{
     ViewData["Title"] = "Personal Info";
@@ -14,40 +14,40 @@
                     <form asp-controller="Order" asp-action="CreateOrder" method="post">
                         <div class="field">
                             <label for="email">Email Address <span></span></label>
-                            <input type="email" name="email" id="email" autocomplete="off" required>
+                            <input type="email" name="Email" id="email" autocomplete="off" required>
                         </div>
                         <div class="field">
                             <label for="fname">First Name <span></span></label>
-                            <input type="text" id="fname" required>
+                            <input type="text" name="FirstName" id="fname" required>
                         </div>
                         <div class="field">
                             <label for="lname">Last Name <span></span></label>
-                            <input type="text" id="lname" required>
+                            <input type="text" name="LastName" id="lname" required>
                         </div>
                         <div class="field">
                             <label for="cname">Company Name</label>
-                            <input type="text" id="cname">
+                            <input type="text" name="CompanyName" id="cname">
                         </div>
                         <div class="field">
                             <label for="address">Street Address <span></span></label>
-                            <input type="text" id="address" required>
-                            <input type="text" id="address" required>
+                            <input type="text" name="StreetAddress" id="address" required>
+                            <input type="text" name="Apartment" id="address" required>
                         </div>
                         <div class="field">
                             <label for="city">City <span></span></label>
-                            <input type="text" id="city" required>
+                            <input type="text" name="City" id="city" required>
                         </div>
                         <div class="field">
                             <label for="state">State / Province <span></span></label>
-                            <input type="text" id="state" required>
+                            <input type="text" name="State" id="state" required>
                         </div>
                         <div class="field">
                             <label for="postal">Zip / Postal Code <span></span></label>
-                            <input type="number" id="postal" required>
+                            <input type="number" name="Postcode" id="postal" required>
                         </div>
                         <div class="field">
                             <label for="country">Country <span></span></label>
-                            <select name="country" id="country">
+                            <select name="Country" id="country">
                                 <option value=""></option>
                                 <option value="1" selected="selected">United States</option>
                                 <option value="2">Canada</option>
@@ -58,35 +58,36 @@
                         </div>
                         <div class="field">
                             <label for="phone">Phone Number <span></span></label>
-                            <input type="number" id="phone" required>
+                            <input type="number" name="Phone" id="phone" required>
                         </div>
                         <div class="field">
-                            <label for="notes">Order Notes (optional) <span></span></label>
-                            <textarea cols="30" rows="3" type="number" id="notes"></textarea>
+                            <label for="notes">Order Notes (optional)</label>
+                            <textarea cols="30" rows="3" type="number" name="Notes" id="notes"></textarea>
                         </div>
                         <div class="field checkset">
                             <input type="checkbox" id="anaccount">
                             <label for="anaccount">Create an account?</label>
                         </div>
-                    </form>
-                    <div class="shipping-methods">
-                        <h2>Shipping Methods</h2>
-                        <div class="field rate-options">
-                            <p>
-                                <span>Flat: $10.00</span>
-                                <input type="radio" name="rate-option" id="flat" checked>
-                                <label for="flat" class="circle"></label>
-                            </p>
-                            <p>
-                                <span>Best: $0.00</span>
-                                <input type="radio" name="rate-option" id="best">
-                                <label for="best" class="circle"></label>
-                            </p>
+                        <div class="shipping-methods">
+                            <h2>Shipping Methods</h2>
+                            <div class="field rate-options">
+                                <p>
+                                    <span>Flat: $10.00</span>
+                                    <input type="radio" name="rate-option" id="flat" checked>
+                                    <label for="flat" class="circle"></label>
+                                </p>
+                                <p>
+                                    <span>Best: $0.00</span>
+                                    <input type="radio" name="rate-option" id="best">
+                                    <label for="best" class="circle"></label>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="primary-checkout">
-                        <button class="primary-button" type="submit">Place Order</button>
-                    </div>
+                        <div class="primary-checkout">
+                            <button class="primary-button" type="submit">Place Order</button>
+                        </div>
+                        <input name="CartId" type="hidden" value="@Model.Id"/>
+                    </form>
                 </div>
                 <div class="item right">
                     <h2>Order Summary</h2>
@@ -95,11 +96,11 @@
                             <ul>
                                 <li>
                                     <span>Subtotal</span>
-                                    <span>$3578.97</span>
+                                    <span>$@Model.SubtotalPrice</span>
                                 </li>
                                 <li>
                                     <span>Discount</span>
-                                    <span>-$150.00</span>
+                                    <span>-$@Model.TotalDiscount</span>
                                 </li>
                                 <li>
                                     <span>Shipping: Flat</span>
@@ -107,63 +108,32 @@
                                 </li>
                                 <li>
                                     <span>Total</span>
-                                    <strong>$3438.97</strong>
+                                    <strong>$@Model.TotalPrice</strong>
                                 </li>
                             </ul>
                         </div>
                         <ul class="products mini">
-                            <li class="item">
-                                <div class="thumbnail object-contain">
-                                    <img src="~/resources/productsImages/hp-laptop-victus.jpg" alt="">
-                                </div>
-                                <div class="item-content">
-                                    <p>HP Victus 16'</p>
-                                    <span class="price">
-                                        <span>$3854.99</span>
-                                        <span>x 2</span>
-                                    </span>
-                                </div>
-                            </li>
-
-                            <li class="item">
-                                <div class="thumbnail object-contain">
-                                    <img src="~/resources/productsImages/hp-laptop-victus.jpg" alt="">
-                                </div>
-                                <div class="item-content">
-                                    <p>HP Victus 16'</p>
-                                    <span class="price">
-                                        <span>$3854.99</span>
-                                        <span>x 2</span>
-                                    </span>
-                                </div>
-                            </li>
-
-                            <li class="item">
-                                <div class="thumbnail object-contain">
-                                    <img src="~/resources/productsImages/hp-laptop-victus.jpg" alt="">
-                                </div>
-                                <div class="item-content">
-                                    <p>HP Victus 16'</p>
-                                    <span class="price">
-                                        <span>$3854.99</span>
-                                        <span>x 2</span>
-                                    </span>
-                                </div>
-                            </li>
-
-                            <li class="item">
-                                <div class="thumbnail object-contain">
-                                    <img src="~/resources/productsImages/hp-laptop-victus.jpg" alt="">
-                                </div>
-                                <div class="item-content">
-                                    <p>HP Victus 16'</p>
-                                    <span class="price">
-                                        <span>$3854.99</span>
-                                        <span>x 2</span>
-                                    </span>
-                                </div>
-                            </li>
-
+                            @if (Model.CartItems.Count() > 0)
+                            {
+                                foreach (var cartItem in Model.CartItems)
+                                {
+                                    if (cartItem.Product != null)
+                                    {
+                                        <li class="item">
+                                            <div class="thumbnail object-contain">
+                                                <img src="@cartItem.Product.Image" alt="">
+                                            </div>
+                                            <div class="item-content">
+                                                <p>@cartItem.Product.Name</p>
+                                                <span class="price">
+                                                    <span>$@cartItem.Product.PriceBeforeDiscount</span>
+                                                    <span>x @cartItem.Quantity</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            }
                         </ul>
                     </div>
                 </div>

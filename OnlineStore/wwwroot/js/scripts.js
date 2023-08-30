@@ -211,7 +211,7 @@
 
     $('.qty-value').change(function () {
         $.ajax({
-            url: '/Order/UpdateCart',
+            url: '/Product/UpdateCart',
             type: 'post',
             dataType: 'json',
             data:
@@ -235,7 +235,7 @@
 
     $('.item-remove.from-cart').click(function () {
         $.ajax({
-            url: '/Order/RemoveFromCart',
+            url: '/Product/RemoveFromCart',
             type: 'post',
             dataType: 'json',
             data:
@@ -253,7 +253,7 @@
 
     $('.item-remove.from-minicart').click(function () {
         $.ajax({
-            url: '/Order/RemoveFromCart',
+            url: '/Product/RemoveFromCart',
             type: 'post',
             dataType: 'json',
             data:
