@@ -158,12 +158,6 @@
                 }
                 else {
                     let newQty = parseInt($('#cartQuantity').text()) + parseInt(qty);
-                    console.log(qty);
-                    console.log(newQty);
-                    if (newQty > 9) {
-                        let counter = $('#cartQuantity').parent('.counter');
-                        if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
-                    }
                     $('#cartQuantity').text(newQty);
                     checkCartQuantity();
                 }
@@ -200,7 +194,55 @@
         });
     });
 
-    $('.cart-line-qty').bind('keyup click', function () {
+    //$('.qty-minus, .qty-plus').click(function () {
+    //    let qty = $(this).parent().find('.qty-value').val();
+    //    if ($(this).hasClass('qty-plus'))
+    //        qty++;
+    //    else
+    //        qty--;
+
+    //    $.ajax({
+    //        url: '/Order/UpdateCart',
+    //        type: 'post',
+    //        dataType: 'json',
+    //        data:
+    //        {
+    //            productId: $(this).parent().find('.qty-value').data('itemid'),
+    //            qty: qty
+    //        },
+    //        error: function () {
+    //            alert('Error occured.');
+    //        },
+    //        success: function (result) {
+    //            if (result.error == true) {
+    //                alert(result.message);
+    //            }
+    //            else {
+                    //$(this).val(result.TotalQuantity);
+                    //$(this).parent('tr').find('.line-price').text(result.LinePrice);
+                    //$('.subtotal-price').text(result.SubtotalPrice);
+                    //$('.total-discount').text(result.TotalDiscount);
+                    //$('.total-price').text(result.TotalPrice);
+                    //$('#cartQuantity').text(result.TotalQuantity);
+                    //checkCartQuantity();
+    //                location.reload();
+    //            }
+    //        }
+    //    });
+    //});
+
+    $('.qty-minus, .qty-plus').click(function () {
+        let qty = $(this).parent().find('input');
+        let oldValue = $(this).parent().find('input').val();
+        if ($(this).hasClass('qty-plus'))
+            $(qty).val(++oldValue);
+        else
+            $(qty).val(--oldValue);
+        if ($(qty).val() < 1 || $(qty).val() > 999) $(qty).val(1);
+        qty.trigger('change');
+    });
+
+    $('.qty-value').change(function () {
         $.ajax({
             url: '/Order/UpdateCart',
             type: 'post',
@@ -214,9 +256,12 @@
                 alert('Error occured.');
             },
             success: function (result) {
-                $('.cart-total').text(result.CartPrice);
-                location.reload();
-                //$(this).closest('tr').find('td.line-total').text(result.LinePrice);
+                if (result.error == true) {
+                    alert(result.message);
+                }
+                else {
+                    location.reload();
+                }
             }
         });
     });

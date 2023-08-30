@@ -39,14 +39,17 @@ namespace OnlineStore.Controllers
 
             var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
 
-            if (cart is null || cartItem is null) return Json(null);
+            if (cart is null || cartItem is null) return Json(new { error = true, message = "Error occurred." });
 
             cartItem.Quantity = qty;
             await _context.SaveChangesAsync();
             return Json(new
             {
-                CartPrice = cart.TotalPrice,
-                CartItems = cart.TotalQuantity,
+                error = false,
+                SubtotalPrice = cart.SubtotalPrice,
+                TotalPrice = cart.TotalPrice,
+                TotalDiscount = cart.TotalDiscount,
+                TotalQuantity = cart.TotalQuantity,
                 LinePrice = cartItem.Price
             });
         }

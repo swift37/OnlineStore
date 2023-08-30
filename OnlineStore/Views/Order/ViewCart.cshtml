@@ -19,7 +19,7 @@
             </div>
             <div class="products one cart">
                 <div class="flexwrap">
-                    <form action="" class="form-cart">
+                    <div class="form-cart">
                         <div class="item">
                             <table id="cart-table">
                                 <thead>
@@ -46,15 +46,15 @@
                                                         <p>RAM: 16 Gb</p>
                                                     </div>
                                                 </td>
-                                                <td>@cartItem.Product?.UnitPrice</td>
+                                                <td>$@cartItem.Product?.PriceBeforeDiscount</td>
                                                 <td>
                                                     <div class="qty-control flexitem">
                                                         <button class="qty-minus">-</button>
-                                                        <input class="qty-value" type="text" value="@cartItem.Quantity" min="1" pattern="^[0-9]+$">
+                                                        <input class="qty-value" type="text" value="@cartItem.Quantity" data-itemid="@cartItem.ProductId" min="1" pattern="^[0-9]+$">
                                                         <button class="qty-plus">+</button>
                                                     </div>
                                                 </td>
-                                                <td>@cartItem.Price</td>
+                                                <td>$<span class="line-price">@cartItem.Price</span></td>
                                                 <td>
                                                     <a class="item-remove from-cart" data-itemid="@cartItem.ProductId">
                                                         <img src="~/resources/icons/close.png" alt="">
@@ -66,7 +66,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </form>
+                    </div>
                     <div class="cart-summary styled">
                         <div class="item">
                             <div class="coupon">
@@ -131,11 +131,11 @@
                                     <tbody>
                                         <tr>
                                             <th>Subtotal</th>
-                                            <td>@Model.TotalPrice</td>
+                                            <td>$<span class="subtotal-price">@Model.SubtotalPrice</span></td>
                                         </tr>
                                         <tr>
                                             <th>Discount</th>
-                                            <td>$0.00</td>
+                                            <td>$<span class="total-discount">@Model.TotalDiscount</span></td>
                                         </tr>
                                         <tr>
                                             <th>Shipping<span class="mini-text">(Flat)</span></th>
@@ -143,7 +143,7 @@
                                         </tr>
                                         <tr>
                                             <th>TOTAL</th>
-                                            <td><strong>$@Model.TotalPrice</strong></td>
+                                            <td>$<strong class="total-price">@Model.TotalPrice</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

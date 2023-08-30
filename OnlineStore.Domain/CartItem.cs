@@ -1,9 +1,4 @@
 ﻿using OnlineStore.Domain.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Domain
 {
@@ -15,6 +10,6 @@ namespace OnlineStore.Domain
 
         public int Quantity { get; set; }
 
-        public decimal Price => Product?.UnitPrice * Quantity ?? 0;
+        public decimal Price => Product?.PriceBeforeDiscount * Quantity ?? default;
     }
 }
