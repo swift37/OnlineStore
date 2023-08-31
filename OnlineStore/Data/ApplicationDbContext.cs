@@ -19,5 +19,7 @@ namespace OnlineStore.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ContactRequest> ContactRequests { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
     }
 }
