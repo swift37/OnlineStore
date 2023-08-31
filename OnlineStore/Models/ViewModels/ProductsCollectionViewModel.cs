@@ -24,6 +24,8 @@ namespace OnlineStore.Models.ViewModels
 
         public SubCategory? SubCategory { get; set; }
 
+        public int SubCategoryId => SubCategory?.Id ?? -1;
+
         public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }

@@ -3509,6 +3509,57 @@ table {
     }
 }
 
+.pagination, .page-btn, .page-links, .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination {
+    column-gap: 12px;
+    padding: 20px;
+    margin: 2em 0 4em;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0 0 0 0.1);
+}
+
+    .pagination .page-btn {
+        border: none;
+    }
+
+    .pagination .page-btn i {
+        border: none;
+    }
+
+    .pagination .page-btn:disabled {
+        color: #b3b3b3;
+        pointer-events: none;
+    }
+
+    .pagination .page-btn, .page-link {
+        height: 45px;
+        width: 45px;
+        font-size: 20px;
+        color: #666666;
+        background-color: #ffffff;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .pagination .page-links {
+        column-gap: 12px;
+    }
+
+    .pagination .page-link {
+        font-weight: 400;
+        text-decoration: none;
+    }
+
+    .pagination :where(.page-btn, .page-link):hover, .page-link.active {
+        color: #ffffff;
+        background-color: #000000;
+    }
 
 
 
@@ -3566,8 +3617,10 @@ table {
 
 
 
-@media screen and (min-width: 992px) {
-    .desktop-hide {
+
+
+        @media screen and (min-width: 992px) {
+            .desktop-hide {
         display: none;
     }
 }

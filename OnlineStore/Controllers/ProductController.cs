@@ -16,14 +16,14 @@ namespace OnlineStore.Controllers
             _context = context;
         }
 
-        [Route("products")]
-        public IActionResult GetProductsBySubCategory(int? subCategoryId, int page = 1)
+        [Route("products", Name = "products")]
+        public IActionResult GetProductsBySubCategory(int? subCatId, int page = 1)
         {
-            if (subCategoryId is null) return RedirectToAction("Index", "Home");
+            if (subCatId is null) return RedirectToAction("Index", "Home");
 
             var subCategory = _context.SubCategories
                 .Include(sc => sc.Category)
-                .SingleOrDefault(sc => sc.Id == subCategoryId);
+                .SingleOrDefault(sc => sc.Id == subCatId);
 
             if (subCategory is null) return RedirectToAction("Error", "NotFound");
 

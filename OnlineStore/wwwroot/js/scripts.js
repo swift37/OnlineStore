@@ -126,7 +126,7 @@
             let counter = $('#wishlistQuantity').parent('.counter');
             if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
         }
-    }
+    };
 
     function checkCartQuantity() {
         let qty = parseInt($('#cartQuantity').text());
@@ -134,7 +134,7 @@
             let counter = $('#cartQuantity').parent('.counter');
             if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
         }
-    }
+    };
 
     $('.add-to-cart-btn, item-add-to-cart').click(function () {
         let qty = $('#productQuantity').val();
@@ -291,6 +291,61 @@
                 if (result) location.reload();
             }
         });
+    });
+
+    let currentStep = 0;
+
+    const updateBtn = () => {
+        if (currentStep === 4) {
+            $('#endBtn').prop('disabled', true);
+            $('#nextBtn').prop('disabled', true);
+            $('#startBtn').prop('disabled', false);
+            $('#prevBtn').prop('disabled', false);
+        }
+        else if (currentStep === 0) {
+            $('#startBtn').prop('disabled', true);
+            $('#prevBtn').prop('disabled', true);
+            $('#endBtn').prop('disabled', false);
+            $('#nextBtn').prop('disabled', false);
+        } else {
+            $('#endBtn').prop('disabled', false);
+            $('#nextBtn').prop('disabled', false);
+            $('#startBtn').prop('disabled', false);
+            $('#prevBtn').prop('disabled', false);
+        }
+    };
+
+    $.each($('.page-link'), function (index) {
+        $(this).click(function (e) {
+            e.preventDefault();
+            currentStep = index;
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            updateBtn();
+        });
+    });
+
+    $('.prevNext').click(function () {
+        currentStep += $(this).attr('id') === "nextBtn" ? 1 : -1;
+        $('.page-link').each(function(index) {
+            console.log(index, currentStep);
+            $(this).toggleClass('active', index === currentStep);
+            updateBtn();
+        });
+    });
+
+    $('#startBtn').click(function () {
+        $('.page-link').first().siblings().removeClass('active');
+        $('.page-link').first().addClass('active');
+        currentStep = 0;
+        updateBtn();
+    });
+
+    $('#endBtn').click(function () {
+        $('.page-link').last().siblings().removeClass('active');
+        $('.page-link').last().addClass('active');
+        currentStep = 4;
+        updateBtn();
     });
 
     $('#termsCheckbox').click(function () {
