@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
+using OnlineStore.Domain;
 using OnlineStore.Models.ViewModels;
 using System.Diagnostics;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace OnlineStore.Controllers
 {
@@ -36,6 +39,19 @@ namespace OnlineStore.Controllers
         public IActionResult Events()
         {
             return View();
+        }
+
+        public async Task<IActionResult> SubscribeToNewsletter(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email) || !email.Contains('@')) 
+                return Json(new { error = true, message = "Invalid email address." });
+            if (_context.Subscribers.Any(s => s.Email == email))
+                return Json(new { error = true, message = "This email address has already registered." });
+
+            await _context.Subscribers.AddAsync(new Subscriber { Email = email, SubscribeDate = DateTime.Now });
+            await _context.SaveChangesAsync();
+
+            return Json(new { error = false });
         }
 
         public IActionResult Catalog(int page = 1)

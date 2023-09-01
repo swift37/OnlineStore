@@ -393,6 +393,43 @@
     });
 
 
+
+    function validateEmail (email) {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+            );
+    };
+
+    $('.subscribe-btn').click(function () {
+        let input = $(this).parent().find('input');
+        let email = input.val();
+        let validatedEmail = validateEmail(email);
+        if (!validatedEmail) return alert('Error occured.');
+
+        $.ajax({
+            url: '/Home/SubscribeToNewsletter',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                email: validatedEmail
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                if (result.error == true)
+                    alert(result.message);
+                else
+                    input.val('');
+            }
+        });
+    });
+
+
+
     $('#termsCheckbox').click(function () {
         if ($(this).is(':checked')) {
             $('#checkoutBtn').removeAttr('disabled');

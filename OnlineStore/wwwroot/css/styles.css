@@ -54,6 +54,14 @@ a {
         color: #1d1d1d;
     }
 
+input::placeholder {
+    color: #b4b4b4;
+}
+
+input:focus::placeholder {
+    color: #818181;
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -1259,15 +1267,14 @@ table {
 
 .subscribe-section {
     margin-top: 50px;
-    padding-top: 70px;
-    padding-bottom: 80px;
-    /*background-color: #f4f4f4;*/
+    padding-top: 45px;
+    padding-bottom: 60px;
     background-color: #1d1d1d;
     background-image: radial-gradient(circle farthest-corner at 0% 50%, rgba(255, 1, 1, 0.15), transparent 47%), radial-gradient(circle farthest-corner at 40% 130%, rgba(122, 167, 255, 0.41), transparent 58%);
     color: #fff;
 }
 
-    .subscribe-section .content-container {
+    .subscribe-section .content {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1275,24 +1282,59 @@ table {
         text-align: center;
     }
 
-        .subscribe-section .content-container .ui.input {
-            margin-top: 20px;
+    .subscribe-section .subscribe-head {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-size: 36px;
+        line-height: 50px;
+        font-weight: 400;
+        text-transform: none;
+    }
+
+    .subscribe-section .subscribe-paragraph {
+        width: 40%;
+        font-size: 16px;
+        line-height: 1.5em;
+    }
+
+    .subscribe-section .subscribe-form {
+        position: relative;
+        max-width: 350px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        .subscribe-section .subscribe-form input {
+            width: 100%;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 3.25em;
+            padding: 0 8em 0 1.5em;
+            border: 0;
+            outline: 0;
+            border-radius: 5px;
         }
 
-.subscribe-header {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    font-size: 36px;
-    line-height: 50px;
-    font-weight: 400;
-    text-transform: none;
-}
+        .subscribe-section .subscribe-form button {
+            position: absolute;
+            top: 0;
+            right: -3px;
+            border: 0;
+            outline: 0;
+            padding: 0.55em 1.5em;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #1b1c1d;
+            border-radius: 0 5px 5px 0;
+            height: 100%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-.subscribe-paragraph {
-    width: 40%;
-    font-size: 16px;
-    line-height: 1.5em;
-}
+            .subscribe-section .subscribe-form button:hover {
+                background-color: #27292a;
+            }
 
 @media screen and (max-width: 991px) {
     .subscribe-paragraph {

@@ -9,7 +9,6 @@ namespace OnlineStore.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private int _pageSize = 25;
 
         public ProductController(ApplicationDbContext context)
         {
