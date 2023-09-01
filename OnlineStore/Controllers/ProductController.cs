@@ -17,9 +17,13 @@ namespace OnlineStore.Controllers
         }
 
         [Route("products", Name = "products")]
-        public IActionResult GetProductsBySubCategory(int? subCatId, int page = 1)
+        public IActionResult GetProductsBySubCategory(
+            int subCatId, 
+            int page = 1, 
+            int itemsPerPage = 15, 
+            SortParameter sortBy = SortParameter.Default)
         {
-            if (subCatId is null) return RedirectToAction("Index", "Home");
+            if (itemsPerPage > 30 || itemsPerPage < 15) itemsPerPage = 15;
 
             var subCategory = _context.SubCategories
                 .Include(sc => sc.Category)
@@ -27,20 +31,39 @@ namespace OnlineStore.Controllers
 
             if (subCategory is null) return RedirectToAction("Error", "NotFound");
 
-            var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;
+            var pagesCount = (_context.Products.Count() + itemsPerPage - 1) / itemsPerPage;
             var productsList = _context.Products
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize)
-                .Include(p => p.SubCategory);
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Include(p => p.SubCategory)
+                .Include(p => p.Category);
+
+            var productsSortedList = SortProducts(productsList, sortBy);
+
             var model = new ProductsCollectionViewModel(
-                productsList, 
+                productsSortedList, 
                 subCategory.Category, 
                 subCategory, 
                 page, 
-                pagesCount
-                );
+                pagesCount,
+                itemsPerPage);
 
             return View(model);
+        }
+
+        private IEnumerable<Product> SortProducts(IEnumerable<Product> products, SortParameter sortBy)
+        {
+            switch (sortBy) 
+            {
+                default:
+                    return products;
+                case SortParameter.RatingDescending:
+                    return products.OrderByDescending(p => p.Rating);
+                case SortParameter.PriceAscending:
+                    return products.OrderBy(p => p.UnitPrice);
+                case SortParameter.PriceDescending:
+                    return products.OrderByDescending(p => p.UnitPrice);
+            }
         }
 
         [Route("product")]
@@ -198,5 +221,13 @@ namespace OnlineStore.Controllers
 
             return Redirect("/cart");
         } 
+    }
+
+    public enum SortParameter
+    {
+        Default,
+        RatingDescending,
+        PriceAscending,
+        PriceDescending
     }
 }

@@ -181,12 +181,19 @@
                             <div class="cat-head">
                                 <div class="breadcrumb">
                                     <ul class="flexitem">
-                                        <li><a href="/">Home</a></li>
-                                        <li>Category</li>
+                                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                        @if (Model.Category != null)
+                                        {
+                                            <li>@Model.Category.Name</li>
+                                        }
+                                        @if (Model.SubCategory != null)
+                                        {
+                                            <li>@Model.SubCategory.Name</li>
+                                        }
                                     </ul>
                                 </div>
                                 <div class="page-title">
-                                    <h1>Category</h1>
+                                    <h1>@(Model.SubCategory?.Name ?? Model.Category?.Name)</h1>
                                 </div>
                                 <div class="cat-navigation flexitem">
                                     <div class="item-filter desktop-hide">
@@ -197,46 +204,37 @@
                                     </div>
                                     <div class="item-sortir">
                                         <div class="label">
-                                            <span class="mobile-hide">Sort by default</span>
-                                            <div class="desktop-hide">Default</div>
+                                            <span class="mobile-hide">Sort by <span class="selected-value">Default</span></span>
+                                            <div class="desktop-hide selected-value">Default</div>
                                             <i class="angle down icon"></i>
                                         </div>
                                         <ul>
-                                            <li>Default</li>
-                                            <li>Customer rating: from the best</li>
-                                            <li>Price: from the cheapest</li>
-                                            <li>Price: from the most expensive</li>
+                                            <li data-option="0">Default</li>
+                                            <li data-option="1">Customer rating: from the best</li>
+                                            <li data-option="2">Price: from the cheapest</li>
+                                            <li data-option="3">Price: from the most expensive</li>
                                         </ul>
                                     </div>
                                     <div class="item-perpage mobile-hide">
-                                        <div class="label">Items 10 per page</div>
-                                        <div class="desktop-hide">10</div>
+                                        <div class="label">Items @Model.Products.Count() per page</div>
                                     </div>
                                     <div class="item-options">
                                         <div class="label">
-                                            <span class="mobile-hide">Show per 10 page</span>
-                                            <div class="desktop-hide">10</div>
+                                            <span class="mobile-hide">Show <span class="selected-value">15</span> per page</span>
+                                            <div class="desktop-hide selected-value">15</div>
                                             <i class="angle down icon"></i>
                                         </div>
                                         <ul>
-                                            <li>10</li>
-                                            <li>15</li>
-                                            <li>20</li>
-                                            <li>25</li>
+                                            <li data-option="15">15</li>
+                                            <li data-option="20">20</li>
+                                            <li data-option="25">25</li>
+                                            <li data-option="30">30</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="products main">
-                            @if (Model.Products != null)
-                            {
-                                foreach (var product in Model.Products)
-                                {
-                                    @await Component.InvokeAsync("ProductCard", new { product = product })
-                                }
-                            }
-                        </div>
+                        @await Component.InvokeAsync("ProductCardsList", new { products = Model.Products })
                         <div class="pagination">
                             <button id="startBtn" class="page-btn" disabled>
                                 <i class="fa-solid fa-angles-left"></i>

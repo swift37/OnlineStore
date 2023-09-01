@@ -86,8 +86,8 @@
     @if (Model.IsAvailable)
     {
         <div class="add-to-cart">
-            <div class="add-to-cart-btn">
-                <img src="~/resources/icons/shopping-cart.png" data-itemid="@Model.Id" />
+            <div class="add-to-cart-btn" data-itemid="@Model.Id">
+                <img src="~/resources/icons/shopping-cart.png" />
             </div>
         </div>
     }

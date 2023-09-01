@@ -9,13 +9,15 @@ namespace OnlineStore.Models.ViewModels
             Category? category,
             SubCategory? subCategory,
             int currentPage,
-            int totalPages)
+            int totalPages,
+            int itemsPerPage)
         {
             Products = products;
             Category = category;
             SubCategory = subCategory;
             CurrentPage = currentPage;
             TotalPages = totalPages;
+            ItemsPerPage = itemsPerPage;
         }
 
         public IEnumerable<Product> Products { get; set; }
@@ -29,5 +31,7 @@ namespace OnlineStore.Models.ViewModels
         public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }
+
+        public int ItemsPerPage { get; set; }
     }
 }

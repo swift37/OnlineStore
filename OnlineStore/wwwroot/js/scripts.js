@@ -6,6 +6,10 @@
 
     copyMenu();
 
+    setSortBySlValue();
+
+    setItemsPerPageSlValue();
+
     $('.side-menu-button').click(function () {
         $('.site-off').addClass('show-menu');
     });
@@ -293,6 +297,8 @@
         });
     });
 
+
+
     let currentStep = 0;
 
     const updateBtn = () => {
@@ -347,6 +353,45 @@
         currentStep = 4;
         updateBtn();
     });
+
+
+
+    function setSortBySlValue() {
+        let url = new window.URL(document.location);
+        let param = url.searchParams.get("sortBy");
+        console.log(param);
+        if (param != null) {
+            var value = $('.item-sortir').find('[data-option="' + param + '"]').text();
+            $('.item-sortir .selected-value').text(value);
+        }
+    }
+
+    function setItemsPerPageSlValue() {
+        let url = new window.URL(document.location);
+        let param = url.searchParams.get("itemsperpage");
+        if (param != null)
+            $('.item-options .selected-value').text(param);
+    }
+
+
+    $('.item-sortir li').click(function () {
+        let sortParam = $(this).data('option');
+        if (!sortParam) sortParam = 0;
+
+        let url = new window.URL(document.location);
+        url.searchParams.set("sortBy", sortParam);
+        location.replace(url);
+    });
+
+    $('.item-options li').click(function () {
+        let itemsPerPage = $(this).data('option');
+        if (!itemsPerPage) itemsPerPage = 15;
+
+        let url = new window.URL(document.location);
+        url.searchParams.set("itemsperpage", itemsPerPage);
+        location.replace(url);
+    });
+
 
     $('#termsCheckbox').click(function () {
         if ($(this).is(':checked')) {
