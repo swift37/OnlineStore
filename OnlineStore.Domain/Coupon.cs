@@ -8,6 +8,8 @@ namespace OnlineStore.Domain
     {
         public string? Number { get; set; }
         
+        public DateTime CreationDate { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public DateTime? FinishDate { get; set; }

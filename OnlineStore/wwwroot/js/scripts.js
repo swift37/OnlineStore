@@ -28,12 +28,10 @@
 
     $('.link-item.has-child').click(function () {
         $(this).siblings().removeClass('expand');
-        if ($(this).hasClass('expand'))
-        {
+        if ($(this).hasClass('expand')) {
             $(this).removeClass('expand');
         }
-        else
-        {
+        else {
             $(this).addClass('expand');
         }
     });
@@ -104,7 +102,7 @@
 
         let element = '<div class="field spec-field"><label>Specs</label>' +
             '<div class="two fields"><div class="field">' +
-            '<input name="ProductDetails[' + specsCount + '].PropertyName" type="text" placeholder="Name"></div><div class="field">' + 
+            '<input name="ProductDetails[' + specsCount + '].PropertyName" type="text" placeholder="Name"></div><div class="field">' +
             '<input name="ProductDetails[' + specsCount + '].PropertyValue" type="text" placeholder="Value"></div>' +
             '<i class="remove circle icon remove-spec"></i></div></div>';
 
@@ -333,7 +331,7 @@
 
     $('.prevNext').click(function () {
         currentStep += $(this).attr('id') === "nextBtn" ? 1 : -1;
-        $('.page-link').each(function(index) {
+        $('.page-link').each(function (index) {
             console.log(index, currentStep);
             $(this).toggleClass('active', index === currentStep);
             updateBtn();
@@ -394,7 +392,7 @@
 
 
 
-    function validateEmail (email) {
+    function validateEmail(email) {
         return String(email)
             .toLowerCase()
             .match(
@@ -406,7 +404,7 @@
         let input = $(this).parent().find('input');
         let email = input.val();
         let validatedEmail = validateEmail(email);
-        if (!validatedEmail) return alert('Error occured.');
+        if (!validatedEmail) return alert('Invalid email address.');
 
         $.ajax({
             url: '/Home/SubscribeToNewsletter',
@@ -424,6 +422,53 @@
                     alert(result.message);
                 else
                     input.val('');
+            }
+        });
+    });
+
+    $('.contact-btn').click(function () {
+        let name = $('#contactName').val();
+        let email = $('#contactEmail').val();
+        let message = $('#contactMessage').val();
+        let validatedEmail = validateEmail(email);
+        let error = $('#contactFormError span');
+        $('#contactFormError').css('display', 'none');
+        error.text('');
+
+        if (!validatedEmail || !name || !message) {
+
+            $('#contactFormError').css('display', 'block');
+            return error.text('Invalid data.');
+        }
+
+        $.ajax({
+            url: '/Home/SendContactRequest',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                name: name,
+                email: validatedEmail,
+                message: message
+            },
+            error: function () {
+                $('#contactFormError').css('display', 'block');
+                error.text('Error occurred.');
+            },
+            success: function (result) {
+                if (result.error == true) {
+                    $('#contactFormError').css('display', 'block');
+                    error.text(result.message);
+                }
+                else {
+                    $('#contactName').val('');
+                    $('#contactEmail').val('');
+                    $('#contactMessage').val('');
+                    $('#contactFormSuccess').css('display', 'block');
+                    setTimeout(function () {
+                        $('#contactFormSuccess').css('display', 'none');
+                    }, 2000);
+                }
             }
         });
     });

@@ -54,6 +54,21 @@ namespace OnlineStore.Controllers
             return Json(new { error = false });
         }
 
+        public async Task<IActionResult> SendContactRequest(string name, string email, string message)
+        {
+            if (string.IsNullOrWhiteSpace(name) || 
+                string.IsNullOrWhiteSpace(email) || 
+                !email.Contains('@') ||
+                string.IsNullOrWhiteSpace(message))
+                return Json(new { error = true, message = "Invalid data." });
+
+            await _context.ContactRequests.AddAsync(
+                new ContactRequest { Name = name, Email = email, Message = message, CreationDate = DateTime.Now });
+            await _context.SaveChangesAsync();
+
+            return Json(new { error = false });
+        }
+
         public IActionResult Catalog(int page = 1)
         {
             var pagesCount = (_context.Products.Count() + _pageSize - 1) / _pageSize;

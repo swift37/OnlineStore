@@ -14,6 +14,8 @@ namespace OnlineStore.Domain
 
         public Product? Product { get; set; }
 
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
         public string? Title { get; set; }
 
         [Range(0.0, 5.0)]

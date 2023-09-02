@@ -105,6 +105,50 @@ table {
     padding: 0 15px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    margin-bottom: 2em;
+}
+
+    .field :where(input, textarea) {
+        background-color: rgb(225 225 225 / 50%);
+        font-family: inherit;
+    }
+
+    .field.double input:nth-child(2) {
+        margin-bottom: 0.7em;
+    }
+
+    .field input:focus {
+        background-color: #ffffff;
+    }
+
+    .field.checkset {
+        flex-direction: row;
+    }
+
+        .field.checkset label {
+            margin: 0 0 0 1em;
+            cursor: pointer;
+        }
+
+.styled :where(input, select, textarea) {
+    padding: 11px 16px;
+    outline: 0;
+    background-color: #ffffff;
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: #e5e8ec;
+    border-radius: 5px;
+}
+
 .w-list-unstyled {
     padding-left: 0;
     list-style: none;
@@ -139,6 +183,28 @@ table {
         grid-template-rows: auto auto auto auto;
     }
 }
+
+.errors-area {
+    display: none;
+    margin: 10px 0;
+    color: #cc0000;
+    font-size: 14px;
+}
+
+    .errors-area span {
+        margin-left: 5px;
+    }
+
+.success-msg {
+    display: none;
+    margin: 10px 0;
+    color: #4caf50;
+    font-size: 14px;
+}
+
+    .success-msg span {
+        margin-left: 5px;
+    }
 
 .object-cover img {
     display: block;
@@ -1353,7 +1419,7 @@ table {
 
     .container.header-wrap {
         margin-top: 60px;
-        margin-bottom: 80px;
+        margin-bottom: 50px;
         text-align: center;
     }
 
@@ -1410,11 +1476,23 @@ table {
     }
 
 .get-in-touch-section {
-    width: 70%;
-    margin-right: auto;
-    margin-left: auto;
     margin-bottom: 100px;
 }
+
+    .get-in-touch-section .container {
+        max-width: 750px;
+    }
+
+    .get-in-touch-section button {
+        width: 110px;
+        border: 0;
+        padding: 1em 2em;
+        cursor: pointer;
+    }
+
+    .get-in-touch-section :where(input, select, textarea) {
+        border-width: 1px 1px 3px 1px;
+    }
 
 .w-widget {
     position: relative;
@@ -3141,15 +3219,6 @@ table {
     margin-bottom: 1em;
 }
 
-.styled :where(input, select, textarea) {
-    padding: 0.75em;
-    outline: 0;
-    background-color: #ffffff;
-    border-width: 0 0 3px 0;
-    border-style: solid;
-    border-color: #e5e8ec;
-}
-
 .products .cart-summary .variant .item-content label {
     position: relative;
     border: 0;
@@ -3279,6 +3348,7 @@ table {
     .checkout .field {
         display: flex;
         flex-direction: column;
+        gap: 0.25em;
         margin-bottom: 2em;
     }
 
