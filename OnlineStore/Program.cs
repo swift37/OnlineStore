@@ -1,5 +1,6 @@
 using Librarian.Services;
 using Microsoft.EntityFrameworkCore;
+using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 using Stripe;
@@ -24,6 +25,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddServices();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        DbInitializer.Initialize(context);
+    }
+    catch (Exception exception)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(exception, "An error occurred during app initialization.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
