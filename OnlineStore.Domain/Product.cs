@@ -31,10 +31,6 @@ namespace OnlineStore.Domain
 
         public Category? Category { get; set; }
 
-        public int SubCategoryId { get; set; }
-
-        public SubCategory? SubCategory { get; set; }
-
         public List<Specification> Specification { get; set; } = new List<Specification>();
 
         [Range(0.0, 5.0)]

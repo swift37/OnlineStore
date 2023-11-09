@@ -7,11 +7,15 @@ namespace OnlineStore.Domain
     {
         public string? Description { get; set; }
 
-        [NotMapped]
-        public bool IsActive => Products?.Any() ?? false;
+        public Category? Parent { get; set; }
 
-        public IEnumerable<SubCategory>? SubCategories { get; set; }
+        public IEnumerable<Category>? Subcategories { get; set; }
 
         public IEnumerable<Product>? Products { get; set; }
+
+        public bool IsMainCategory { get; set; }
+
+        [NotMapped]
+        public bool IsActive => Products?.Any() ?? false;
     }
 }
