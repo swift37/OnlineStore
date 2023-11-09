@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Data;
 
@@ -11,9 +12,11 @@ using OnlineStore.Data;
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230902171412_Initial13")]
+    partial class Initial13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,7 +294,7 @@ namespace OnlineStore.Data.Migrations
                     b.Property<bool>("IsMainCategory")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MenuItemId")
+                    b.Property<int?>("MainMenuItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -303,7 +306,7 @@ namespace OnlineStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuItemId");
+                    b.HasIndex("MainMenuItemId");
 
                     b.HasIndex("ParentId");
 
@@ -410,7 +413,7 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.MenuItem", b =>
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -428,7 +431,7 @@ namespace OnlineStore.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("MenuItems");
+                    b.ToTable("MainMenuItems");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
@@ -747,9 +750,9 @@ namespace OnlineStore.Data.Migrations
 
             modelBuilder.Entity("OnlineStore.Domain.Category", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.MenuItem", null)
+                    b.HasOne("OnlineStore.Domain.MainMenuItem", null)
                         .WithMany("Categories")
-                        .HasForeignKey("MenuItemId");
+                        .HasForeignKey("MainMenuItemId");
 
                     b.HasOne("OnlineStore.Domain.Category", "Parent")
                         .WithMany("Subcategories")
@@ -758,7 +761,7 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.MenuItem", b =>
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Category", "Category")
                         .WithMany()
@@ -842,7 +845,7 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Subcategories");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.MenuItem", b =>
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
                 {
                     b.Navigation("Categories");
                 });
