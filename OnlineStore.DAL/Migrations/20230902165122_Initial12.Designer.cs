@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 #nullable disable
 
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230902142854_Initial11")]
-    partial class Initial11
+    [Migration("20230902165122_Initial12")]
+    partial class Initial12
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -291,11 +291,19 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsMainCategory")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
                 });
@@ -510,9 +518,6 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("StoreCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -525,8 +530,6 @@ namespace OnlineStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("SubCategoryId");
 
                     b.HasIndex("WishlistId");
 
@@ -599,28 +602,6 @@ namespace OnlineStore.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Specifications");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Subscriber", b =>
@@ -741,6 +722,15 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.Category", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Category", "Parent")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Cart", "Cart")
@@ -766,19 +756,11 @@ namespace OnlineStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineStore.Domain.SubCategory", "SubCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("OnlineStore.Domain.Wishlist", null)
                         .WithMany("Products")
                         .HasForeignKey("WishlistId");
 
                     b.Navigation("Category");
-
-                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Review", b =>
@@ -803,17 +785,6 @@ namespace OnlineStore.Data.Migrations
                         .HasForeignKey("ProductId");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
-                {
-                    b.HasOne("OnlineStore.Domain.Category", "Category")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>
                 {
                     b.HasOne("OnlineStore.Domain.ApplicationUser", "User")
@@ -832,7 +803,7 @@ namespace OnlineStore.Data.Migrations
                 {
                     b.Navigation("Products");
 
-                    b.Navigation("SubCategories");
+                    b.Navigation("Subcategories");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Product", b =>
@@ -840,11 +811,6 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Specification");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>

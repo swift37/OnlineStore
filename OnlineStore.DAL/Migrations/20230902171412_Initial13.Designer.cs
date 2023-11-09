@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 #nullable disable
 
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230902165122_Initial12")]
-    partial class Initial12
+    [Migration("20230902171412_Initial13")]
+    partial class Initial13
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -294,6 +294,9 @@ namespace OnlineStore.Data.Migrations
                     b.Property<bool>("IsMainCategory")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("MainMenuItemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -302,6 +305,8 @@ namespace OnlineStore.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MainMenuItemId");
 
                     b.HasIndex("ParentId");
 
@@ -406,6 +411,27 @@ namespace OnlineStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("MainMenuItems");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
@@ -724,11 +750,24 @@ namespace OnlineStore.Data.Migrations
 
             modelBuilder.Entity("OnlineStore.Domain.Category", b =>
                 {
+                    b.HasOne("OnlineStore.Domain.MainMenuItem", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("MainMenuItemId");
+
                     b.HasOne("OnlineStore.Domain.Category", "Parent")
                         .WithMany("Subcategories")
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
@@ -804,6 +843,11 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("Subcategories");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.MainMenuItem", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Product", b =>

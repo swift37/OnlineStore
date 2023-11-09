@@ -1,7 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 using OnlineStore.Models.ViewModels;
 using System.Diagnostics;

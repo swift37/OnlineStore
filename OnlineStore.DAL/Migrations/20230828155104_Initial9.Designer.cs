@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 #nullable disable
 
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230804170302_Initial5")]
-    partial class Initial5
+    [Migration("20230828155104_Initial9")]
+    partial class Initial9
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,7 +265,7 @@ namespace OnlineStore.Data.Migrations
                     b.Property<int?>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -300,6 +300,75 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentUsesCount")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountSize")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("FinishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNotUsesLimit")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxUsesCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PercentDiscountSize")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FinishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -317,6 +386,9 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -324,6 +396,9 @@ namespace OnlineStore.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -344,9 +419,14 @@ namespace OnlineStore.Data.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -365,11 +445,38 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFeaturedProduct")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNewProduct")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSale")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManufacturersCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("StoreCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SubCategoryId")
@@ -381,16 +488,21 @@ namespace OnlineStore.Data.Migrations
                     b.Property<int>("UnitsInStock")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WishlistId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("SubCategoryId");
 
+                    b.HasIndex("WishlistId");
+
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.ProductDetails", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,20 +510,61 @@ namespace OnlineStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsModerated")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PropertyName")
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PropertyValue")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Specification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SpecificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecificationValue")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductDetails");
+                    b.ToTable("Specifications");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
@@ -434,6 +587,30 @@ namespace OnlineStore.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -504,7 +681,9 @@ namespace OnlineStore.Data.Migrations
 
                     b.HasOne("OnlineStore.Domain.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -517,7 +696,13 @@ namespace OnlineStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OnlineStore.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Cart");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Product", b =>
@@ -534,15 +719,34 @@ namespace OnlineStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OnlineStore.Domain.Wishlist", null)
+                        .WithMany("Products")
+                        .HasForeignKey("WishlistId");
+
                     b.Navigation("Category");
 
                     b.Navigation("SubCategory");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.ProductDetails", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Review", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Product", "Product")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("OnlineStore.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Specification", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Product", null)
-                        .WithMany("ProductDetails")
+                        .WithMany("Specification")
                         .HasForeignKey("ProductId");
                 });
 
@@ -555,6 +759,15 @@ namespace OnlineStore.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Cart", b =>
@@ -571,10 +784,17 @@ namespace OnlineStore.Data.Migrations
 
             modelBuilder.Entity("OnlineStore.Domain.Product", b =>
                 {
-                    b.Navigation("ProductDetails");
+                    b.Navigation("Reviews");
+
+                    b.Navigation("Specification");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>
                 {
                     b.Navigation("Products");
                 });

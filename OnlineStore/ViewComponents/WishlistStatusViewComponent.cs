@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 namespace OnlineStore.ViewComponents
 {

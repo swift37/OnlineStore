@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 #nullable disable
 
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230720164909_Initial")]
-    partial class Initial
+    [Migration("20230722150433_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,17 +255,20 @@ namespace OnlineStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubCategoryId")
+                    b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
@@ -283,6 +286,30 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.ProductDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PropertyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PropertyValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductDetails");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -291,7 +318,7 @@ namespace OnlineStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -360,22 +387,35 @@ namespace OnlineStore.Data.Migrations
                 {
                     b.HasOne("OnlineStore.Domain.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("OnlineStore.Domain.SubCategory", "SubCategory")
                         .WithMany("Products")
-                        .HasForeignKey("SubCategoryId");
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("SubCategory");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.ProductDetails", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Product", null)
+                        .WithMany("ProductDetails")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Category", "Category")
                         .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
@@ -385,6 +425,11 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Product", b =>
+                {
+                    b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.SubCategory", b =>

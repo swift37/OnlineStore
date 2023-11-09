@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 using OnlineStore.Models.ViewModels;
 

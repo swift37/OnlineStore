@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 
 #nullable disable
 
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230831123834_Initial10")]
-    partial class Initial10
+    [Migration("20230827173040_Initial8")]
+    partial class Initial8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,28 +300,6 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.ContactRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContactRequests");
-                });
-
             modelBuilder.Entity("OnlineStore.Domain.Coupon", b =>
                 {
                     b.Property<int>("Id")
@@ -473,17 +451,14 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsFeaturedProduct")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsNewProduct")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsNewProduct")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsSale")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsSale")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
@@ -609,25 +584,6 @@ namespace OnlineStore.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Subscriber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SubscribeDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subscribers");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Wishlist", b =>

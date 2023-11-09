@@ -1,6 +1,6 @@
 using Librarian.Services;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Data;
+using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 using Stripe;
 
@@ -12,9 +12,7 @@ StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options
-    //.UseLazyLoadingProxies()
     .UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -30,7 +28,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
