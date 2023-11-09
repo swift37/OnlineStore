@@ -5,14 +5,19 @@
         </a>
         <div class="nav-menu-wrap">
             <nav class="nav-menu mobile-hide">
+                @await Component.InvokeAsync("MenuItemsGroup")
+            </nav>
+            <nav class="nav-menu right mobile-hide">
                 <div class="nav-link has-menu">
-                    Category
-                    <div class="dpt-categories nav-link-menu">
+                    <div class="content">
+                        Store
+                    </div>
+                    <div class="nav-link-menu">
                         <div class="dpt-menu">
                             <div class="second-links">
                                 <div class="link-item has-child beauty">
                                     <div class="main-link">
-                                        Subcategory <i class="icon angle right"></i>
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
                                     </div>
                                     <div class="child-menu">
                                         <a href="/">Item</a>
@@ -27,12 +32,9 @@
                                 </div>
                                 <div class="link-item has-child electric">
                                     <div class="main-link">
-                                        Subcategory <i class="icon angle right"></i>
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
                                     </div>
                                     <div class="child-menu">
-                                        <a href="/">Item</a>
-                                        <a href="/">Item</a>
-                                        <a href="/">Item</a>
                                         <a href="/">Item</a>
                                         <a href="/">Item</a>
                                         <a href="/">Item</a>
@@ -42,11 +44,9 @@
                                 </div>
                                 <div class="link-item has-child fashion">
                                     <div class="main-link">
-                                        Subcategory <i class="icon angle right"></i>
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
                                     </div>
                                     <div class="child-menu">
-                                        <a href="/">Item</a>
-                                        <a href="/">Item</a>
                                         <a href="/">Item</a>
                                         <a href="/">Item</a>
                                         <a href="/">Item</a>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="link-item has-child homekit">
                                     <div class="main-link">
-                                        Subcategory <i class="icon angle right"></i>
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
                                     </div>
                                     <div class="mega-menu">
                                         <div class="flex-column">
@@ -129,105 +129,15 @@
                         </div>
                     </div>
                 </div>
-                <a class="nav-link">Category</a>
-                <a class="nav-link">Category</a>
-                <a class="nav-link">Category</a>
-                <a class="nav-link">Category</a>
-                <a class="nav-link">Category</a>
-            </nav>
-            <nav class="nav-menu right mobile-hide">
-                <div class="store-link nav-link">
-                    Store
-                    <div class="mega-menu">
-                        <div class="mega-menu-container">
-                            <div class="wrapper">
-                                <div class="flex-column flexcolumn">
-                                    <div class="row">
-                                        <h4>Category</h4>
-                                        <div class="links">
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-column">
-                                    <div class="row">
-                                        <h4>Category</h4>
-                                        <div class="links">
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-column">
-                                    <div class="row">
-                                        <h4>Category</h4>
-                                        <div class="links">
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-column">
-                                    <div class="row">
-                                        <h4>Category</h4>
-                                        <div class="links two-columns">
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                            <a href="/">Item</a>
-                                        </div>
-                                        <a href="/" class="view-all">
-                                            View all brands<i class="icon angle right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="flex-column products">
-                                    <div class="row">
-                                        <div class="media">
-                                            <div class="tumbnail object-cover">
-                                                <a href="/">
-                                                    <img src="/resources/images/mega-menu-image.png" alt="" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="text-content">
-                                            <h4>Most wanted!</h4>
-                                            <a href="/" class="primary-button">Order Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="nav-link">
+                    <a class="content" asp-controller="Home" asp-action="About">
+                        About
+                    </a>
                 </div>
-                <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                 <div class="nav-link has-menu">
-                    Support
+                    <a class="content" asp-controller="Home" asp-action="Contact">
+                        Support
+                    </a>
                     <div class="nav-link-menu">
                         <div class="dpt-menu">
                             <div class="second-links">

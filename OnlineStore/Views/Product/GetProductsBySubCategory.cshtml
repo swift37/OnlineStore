@@ -1,7 +1,7 @@
 ﻿@model OnlineStore.Models.ViewModels.ProductsCollectionViewModel
 
 @{
-    ViewData["Title"] = $"{Model.Category?.Name} - {Model.SubCategory?.Name}";
+    ViewData["Title"] = $"{Model.Category?.Name}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -186,14 +186,10 @@
                                         {
                                             <li>@Model.Category.Name</li>
                                         }
-                                        @if (Model.SubCategory != null)
-                                        {
-                                            <li>@Model.SubCategory.Name</li>
-                                        }
                                     </ul>
                                 </div>
                                 <div class="page-title">
-                                    <h1>@(Model.SubCategory?.Name ?? Model.Category?.Name)</h1>
+                                    <h1>@Model.Category?.Name</h1>
                                 </div>
                                 <div class="cat-navigation flexitem">
                                     <div class="item-filter desktop-hide">
@@ -248,7 +244,7 @@
                                 {
                                     @for (int i = 1; i <= Model.TotalPages; i++)
                                     {
-                                        <a asp-route="products" asp-route-subcatid="@Model.SubCategoryId" asp-route-page="@i" class="page-link">@i</a>
+                                        <a asp-route="products" asp-route-subcatid="@Model.CategoryId" asp-route-page="@i" class="page-link">@i</a>
                                     }
                                 }
                                 else
@@ -257,21 +253,21 @@
                                     {
                                         for (int i = 1; i < 5; i++)
                                         {
-                                            <a asp-route="products" asp-route-subcatid="@Model.SubCategoryId" asp-route-page="@i" class="page-link">@i</a>
+                                            <a asp-route="products" asp-route-subcatid="@Model.CategoryId" asp-route-page="@i" class="page-link">@i</a>
                                         }
                                     }
                                     else if (Model.CurrentPage > Model.TotalPages - 4)
                                     {
                                         for (int i = Model.TotalPages - 4; i <= Model.TotalPages; i++)
                                         {
-                                            <a asp-route="products" asp-route-subcatid="@Model.SubCategoryId" asp-route-page="@i" class="page-link">@i</a>
+                                            <a asp-route="products" asp-route-subcatid="@Model.CategoryId" asp-route-page="@i" class="page-link">@i</a>
                                         }
                                     }
                                     else
                                     {
                                         for (int i = Model.CurrentPage - 2; i <= Model.CurrentPage + 2; i++)
                                         {
-                                            <a asp-route="products" asp-route-subcatid="@Model.SubCategoryId" asp-route-page="@i" class="page-link">@i</a>
+                                            <a asp-route="products" asp-route-subcatid="@Model.CategoryId" asp-route-page="@i" class="page-link">@i</a>
                                         }
                                     }
                                 }

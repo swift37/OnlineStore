@@ -1,0 +1,98 @@
+﻿@model IEnumerable<OnlineStore.Domain.MenuItem>
+
+@foreach (var item in Model)
+{
+    <div class="nav-link has-mega-menu">
+        <div class="content">
+            @item.Category?.Name?.Replace("and", "/")
+        </div>
+        <div class="nav-link-menu">
+            <div class="mega-menu">
+                <div class="mega-menu-container">
+                    <div class="wrapper">
+                        <div class="flex-column flexcolumn">
+                            <div class="row">
+                                <h4>Category</h4>
+                                <div class="links">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column flexcolumn">
+                            <div class="row">
+                                <h4>Category</h4>
+                                <div class="links">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column flexcolumn">
+                            <div class="row">
+                                <h4>Category</h4>
+                                <div class="links">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column flexcolumn">
+                            <div class="row">
+                                <h4>Category</h4>
+                                <div class="links two-columns">
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                    <a href="/">Item</a>
+                                </div>
+                                <a href="/" class="view-all">
+                                    View all brands <i class="fa-solid fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-column flexcolumn products">
+                            <div class="row">
+                                <div class="media">
+                                    <div class="tumbnail object-cover">
+                                        <a href="/">
+                                            <img src="/resources/images/mega-menu-image.png" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-content">
+                                    <h4>Most wanted!</h4>
+                                    <a href="/" class="primary-button">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
