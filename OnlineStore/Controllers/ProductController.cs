@@ -17,32 +17,30 @@ namespace OnlineStore.Controllers
 
         [Route("products", Name = "products")]
         public IActionResult GetProductsBySubCategory(
-            int subCatId, 
+            int catId, 
             int page = 1, 
             int itemsPerPage = 15, 
             SortParameter sortBy = SortParameter.Default)
         {
             if (itemsPerPage > 30 || itemsPerPage < 15) itemsPerPage = 15;
 
-            var subCategory = _context.SubCategories
-                .Include(sc => sc.Category)
-                .SingleOrDefault(sc => sc.Id == subCatId);
+            var category = _context.Categories
+                .Include(c => c.Parent)
+                .SingleOrDefault(c => c.Id == catId);
 
-            if (subCategory is null) return RedirectToAction("Error", "NotFound");
+            if (category is null) return RedirectToAction("Error", "NotFound");
 
             var pagesCount = (_context.Products.Count() + itemsPerPage - 1) / itemsPerPage;
             var productsList = _context.Products
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .Include(p => p.SubCategory)
                 .Include(p => p.Category);
 
             var productsSortedList = SortProducts(productsList, sortBy);
 
             var model = new ProductsCollectionViewModel(
-                productsSortedList, 
-                subCategory.Category, 
-                subCategory, 
+                productsSortedList,
+                category, 
                 page, 
                 pagesCount,
                 itemsPerPage);

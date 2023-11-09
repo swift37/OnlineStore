@@ -4,7 +4,7 @@ using OnlineStore.Domain;
 namespace OnlineStore.Models.ViewModels
 {
 
-    public class SubCategoryViewModel : SubCategory
+    public class SubCategoryViewModel : Category
     {
         public IEnumerable<SelectListItem> AvailableCategories { get; set; } = new HashSet<SelectListItem>();
     }

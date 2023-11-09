@@ -26,7 +26,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult Categories() 
         {
-            return View(_context.Categories.Include(c => c.SubCategories).ToArray()); 
+            return View(_context.Categories.Include(c => c.Subcategories).ToArray()); 
         }
 
         [HttpGet]
@@ -74,13 +74,13 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateSubCategory(SubCategoryViewModel model)
         {
-            var category = _context.Categories.SingleOrDefault(c => c.Id == model.CategoryId);
+            var category = _context.Categories.SingleOrDefault(c => c.Id == model.Id);
 
             if (category is null) return View();
 
-            var subcategory = new SubCategory();
+            var subcategory = new Category();
             subcategory.Name = model.Name;
-            subcategory.Category = category;
+            subcategory.Parent = category;
 
             _context.Entry(subcategory).State = EntityState.Added;
             _context.SaveChanges();
@@ -90,14 +90,13 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult EditSubCategory(int id)
         {
-            var subcategory = _context.SubCategories.SingleOrDefault(c => c.Id == id);
+            var subcategory = _context.Categories.SingleOrDefault(c => c.Id == id);
             if (subcategory is null) return RedirectToAction("NotFound", "Error");
 
             var model = new SubCategoryViewModel
             {
                 Id = subcategory.Id,
                 Name = subcategory.Name,
-                CategoryId = subcategory.CategoryId,
                 AvailableCategories = new SelectList(
                     _context.Categories, 
                     nameof(Category.Id), 
@@ -110,13 +109,13 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult EditSubCategory(SubCategoryViewModel model)
         {
-            var subcategory = _context.SubCategories.SingleOrDefault(c => c.Id == model.Id);
-            var category = _context.Categories.SingleOrDefault(c => c.Id == model.CategoryId);
+            var subcategory = _context.Categories.SingleOrDefault(c => c.Id == model.Id);
+            var category = _context.Categories.SingleOrDefault(c => c.Id == model.Id);
 
             if (subcategory is null || category is null) return RedirectToAction("NotFound", "Error");
 
             subcategory.Name = model.Name;
-            subcategory.Category = category;
+            subcategory.Parent = category;
 
             _context.Entry(subcategory).State = EntityState.Modified;
             _context.SaveChanges();
@@ -175,9 +174,9 @@ namespace OnlineStore.Controllers
                 nameof(Category.Id),
                 nameof(Category.Name));
             model.AvailableSubCategories = new SelectList(
-                _context.SubCategories.Where(sc => sc.CategoryId == model.CategoryId),
-                nameof(SubCategory.Id),
-                nameof(SubCategory.Name));
+                _context.Categories.Where(sc => sc.Id == model.CategoryId),
+                nameof(Category.Id),
+                nameof(Category.Name));
 
             return View(model);
         }
@@ -221,10 +220,10 @@ namespace OnlineStore.Controllers
 
         public IActionResult GetSubCategories(int id)
         {
-            var category = _context.Categories.Include(c => c.SubCategories).SingleOrDefault(c => c.Id == id);
+            var category = _context.Categories.Include(c => c.Subcategories).SingleOrDefault(c => c.Id == id);
             if (category is null) return Json(false);
 
-            var subcategories = new SelectList(category.SubCategories, nameof(SubCategory.Id), nameof(SubCategory.Name));
+            var subcategories = new SelectList(category.Subcategories, nameof(Category.Id), nameof(Category.Name));
             return Json(subcategories);
         }
     }

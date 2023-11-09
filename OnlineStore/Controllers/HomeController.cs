@@ -75,8 +75,8 @@ namespace OnlineStore.Controllers
             var productsList = _context.Products
                 .Skip((page - 1) * _pageSize)
                 .Take(_pageSize)
-                .Include(p => p.SubCategory);
-            var model = new ProductsCollectionViewModel(productsList, null, null, page, pagesCount, 15);
+                .Include(p => p.Category);
+            var model = new ProductsCollectionViewModel(productsList, null, page, pagesCount, 15);
             return View(model);
         }
 
