@@ -67,7 +67,7 @@ namespace OnlineStore.Controllers
         public IActionResult ViewProduct(int? id)
         {
             if (id is null) return RedirectToAction("Index", "Home");
-            return View(_context.Products.Include(p => p.Specification).SingleOrDefault(p => p.Id == id));
+            return View(_context.Products.Include(p => p.Specifications).SingleOrDefault(p => p.Id == id));
         }
 
         [Route("cart")]

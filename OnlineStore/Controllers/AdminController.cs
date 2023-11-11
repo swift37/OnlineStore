@@ -162,7 +162,7 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            var product = _context.Products.Include(p => p.Specification).SingleOrDefault(p => p.Id == id);
+            var product = _context.Products.Include(p => p.Specifications).SingleOrDefault(p => p.Id == id);
             if (product is null) return RedirectToAction("NotFound", "Error");
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductViewModel>());
@@ -184,20 +184,20 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductViewModel model)
         {
-            var product = _context.Products.Include(p => p.Specification).SingleOrDefault(c => c.Id == model.Id);
+            var product = _context.Products.Include(p => p.Specifications).SingleOrDefault(c => c.Id == model.Id);
 
             if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var removableSpecs = product.Specification.ExceptBy(model.Specification.Select(p => p.Id), pd => pd.Id);
-            foreach (var spec in removableSpecs.ToArray()) product.Specification.Remove(spec);
+            var removableSpecs = product.Specifications.ExceptBy(model.Specifications.Select(p => p.Id), pd => pd.Id);
+            foreach (var spec in removableSpecs.ToArray()) product.Specifications.Remove(spec);
 
-            var newSpecs = model.Specification.ExceptBy(product.Specification.Select(p => p.Id), pd => pd.Id);
-            product.Specification.AddRange(newSpecs);
+            var newSpecs = model.Specifications.ExceptBy(product.Specifications.Select(p => p.Id), pd => pd.Id);
+            product.Specifications.AddRange(newSpecs);
 
             var config = new MapperConfiguration(cfg =>
             cfg.CreateMap<ProductViewModel, Product>()
             .ForMember(p => p.Image, opt => opt.Ignore())
-            .ForMember(p => p.Specification, opt => opt.Ignore()));
+            .ForMember(p => p.Specifications, opt => opt.Ignore()));
             var mapper = config.CreateMapper();
 
             mapper.Map(model, product);

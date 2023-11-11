@@ -105,14 +105,14 @@
     </div>
 </section>
 
-@if (Model.Specification != null && Model.Specification.Count > 0)
+@if (Model.Specifications != null && Model.Specifications.Count > 0)
 {
     <section class="full-specs-section">
         <div class="container">
             <h3 class="ui horizontal divider header">Specifications</h3>
             <table class="ui definition table">
                 <tbody>
-                    @foreach (var spec in Model.Specification)
+                    @foreach (var spec in Model.Specifications)
                     {
                         <tr>
                             <td>@spec.SpecificationName</td>

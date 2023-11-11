@@ -12,31 +12,20 @@ namespace OnlineStore.Domain
         [Column(TypeName = "decimal(18,2)")]
         public decimal Discount { get; set; }
 
-        [NotMapped]
-        public decimal PriceBeforeDiscount => UnitPrice - Discount;
-
         public int UnitsInStock { get; set; }
 
         public string? Description { get; set; }
 
-        [NotMapped]
-        public string? ShortDescription => Description?.Length < 100 ? Description : Description?.Substring(0, 100);
-
-        [NotMapped]
-        public bool IsActive => UnitsInStock > 0;
-
         public string? Image { get; set; }
-
-        public int CategoryId { get; set; }
 
         public Category? Category { get; set; }
 
-        public List<Specification> Specification { get; set; } = new List<Specification>();
+        public ICollection<Specification?> Specifications { get; set; } = new HashSet<Specification?>();
 
         [Range(0.0, 5.0)]
         public double Rating { get; set; }
 
-        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+        public ICollection<Review?> Reviews { get; set; } = new HashSet<Review?>();
 
         public string? Manufacturer { get; set; }
 

@@ -1,17 +1,10 @@
 ﻿using OnlineStore.Domain.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Domain
 {
-    public class Specification : Entity
+    public class Specification : NamedEntity
     {
-        public string? SpecificationName { get; set; }
-
-        public string? SpecificationValue { get; set; }
+        public string? Value { get; set; }
 
         public bool IsMain { get; set; }
     }

@@ -1,5 +1,4 @@
 ﻿using OnlineStore.Domain.Base;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
 {
@@ -13,16 +12,6 @@ namespace OnlineStore.Domain
 
         public ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
-        [NotMapped]
-        public decimal SubtotalPrice => Products.Sum(p => p.UnitPrice);
-
-        [NotMapped]
-        public decimal TotalDiscount => Products.Sum(p => p.Discount);
-
-        [NotMapped]
-        public decimal TotalPrice => SubtotalPrice - TotalDiscount;
-
-        [NotMapped]
-        public int TotalQuantity => Products.Count();
+        public int ProductsQuantity => Products.Count;
     }
 }

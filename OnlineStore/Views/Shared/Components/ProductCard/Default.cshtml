@@ -47,9 +47,9 @@
             </a>
         </div>
         <ul class="product-main-specs">
-            @if (Model.Specification != null)
+            @if (Model.Specifications != null)
             {
-                foreach (var spec in Model.Specification)
+                foreach (var spec in Model.Specifications)
                 {
                     <li class="product-spec">
                         @spec.SpecificationName: @spec.SpecificationValue
