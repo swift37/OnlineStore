@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Application.Models
 {
-    public class ProductsCollectionDTO
+    public class ProductsPageDTO
     {
         public int Id { get; set; }
 

@@ -7,6 +7,7 @@ namespace OnlineStore.Application.Mapping
     {
         public static SpecificationDTO? ToDTO(this Specification specification) => specification is null ? null : new SpecificationDTO
         {
+            Id = specification.Id,
             Name = specification.Name,
             Value = specification.Value,
             IsMain = specification.IsMain
@@ -14,6 +15,7 @@ namespace OnlineStore.Application.Mapping
 
         public static Specification? FromDTO(this SpecificationDTO specification) => specification is null ? null : new Specification
         {
+            Id = specification.Id,
             Name = specification.Name,
             Value = specification.Value,
             IsMain = specification.IsMain

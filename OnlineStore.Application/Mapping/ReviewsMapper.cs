@@ -7,6 +7,7 @@ namespace OnlineStore.Application.Mapping
     {
         public static ReviewDTO? ToDTO(this Review review) => review is null ? null : new ReviewDTO
         {
+            Id = review.Id,
             Title = review.Title,
             Product = review.Product?.ToDTO(),
             Content = review.Content,
@@ -16,6 +17,7 @@ namespace OnlineStore.Application.Mapping
 
         public static Review? FromDTO(this ReviewDTO review) => review is null ? null : new Review
         {
+            Id = review.Id,
             Title = review.Title,
             Product = review.Product?.FromDTO(),
             Content = review.Content,

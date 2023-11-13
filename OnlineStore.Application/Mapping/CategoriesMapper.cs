@@ -7,6 +7,7 @@ namespace OnlineStore.Application.Mapping
     {
         public static CategoryDTO? ToDTO(this Category category) => category is null ? null : new CategoryDTO
         {
+            Id = category.Id,
             Name = category.Name,
             Description = category.Description,
             Parent = category.Parent?.ToDTO(),
@@ -17,6 +18,7 @@ namespace OnlineStore.Application.Mapping
 
         public static Category? FromDTO(this CategoryDTO category) => category is null ? null : new Category
         {
+            Id = category.Id,
             Name = category.Name,
             Description = category.Description,
             Parent = category.Parent?.FromDTO(),
