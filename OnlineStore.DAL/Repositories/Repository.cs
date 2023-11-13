@@ -7,7 +7,7 @@ namespace OnlineStore.DAL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : Entity, new()
     {
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
 
         protected DbSet<T> DbSet { get; }
 
