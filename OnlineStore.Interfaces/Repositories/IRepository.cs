@@ -4,17 +4,17 @@ namespace OnlineStore.Interfaces.Repositories
 {
     public interface IRepository<T> where T : IEntity
     {
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(CancellationToken cancellation = default);
 
-        Task<bool> Exists(int id);
+        Task<bool> Exists(int id, CancellationToken cancellation = default);
 
-        Task<T> Get(int id);
+        Task<T> Get(int id, CancellationToken cancellation = default);
 
-        Task<T> Create(T entity);
+        Task<T> Create(T entity, CancellationToken cancellation = default);
 
-        Task Update(T entity);
+        Task Update(T entity, CancellationToken cancellation = default);
 
-        Task Delete(T entity);
+        Task Delete(T entity, CancellationToken cancellation = default);
 
     }
 }
