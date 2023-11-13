@@ -8,13 +8,13 @@ namespace OnlineStore.Interfaces.Repositories
 
         Task<bool> Exists(int id, CancellationToken cancellation = default);
 
-        Task<T> Get(int id, CancellationToken cancellation = default);
+        Task<T?> Get(int id, CancellationToken cancellation = default);
 
-        Task<T> Create(T entity, CancellationToken cancellation = default);
+        Task<T?> Create(T? entity, CancellationToken cancellation = default);
 
-        Task Update(T entity, CancellationToken cancellation = default);
+        Task Update(T? entity, CancellationToken cancellation = default);
 
-        Task Delete(T entity, CancellationToken cancellation = default);
+        Task<bool> Delete(int id, CancellationToken cancellation = default);
 
     }
 }
