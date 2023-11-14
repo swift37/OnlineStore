@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using OnlineStore.Domain.Base;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using OnlineStore.Domain.Base;
 
 namespace OnlineStore.Domain
 {
@@ -8,13 +6,12 @@ namespace OnlineStore.Domain
     {
         public string? Number { get; set; }
         
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime StartDate { get; set; }
 
         public DateTime? FinishDate { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
         public decimal DiscountSize { get; set; }
 
         public double PercentDiscountSize { get; set; }
@@ -26,8 +23,5 @@ namespace OnlineStore.Domain
         public bool IsNotUsesLimit { get; set; }
 
         public bool IsActive { get; set; } = true;
-
-        [NotMapped]
-        public bool IsActual => IsActive && DateTime.Now >= StartDate && DateTime.Now <= FinishDate && (IsNotUsesLimit || CurrentUsesCount < MaxUsesCount);
     }
 }

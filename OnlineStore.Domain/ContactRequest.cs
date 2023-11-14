@@ -4,7 +4,7 @@ namespace OnlineStore.Domain
 {
     public class ContactRequest : Entity
     {
-        public string? Name { get; set; }
+        public string? ContactName { get; set; }
 
         public string? Email { get; set; }
 

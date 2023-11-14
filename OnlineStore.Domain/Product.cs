@@ -6,10 +6,8 @@ namespace OnlineStore.Domain
 {
     public class Product : NamedEntity
     {
-        [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
         public decimal Discount { get; set; }
 
         public int UnitsInStock { get; set; }
