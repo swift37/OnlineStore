@@ -4,7 +4,7 @@ namespace OnlineStore.Domain
 {
     public class Wishlist : Entity
     {
-        public ApplicationUser? User { get; set; }
+        public Guid UserId { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
