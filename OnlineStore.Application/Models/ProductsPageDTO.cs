@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public IEnumerable<ProductDTO?> Products { get; set; } = Enumerable.Empty<ProductDTO>();
+        public IEnumerable<ProductDTO> Products { get; set; } = Enumerable.Empty<ProductDTO>();
 
         public CategoryDTO? Category { get; set; }
 

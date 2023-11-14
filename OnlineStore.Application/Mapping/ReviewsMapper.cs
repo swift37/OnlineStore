@@ -5,7 +5,7 @@ namespace OnlineStore.Application.Mapping
 {
     public static class ReviewsMapper
     {
-        public static ReviewDTO? ToDTO(this Review review) => review is null ? null : new ReviewDTO
+        public static ReviewDTO ToDTO(this Review review) => new ReviewDTO
         {
             Id = review.Id,
             Title = review.Title,
@@ -15,7 +15,7 @@ namespace OnlineStore.Application.Mapping
             CreationDate = review.CreationDate
         };
 
-        public static Review? FromDTO(this ReviewDTO review) => review is null ? null : new Review
+        public static Review FromDTO(this ReviewDTO review) => new Review
         {
             Id = review.Id,
             Title = review.Title,
@@ -25,8 +25,8 @@ namespace OnlineStore.Application.Mapping
             CreationDate = review.CreationDate
         };
 
-        public static IEnumerable<ReviewDTO?> ToDTO(this IEnumerable<Review?> reviews) => reviews.Select(s => s?.ToDTO());
+        public static IEnumerable<ReviewDTO> ToDTO(this IEnumerable<Review> reviews) => reviews.Select(s => s.ToDTO());
 
-        public static IEnumerable<Review?> FromDTO(this IEnumerable<ReviewDTO?> reviews) => reviews.Select(s => s?.FromDTO());
+        public static IEnumerable<Review> FromDTO(this IEnumerable<ReviewDTO> reviews) => reviews.Select(s => s.FromDTO());
     }
 }

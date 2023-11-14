@@ -4,7 +4,7 @@ namespace OnlineStore.Domain
 {
     public class ProductsPage : Entity
     {
-        public IEnumerable<Product?> Products { get; set; } = Enumerable.Empty<Product>();
+        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 
         public Category? Category { get; set; }
 

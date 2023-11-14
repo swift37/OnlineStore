@@ -9,9 +9,9 @@ namespace OnlineStore.Domain
 
         public Category? Parent { get; set; }
 
-        public IEnumerable<Category?> Subcategories { get; set; } = Enumerable.Empty<Category?>();
+        public IEnumerable<Category> Subcategories { get; set; } = Enumerable.Empty<Category>();
 
-        public IEnumerable<Product?> Products { get; set; } = Enumerable.Empty<Product?>();
+        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 
         public bool IsMainCategory { get; set; }
 

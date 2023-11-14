@@ -5,7 +5,7 @@ namespace OnlineStore.Application.Mapping
 {
     public static class CategoriesMapper
     {
-        public static CategoryDTO? ToDTO(this Category category) => category is null ? null : new CategoryDTO
+        public static CategoryDTO ToDTO(this Category category) => new CategoryDTO
         {
             Id = category.Id,
             Name = category.Name,
@@ -16,7 +16,7 @@ namespace OnlineStore.Application.Mapping
             IsMainCategory = category.IsMainCategory
         };
 
-        public static Category? FromDTO(this CategoryDTO category) => category is null ? null : new Category
+        public static Category FromDTO(this CategoryDTO category) => new Category
         {
             Id = category.Id,
             Name = category.Name,
@@ -27,8 +27,8 @@ namespace OnlineStore.Application.Mapping
             IsMainCategory = category.IsMainCategory
         };
 
-        public static IEnumerable<CategoryDTO?> ToDTO(this IEnumerable<Category?> categories) => categories.Select(c => c?.ToDTO());
+        public static IEnumerable<CategoryDTO> ToDTO(this IEnumerable<Category> categories) => categories.Select(c => c.ToDTO());
 
-        public static IEnumerable<Category?> FromDTO(this IEnumerable<CategoryDTO?> categories) => categories.Select(c => c?.FromDTO());
+        public static IEnumerable<Category> FromDTO(this IEnumerable<CategoryDTO> categories) => categories.Select(c => c.FromDTO());
     }
 }

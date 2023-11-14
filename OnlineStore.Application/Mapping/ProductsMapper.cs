@@ -5,7 +5,7 @@ namespace OnlineStore.Application.Mapping
 {
     public static class ProductsMapper
     {
-        public static ProductDTO? ToDTO(this Product product) => product is null ? null : new ProductDTO
+        public static ProductDTO ToDTO(this Product product) => new ProductDTO
         {
             Id = product.Id,
             Name = product.Name,
@@ -27,7 +27,7 @@ namespace OnlineStore.Application.Mapping
             IsSale = product.IsSale,
         };
 
-        public static Product? FromDTO(this ProductDTO product) => product is null ? null : new Product
+        public static Product FromDTO(this ProductDTO product) => new Product
         {
             Id = product.Id,
             Name = product.Name,
@@ -49,8 +49,8 @@ namespace OnlineStore.Application.Mapping
             IsSale = product.IsSale
         };
 
-        public static IEnumerable<ProductDTO?> ToDTO(this IEnumerable<Product?> products) => products.Select(p => p?.ToDTO());
+        public static IEnumerable<ProductDTO> ToDTO(this IEnumerable<Product> products) => products.Select(p => p.ToDTO());
 
-        public static IEnumerable<Product?> FromDTO(this IEnumerable<ProductDTO?> products) => products.Select(p => p?.FromDTO());
+        public static IEnumerable<Product> FromDTO(this IEnumerable<ProductDTO> products) => products.Select(p => p.FromDTO());
     }
 }

@@ -6,7 +6,7 @@ namespace OnlineStore.Application.Models
     {
         public int Id { get; set; }
 
-        public ICollection<OrderItemDTO?> Items { get; set; } = new HashSet<OrderItemDTO?>();
+        public ICollection<OrderItemDTO> Items { get; set; } = new HashSet<OrderItemDTO>();
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
 
