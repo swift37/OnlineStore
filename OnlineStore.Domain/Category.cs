@@ -7,6 +7,8 @@ namespace OnlineStore.Domain
     {
         public string? Description { get; set; }
 
+        public int ParentId { get; set; }
+
         public Category? Parent { get; set; }
 
         public IEnumerable<Category> Subcategories { get; set; } = Enumerable.Empty<Category>();
@@ -14,8 +16,5 @@ namespace OnlineStore.Domain
         public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 
         public bool IsMainCategory { get; set; }
-
-        [NotMapped]
-        public bool IsActive => Products?.Any() ?? false;
     }
 }

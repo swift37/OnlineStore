@@ -7,6 +7,8 @@ namespace OnlineStore.Domain
     {
         public Guid UserId { get; set; }
 
+        public int ProductId { get; set; }
+
         public Product? Product { get; set; }
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
