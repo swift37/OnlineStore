@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using OnlineStore.Domain.Base;
+﻿using OnlineStore.Domain.Base;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
 {
