@@ -93,7 +93,7 @@
                     <h2>Order Summary</h2>
                     <div class="summary-order">
                         <div class="summary-totals">
-                            <ul>
+@*                             <ul>
                                 <li>
                                     <span>Subtotal</span>
                                     <span>$@Model.SubtotalPrice</span>
@@ -110,7 +110,7 @@
                                     <span>Total</span>
                                     <strong>$@Model.TotalPrice</strong>
                                 </li>
-                            </ul>
+                            </ul> *@
                         </div>
                         <ul class="products mini">
                             @if (Model.CartItems.Count() > 0)
@@ -125,10 +125,10 @@
                                             </div>
                                             <div class="item-content">
                                                 <p>@cartItem.Product.Name</p>
-                                                <span class="price">
+@*                                                 <span class="price">
                                                     <span>$@cartItem.Product.PriceBeforeDiscount</span>
                                                     <span>x @cartItem.Quantity</span>
-                                                </span>
+                                                </span> *@
                                             </div>
                                         </li>
                                     }

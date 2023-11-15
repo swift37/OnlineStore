@@ -47,7 +47,7 @@
             </a>
         </div>
         <ul class="product-main-specs">
-            @if (Model.Specifications != null)
+@*             @if (Model.Specifications != null)
             {
                 foreach (var spec in Model.Specifications)
                 {
@@ -55,7 +55,7 @@
                         @spec.SpecificationName: @spec.SpecificationValue
                     </li>
                 }
-            }
+            } *@
         </ul>
         <div class="product-info">
             <div class="info-container">
@@ -64,7 +64,7 @@
                     {
                         <span class="discount">$@Model.UnitPrice</span>
                     }
-                    <span class="price">$@Model.PriceBeforeDiscount</span>
+@*                     <span class="price">$@Model.PriceBeforeDiscount</span> *@
                 </div>
                 <div class="product-status">
                     @if (Model.IsAvailable)

@@ -18,96 +18,96 @@ namespace OnlineStore.Controllers
             _emailSender = emailSender;
         }
 
-        public IActionResult PersonalInfo(int cartId)
-        {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefault(c => c.Status == CartStatus.Active);
+        //public IActionResult PersonalInfo(int cartId)
+        //{
+        //    var cart = _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .FirstOrDefault(c => c.Status == CartStatus.Active);
 
-            return View(cart);
-        }
+        //    return View(cart);
+        //}
 
-        public IActionResult CreateOrder(Order order)
-        {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .SingleOrDefault(x => x.Id == order.CartId);
-            if (cart is null) return RedirectToAction("NotFound", "Error");
-            order.Cart = cart;
-            order.Total = cart.TotalPrice;
-            cart.Status = CartStatus.Completed;
-            cart.PayDate = DateTime.Now;
+        //public IActionResult CreateOrder(Order order)
+        //{
+        //    var cart = _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .SingleOrDefault(x => x.Id == order.CartId);
+        //    if (cart is null) return RedirectToAction("NotFound", "Error");
+        //    order.Cart = cart;
+        //    order.Total = cart.TotalPrice;
+        //    cart.Status = CartStatus.Completed;
+        //    cart.PayDate = DateTime.Now;
 
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+        //    _context.Orders.Add(order);
+        //    _context.SaveChanges();
 
-            //_emailSender.SendMail("To", "New order", "Message");
+        //    //_emailSender.SendMail("To", "New order", "Message");
 
-            //return RedirectToAction("Checkout", new { cartId = cart.Id });
-            return Checkout(cart);
-        }
+        //    //return RedirectToAction("Checkout", new { cartId = cart.Id });
+        //    return Checkout(cart);
+        //}
 
-        public IActionResult Checkout(Cart cart)
-        {
-            if (cart is null) return RedirectToAction("NotFound", "Error");
+        //public IActionResult Checkout(Cart cart)
+        //{
+        //    if (cart is null) return RedirectToAction("NotFound", "Error");
 
-            var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
-            var options = new SessionCreateOptions
-            {
-                LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment",
-                PaymentMethodTypes = new List<string>{ "card" },
-                SuccessUrl = domain + $"/order/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&cartId=" + cart.Id,
-                CancelUrl = domain + "/order/checkoutfailed.html"
-            };
+        //    var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+        //    var options = new SessionCreateOptions
+        //    {
+        //        LineItems = new List<SessionLineItemOptions>(),
+        //        Mode = "payment",
+        //        PaymentMethodTypes = new List<string>{ "card" },
+        //        SuccessUrl = domain + $"/order/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&cartId=" + cart.Id,
+        //        CancelUrl = domain + "/order/checkoutfailed.html"
+        //    };
 
-            foreach (var cartItem in cart.CartItems)
-            {
-                options.LineItems.Add(new SessionLineItemOptions
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        UnitAmountDecimal = cartItem.Product?.UnitPrice,
-                        Currency = "USD",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = cartItem.Product?.Name,
-                        }
-                    },
-                    Quantity = cartItem.Quantity
-                });
-            }
+        //    foreach (var cartItem in cart.CartItems)
+        //    {
+        //        options.LineItems.Add(new SessionLineItemOptions
+        //        {
+        //            PriceData = new SessionLineItemPriceDataOptions
+        //            {
+        //                UnitAmountDecimal = cartItem.Product?.UnitPrice,
+        //                Currency = "USD",
+        //                ProductData = new SessionLineItemPriceDataProductDataOptions
+        //                {
+        //                    Name = cartItem.Product?.Name,
+        //                }
+        //            },
+        //            Quantity = cartItem.Quantity
+        //        });
+        //    }
 
-            var service = new SessionService();
-            Session session = service.Create(options);
+        //    var service = new SessionService();
+        //    Session session = service.Create(options);
 
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
-        }
+        //    Response.Headers.Add("Location", session.Url);
+        //    return new StatusCodeResult(303);
+        //}
 
-        public IActionResult CheckoutSuccess(string sessionId, int cartId)
-        {
-            var sessionService = new SessionService();
-            var session = sessionService.Get(sessionId);
+        //public IActionResult CheckoutSuccess(string sessionId, int cartId)
+        //{
+        //    var sessionService = new SessionService();
+        //    var session = sessionService.Get(sessionId);
 
-            // Save order and customer details to your database.
-            var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
-            var customerEmail = session.CustomerDetails.Email;
+        //    // Save order and customer details to your database.
+        //    var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
+        //    var customerEmail = session.CustomerDetails.Email;
 
-            var order = _context.Orders.SingleOrDefault(o => o.CartId == cartId);
+        //    var order = _context.Orders.SingleOrDefault(o => o.CartId == cartId);
 
-            if (order is null) return RedirectToAction("NotFound", "Error");
+        //    if (order is null) return RedirectToAction("NotFound", "Error");
 
-            order.Status = OrderStatus.Paid;
-            order.Email = customerEmail;
-            order.Total = total / 100;
+        //    order.Status = OrderStatus.Paid;
+        //    order.Email = customerEmail;
+        //    order.Total = total / 100;
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public IActionResult CheckoutFailed()
         {

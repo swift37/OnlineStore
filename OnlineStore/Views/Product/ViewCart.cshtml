@@ -32,7 +32,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model.CartItems != null && Model.CartItems.Count() > 0)
+@*                                     @if (Model.CartItems != null && Model.CartItems.Count() > 0)
                                     {
                                         @foreach (var cartItem in Model.CartItems)
                                         {
@@ -62,7 +62,7 @@
                                                 </td>
                                             </tr>
                                         }
-                                    }
+                                    } *@
                                 </tbody>
                             </table>
                         </div>
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="cart-total">
-                                <table>
+@*                                 <table>
                                     <tbody>
                                         <tr>
                                             <th>Subtotal</th>
@@ -146,7 +146,7 @@
                                             <td>$<strong class="total-price">@Model.TotalPrice</strong></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> *@
                                 <a asp-controller="Order" asp-action="PersonalInfo" asp-route-cartId="@Model.Id" class="secondary-button">
                                     Checkout
                                 </a>

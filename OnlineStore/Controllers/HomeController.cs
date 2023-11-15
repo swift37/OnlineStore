@@ -63,7 +63,7 @@ namespace OnlineStore.Controllers
                 return Json(new { error = true, message = "Invalid data." });
 
             await _context.ContactRequests.AddAsync(
-                new ContactRequest { Name = name, Email = email, Message = message, CreationDate = DateTime.Now });
+                new ContactRequest { ContactName = name, Email = email, Message = message, CreationDate = DateTime.Now });
             await _context.SaveChangesAsync();
 
             return Json(new { error = false });

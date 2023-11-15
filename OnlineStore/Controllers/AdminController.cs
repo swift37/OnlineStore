@@ -181,42 +181,42 @@ namespace OnlineStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult EditProduct(ProductViewModel model)
-        {
-            var product = _context.Products.Include(p => p.Specifications).SingleOrDefault(c => c.Id == model.Id);
+        //[HttpPost]
+        //public IActionResult EditProduct(ProductViewModel model)
+        //{
+        //    var product = _context.Products.Include(p => p.Specifications).SingleOrDefault(c => c.Id == model.Id);
 
-            if (product is null) return RedirectToAction("NotFound", "Error");
+        //    if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var removableSpecs = product.Specifications.ExceptBy(model.Specifications.Select(p => p.Id), pd => pd.Id);
-            foreach (var spec in removableSpecs.ToArray()) product.Specifications.Remove(spec);
+        //    var removableSpecs = product.Specifications.ExceptBy(model.Specifications.Select(p => p.Id), pd => pd.Id);
+        //    foreach (var spec in removableSpecs.ToArray()) product.Specifications.Remove(spec);
 
-            var newSpecs = model.Specifications.ExceptBy(product.Specifications.Select(p => p.Id), pd => pd.Id);
-            product.Specifications.AddRange(newSpecs);
+        //    var newSpecs = model.Specifications.ExceptBy(product.Specifications.Select(p => p.Id), pd => pd.Id);
+        //    product.Specifications.AddRange(newSpecs);
 
-            var config = new MapperConfiguration(cfg =>
-            cfg.CreateMap<ProductViewModel, Product>()
-            .ForMember(p => p.Image, opt => opt.Ignore())
-            .ForMember(p => p.Specifications, opt => opt.Ignore()));
-            var mapper = config.CreateMapper();
+        //    var config = new MapperConfiguration(cfg =>
+        //    cfg.CreateMap<ProductViewModel, Product>()
+        //    .ForMember(p => p.Image, opt => opt.Ignore())
+        //    .ForMember(p => p.Specifications, opt => opt.Ignore()));
+        //    var mapper = config.CreateMapper();
 
-            mapper.Map(model, product);
+        //    mapper.Map(model, product);
 
-            if (model.ImageFile != null &&
-                model.ImageFile.Length > 0 &&
-                model.ImageFile.ContentType.Contains("image"))
-            {
-                var relativePath = Path.Combine("resources", "productsImages", model.ImageFile.FileName);
-                var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
-                using (Stream stream = new FileStream(path, FileMode.Create))
-                    model.ImageFile.CopyTo(stream);
-                product.Image = "\\" + relativePath;
-            }
+        //    if (model.ImageFile != null &&
+        //        model.ImageFile.Length > 0 &&
+        //        model.ImageFile.ContentType.Contains("image"))
+        //    {
+        //        var relativePath = Path.Combine("resources", "productsImages", model.ImageFile.FileName);
+        //        var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
+        //        using (Stream stream = new FileStream(path, FileMode.Create))
+        //            model.ImageFile.CopyTo(stream);
+        //        product.Image = "\\" + relativePath;
+        //    }
 
-            _context.Entry(product).State = EntityState.Modified;
-            _context.SaveChanges();
-            return RedirectToAction("Categories");
-        }
+        //    _context.Entry(product).State = EntityState.Modified;
+        //    _context.SaveChanges();
+        //    return RedirectToAction("Categories");
+        //}
 
         public IActionResult GetSubCategories(int id)
         {

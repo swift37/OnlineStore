@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Domain\OnlineStore.Domain.csproj" />
+    <ProjectReference Include="..\OnlineStore.Interfaces\OnlineStore.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

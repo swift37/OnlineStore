@@ -1,8 +1,8 @@
-﻿using OnlineStore.Interfaces.Entities;
+﻿using OnlineStore.Domain.Base;
 
 namespace OnlineStore.Interfaces.Repositories
 {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : Entity
     {
         Task<IEnumerable<T>> GetAll(CancellationToken cancellation = default);
 

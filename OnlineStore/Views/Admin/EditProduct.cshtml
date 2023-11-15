@@ -43,7 +43,7 @@
         <input asp-for="ImageFile" multiple type="file">
     </div>
     <div class="product-specs">
-        <div class="product-specs-list">
+@*         <div class="product-specs-list">
             @for (var i = 0; i < Model.Specifications.Count; i++)
             {
                 <div class="field spec-field">
@@ -60,7 +60,7 @@
                     <input class="property-id" type="hidden" value="@Model.Specifications[i].Id" name="ProductDetails[@i].Id">
                 </div>
             }
-        </div>
+        </div> *@
 
         <button type="button" class="ui primary button" id="add-spec">Add specification</button>
     </div>

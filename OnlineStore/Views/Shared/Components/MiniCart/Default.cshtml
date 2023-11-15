@@ -14,7 +14,7 @@
         </div>
         <div class="cart-body">
             <ul class="products mini">
-                @if (Model.CartItems.Count() > 0)
+@*                 @if (Model.CartItems.Count() > 0)
                 {
                     foreach (var cartItem in Model.CartItems)
                     {
@@ -37,14 +37,14 @@
                             </li>
                         }
                     }
-                }
+                } *@
             </ul>
         </div>
         <div class="cart-footer">
-            <div class="subtotal">
+@*             <div class="subtotal">
                 <p>Subtotal</p>
                 <p><strong>$@Model.SubtotalPrice</strong></p>
-            </div>
+            </div> *@
             <div class="actions">
                 <a asp-controller="Order" asp-action="PersonalInfo" class="primary-button">Checkout</a>
                 <a href="/cart" class="primary-button">View Cart</a>

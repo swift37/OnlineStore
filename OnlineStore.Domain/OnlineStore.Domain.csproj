@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OnlineStore.Interfaces\OnlineStore.Interfaces.csproj" />
-  </ItemGroup>
-
 </Project>

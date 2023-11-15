@@ -13,14 +13,14 @@ namespace OnlineStore.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefaultAsync(c => c.Status == Domain.CartStatus.Active);
+        //public async Task<IViewComponentResult> InvokeAsync()
+        //{
+        //    var cart = await _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .FirstOrDefaultAsync(c => c.Status == Domain.CartStatus.Active);
 
-            return View(cart);
-        }
+        //    return View(cart);
+        //}
     }
 }

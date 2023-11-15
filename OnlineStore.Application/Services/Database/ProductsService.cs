@@ -15,7 +15,7 @@ namespace OnlineStore.Application.Services.Database
         public async Task<ProductDTO?> GetProduct(int id) =>
             (await _context.Products.Include(p => p.Specifications).SingleOrDefaultAsync(p => p.Id == id))?.ToDTO();
 
-        public async Task<ProductsCollectionDTO?> GetProductByCategory(
+        public async Task<ProductsPageDTO?> GetProductByCategory(
             int catId,
             int page = 1,
             int itemsPerPage = 15,
@@ -38,7 +38,7 @@ namespace OnlineStore.Application.Services.Database
 
             var productsSortedList = SortProducts(productsList, sortBy);
 
-            var products = new ProductsCollectionDTO 
+            var products = new ProductsPageDTO 
             {
                 Products = productsSortedList.ToDTO(),
                 Category = category.ToDTO(),

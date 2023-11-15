@@ -70,93 +70,93 @@ namespace OnlineStore.Controllers
             return View(_context.Products.Include(p => p.Specifications).SingleOrDefault(p => p.Id == id));
         }
 
-        [Route("cart")]
-        public IActionResult ViewCart()
-        {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefault(c => c.Status == CartStatus.Active);
+        //[Route("cart")]
+        //public IActionResult ViewCart()
+        //{
+        //    var cart = _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .FirstOrDefault(c => c.Status == CartStatus.Active);
 
-            return View(cart);
-        }
+        //    return View(cart);
+        //}
 
-        [Route("wishlist")]
-        public IActionResult ViewWishlist()
-        {
-            var wishlist = _context.Wishlists
-                .Include(c => c.Products)
-                .FirstOrDefault();
+        //[Route("wishlist")]
+        //public IActionResult ViewWishlist()
+        //{
+        //    var wishlist = _context.Wishlists
+        //        .Include(c => c.Products)
+        //        .FirstOrDefault();
 
-            return View(wishlist);
-        }
+        //    return View(wishlist);
+        //}
 
-        public IActionResult AddToCart(int productId, int qty = 1)
-        {
-            var product = _context.Products.SingleOrDefault(p => p.Id == productId);
-            if (product is null) return RedirectToAction("NotFound", "Error");
+        //public IActionResult AddToCart(int productId, int qty = 1)
+        //{
+        //    var product = _context.Products.SingleOrDefault(p => p.Id == productId);
+        //    if (product is null) return RedirectToAction("NotFound", "Error");
 
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefault(c => /*c.User.Id == User.Identity.GetUserId() &&*/ c.Status == CartStatus.Active);
+        //    var cart = _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .FirstOrDefault(c => /*c.User.Id == User.Identity.GetUserId() &&*/ c.Status == CartStatus.Active);
 
-            if (cart is null)
-            {
-                cart = new Cart();
-                _context.Carts.Add(cart);
-            }
+        //    if (cart is null)
+        //    {
+        //        cart = new Cart();
+        //        _context.Carts.Add(cart);
+        //    }
 
-            var item = cart.CartItems?.FirstOrDefault(i => i.Product?.Id == product.Id);
-            if (item is null) cart.CartItems?.Add(new CartItem { Product = product, Quantity = qty });
-            else item.Quantity += qty;
+        //    var item = cart.CartItems?.FirstOrDefault(i => i.Product?.Id == product.Id);
+        //    if (item is null) cart.CartItems?.Add(new CartItem { Product = product, Quantity = qty });
+        //    else item.Quantity += qty;
 
-            if (product.UnitsInStock < item?.Quantity)
-                return Json(new { error = true, message = $"You can`t buy more than {product.UnitsInStock} pcs." });
+        //    if (product.UnitsInStock < item?.Quantity)
+        //        return Json(new { error = true, message = $"You can`t buy more than {product.UnitsInStock} pcs." });
 
-            _context.SaveChanges();
-            return Json(new { error = false });
-        }
+        //    _context.SaveChanges();
+        //    return Json(new { error = false });
+        //}
 
-        public async Task<IActionResult> UpdateCart(int productId, int qty)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(i => i.Product)
-                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
+        //public async Task<IActionResult> UpdateCart(int productId, int qty)
+        //{
+        //    var cart = await _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(i => i.Product)
+        //        .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
 
-            var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
+        //    var cartItem = cart?.CartItems.FirstOrDefault(i => i.Product?.Id == productId);
 
-            if (cart is null || cartItem is null) return Json(new { error = true, message = "Error occurred." });
+        //    if (cart is null || cartItem is null) return Json(new { error = true, message = "Error occurred." });
 
-            cartItem.Quantity = qty;
-            await _context.SaveChangesAsync();
-            return Json(new
-            {
-                error = false,
-                SubtotalPrice = cart.SubtotalPrice,
-                TotalPrice = cart.TotalPrice,
-                TotalDiscount = cart.TotalDiscount,
-                TotalQuantity = cart.TotalQuantity,
-                LinePrice = cartItem.Price
-            });
-        }
+        //    cartItem.Quantity = qty;
+        //    await _context.SaveChangesAsync();
+        //    return Json(new
+        //    {
+        //        error = false,
+        //        SubtotalPrice = cart.SubtotalPrice,
+        //        TotalPrice = cart.TotalPrice,
+        //        TotalDiscount = cart.TotalDiscount,
+        //        TotalQuantity = cart.TotalQuantity,
+        //        LinePrice = cartItem.Price
+        //    });
+        //}
 
-        public async Task<IActionResult> RemoveFromCart(int productId)
-        {
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
+        //public async Task<IActionResult> RemoveFromCart(int productId)
+        //{
+        //    var cart = await _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .FirstOrDefaultAsync(c => c.Status == CartStatus.Active);
 
-            var cartItem = cart?.CartItems.SingleOrDefault(p => p.ProductId == productId);
+        //    var cartItem = cart?.CartItems.SingleOrDefault(p => p.ProductId == productId);
 
-            if (cart is null || cartItem is null) return Json(new { removeSuccess = false });
+        //    if (cart is null || cartItem is null) return Json(new { removeSuccess = false });
 
-            cart.CartItems.Remove(cartItem);
-            _context.Entry(cart).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return Json(new { removeSuccess = true });
-        }
+        //    cart.CartItems.Remove(cartItem);
+        //    _context.Entry(cart).State = EntityState.Modified;
+        //    await _context.SaveChangesAsync();
+        //    return Json(new { removeSuccess = true });
+        //}
 
         public IActionResult UpdateMiniCart()
         {
@@ -204,20 +204,20 @@ namespace OnlineStore.Controllers
             return Json(new { removeSuccess = true });
         }
 
-        public IActionResult AddAllWishlistToCart(int wishlistId)
-        {
-            var wishlist = _context.Wishlists.Include(w => w.Products).FirstOrDefault(w => w.Id == wishlistId);
+        //public IActionResult AddAllWishlistToCart(int wishlistId)
+        //{
+        //    var wishlist = _context.Wishlists.Include(w => w.Products).FirstOrDefault(w => w.Id == wishlistId);
 
-            if (wishlist is null) return RedirectToAction("NotFound", "Error");
+        //    if (wishlist is null) return RedirectToAction("NotFound", "Error");
 
-            foreach (var item in wishlist.Products) 
-                AddToCart(item.Id);
+        //    foreach (var item in wishlist.Products) 
+        //        AddToCart(item.Id);
 
-            _context.Wishlists.Remove(wishlist);
-            _context.SaveChanges();
+        //    _context.Wishlists.Remove(wishlist);
+        //    _context.SaveChanges();
 
-            return Redirect("/cart");
-        } 
+        //    return Redirect("/cart");
+        //} 
     }
 
     public enum SortParameter

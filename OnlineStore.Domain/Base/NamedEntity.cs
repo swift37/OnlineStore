@@ -1,9 +1,8 @@
-﻿using OnlineStore.Interfaces.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore.Domain.Base
 {
-    public abstract class NamedEntity : Entity, INamedEntity
+    public abstract class NamedEntity : Entity
     {
         [Required]
         public string? Name { get; set; }

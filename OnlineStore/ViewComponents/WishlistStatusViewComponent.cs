@@ -19,7 +19,7 @@ namespace OnlineStore.ViewComponents
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync();
 
-            ViewBag.WishlistItems = wishlist?.TotalQuantity ?? 0;
+            //ViewBag.WishlistItems = wishlist?.TotalQuantity ?? 0;
 
             return View();
         }

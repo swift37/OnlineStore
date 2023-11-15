@@ -14,9 +14,9 @@
                     <li>Wishlist</li>
                 </ul>
             </div>
-            <div class="page-title">
+@*             <div class="page-title">
                 <h1>Wishlist (@Model.TotalQuantity)</h1>
-            </div>
+            </div> *@
             <div class="products one cart">
                 <div class="flexwrap">
                     <form action="" class="form-cart">
@@ -63,7 +63,7 @@
                     <div class="cart-summary styled">
                         <div class="item">
                             <div class="cart-total">
-                                <table>
+@*                                 <table>
                                     <tbody>
                                         <tr>
                                             <th>Subtotal</th>
@@ -78,7 +78,7 @@
                                             <td><strong>$@Model.TotalPrice</strong></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> *@
                                 <a asp-controller="Product" asp-action="AddAllWishlistToCart" asp-route-wishlistId="@Model.Id" class="secondary-button">
                                     Add available to cart
                                 </a>
