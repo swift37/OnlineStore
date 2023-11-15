@@ -113,9 +113,9 @@
                             </ul> *@
                         </div>
                         <ul class="products mini">
-                            @if (Model.CartItems.Count() > 0)
+                            @if (Model.Items.Count() > 0)
                             {
-                                foreach (var cartItem in Model.CartItems)
+                                foreach (var cartItem in Model.Items)
                                 {
                                     if (cartItem.Product != null)
                                     {

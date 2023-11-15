@@ -4,9 +4,9 @@ namespace OnlineStore.Domain
 {
     public class Cart : Entity
     {
-        public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
+        public ICollection<CartItem> Items { get; set; } = new HashSet<CartItem>();
 
-        public int ItemsQuantity => CartItems.Sum(i => i.Quantity);
+        public int ItemsQuantity => Items.Sum(i => i.Quantity);
     }
 
     public class CartItem : Entity
