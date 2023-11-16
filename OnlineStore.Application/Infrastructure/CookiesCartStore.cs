@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using OnlineStore.Application.Interfaces.Infrastructure;
 using OnlineStore.Domain;
-using OnlineStore.Interfaces.Infrastructure;
 
 namespace OnlineStore.Application.Infrastructure
 {

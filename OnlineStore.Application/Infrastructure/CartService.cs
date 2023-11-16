@@ -1,6 +1,6 @@
-﻿using OnlineStore.Domain;
-using OnlineStore.Interfaces.Infrastructure;
-using OnlineStore.Interfaces.Repositories;
+﻿using OnlineStore.Application.Interfaces.Infrastructure;
+using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Domain;
 
 namespace OnlineStore.Application.Infrastructure
 {

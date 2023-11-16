@@ -1,6 +1,6 @@
 ﻿using OnlineStore.Domain;
 
-namespace OnlineStore.Application.Models
+namespace OnlineStore.Application.DTOs
 {
     public class ReviewDTO
     {

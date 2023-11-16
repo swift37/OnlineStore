@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
-using OnlineStore.Interfaces.Repositories;
-using static OnlineStore.Interfaces.Repositories.IProductsRepository;
+using static OnlineStore.Application.Interfaces.Repositories.IProductsRepository;
 
 namespace OnlineStore.DAL.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
-using OnlineStore.Interfaces.Repositories;
 
 namespace OnlineStore.DAL.Repositories
 {
