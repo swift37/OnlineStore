@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
-using OnlineStore.Services;
 using Stripe.Checkout;
 
 namespace OnlineStore.Controllers
@@ -10,12 +9,10 @@ namespace OnlineStore.Controllers
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly EmailSenderService _emailSender;
 
-        public OrderController(ApplicationDbContext context, EmailSenderService emailSender)
+        public OrderController(ApplicationDbContext context)
         {
             _context = context;
-            _emailSender = emailSender;
         }
 
         //public IActionResult PersonalInfo(int cartId)
