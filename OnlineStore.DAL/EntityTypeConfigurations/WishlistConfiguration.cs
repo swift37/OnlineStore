@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class WishlistConfiguration : IEntityTypeConfiguration<Wishlist>
+    public class WishlistConfiguration : BaseConfiguration<Wishlist>
     {
-        public void Configure(EntityTypeBuilder<Wishlist> builder)
+        public override void Configure(EntityTypeBuilder<Wishlist> builder)
         {
-            builder.HasKey(wishlist => wishlist.Id);
-            builder.HasIndex(wishlist => wishlist.Id).IsUnique();
+            base.Configure(builder);
             builder.HasIndex(wishlist => wishlist.UserId);
             builder.Property(wishlist => wishlist.UserId).IsRequired();
             builder

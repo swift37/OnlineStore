@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class CategoryConfiguration : BaseConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public override void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasKey(category => category.Id);
-            builder.HasIndex(category => category.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(category => category.Name).HasMaxLength(32);
             builder
                 .HasOne(category => category.Parent)

@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class OrderConfiguration : IEntityTypeConfiguration<Order>
+    public class OrderConfiguration : BaseConfiguration<Order>
     {
-        public void Configure(EntityTypeBuilder<Order> builder)
+        public override void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasKey(order => order.Id);
-            builder.HasIndex(order => order.Id).IsUnique();
+            base.Configure(builder);
             builder.HasIndex(order => order.UserId);
             builder.Property(order => order.ShippingCost).HasColumnType("decimal(18,2)");
             builder.Property(order => order.Notes).HasMaxLength(64);
@@ -17,12 +17,11 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         }
     }
 
-    public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
+    public class OrderItemConfiguration : BaseConfiguration<OrderItem>
     {
-        public void Configure(EntityTypeBuilder<OrderItem> builder)
+        public override void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.HasKey(orderItem => orderItem.Id);
-            builder.HasIndex(orderItem => orderItem.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(orderItem => orderItem.UnitPrice).HasColumnType("decimal(18,2)");
             builder.Property(orderItem => orderItem.Discount).HasColumnType("decimal(18,2)");
             builder

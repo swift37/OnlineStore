@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class ContactRequestConfiguration : IEntityTypeConfiguration<ContactRequest>
+    public class ContactRequestConfiguration : BaseConfiguration<ContactRequest>
     {
-        public void Configure(EntityTypeBuilder<ContactRequest> builder)
+        public override void Configure(EntityTypeBuilder<ContactRequest> builder)
         {
-            builder.HasKey(contactRequest => contactRequest.Id);
-            builder.HasIndex(contactRequest => contactRequest.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(contactRequest => contactRequest.ContactName).HasMaxLength(32);
             builder.Property(contactRequest => contactRequest.Message).HasMaxLength(256);
         }

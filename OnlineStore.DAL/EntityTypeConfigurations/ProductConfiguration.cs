@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Domain;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class ProductConfiguration : BaseConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public override void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasKey(product => product.Id);
-            builder.HasIndex(product => product.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(product => product.Name).HasMaxLength(32);
             builder.Property(product => product.UnitPrice).HasColumnType("decimal(18,2)");
             builder.Property(product => product.Discount).HasColumnType("decimal(18,2)");

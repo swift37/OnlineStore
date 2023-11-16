@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class EventConfiguration : IEntityTypeConfiguration<Event>
+    public class EventConfiguration : BaseConfiguration<Event>
     {
-        public void Configure(EntityTypeBuilder<Event> builder)
+        public override void Configure(EntityTypeBuilder<Event> builder)
         {
-            builder.HasKey(@event => @event.Id);
-            builder.HasIndex(@event => @event.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(@event => @event.Name).HasMaxLength(32);
         }
     }

@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OnlineStore.DAL.EntityTypeConfigurations.Base;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
-    public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
+    public class CouponConfiguration : BaseConfiguration<Coupon>
     {
-        public void Configure(EntityTypeBuilder<Coupon> builder)
+        public override void Configure(EntityTypeBuilder<Coupon> builder)
         {
-            builder.HasKey(coupon => coupon.Id);
-            builder.HasIndex(coupon => coupon.Id).IsUnique();
+            base.Configure(builder);
             builder.Property(coupon => coupon.DiscountSize).HasColumnType("decimal(18,2)");
         }
     }
