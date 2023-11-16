@@ -1,4 +1,3 @@
-using Librarian.Services;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
@@ -21,8 +20,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddServices();
 
 var app = builder.Build();
 
