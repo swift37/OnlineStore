@@ -14,7 +14,7 @@ namespace OnlineStore.Application.Infrastructure
         public EmailSender(IOptions<EmailSettings> emailSettings) => 
             _emailSettings = emailSettings.Value;
 
-        public async Task<bool> SendEmail(EmailRequest emailRequest, CancellationToken cancellation = default)
+        public async Task<bool> SendEmailAsync(EmailRequest emailRequest, CancellationToken cancellation = default)
         {
             try
             {

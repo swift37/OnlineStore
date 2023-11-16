@@ -4,6 +4,6 @@ namespace OnlineStore.Application.Interfaces.Repositories
 {
     public interface IOrdersRepository : IRepository<Order>
     {
-        Task<IEnumerable<Order>> GetUserOrders(Guid userId);
+        Task<IEnumerable<Order>> GetUserOrdersAsync(Guid userId);
     }
 }

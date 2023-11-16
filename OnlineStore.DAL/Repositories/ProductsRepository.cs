@@ -10,7 +10,7 @@ namespace OnlineStore.DAL.Repositories
     {
         public ProductsRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<ProductsPage?> GetProductByCategory(int categoryId, int page = 1, int itemsPerPage = 15, IProductsRepository.SortParameters sortBy = IProductsRepository.SortParameters.Default, CancellationToken cancellation = default)
+        public async Task<ProductsPage?> GetProductByCategoryAsync(int categoryId, int page = 1, int itemsPerPage = 15, IProductsRepository.SortParameters sortBy = IProductsRepository.SortParameters.Default, CancellationToken cancellation = default)
         {
             if (itemsPerPage > 30 || itemsPerPage < 15) itemsPerPage = 15;
 

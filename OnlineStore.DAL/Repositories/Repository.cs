@@ -21,14 +21,14 @@ namespace OnlineStore.DAL.Repositories
             DbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAll(CancellationToken cancellation = default) => 
+        public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellation = default) => 
             await Entities.ToArrayAsync(cancellation).ConfigureAwait(false);
 
 
-        public async Task<bool> Exists(int id, CancellationToken cancellation = default) => 
+        public async Task<bool> ExistsAsync(int id, CancellationToken cancellation = default) => 
             await Entities.AnyAsync(e => e.Id == id, cancellation).ConfigureAwait(false);
 
-        public async Task<T?> Get(int id, CancellationToken cancellation = default)
+        public async Task<T?> GetAsync(int id, CancellationToken cancellation = default)
         {
             switch (Entities)
             {
@@ -41,7 +41,7 @@ namespace OnlineStore.DAL.Repositories
             }
         }
 
-        public async Task<T?> Create(T? entity, CancellationToken cancellation = default)
+        public async Task<T?> CreateAsync(T? entity, CancellationToken cancellation = default)
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
 
@@ -51,7 +51,7 @@ namespace OnlineStore.DAL.Repositories
             return entity;
         }
 
-        public async Task Update(T? entity, CancellationToken cancellation = default)
+        public async Task UpdateAsync(T? entity, CancellationToken cancellation = default)
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
 
@@ -60,7 +60,7 @@ namespace OnlineStore.DAL.Repositories
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
 
-        public async Task<bool> Delete(int id, CancellationToken cancellation = default)
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellation = default)
         {
             var entity = await DbSet
                 .FindAsync(new object[] { id }, cancellation)

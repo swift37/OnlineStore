@@ -4,6 +4,6 @@ namespace OnlineStore.Application.Interfaces.Infrastructure
 {
     public interface IEmailSender
     {
-        Task<bool> SendEmail(EmailRequest emailRequest, CancellationToken cancellation = default);
+        Task<bool> SendEmailAsync(EmailRequest emailRequest, CancellationToken cancellation = default);
     }
 }

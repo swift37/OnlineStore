@@ -9,7 +9,7 @@ namespace OnlineStore.DAL.Repositories
     {
         public OrdersRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Order>> GetUserOrders(Guid userId) => await DbSet
+        public async Task<IEnumerable<Order>> GetUserOrdersAsync(Guid userId) => await DbSet
             .Where(o => o.UserId == userId)
             .ToArrayAsync();
     }

@@ -4,7 +4,7 @@ namespace OnlineStore.Application.Interfaces.Repositories
 {
     public interface IProductsRepository : IRepository<Product>
     {
-        Task<ProductsPage?> GetProductByCategory(
+        Task<ProductsPage?> GetProductByCategoryAsync(
             int catId,
             int page = 1,
             int itemsPerPage = 15,
