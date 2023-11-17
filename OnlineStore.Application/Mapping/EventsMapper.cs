@@ -25,8 +25,8 @@ namespace OnlineStore.Application.Mapping
             Image = @event.Image
         };
 
-        public static IEnumerable<EventDTO> ToDTO(this IEnumerable<Event> events) => events.Select(c => c.ToDTO());
+        public static IEnumerable<EventDTO> ToDTO(this IEnumerable<Event> events) => events.Select(e => e.ToDTO());
 
-        public static IEnumerable<Event> FromDTO(this IEnumerable<EventDTO> events) => events.Select(c => c.FromDTO());
+        public static IEnumerable<Event> FromDTO(this IEnumerable<EventDTO> events) => events.Select(e => e.FromDTO());
     }
 }
