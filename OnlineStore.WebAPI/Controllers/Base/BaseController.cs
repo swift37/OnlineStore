@@ -4,7 +4,7 @@ using System.Security.Claims;
 namespace OnlineStore.WebAPI.Controllers.Base
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public class BaseController : ControllerBase
     {
         internal Guid UserId => (User.Identity?.IsAuthenticated ?? false)
