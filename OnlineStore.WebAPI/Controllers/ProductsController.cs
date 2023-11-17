@@ -2,16 +2,17 @@
 using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
+using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
 {
     [Produces("application/json")]
-    public class ProductsController : Controller
+    public class ProductsController : BaseController
     {
-        private readonly IProductsRepository _productsRepository;
+        private readonly IProductsRepository _repository;
 
-        public ProductsController(IProductsRepository productsRepository) => 
-            _productsRepository = productsRepository;
+        public ProductsController(IProductsRepository repository) => 
+            _repository = repository;
 
         /// <summary>
         /// Get the enumeration of products
@@ -25,7 +26,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll() => 
-            Ok((await _productsRepository.GetAllAsync()).ToDTO());
+            Ok((await _repository.GetAllAsync()).ToDTO());
 
         /// <summary>
         /// Get true if product exists
@@ -42,7 +43,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<bool>> Exist(int id) =>
-            await _productsRepository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
 
         /// <summary>
         /// Get the product by id
@@ -60,7 +61,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductDTO>> Get(int id)
         {
-            var product = await _productsRepository.GetAsync(id);
+            var product = await _repository.GetAsync(id);
             if (product is null) return NotFound();
 
             return Ok(product.ToDTO());
@@ -85,7 +86,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] ProductDTO productDTO)
         {
-            var product = await _productsRepository.CreateAsync(productDTO.FromDTO());
+            var product = await _repository.CreateAsync(productDTO.FromDTO());
             if (product is null) return UnprocessableEntity();
             return Ok(product.Id);
         }
@@ -106,7 +107,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Update([FromBody] ProductDTO productDTO)
         {
-            await _productsRepository.UpdateAsync(productDTO.FromDTO());
+            await _repository.UpdateAsync(productDTO.FromDTO());
             return NoContent();
         }
 
@@ -119,13 +120,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Product id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
+        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _productsRepository.DeleteAsync(id);
-            return NoContent();
-        }
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id) =>
+            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
 
         /// <summary>
         /// Get the products page by category id
@@ -148,7 +148,7 @@ namespace OnlineStore.WebAPI.Controllers
             int itemsPerPage = 15, 
             IProductsRepository.SortParameters sortBy = IProductsRepository.SortParameters.Default)
         {
-            var prodcutsPage = await _productsRepository
+            var prodcutsPage = await _repository
                 .GetProductByCategoryAsync(categoryId, page, itemsPerPage, sortBy);
 
             if (prodcutsPage == null) return NotFound();
