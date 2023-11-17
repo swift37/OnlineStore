@@ -149,7 +149,7 @@ namespace OnlineStore.WebAPI.Controllers
             IProductsRepository.SortParameters sortBy = IProductsRepository.SortParameters.Default)
         {
             var prodcutsPage = await _repository
-                .GetProductByCategoryAsync(categoryId, page, itemsPerPage, sortBy);
+                .GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy);
 
             if (prodcutsPage == null) return NotFound();
 

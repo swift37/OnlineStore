@@ -10,7 +10,7 @@ namespace OnlineStore.DAL.Repositories
     {
         public ProductsRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<ProductsPage?> GetProductByCategoryAsync(
+        public async Task<ProductsPage?> GetProductsByCategoryAsync(
             int categoryId, 
             int page = 1, 
             int itemsPerPage = 15, 
