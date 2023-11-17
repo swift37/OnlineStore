@@ -3,7 +3,7 @@ using OnlineStore.Domain;
 
 namespace OnlineStore.Application.Mapping
 {
-    public static class ProductsPageMapping
+    public static class ProductsPageMapper
     {
         public static ProductsPageDTO ToDTO(this ProductsPage productsPage) => new ProductsPageDTO
         {
