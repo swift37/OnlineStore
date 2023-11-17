@@ -20,7 +20,9 @@ namespace OnlineStore.DAL.Repositories
             if (itemsPerPage > 30 || itemsPerPage < 15) itemsPerPage = 15;
 
             var category = await _context.Categories
-                .SingleOrDefaultAsync(c => c.Id == categoryId, cancellation).ConfigureAwait(false);
+                .SingleOrDefaultAsync(c => c.Id == categoryId, cancellation)
+                .ConfigureAwait(false);
+
             if (category is null) return null;
 
             var query = DbSet.Where(p => p.Category == null ? false : p.Category.Id == category.Id);
