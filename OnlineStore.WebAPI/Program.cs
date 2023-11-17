@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Infrastructure;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
+using OnlineStore.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,11 @@ var connectionString = builder.Configuration.GetConnectionString("DbConnection")
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddRepositories();
+
 builder.Services.AddInfrastructure();
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllers();
 
