@@ -2,7 +2,6 @@
 using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
-using OnlineStore.Domain;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -129,18 +128,16 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.DeleteAsync(id) ? NoContent() : NotFound();
 
         /// <summary>
-        /// Get the reviews page by category id
+        /// Get the reviews enumeration by category id
         /// </summary>
         /// <remarks>
-        /// GET /reviews/page?categoryId=1&page=3&itemsPerPage=20
+        /// GET /reviews/product/1
         /// </remarks>
-        /// <param name="categoryId">Category id (int)</param>
-        /// <param name="page">Page number</param>
-        /// <param name="itemsPerPage">Number of items per page</param>
-        /// <param name="sortBy">Sort by statement</param>
+        /// <param name="productId">Product id (int)</param>
         /// <returns>Returns IEnumerable<ReviewDTO></returns>
         /// <response code="200">Success</response>
-        [HttpGet("product/{productid:int}")]
+        /// <response code="404">Not Found</response>
+        [HttpGet("product/{productId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviewsByProduct(int productId)
