@@ -8,13 +8,13 @@ namespace OnlineStore.Application.Interfaces.Repositories
 
         Task<bool> ExistsAsync(int id, CancellationToken cancellation = default);
 
-        Task<T?> GetAsync(int id, CancellationToken cancellation = default);
+        Task<T> GetAsync(int id, CancellationToken cancellation = default);
 
-        Task<T?> CreateAsync(T? entity, CancellationToken cancellation = default);
+        Task<T> CreateAsync(T? entity, CancellationToken cancellation = default);
 
         Task UpdateAsync(T? entity, CancellationToken cancellation = default);
 
-        Task<bool> DeleteAsync(int id, CancellationToken cancellation = default);
+        Task DeleteAsync(int id, CancellationToken cancellation = default);
 
     }
 }

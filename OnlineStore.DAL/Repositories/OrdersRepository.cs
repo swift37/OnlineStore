@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
@@ -15,10 +16,12 @@ namespace OnlineStore.DAL.Repositories
             .Where(o => o.UserId == userId)
             .ToArrayAsync(cancellation);
 
-        public async Task<Order?> GetUserOrderAsync(
+        public async Task<Order> GetUserOrderAsync(
             int id, 
             Guid userId, 
             CancellationToken cancellation = default) => 
-            await Entities.FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId).ConfigureAwait(false);
+            await Entities.FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId)
+            .ConfigureAwait(false)
+            ?? throw new NotFoundException(nameof(Order), id);
     }
 }

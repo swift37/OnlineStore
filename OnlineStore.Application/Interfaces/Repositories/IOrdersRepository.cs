@@ -8,7 +8,7 @@ namespace OnlineStore.Application.Interfaces.Repositories
             Guid userId, 
             CancellationToken cancellation = default);
 
-        Task<Order?> GetUserOrderAsync(
+        Task<Order> GetUserOrderAsync(
             int id,
             Guid userId,
             CancellationToken cancellation = default);
