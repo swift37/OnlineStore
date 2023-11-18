@@ -9,8 +9,10 @@ namespace OnlineStore.DAL.Repositories
     {
         public WishlistsRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Wishlist>> GetUserWishlistAsync(Guid userId) => await DbSet
+        public async Task<IEnumerable<Wishlist>> GetUserWishlistAsync(
+            Guid userId, 
+            CancellationToken cancellation = default) => await Entities
             .Where(o => o.UserId == userId)
-            .ToArrayAsync();
+            .ToArrayAsync(cancellation);
     }
 }

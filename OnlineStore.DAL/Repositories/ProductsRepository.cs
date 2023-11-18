@@ -25,7 +25,7 @@ namespace OnlineStore.DAL.Repositories
 
             if (category is null) return null;
 
-            var query = DbSet.Where(p => p.Category == null ? false : p.Category.Id == category.Id);
+            var query = Entities.Where(p => p.Category == null ? false : p.Category.Id == category.Id);
             var pagesCount = (await query.CountAsync(cancellation) + itemsPerPage - 1) / itemsPerPage;
             var productsList = query
                 .Skip((page - 1) * itemsPerPage)

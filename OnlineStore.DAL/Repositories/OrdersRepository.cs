@@ -9,9 +9,11 @@ namespace OnlineStore.DAL.Repositories
     {
         public OrdersRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Order>> GetUserOrdersAsync(Guid userId) => await DbSet
+        public async Task<IEnumerable<Order>> GetUserOrdersAsync(
+            Guid userId, 
+            CancellationToken cancellation = default) => await Entities
             .Where(o => o.UserId == userId)
-            .ToArrayAsync();
+            .ToArrayAsync(cancellation);
 
         public async Task<Order?> GetUserOrderAsync(
             int id, 

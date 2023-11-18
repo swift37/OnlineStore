@@ -13,15 +13,14 @@ namespace OnlineStore.DAL.Repositories
 
         public async Task<IEnumerable<Review>> GetReviewsByProductAsync(int productId, CancellationToken cancellation = default)
         {
-            var product = await _context.Products
-                .Include(p => p.Reviews)
-                .SingleOrDefaultAsync(p => p.Id == productId, cancellation)
-                .ConfigureAwait(false);
+            var reviews = await Entities
+                .Where(r => r.ProductId == productId)
+                .ToArrayAsync();
 
-            if (product is null || product.Reviews is not { Count: > 0 }) 
+            if (reviews is not { Length: > 0 }) 
                 return Enumerable.Empty<Review>();
 
-            return product.Reviews;
+            return reviews;
         }
     }
 }
