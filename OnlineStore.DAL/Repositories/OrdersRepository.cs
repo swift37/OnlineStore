@@ -12,5 +12,11 @@ namespace OnlineStore.DAL.Repositories
         public async Task<IEnumerable<Order>> GetUserOrdersAsync(Guid userId) => await DbSet
             .Where(o => o.UserId == userId)
             .ToArrayAsync();
+
+        public async Task<Order?> GetUserOrderAsync(
+            int id, 
+            Guid userId, 
+            CancellationToken cancellation = default) => 
+            await Entities.FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId).ConfigureAwait(false);
     }
 }
