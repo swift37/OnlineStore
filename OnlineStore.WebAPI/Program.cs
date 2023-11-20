@@ -3,6 +3,7 @@ using OnlineStore.Application.Infrastructure;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.DAL.Repositories;
+using OnlineStore.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
