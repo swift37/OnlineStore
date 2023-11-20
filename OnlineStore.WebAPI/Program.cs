@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddRepositories();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddInfrastructure();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);

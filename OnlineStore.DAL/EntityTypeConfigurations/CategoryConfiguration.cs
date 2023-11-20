@@ -12,12 +12,17 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             base.Configure(builder);
             builder.Property(category => category.Name).HasMaxLength(32);
             builder
+                .HasOne(category => category.Root)
+                .WithMany()
+                .HasForeignKey(category => category.RootId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
+            builder
                 .HasOne(category => category.Parent)
                 .WithMany(parent => parent.Subcategories)
                 .HasForeignKey(category => category.ParentId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired(false);
-            builder.Navigation(category => category.Parent).AutoInclude();
         }
     }
 }

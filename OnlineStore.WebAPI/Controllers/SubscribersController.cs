@@ -41,7 +41,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<bool>> Exist(int id) => => 
+        public async Task<ActionResult<bool>> Exist(int id) =>
         Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
