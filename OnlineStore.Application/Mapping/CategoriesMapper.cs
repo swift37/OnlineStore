@@ -10,10 +10,11 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
+            Root = category.Root?.ToDTO(),
             Parent = category.Parent?.ToDTO(),
             Subcategories = category.Subcategories.ToDTO(),
             Products = category.Products.ToDTO(),
-            IsMainCategory = category.IsMainCategory
+            IsMainCategory = category.IsRootCategory
         };
 
         public static Category FromDTO(this CategoryDTO category) => new Category
@@ -21,10 +22,11 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
+            Root = category.Root?.FromDTO(),
             Parent = category.Parent?.FromDTO(),
             Subcategories = category.Subcategories.FromDTO(),
             Products = category.Products.FromDTO(),
-            IsMainCategory = category.IsMainCategory
+            IsRootCategory = category.IsMainCategory
         };
 
         public static IEnumerable<CategoryDTO> ToDTO(this IEnumerable<Category> categories) => categories.Select(c => c.ToDTO());
