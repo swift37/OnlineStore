@@ -39,12 +39,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<bool>> Exist(int id) =>
-            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+            Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
         /// Get the contact request by id
@@ -56,17 +54,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id (int)</param>
         /// <returns>Returns ContactRequestDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ContactRequestDTO>> Get(int id)
-        {
-            var contactRequest = await _repository.GetAsync(id);
-            if (contactRequest is null) return NotFound();
-
-            return Ok(contactRequest.ToDTO());
-        }
+        public async Task<ActionResult<ContactRequestDTO>> Get(int id) =>
+            Ok((await _repository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a contact request
@@ -121,11 +112,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id) =>
-            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }

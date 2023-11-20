@@ -39,12 +39,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Event id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<bool>> Exist(int id) =>
-            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+            Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
         /// Get the event by id
@@ -60,13 +58,8 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EventDTO>> Get(int id)
-        {
-            var @event = await _repository.GetAsync(id);
-            if (@event is null) return NotFound();
-
-            return Ok(@event.ToDTO());
-        }
+        public async Task<ActionResult<EventDTO>> Get(int id) => 
+            Ok((await _repository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a event
@@ -121,11 +114,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Event id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id) =>
-            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }

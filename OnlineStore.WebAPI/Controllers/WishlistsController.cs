@@ -38,12 +38,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Wishlist id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<bool>> Exist(int id) =>
-            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+        public async Task<ActionResult<bool>> Exist(int id) => 
+            Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
         /// Get the wishlist by id
@@ -55,17 +53,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Wishlist id (int)</param>
         /// <returns>Returns WishlistDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<WishlistDTO>> Get(int id)
-        {
-            var wishlist = await _repository.GetAsync(id);
-            if (wishlist is null) return NotFound();
-
-            return Ok(wishlist.ToDTO());
-        }
+        public async Task<ActionResult<WishlistDTO>> Get(int id) => 
+            Ok((await _repository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a wishlist
@@ -120,12 +111,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Wishlist id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id) =>
-            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
 
         /// <summary>
         /// Get the wishlist by user id
@@ -136,18 +128,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="userId">User id (Guid)</param>
         /// <returns>Returns WishlistDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("user/{userId:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<WishlistDTO>> GetUserWishlist(Guid userId)
-        {
-            var wishlist = await _repository.GetUserWishlistAsync(userId);
-
-            if (wishlist == null) return NotFound();
-
-            return Ok(wishlist.ToDTO());
-        }
+        public async Task<ActionResult<WishlistDTO>> GetUserWishlist(Guid userId) => 
+            Ok((await _repository.GetUserWishlistAsync(userId)).ToDTO());
 
         /// <summary>
         /// Get the current user wishlist
@@ -158,17 +142,9 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="userId">User id (Guid)</param>
         /// <returns>Returns WishlistDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("user/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<WishlistDTO>> GetUserWishlist()
-        {
-            var wishlist = await _repository.GetUserWishlistAsync(UserId);
-
-            if (wishlist == null) return NotFound();
-
-            return Ok(wishlist.ToDTO());
-        }
+        public async Task<ActionResult<WishlistDTO>> GetUserWishlist() => 
+            Ok((await _repository.GetUserWishlistAsync(UserId)).ToDTO());
     }
 }

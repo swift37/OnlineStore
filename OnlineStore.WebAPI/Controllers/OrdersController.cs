@@ -38,12 +38,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Order id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<bool>> Exist(int id) =>
-            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+             Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
         /// Get the order by id
@@ -55,17 +53,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Order id (int)</param>
         /// <returns>Returns OrderDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderDTO>> Get(int id)
-        {
-            var order = await _repository.GetAsync(id);
-            if (order is null) return NotFound();
-
-            return Ok(order.ToDTO());
-        }
+        public async Task<ActionResult<OrderDTO>> Get(int id) =>
+            Ok((await _repository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a order
@@ -120,12 +111,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Order id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id) =>
-            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
 
         /// <summary>
         /// Get the orders enumeration by category id
@@ -136,18 +128,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="userId">User id (Guid)</param>
         /// <returns>Returns IEnumerable<OrderDTO></returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("user/{userId:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders(Guid userId)
-        {
-            var orders = await _repository.GetUserOrdersAsync(userId);
-
-            if (orders == null || orders.Count() < 1) return NotFound();
-
-            return Ok(orders.ToDTO());
-        }
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders(Guid userId) =>
+            Ok((await _repository.GetUserOrdersAsync(userId)).ToDTO());
 
         /// <summary>
         /// Get the orders enumeration by category id
@@ -157,18 +141,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// </remarks>
         /// <returns>Returns IEnumerable<OrderDTO></returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("user/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders()
-        {
-            var orders = await _repository.GetUserOrdersAsync(UserId);
-
-            if (orders == null || orders.Count() < 1) return NotFound();
-
-            return Ok(orders.ToDTO());
-        }
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders() => 
+            Ok((await _repository.GetUserOrdersAsync(UserId)).ToDTO());
 
         /// <summary>
         /// Get the order belonging to the current user by id
@@ -180,17 +156,9 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Order id (int)</param>
         /// <returns>Returns OrderDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("user/current/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderDTO>> GetUserOrder(int id)
-        {
-            var order = await _repository.GetUserOrderAsync(id, UserId);
-
-            if (order is null) return NotFound();
-
-            return Ok(order.ToDTO());
-        }
+        public async Task<ActionResult<OrderDTO>> GetUserOrder(int id) => 
+            Ok((await _repository.GetUserOrderAsync(id, UserId)).ToDTO());
     }
 }

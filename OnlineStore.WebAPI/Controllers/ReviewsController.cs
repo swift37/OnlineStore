@@ -38,12 +38,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Review id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("exists/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<bool>> Exist(int id) =>
-            await _repository.ExistsAsync(id) ? Ok(true) : NotFound(false);
+        public async Task<ActionResult<bool>> Exist(int id) => 
+            Ok(await _repository.ExistsAsync(id));
 
         /// <summary>
         /// Get the review by id
@@ -55,17 +53,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Review id (int)</param>
         /// <returns>Returns ReviewDTO</returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ReviewDTO>> Get(int id)
-        {
-            var review = await _repository.GetAsync(id);
-            if (review is null) return NotFound();
-
-            return Ok(review.ToDTO());
-        }
+        public async Task<ActionResult<ReviewDTO>> Get(int id) => 
+            Ok((await _repository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a review
@@ -120,12 +111,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">Review id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id) =>
-            await _repository.DeleteAsync(id) ? NoContent() : NotFound();
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
 
         /// <summary>
         /// Get the reviews enumeration by category id
@@ -136,17 +128,9 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="productId">Product id (int)</param>
         /// <returns>Returns IEnumerable<ReviewDTO></returns>
         /// <response code="200">Success</response>
-        /// <response code="404">Not Found</response>
         [HttpGet("product/{productId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviewsByProduct(int productId)
-        {
-            var reviews = await _repository.GetReviewsByProductAsync(productId);
-
-            if (reviews == null || reviews.Count() < 1) return NotFound();
-
-            return Ok(reviews.ToDTO());
-        }
+        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviewsByProduct(int productId) => 
+            Ok((await _repository.GetReviewsByProductAsync(productId)).ToDTO());
     }
 }
