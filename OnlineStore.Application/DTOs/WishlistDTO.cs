@@ -12,6 +12,6 @@ namespace OnlineStore.Application.DTOs
 
         public DateTime LastChangeDate { get; set; }
 
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        public ICollection<ProductDTO> Products { get; set; } = new HashSet<ProductDTO>();
     }
 }

@@ -26,8 +26,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll()
+        {
+            var result = (await _repository.GetAllAsync()).ToDTO();
+
+            return Ok(result);
+        }
 
         /// <summary>
         /// Get true if category exists

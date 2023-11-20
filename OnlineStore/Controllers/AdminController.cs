@@ -26,7 +26,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult Categories() 
         {
-            return View(_context.Categories.Include(c => c.Subcategories).ToArray()); 
+            return View(_context.Categories.ToArray()); 
         }
 
         [HttpGet]

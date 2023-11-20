@@ -15,7 +15,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder.Property(product => product.Discount).HasColumnType("decimal(18,2)");
             builder
                 .HasOne(product => product.Category)
-                .WithMany(category => category.Products)
+                .WithMany()
                 .HasForeignKey(product => product.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder

@@ -8,13 +8,9 @@
 
         public string? Description { get; set; }
 
-        public CategoryDTO? Root { get; set; }
+        public int? RootId { get; set; }
 
-        public CategoryDTO? Parent { get; set; }
-
-        public IEnumerable<CategoryDTO> Subcategories { get; set; } = Enumerable.Empty<CategoryDTO>();
-
-        public IEnumerable<ProductDTO> Products { get; set; } = Enumerable.Empty<ProductDTO>();
+        public int? ParentId { get; set; }
 
         public bool IsMainCategory { get; set; }
     }

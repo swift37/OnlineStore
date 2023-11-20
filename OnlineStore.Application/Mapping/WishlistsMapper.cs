@@ -11,7 +11,7 @@ namespace OnlineStore.Application.Mapping
             UserId = wishlist.UserId,
             CreateDate = wishlist.CreateDate,
             LastChangeDate = wishlist.LastChangeDate,
-            Products = wishlist.Products
+            Products = wishlist.Products.ToDTO().ToArray()
         };
 
         public static Wishlist FromDTO(this WishlistDTO wishlist) => new Wishlist
@@ -20,7 +20,7 @@ namespace OnlineStore.Application.Mapping
             UserId = wishlist.UserId,
             CreateDate = wishlist.CreateDate,
             LastChangeDate = wishlist.LastChangeDate,
-            Products = wishlist.Products
+            Products = wishlist.Products.FromDTO().ToArray()
         };
 
         public static IEnumerable<WishlistDTO> ToDTO(this IEnumerable<Wishlist> wishlists) => wishlists.Select(p => p.ToDTO());

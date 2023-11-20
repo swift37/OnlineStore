@@ -1,5 +1,4 @@
 ﻿using OnlineStore.Domain.Base;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStore.Domain
 {
@@ -14,10 +13,6 @@ namespace OnlineStore.Domain
         public int? ParentId { get; set; }
 
         public Category? Parent { get; set; }
-
-        public IEnumerable<Category> Subcategories { get; set; } = Enumerable.Empty<Category>();
-
-        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 
         public bool IsRootCategory { get; set; }
     }

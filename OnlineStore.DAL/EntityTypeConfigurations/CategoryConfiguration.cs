@@ -19,7 +19,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
                 .IsRequired(false);
             builder
                 .HasOne(category => category.Parent)
-                .WithMany(parent => parent.Subcategories)
+                .WithMany()
                 .HasForeignKey(category => category.ParentId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired(false);

@@ -14,7 +14,7 @@
 <ul class="ui list">
     @foreach (var category in Model)
     {
-        if (category.Subcategories != null && category.Subcategories.Any())
+@*         if (category.Subcategories != null && category.Subcategories.Any())
         {
             <li>
                 @category.Name
@@ -36,7 +36,7 @@
                 @category.Name 
                 <a asp-action="EditCategory" asp-route-id="@category.Id">Edit</a>
             </li>
-        }
+        } *@
     }
 </ul>
 

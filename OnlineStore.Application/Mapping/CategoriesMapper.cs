@@ -10,10 +10,8 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Root = category.Root?.ToDTO(),
-            Parent = category.Parent?.ToDTO(),
-            Subcategories = category.Subcategories.ToDTO(),
-            Products = category.Products.ToDTO(),
+            RootId = category.RootId,
+            ParentId = category.ParentId,
             IsMainCategory = category.IsRootCategory
         };
 
@@ -22,10 +20,8 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Root = category.Root?.FromDTO(),
-            Parent = category.Parent?.FromDTO(),
-            Subcategories = category.Subcategories.FromDTO(),
-            Products = category.Products.FromDTO(),
+            RootId = category.RootId,
+            ParentId = category.ParentId,
             IsRootCategory = category.IsMainCategory
         };
 
