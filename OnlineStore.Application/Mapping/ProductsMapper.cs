@@ -49,6 +49,46 @@ namespace OnlineStore.Application.Mapping
             IsSale = product.IsSale
         };
 
+        public static Product FromDTO(this CreateProductDTO product) => new Product
+        {
+            Name = product.Name,
+            CategoryId = product.CategoryId,
+            Description = product.Description,
+            Discount = product.Discount,
+            Image = product.Image,
+            Specifications = product.Specifications.FromDTO().ToArray(),
+            UnitsInStock = product.UnitsInStock,
+            UnitPrice = product.UnitPrice,
+            StoreCode = product.StoreCode,
+            ManufacturersCode = product.ManufacturersCode,
+            Manufacturer = product.Manufacturer,
+            IsAvailable = product.IsAvailable,
+            IsFeaturedProduct = product.IsFeaturedProduct,
+            IsNewProduct = product.IsNewProduct,
+            IsSale = product.IsSale
+        };
+
+        public static Product FromDTO(this UpdateProductDTO product) => new Product
+        {
+            Id = product.Id,
+            Name = product.Name,
+            CategoryId = product.CategoryId,
+            Description = product.Description,
+            Discount = product.Discount,
+            Image = product.Image,
+            Specifications = product.Specifications.FromDTO().ToArray(),
+            UnitsInStock = product.UnitsInStock,
+            UnitPrice = product.UnitPrice,
+            Rating = product.Rating,
+            StoreCode = product.StoreCode,
+            ManufacturersCode = product.ManufacturersCode,
+            Manufacturer = product.Manufacturer,
+            IsAvailable = product.IsAvailable,
+            IsFeaturedProduct = product.IsFeaturedProduct,
+            IsNewProduct = product.IsNewProduct,
+            IsSale = product.IsSale
+        };
+
         public static IEnumerable<ProductDTO> ToDTO(this IEnumerable<Product> products) => products.Select(p => p.ToDTO());
 
         public static IEnumerable<Product> FromDTO(this IEnumerable<ProductDTO> products) => products.Select(p => p.FromDTO());

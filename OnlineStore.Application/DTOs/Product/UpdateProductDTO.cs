@@ -20,11 +20,9 @@ namespace OnlineStore.Application.DTOs.Product
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<SpecificationDTO> Specifications { get; set; } = Enumerable.Empty<SpecificationDTO>();
+        public IEnumerable<UpdateSpecificationDTO> Specifications { get; set; } = Enumerable.Empty<UpdateSpecificationDTO>();
 
         public double Rating { get; set; }
-
-        public IEnumerable<ReviewDTO> Reviews { get; set; } = Enumerable.Empty<ReviewDTO>();
 
         public string? Manufacturer { get; set; }
 

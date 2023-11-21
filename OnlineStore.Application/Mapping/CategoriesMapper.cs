@@ -25,6 +25,25 @@ namespace OnlineStore.Application.Mapping
             IsRootCategory = category.IsMainCategory
         };
 
+        public static Category FromDTO(this CreateCategoryDTO category) => new Category
+        {
+            Name = category.Name,
+            Description = category.Description,
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsRootCategory = category.IsMainCategory
+        };
+
+        public static Category FromDTO(this UpdateCategoryDTO category) => new Category
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsRootCategory = category.IsMainCategory
+        };
+
         public static IEnumerable<CategoryDTO> ToDTO(this IEnumerable<Category> categories) => categories.Select(c => c.ToDTO());
 
         public static IEnumerable<Category> FromDTO(this IEnumerable<CategoryDTO> categories) => categories.Select(c => c.FromDTO());

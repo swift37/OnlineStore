@@ -1,10 +1,5 @@
 ﻿using OnlineStore.Application.DTOs.Subscriber;
 using OnlineStore.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Application.Mapping
 {
@@ -18,6 +13,19 @@ namespace OnlineStore.Application.Mapping
         };
 
         public static Subscriber FromDTO(this SubscriberDTO subscriber) => new Subscriber
+        {
+            Id = subscriber.Id,
+            Email = subscriber.Email,
+            SubscribeDate = subscriber.SubscribeDate
+        };
+
+        public static Subscriber FromDTO(this CreateSubscriberDTO subscriber) => new Subscriber
+        {
+            Email = subscriber.Email,
+            SubscribeDate = subscriber.SubscribeDate
+        };
+
+        public static Subscriber FromDTO(this UpdateSubscriberDTO subscriber) => new Subscriber
         {
             Id = subscriber.Id,
             Email = subscriber.Email,

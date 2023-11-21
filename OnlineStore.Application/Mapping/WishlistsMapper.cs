@@ -8,7 +8,6 @@ namespace OnlineStore.Application.Mapping
         public static WishlistDTO ToDTO(this Wishlist wishlist) => new WishlistDTO
         {
             Id = wishlist.Id,
-            UserId = wishlist.UserId,
             CreateDate = wishlist.CreateDate,
             LastChangeDate = wishlist.LastChangeDate,
             Products = wishlist.Products.ToDTO().ToArray()
@@ -17,8 +16,21 @@ namespace OnlineStore.Application.Mapping
         public static Wishlist FromDTO(this WishlistDTO wishlist) => new Wishlist
         {
             Id = wishlist.Id,
-            UserId = wishlist.UserId,
             CreateDate = wishlist.CreateDate,
+            LastChangeDate = wishlist.LastChangeDate,
+            Products = wishlist.Products.FromDTO().ToArray()
+        };
+
+        public static Wishlist FromDTO(this CreateWishlistDTO wishlist) => new Wishlist
+        {
+            CreateDate = wishlist.CreateDate,
+            LastChangeDate = wishlist.LastChangeDate,
+            Products = wishlist.Products.FromDTO().ToArray()
+        };
+
+        public static Wishlist FromDTO(this UpdateWishlistDTO wishlist) => new Wishlist
+        {
+            Id = wishlist.Id,
             LastChangeDate = wishlist.LastChangeDate,
             Products = wishlist.Products.FromDTO().ToArray()
         };

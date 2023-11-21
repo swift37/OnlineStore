@@ -25,6 +25,23 @@ namespace OnlineStore.Application.Mapping
             ResponseDate = contactRequest.ResponseDate
         };
 
+        public static ContactRequest FromDTO(this CreateContactRequestDTO contactRequest) => new ContactRequest
+        {
+            ContactName = contactRequest.ContactName,
+            Email = contactRequest.Email,
+            Message = contactRequest.Message,
+            CreationDate = contactRequest.CreationDate
+        };
+
+        public static ContactRequest FromDTO(this UpdateContactRequestDTO contactRequest) => new ContactRequest
+        {
+            Id = contactRequest.Id,
+            ContactName = contactRequest.ContactName,
+            Email = contactRequest.Email,
+            Message = contactRequest.Message
+            ResponseDate = contactRequest.ResponseDate
+        };
+
         public static IEnumerable<ContactRequestDTO> ToDTO(this IEnumerable<ContactRequest> contactRequests) => contactRequests.Select(c => c.ToDTO());
 
         public static IEnumerable<ContactRequest> FromDTO(this IEnumerable<ContactRequestDTO> contactRequests) => contactRequests.Select(c => c.FromDTO());
