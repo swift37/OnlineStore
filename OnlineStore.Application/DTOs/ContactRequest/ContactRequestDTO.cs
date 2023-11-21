@@ -1,9 +1,9 @@
-﻿namespace OnlineStore.Application.DTOs
-{
-    public class ContactRequestDTO
-    {
-        public int Id {  get; set; }
+﻿using OnlineStore.Application.DTOs.Base;
 
+namespace OnlineStore.Application.DTOs.ContactRequest
+{
+    public class ContactRequestDTO : BaseDTO
+    {
         public string? ContactName { get; set; }
 
         public string? Email { get; set; }

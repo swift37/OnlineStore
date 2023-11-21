@@ -1,9 +1,9 @@
-﻿namespace OnlineStore.Application.DTOs
-{
-    public class CouponDTO
-    {
-        public int Id { get; set; }
+﻿using OnlineStore.Application.DTOs.Base;
 
+namespace OnlineStore.Application.DTOs.Coupon
+{
+    public class CouponDTO : BaseDTO
+    {
         public string? Number { get; set; }
 
         public DateTime CreationDate { get; set; }

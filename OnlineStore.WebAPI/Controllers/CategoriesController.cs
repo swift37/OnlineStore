@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Application.DTOs;
+using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain;
@@ -26,12 +26,8 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll()
-        {
-            var result = (await _repository.GetAllAsync()).ToDTO();
-
-            return Ok(result);
-        }
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll() =>
+            Ok((await _repository.GetAllAsync()).ToDTO());
 
         /// <summary>
         /// Get true if category exists

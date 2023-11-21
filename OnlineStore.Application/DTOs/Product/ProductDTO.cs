@@ -1,11 +1,11 @@
-﻿using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.Category;
+using OnlineStore.Application.DTOs.Review;
 
-namespace OnlineStore.Application.DTOs
+namespace OnlineStore.Application.DTOs.Product
 {
-    public class ProductDTO
+    public class ProductDTO : BaseDTO
     {
-        public int Id { get; set; }
-
         public string? Name { get; set; }
 
         public decimal UnitPrice { get; set; }
@@ -39,5 +39,14 @@ namespace OnlineStore.Application.DTOs
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
+    }
+
+    public class SpecificationDTO : BaseDTO
+    {
+        public string? Name { get; set; }
+
+        public string? Value { get; set; }
+
+        public bool IsMain { get; set; }
     }
 }

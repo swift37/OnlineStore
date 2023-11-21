@@ -1,4 +1,4 @@
-﻿using OnlineStore.Application.DTOs;
+﻿using OnlineStore.Application.DTOs.Subscriber;
 using OnlineStore.Domain;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using OnlineStore.Application.DTOs;
+﻿using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Domain;
 
 namespace OnlineStore.Application.Mapping

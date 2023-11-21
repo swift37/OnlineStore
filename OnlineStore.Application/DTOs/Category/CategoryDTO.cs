@@ -1,9 +1,9 @@
-﻿namespace OnlineStore.Application.DTOs
-{
-    public class CategoryDTO
-    {
-        public int Id { get; set; }
+﻿using OnlineStore.Application.DTOs.Base;
 
+namespace OnlineStore.Application.DTOs.Category
+{
+    public class CategoryDTO : BaseDTO
+    {
         public string? Name { get; set; }
 
         public string? Description { get; set; }

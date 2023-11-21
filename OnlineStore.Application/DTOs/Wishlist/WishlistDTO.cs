@@ -1,13 +1,10 @@
-﻿using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.Product;
 
-namespace OnlineStore.Application.DTOs
+namespace OnlineStore.Application.DTOs.Wishlist
 {
-    public class WishlistDTO
+    public class WishlistDTO : BaseDTO
     {
-        public int Id { get; set; }
-
-        public Guid UserId { get; set; }
-
         public DateTime CreateDate { get; set; }
 
         public DateTime LastChangeDate { get; set; }

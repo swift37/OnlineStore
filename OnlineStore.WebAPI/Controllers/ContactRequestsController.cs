@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Application.DTOs;
+using OnlineStore.Application.DTOs.ContactRequest;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain;

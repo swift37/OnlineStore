@@ -1,11 +1,11 @@
-﻿using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.Product;
+using OnlineStore.Domain;
 
-namespace OnlineStore.Application.DTOs
+namespace OnlineStore.Application.DTOs.Order
 {
-    public class OrderDTO
+    public class OrderDTO : BaseDTO
     {
-        public int Id { get; set; }
-
         public ICollection<OrderItemDTO> Items { get; set; } = new HashSet<OrderItemDTO>();
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
@@ -43,11 +43,13 @@ namespace OnlineStore.Application.DTOs
         public string? Notes { get; set; }
     }
 
-    public class OrderItemDTO
+    public class OrderItemDTO : BaseDTO
     {
-        public int Id { get; set; }
+        public int OrderId { get; set; }
 
         public OrderDTO? Order { get; set; }
+
+        public int ProductId { get; set; }
 
         public ProductDTO? Product { get; set; }
 

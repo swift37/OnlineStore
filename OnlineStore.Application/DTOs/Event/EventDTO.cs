@@ -1,9 +1,9 @@
-﻿namespace OnlineStore.Application.DTOs
-{
-    public class EventDTO
-    {
-        public int Id { get; set; }
+﻿using OnlineStore.Application.DTOs.Base;
 
+namespace OnlineStore.Application.DTOs.Event
+{
+    public class EventDTO : BaseDTO
+    {
         public string? Name { get; set; }
 
         public DateTime StartDate { get; set; }
