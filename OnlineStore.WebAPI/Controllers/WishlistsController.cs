@@ -68,16 +68,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="wishlistDTO">WishlistDTO</param>
+        /// <param name="createWishlistDTO">CreateWishlistDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect wishlist DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] WishlistDTO wishlistDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateWishlistDTO createWishlistDTO)
         {
-            var wishlist = await _repository.CreateAsync(wishlistDTO.FromDTO());
+            var wishlist = await _repository.CreateAsync(createWishlistDTO.FromDTO());
             if (wishlist is null) return UnprocessableEntity();
             return Ok(wishlist.Id);
         }
@@ -91,14 +91,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated wishlist name"
         /// }
         /// </remarks>
-        /// <param name="wishlistDTO">WishlistDTO</param>
+        /// <param name="updateWishlistDTO">UpdateWishlistDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] WishlistDTO wishlistDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
-            await _repository.UpdateAsync(wishlistDTO.FromDTO());
+            await _repository.UpdateAsync(updateWishlistDTO.FromDTO());
             return NoContent();
         }
 

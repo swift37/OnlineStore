@@ -68,16 +68,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="productDTO">ProductDTO</param>
+        /// <param name="createProductDTO">CreateProductDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect product DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] ProductDTO productDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateProductDTO createProductDTO)
         {
-            var product = await _repository.CreateAsync(productDTO.FromDTO());
+            var product = await _repository.CreateAsync(createProductDTO.FromDTO());
             if (product is null) return UnprocessableEntity();
             return Ok(product.Id);
         }
@@ -91,14 +91,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated product name"
         /// }
         /// </remarks>
-        /// <param name="productDTO">ProductDTO</param>
+        /// <param name="updateProductDTO">UpdateProductDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] ProductDTO productDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            await _repository.UpdateAsync(productDTO.FromDTO());
+            await _repository.UpdateAsync(updateProductDTO.FromDTO());
             return NoContent();
         }
 

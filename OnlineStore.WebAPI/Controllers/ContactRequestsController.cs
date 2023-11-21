@@ -69,16 +69,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="contactRequestDTO">ContactRequestDTO</param>
+        /// <param name="createContactRequestDTO">CreateContactRequestDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect contactRequest DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] ContactRequestDTO contactRequestDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateContactRequestDTO createContactRequestDTO)
         {
-            var contactRequest = await _repository.CreateAsync(contactRequestDTO.FromDTO());
+            var contactRequest = await _repository.CreateAsync(createContactRequestDTO.FromDTO());
             if (contactRequest is null) return UnprocessableEntity();
             return Ok(contactRequest.Id);
         }
@@ -92,14 +92,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated contact request name"
         /// }
         /// </remarks>
-        /// <param name="contactRequestDTO">ContactRequestDTO</param>
+        /// <param name="updateContactRequestDTO">UpdateContactRequestDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] ContactRequestDTO contactRequestDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
-            await _repository.UpdateAsync(contactRequestDTO.FromDTO());
+            await _repository.UpdateAsync(updateContactRequestDTO.FromDTO());
             return NoContent();
         }
 

@@ -69,16 +69,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="subscriberDTO">SubscriberDTO</param>
+        /// <param name="createSubscriberDTO">CreateSubscriberDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect subscriber DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] SubscriberDTO subscriberDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateSubscriberDTO createSubscriberDTO)
         {
-            var subscriber = await _repository.CreateAsync(subscriberDTO.FromDTO());
+            var subscriber = await _repository.CreateAsync(createSubscriberDTO.FromDTO());
             if (subscriber is null) return UnprocessableEntity();
             return Ok(subscriber.Id);
         }
@@ -92,14 +92,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated subscriber name"
         /// }
         /// </remarks>
-        /// <param name="subscriberDTO">SubscriberDTO</param>
+        /// <param name="updateSubscriberDTO">UpdateSubscriberDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] SubscriberDTO subscriberDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateSubscriberDTO updateSubscriberDTO)
         {
-            await _repository.UpdateAsync(subscriberDTO.FromDTO());
+            await _repository.UpdateAsync(updateSubscriberDTO.FromDTO());
             return NoContent();
         }
 

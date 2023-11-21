@@ -69,16 +69,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="couponDTO">CouponDTO</param>
+        /// <param name="createCouponDTO">CreateCouponDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect coupon DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] CouponDTO couponDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateCouponDTO createCouponDTO)
         {
-            var coupon = await _repository.CreateAsync(couponDTO.FromDTO());
+            var coupon = await _repository.CreateAsync(createCouponDTO.FromDTO());
             if (coupon is null) return UnprocessableEntity();
             return Ok(coupon.Id);
         }
@@ -92,14 +92,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated coupon name"
         /// }
         /// </remarks>
-        /// <param name="couponDTO">CouponDTO</param>
+        /// <param name="updateCouponDTO">UpdateCouponDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] CouponDTO couponDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateCouponDTO updateCouponDTO)
         {
-            await _repository.UpdateAsync(couponDTO.FromDTO());
+            await _repository.UpdateAsync(updateCouponDTO.FromDTO());
             return NoContent();
         }
 

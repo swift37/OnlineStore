@@ -71,16 +71,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="eventDTO">EventDTO</param>
+        /// <param name="createEventDTO">CreateEventDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect event DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] EventDTO eventDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateEventDTO createEventDTO)
         {
-            var @event = await _repository.CreateAsync(eventDTO.FromDTO());
+            var @event = await _repository.CreateAsync(createEventDTO.FromDTO());
             if (@event is null) return UnprocessableEntity();
             return Ok(@event.Id);
         }
@@ -94,14 +94,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated event name"
         /// }
         /// </remarks>
-        /// <param name="eventDTO">EventDTO</param>
+        /// <param name="UpdateEventDTO">UpdateEventDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] EventDTO eventDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateEventDTO UpdateEventDTO)
         {
-            await _repository.UpdateAsync(eventDTO.FromDTO());
+            await _repository.UpdateAsync(UpdateEventDTO.FromDTO());
             return NoContent();
         }
 

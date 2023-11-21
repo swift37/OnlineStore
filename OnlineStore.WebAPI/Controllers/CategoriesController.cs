@@ -69,16 +69,16 @@ namespace OnlineStore.WebAPI.Controllers
         ///     price: "2155"
         /// }
         /// </remarks>
-        /// <param name="categoryDTO">CategoryDTO</param>
+        /// <param name="createCategoryDTO">CreateCategoryDTO</param>
         /// <returns>Returns entity id</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect category DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] CategoryDTO categoryDTO)
+        public async Task<ActionResult<int>> Create([FromBody] CreateCategoryDTO createCategoryDTO)
         {
-            var category = await _repository.CreateAsync(categoryDTO.FromDTO());
+            var category = await _repository.CreateAsync(createCategoryDTO.FromDTO());
             if (category is null) return UnprocessableEntity();
             return Ok(category.Id);
         }
@@ -92,14 +92,14 @@ namespace OnlineStore.WebAPI.Controllers
         ///     name: "Updated category name"
         /// }
         /// </remarks>
-        /// <param name="categoryDTO">CategoryDTO</param>
+        /// <param name="updateCategoryDTO">UpdateCategoryDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update([FromBody] CategoryDTO categoryDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
-            await _repository.UpdateAsync(categoryDTO.FromDTO());
+            await _repository.UpdateAsync(updateCategoryDTO.FromDTO());
             return NoContent();
         }
 
