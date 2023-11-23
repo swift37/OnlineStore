@@ -1,12 +1,21 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.DAL.Context;
+using OnlineStore.DAL.Repositories;
 using OnlineStore.Domain;
 
-namespace OnlineStore.DAL.Repositories
+namespace OnlineStore.DAL
 {
-    public static class RepositoriesRegistrator
+    public static class PersistenceRegistrator
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services) => services
+        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) => services
+            .AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DbConnection"));
+                })
             .AddScoped<IProductsRepository, ProductsRepository>()
             .AddScoped<IReviewsRepository, ReviewsRepository>()
             .AddScoped<IOrdersRepository, OrdersRepository>()

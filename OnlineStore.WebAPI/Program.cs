@@ -1,18 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
-using OnlineStore.DAL.Repositories;
 using OnlineStore.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DbConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-
-builder.Services.AddRepositories();
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 
