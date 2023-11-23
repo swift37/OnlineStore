@@ -11,7 +11,19 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.HasIndex(order => order.UserId);
+            builder.HasIndex(order => order.TrackingNumber);
+            builder.Property(order => order.UserId).IsRequired();
+            builder.Property(order => order.FirstName).HasMaxLength(32);
+            builder.Property(order => order.LastName).HasMaxLength(32);
+            builder.Property(order => order.Phone).HasMaxLength(16);
             builder.Property(order => order.ShippingCost).HasColumnType("decimal(18,2)");
+            builder.Property(order => order.TrackingNumber).HasMaxLength(32);
+            builder.Property(order => order.Country).HasMaxLength(32);
+            builder.Property(order => order.City).HasMaxLength(32);
+            builder.Property(order => order.State).HasMaxLength(32);
+            builder.Property(order => order.Postcode).HasMaxLength(10);
+            builder.Property(order => order.StreetAddress).HasMaxLength(32);
+            builder.Property(order => order.Apartment).HasMaxLength(8);
             builder.Property(order => order.Notes).HasMaxLength(64);
             builder.Navigation(order => order.Items).AutoInclude();
         }

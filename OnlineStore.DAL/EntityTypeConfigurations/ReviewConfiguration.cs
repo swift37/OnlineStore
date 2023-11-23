@@ -11,8 +11,8 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.HasIndex(review => review.UserId);
-            builder.Property(review => review.Title).HasMaxLength(32);
             builder.Property(review => review.UserId).IsRequired();
+            builder.Property(review => review.Title).HasMaxLength(32);
             builder.Property(review => review.Content).HasMaxLength(256);
             builder
                 .HasOne(review => review.Product)

@@ -9,6 +9,8 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         public override void Configure(EntityTypeBuilder<Subscriber> builder)
         {
             base.Configure(builder);
+            builder.HasIndex(s => s.Email).IsUnique();
+            builder.Property(s => s.Email).IsRequired();
         }
     }
 }

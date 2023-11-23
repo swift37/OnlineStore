@@ -10,6 +10,8 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         public override void Configure(EntityTypeBuilder<Coupon> builder)
         {
             base.Configure(builder);
+            builder.HasIndex(coupon => coupon.Number).IsUnique();
+            builder.Property(coupon => coupon.Number).HasMaxLength(16).IsRequired();
             builder.Property(coupon => coupon.DiscountSize).HasColumnType("decimal(18,2)");
         }
     }

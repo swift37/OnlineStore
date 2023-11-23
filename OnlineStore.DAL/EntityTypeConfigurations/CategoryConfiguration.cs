@@ -11,6 +11,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.Property(category => category.Name).HasMaxLength(32);
+            builder.Property(category => category.Description).HasMaxLength(128);
             builder
                 .HasOne(category => category.Root)
                 .WithMany()
