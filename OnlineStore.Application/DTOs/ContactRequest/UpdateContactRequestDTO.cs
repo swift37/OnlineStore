@@ -10,6 +10,6 @@ namespace OnlineStore.Application.DTOs.ContactRequest
 
         public string? Message { get; set; }
 
-        public DateTime ResponseDate { get; set; }
+        public DateTime? ResponseDate { get; set; }
     }
 }

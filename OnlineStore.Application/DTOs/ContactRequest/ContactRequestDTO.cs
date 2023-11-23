@@ -12,6 +12,6 @@ namespace OnlineStore.Application.DTOs.ContactRequest
 
         public DateTime CreationDate { get; set; }
 
-        public DateTime ResponseDate { get; set; }
+        public DateTime? ResponseDate { get; set; }
     }
 }
