@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
@@ -15,6 +16,9 @@ builder.Services.AddApplication();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddCors(options =>
 {
