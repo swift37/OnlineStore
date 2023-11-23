@@ -38,7 +38,7 @@ namespace OnlineStore.Application.Mapping
             Id = contactRequest.Id,
             ContactName = contactRequest.ContactName,
             Email = contactRequest.Email,
-            Message = contactRequest.Message
+            Message = contactRequest.Message,
             ResponseDate = contactRequest.ResponseDate
         };
 

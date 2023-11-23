@@ -15,8 +15,8 @@ namespace OnlineStore.Domain
 
         public string? Title { get; set; }
 
-        [Range(0.0, 5.0)]
-        public double Rating { get; set; }
+        [Range(1, 5)]
+        public int Rating { get; set; }
 
         public string? Content { get; set; }
 

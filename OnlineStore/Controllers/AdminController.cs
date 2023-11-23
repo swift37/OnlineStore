@@ -218,13 +218,13 @@ namespace OnlineStore.Controllers
         //    return RedirectToAction("Categories");
         //}
 
-        public IActionResult GetSubCategories(int id)
-        {
-            var category = _context.Categories.Include(c => c.Subcategories).SingleOrDefault(c => c.Id == id);
-            if (category is null) return Json(false);
+        //public IActionResult GetSubCategories(int id)
+        //{
+        //    var category = _context.Categories.Include(c => c.Subcategories).SingleOrDefault(c => c.Id == id);
+        //    if (category is null) return Json(false);
 
-            var subcategories = new SelectList(category.Subcategories, nameof(Category.Id), nameof(Category.Name));
-            return Json(subcategories);
-        }
+        //    var subcategories = new SelectList(category.Subcategories, nameof(Category.Id), nameof(Category.Name));
+        //    return Json(subcategories);
+        //}
     }
 }

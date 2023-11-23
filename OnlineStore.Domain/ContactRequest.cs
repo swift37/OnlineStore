@@ -12,6 +12,6 @@ namespace OnlineStore.Domain
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public DateTime ResponseDate { get; set; }
+        public DateTime? ResponseDate { get; set; }
     }
 }
