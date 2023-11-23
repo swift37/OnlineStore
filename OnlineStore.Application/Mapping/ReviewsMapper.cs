@@ -9,6 +9,7 @@ namespace OnlineStore.Application.Mapping
         {
             Id = review.Id,
             Title = review.Title,
+            ProductId = review.ProductId,
             Product = review.Product?.ToDTO(),
             Content = review.Content,
             Rating = review.Rating,
@@ -19,6 +20,7 @@ namespace OnlineStore.Application.Mapping
         {
             Id = review.Id,
             Title = review.Title,
+            ProductId = review.ProductId,
             Product = review.Product?.FromDTO(),
             Content = review.Content,
             Rating = review.Rating,

@@ -15,6 +15,9 @@ namespace OnlineStore.Application.DTOs.Review.Validation
             RuleFor(r => r.CreationDate)
                 .NotEqual(default(DateTime));
 
+            RuleFor(r => r.ProductId)
+                .NotEqual(0);
+
             RuleFor(r => r.Rating)
                 .GreaterThanOrEqualTo(1)
                 .LessThanOrEqualTo(5);

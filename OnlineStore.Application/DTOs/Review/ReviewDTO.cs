@@ -5,6 +5,8 @@ namespace OnlineStore.Application.DTOs.Review
 {
     public class ReviewDTO: BaseDTO
     {
+        public int ProductId {  get; set; } 
+
         public ProductDTO? Product { get; set; }
 
         public DateTime CreationDate { get; set; }
