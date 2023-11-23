@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Category.Validation
         public UpdateCategoryDTOValidator()
         {
             RuleFor(c => c.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(c => c.Name)
                 .NotEmpty()

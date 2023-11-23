@@ -8,7 +8,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
         public UpdateOrderDTOValidator()
         {
             RuleFor(o => o.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(o => o.PayDate)
                 .NotEqual(default(DateTime));
@@ -63,7 +63,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
         public UpdateOrderItemDTOValidator()
         {
             RuleFor(o => o.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(o => o.UnitPrice)
                 .GreaterThan(0);

@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Review.Validation
         public ReviewDTOValidator()
         {
             RuleFor(r => r.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(r => r.Title)
                 .MaximumLength(32);
@@ -16,7 +16,7 @@ namespace OnlineStore.Application.DTOs.Review.Validation
                 .NotEqual(default(DateTime));
 
             RuleFor(r => r.ProductId)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(r => r.Rating)
                 .GreaterThanOrEqualTo(1)

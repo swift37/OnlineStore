@@ -7,13 +7,13 @@ namespace OnlineStore.Application.DTOs.Product.Validation
         public UpdateProductDTOValidator()
         {
             RuleFor(p => p.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(p => p.Name)
                 .MaximumLength(32);
 
             RuleFor(p => p.CategoryId)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(p => p.Rating)
                 .GreaterThan(0)
@@ -44,7 +44,7 @@ namespace OnlineStore.Application.DTOs.Product.Validation
         public UpdateSpecificationDTOValidator()
         {
             RuleFor(s => s.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(s => s.Name)
                 .MaximumLength(32);

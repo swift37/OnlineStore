@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.ContactRequest.Validation
         public UpdateContactRequestDTOValidator()
         {
             RuleFor(c => c.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(c => c.Email)
                 .NotEmpty()

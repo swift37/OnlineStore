@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Event.Validation
         public UpdateEventDTOValidator()
         {
             RuleFor(e => e.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(e => e.Name)
                 .NotEmpty()

@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Subscriber.Validation
         public UpdateSubscriberDTOValidator()
         {
             RuleFor(s => s.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(s => s.Email)
                 .NotEmpty()

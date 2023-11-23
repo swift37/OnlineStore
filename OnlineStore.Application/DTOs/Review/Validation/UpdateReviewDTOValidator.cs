@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Review.Validation
         public UpdateReviewDTOValidator()
         {
             RuleFor(r => r.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(r => r.Title)
                 .MaximumLength(32);

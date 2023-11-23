@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Coupon.Validation
         public CouponDTOValidator()
         {
             RuleFor(c => c.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(c => c.Number)
                 .NotEmpty()

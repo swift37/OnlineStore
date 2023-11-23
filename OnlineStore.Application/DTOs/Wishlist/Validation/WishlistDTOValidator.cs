@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.Wishlist.Validation
         public WishlistDTOValidator()
         {
             RuleFor(w => w.Id)
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(w => w.CreateDate)
                 .NotEqual(default(DateTime));
