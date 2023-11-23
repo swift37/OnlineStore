@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Application.Infrastructure;
+using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.DAL.Repositories;
@@ -16,7 +16,7 @@ builder.Services.AddRepositories();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
