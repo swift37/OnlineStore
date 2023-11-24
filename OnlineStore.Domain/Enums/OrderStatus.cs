@@ -1,11 +1,18 @@
-﻿namespace OnlineStore.Domain.Enums
+﻿using OnlineStore.Domain.Enums.Atributes;
+
+namespace OnlineStore.Domain.Enums
 {
     public enum OrderStatus
     {
-        NotPaid, 
-        Paid, 
-        Processed, 
-        Completed, 
+        [StringValue("Not paid")]
+        NotPaid,
+        [StringValue("Paid")]
+        Paid,
+        [StringValue("Processed")]
+        Processed,
+        [StringValue("Completed")]
+        Completed,
+        [StringValue("Canceled")]
         Canceled
     }
 }
