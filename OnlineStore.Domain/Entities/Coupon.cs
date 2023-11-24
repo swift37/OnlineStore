@@ -1,11 +1,11 @@
 ﻿using OnlineStore.Domain.Base;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Coupon : Entity
     {
         public string? Number { get; set; }
-        
+
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime StartDate { get; set; }

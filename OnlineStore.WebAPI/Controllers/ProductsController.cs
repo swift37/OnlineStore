@@ -2,6 +2,7 @@
 using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Enums;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -137,7 +138,7 @@ namespace OnlineStore.WebAPI.Controllers
             int categoryId, 
             int page = 1, 
             int itemsPerPage = 15, 
-            IProductsRepository.SortParameters sortBy = IProductsRepository.SortParameters.Default) => 
+            SortParameters sortBy = SortParameters.Default) => 
             Ok((await _repository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy))
                 .ToDTO());
 

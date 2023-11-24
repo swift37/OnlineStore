@@ -3,7 +3,8 @@ using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
-using static OnlineStore.Application.Interfaces.Repositories.IProductsRepository;
+using OnlineStore.Domain.Entities;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.DAL.Repositories
 {

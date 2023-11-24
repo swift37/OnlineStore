@@ -1,8 +1,6 @@
-﻿using OnlineStore.Domain.Base;
-
-namespace OnlineStore.Domain
+﻿namespace OnlineStore.Domain.Entities
 {
-    public class ProductsPage : Entity
+    public class ProductsPage
     {
         public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
 

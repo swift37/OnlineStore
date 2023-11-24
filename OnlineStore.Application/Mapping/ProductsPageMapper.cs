@@ -1,5 +1,5 @@
 ﻿using OnlineStore.Application.DTOs.Product;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Mapping
 {
@@ -7,7 +7,6 @@ namespace OnlineStore.Application.Mapping
     {
         public static ProductsPageDTO ToDTO(this ProductsPage productsPage) => new ProductsPageDTO
         {
-            Id = productsPage.Id,
             Products = productsPage.Products.ToDTO(),
             Category = productsPage.Category?.ToDTO(),
             CurrentPage = productsPage.CurrentPage,
@@ -17,7 +16,6 @@ namespace OnlineStore.Application.Mapping
 
         public static ProductsPage FromDTO(this ProductsPageDTO productsPage) => new ProductsPage
         {
-            Id = productsPage.Id,
             Products = productsPage.Products.FromDTO(),
             Category = productsPage.Category?.FromDTO(),
             CurrentPage = productsPage.CurrentPage,

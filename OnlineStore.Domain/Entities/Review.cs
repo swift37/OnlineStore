@@ -1,7 +1,7 @@
 ﻿using OnlineStore.Domain.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Review : Entity
     {

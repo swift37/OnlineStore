@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Areas.Identity.Pages.Account
 {

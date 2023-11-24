@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Domain.Base;
+using OnlineStore.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore.Domain
@@ -60,10 +61,5 @@ namespace OnlineStore.Domain
         public decimal UnitPrice { get; set; }
 
         public decimal Discount { get; set; }
-    }
-
-    public enum OrderStatus
-    {
-         NotPaid, Paid, Processed, Completed, Canceled
     }
 }

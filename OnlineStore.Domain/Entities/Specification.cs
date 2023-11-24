@@ -1,6 +1,6 @@
 ﻿using OnlineStore.Domain.Base;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Specification : NamedEntity
     {

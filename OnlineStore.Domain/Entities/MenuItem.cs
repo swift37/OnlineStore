@@ -1,6 +1,6 @@
 ﻿using OnlineStore.Domain.Base;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class MenuItem : Entity
     {
@@ -10,6 +10,6 @@ namespace OnlineStore.Domain
 
         public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
-        public string? Image {  get; set; }
+        public string? Image { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using OnlineStore.Application.DTOs.Subscriber;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Mapping
 {

@@ -1,5 +1,6 @@
 ﻿using OnlineStore.Application.DTOs.Base;
 using OnlineStore.Domain;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {

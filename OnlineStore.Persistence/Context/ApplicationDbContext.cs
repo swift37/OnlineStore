@@ -2,6 +2,7 @@
 using OnlineStore.Application.Interfaces;
 using OnlineStore.DAL.EntityTypeConfigurations;
 using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.Context
 {

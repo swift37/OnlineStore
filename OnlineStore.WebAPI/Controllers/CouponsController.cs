@@ -2,7 +2,7 @@
 using OnlineStore.Application.DTOs.Coupon;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers

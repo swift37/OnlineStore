@@ -5,7 +5,7 @@ using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.DAL.Repositories;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL
 {

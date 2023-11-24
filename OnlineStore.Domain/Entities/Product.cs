@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Domain.Base;
+using OnlineStore.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore.Domain
