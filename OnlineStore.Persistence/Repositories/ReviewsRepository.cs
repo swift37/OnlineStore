@@ -1,9 +1,7 @@
-﻿using Azure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain.Entities;
-using System.Globalization;
 
 namespace OnlineStore.DAL.Repositories
 {
