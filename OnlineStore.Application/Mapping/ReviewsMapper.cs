@@ -1,5 +1,5 @@
-﻿using OnlineStore.Application.Models;
-using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Review;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Mapping
 {
@@ -9,6 +9,7 @@ namespace OnlineStore.Application.Mapping
         {
             Id = review.Id,
             Title = review.Title,
+            ProductId = review.ProductId,
             Product = review.Product?.ToDTO(),
             Content = review.Content,
             Rating = review.Rating,
@@ -19,10 +20,28 @@ namespace OnlineStore.Application.Mapping
         {
             Id = review.Id,
             Title = review.Title,
+            ProductId = review.ProductId,
             Product = review.Product?.FromDTO(),
             Content = review.Content,
             Rating = review.Rating,
             CreationDate = review.CreationDate
+        };
+
+        public static Review FromDTO(this CreateReviewDTO review) => new Review
+        {
+            Title = review.Title,
+            ProductId = review.ProductId,
+            Content = review.Content,
+            Rating = review.Rating,
+            CreationDate = review.CreationDate
+        };
+
+        public static Review FromDTO(this UpdateReviewDTO review) => new Review
+        {
+            Id = review.Id,
+            Title = review.Title,
+            Content = review.Content,
+            Rating = review.Rating
         };
 
         public static IEnumerable<ReviewDTO> ToDTO(this IEnumerable<Review> reviews) => reviews.Select(s => s.ToDTO());

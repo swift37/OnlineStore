@@ -1,8 +1,7 @@
-using Librarian.Services;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,8 +20,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddServices();
 
 var app = builder.Build();
 

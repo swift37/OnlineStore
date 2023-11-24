@@ -1,5 +1,5 @@
-﻿using OnlineStore.Application.Models;
-using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Product;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Mapping
 {
@@ -21,8 +21,27 @@ namespace OnlineStore.Application.Mapping
             IsMain = specification.IsMain
         };
 
+        public static Specification FromDTO(this CreateSpecificationDTO specification) => new Specification
+        {
+            Name = specification.Name,
+            Value = specification.Value,
+            IsMain = specification.IsMain
+        };
+
+        public static Specification FromDTO(this UpdateSpecificationDTO specification) => new Specification
+        {
+            Id = specification.Id,
+            Name = specification.Name,
+            Value = specification.Value,
+            IsMain = specification.IsMain
+        };
+
         public static IEnumerable<SpecificationDTO> ToDTO(this IEnumerable<Specification> specifications) => specifications.Select(s => s.ToDTO());
 
         public static IEnumerable<Specification> FromDTO(this IEnumerable<SpecificationDTO> specifications) => specifications.Select(s => s.FromDTO());
+
+        public static IEnumerable<Specification> FromDTO(this IEnumerable<CreateSpecificationDTO> specifications) => specifications.Select(s => s.FromDTO());
+
+        public static IEnumerable<Specification> FromDTO(this IEnumerable<UpdateSpecificationDTO> specifications) => specifications.Select(s => s.FromDTO());
     }
 }

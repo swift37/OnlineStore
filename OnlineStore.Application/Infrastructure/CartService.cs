@@ -1,6 +1,6 @@
-﻿using OnlineStore.Domain;
-using OnlineStore.Interfaces.Infrastructure;
-using OnlineStore.Interfaces.Repositories;
+﻿using OnlineStore.Application.Interfaces.Infrastructure;
+using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Infrastructure
 {
@@ -19,7 +19,7 @@ namespace OnlineStore.Application.Infrastructure
 
             if (item is null)
             {
-                var newItem = _productsRepository.Get(id).Result;
+                var newItem = _productsRepository.GetAsync(id).Result;
                 cart?.Items.Add(new CartItem { Product = newItem, Quantity = 1 });
             }
             else

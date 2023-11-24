@@ -1,4 +1,4 @@
-﻿using OnlineStore.Application.Models;
+﻿using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Domain;
 
 namespace OnlineStore.Application.Mapping
@@ -35,11 +35,51 @@ namespace OnlineStore.Application.Mapping
             Description = product.Description,
             Discount = product.Discount,
             Image = product.Image,
-            Specifications = product.Specifications.FromDTO().ToList(),
+            Specifications = product.Specifications.FromDTO().ToArray(),
             UnitsInStock = product.UnitsInStock,
             UnitPrice = product.UnitPrice,
             Rating = product.Rating,
-            Reviews = product.Reviews.FromDTO().ToList(),
+            Reviews = product.Reviews.FromDTO().ToArray(),
+            StoreCode = product.StoreCode,
+            ManufacturersCode = product.ManufacturersCode,
+            Manufacturer = product.Manufacturer,
+            IsAvailable = product.IsAvailable,
+            IsFeaturedProduct = product.IsFeaturedProduct,
+            IsNewProduct = product.IsNewProduct,
+            IsSale = product.IsSale
+        };
+
+        public static Product FromDTO(this CreateProductDTO product) => new Product
+        {
+            Name = product.Name,
+            CategoryId = product.CategoryId,
+            Description = product.Description,
+            Discount = product.Discount,
+            Image = product.Image,
+            Specifications = product.Specifications.FromDTO().ToArray(),
+            UnitsInStock = product.UnitsInStock,
+            UnitPrice = product.UnitPrice,
+            StoreCode = product.StoreCode,
+            ManufacturersCode = product.ManufacturersCode,
+            Manufacturer = product.Manufacturer,
+            IsAvailable = product.IsAvailable,
+            IsFeaturedProduct = product.IsFeaturedProduct,
+            IsNewProduct = product.IsNewProduct,
+            IsSale = product.IsSale
+        };
+
+        public static Product FromDTO(this UpdateProductDTO product) => new Product
+        {
+            Id = product.Id,
+            Name = product.Name,
+            CategoryId = product.CategoryId,
+            Description = product.Description,
+            Discount = product.Discount,
+            Image = product.Image,
+            Specifications = product.Specifications.FromDTO().ToArray(),
+            UnitsInStock = product.UnitsInStock,
+            UnitPrice = product.UnitPrice,
+            Rating = product.Rating,
             StoreCode = product.StoreCode,
             ManufacturersCode = product.ManufacturersCode,
             Manufacturer = product.Manufacturer,

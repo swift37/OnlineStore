@@ -1,5 +1,5 @@
-﻿using OnlineStore.Application.Models;
-using OnlineStore.Domain;
+﻿using OnlineStore.Application.DTOs.Category;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Mapping
 {
@@ -10,10 +10,9 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Parent = category.Parent?.ToDTO(),
-            Subcategories = category.Subcategories.ToDTO(),
-            Products = category.Products.ToDTO(),
-            IsMainCategory = category.IsMainCategory
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsMainCategory = category.IsRootCategory
         };
 
         public static Category FromDTO(this CategoryDTO category) => new Category
@@ -21,10 +20,28 @@ namespace OnlineStore.Application.Mapping
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Parent = category.Parent?.FromDTO(),
-            Subcategories = category.Subcategories.FromDTO(),
-            Products = category.Products.FromDTO(),
-            IsMainCategory = category.IsMainCategory
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsRootCategory = category.IsMainCategory
+        };
+
+        public static Category FromDTO(this CreateCategoryDTO category) => new Category
+        {
+            Name = category.Name,
+            Description = category.Description,
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsRootCategory = category.IsMainCategory
+        };
+
+        public static Category FromDTO(this UpdateCategoryDTO category) => new Category
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            RootId = category.RootId,
+            ParentId = category.ParentId,
+            IsRootCategory = category.IsMainCategory
         };
 
         public static IEnumerable<CategoryDTO> ToDTO(this IEnumerable<Category> categories) => categories.Select(c => c.ToDTO());

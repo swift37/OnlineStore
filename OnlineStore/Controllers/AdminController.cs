@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Controllers
@@ -26,7 +27,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult Categories() 
         {
-            return View(_context.Categories.Include(c => c.Subcategories).ToArray()); 
+            return View(_context.Categories.ToArray()); 
         }
 
         [HttpGet]
@@ -218,13 +219,13 @@ namespace OnlineStore.Controllers
         //    return RedirectToAction("Categories");
         //}
 
-        public IActionResult GetSubCategories(int id)
-        {
-            var category = _context.Categories.Include(c => c.Subcategories).SingleOrDefault(c => c.Id == id);
-            if (category is null) return Json(false);
+        //public IActionResult GetSubCategories(int id)
+        //{
+        //    var category = _context.Categories.Include(c => c.Subcategories).SingleOrDefault(c => c.Id == id);
+        //    if (category is null) return Json(false);
 
-            var subcategories = new SelectList(category.Subcategories, nameof(Category.Id), nameof(Category.Name));
-            return Json(subcategories);
-        }
+        //    var subcategories = new SelectList(category.Subcategories, nameof(Category.Id), nameof(Category.Name));
+        //    return Json(subcategories);
+        //}
     }
 }

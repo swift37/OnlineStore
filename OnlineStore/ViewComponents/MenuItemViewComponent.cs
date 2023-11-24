@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.ViewComponents
 {
