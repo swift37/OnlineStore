@@ -27,4 +27,8 @@
     <None Include="wwwroot\resources\productsImages\hp-laptop-victus.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="OnlineStore.Domain.Entities" />
+  </ItemGroup>
+
 </Project>

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Identity\OnlineStore.Identity.csproj" />
     <ProjectReference Include="..\OnlineStore.Persistence\OnlineStore.Persistence.csproj" />
   </ItemGroup>
 
