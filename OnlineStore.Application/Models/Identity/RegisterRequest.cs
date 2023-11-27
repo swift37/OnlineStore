@@ -2,7 +2,7 @@
 
 namespace OnlineStore.Application.Models.Identity
 {
-    internal class RegisterRequest
+    public class RegisterRequest
     {
         [Required]
         public string? FirstName { get; set; }
