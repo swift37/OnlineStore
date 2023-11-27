@@ -2,8 +2,8 @@
 {
     public interface IJwtProvider
     {
-        string GenerateAccessToken(Guid userId);
+        Task<string> GenerateAccessToken(Guid userId);
 
-        string GenerateRefreshToken(Guid userId);
+        string GenerateRefreshToken();
     }
 }
