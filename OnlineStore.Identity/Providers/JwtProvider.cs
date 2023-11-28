@@ -19,9 +19,9 @@ namespace OnlineStore.Identity.Providers
         public JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> options) =>
             (_userManager, _jwtOptions) = (userManager, options.Value);
 
-        public async Task<string> GenerateAccessToken(Guid userId)
+        public async Task<string> GenerateAccessToken(string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString()) ?? 
+            var user = await _userManager.FindByIdAsync(userId) ?? 
                 throw new NotFoundException("There is no user with this id.", nameof(ApplicationUser));
 
             var roles = await _userManager.GetRolesAsync(user);

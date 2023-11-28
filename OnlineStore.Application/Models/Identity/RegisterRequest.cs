@@ -5,25 +5,25 @@ namespace OnlineStore.Application.Models.Identity
     public class RegisterRequest
     {
         [Required]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password")]
-        public string? PasswordConfirmation { get; set; }
+        public string PasswordConfirmation { get; set; }
     }
 }

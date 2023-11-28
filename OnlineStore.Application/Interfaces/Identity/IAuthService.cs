@@ -8,8 +8,8 @@ namespace OnlineStore.Application.Interfaces.Identity
         
         Task Register(RegisterRequest request);
 
-        Task<IdentityResponse> Refresh(RefreshRequest refreshRequest);
+        Task<IdentityResponse> Refresh(RefreshRequest refreshRequest, string userId);
 
-        Task Logout();
+        Task Logout(string userId);
     }
 }
