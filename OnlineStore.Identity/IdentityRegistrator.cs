@@ -7,6 +7,7 @@ using OnlineStore.Application.Interfaces.Identity;
 using OnlineStore.Identity.Context;
 using OnlineStore.Identity.Models;
 using OnlineStore.Identity.OptionsSetup;
+using OnlineStore.Identity.Providers;
 using OnlineStore.Identity.Services;
 
 namespace OnlineStore.Identity
@@ -22,7 +23,8 @@ namespace OnlineStore.Identity
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddScoped<IJwtProvider, JwtProvider>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddAuthentication(options =>
             {
