@@ -8,6 +8,8 @@
 
         public string Audience { get; init; }
 
-        public double DurationInMinutes { get; init; }
+        public double AccessTokenExpiryInMinutes { get; init; }
+
+        public double RefreshTokenExpiryInDays { get; init; }
     }
 }

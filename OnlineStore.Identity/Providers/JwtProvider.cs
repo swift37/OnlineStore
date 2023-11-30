@@ -16,8 +16,8 @@ namespace OnlineStore.Identity.Providers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtOptions _jwtOptions;
 
-        public JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> options) =>
-            (_userManager, _jwtOptions) = (userManager, options.Value);
+        public JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtOptions) =>
+            (_userManager, _jwtOptions) = (userManager, jwtOptions.Value);
 
         public async Task<string> GenerateAccessToken(string userId)
         {
@@ -47,7 +47,7 @@ namespace OnlineStore.Identity.Providers
             {
                 Issuer = _jwtOptions.Issuer,
                 Audience = _jwtOptions.Audience,
-                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.DurationInMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenExpiryInMinutes),
                 SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
             };
 

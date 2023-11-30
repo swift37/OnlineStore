@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces.Identity;
@@ -12,9 +13,15 @@ namespace OnlineStore.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IJwtProvider _jwtProvider;
+        private readonly JwtOptions _jwtOptions;
 
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IJwtProvider jwtProvider) =>
-            (_userManager, _signInManager, _jwtProvider) = (userManager, signInManager, jwtProvider);
+        public AuthService(
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            IJwtProvider jwtProvider,
+            IOptions<JwtOptions> jwtOptions) =>
+            (_userManager, _signInManager, _jwtProvider, _jwtOptions) = 
+            (userManager, signInManager, jwtProvider, jwtOptions.Value);
 
         public async Task Register(RegisterRequest request)
         {
@@ -52,7 +59,7 @@ namespace OnlineStore.Identity.Services
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpiryInDays);
 
             await _userManager.UpdateAsync(user);
 
