@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces.Identity;
 using OnlineStore.Application.Models.Identity;
@@ -34,19 +35,19 @@ namespace OnlineStore.Identity.Services
             if (result.Succeeded)
                 await _userManager.AddToRoleAsync(newUser, "User");
             else
-                throw new Exception($"{result.Errors}");
+                foreach (var error in result.Errors)
+                    throw new Exception($"Failed to register: [{error.Code}] {error.Description}");
         }
 
         public async Task<IdentityResponse> Login(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null)
-                throw new Exception($"User with mail {request.Email} not found.");
+                throw new NotFoundException($"User with mail {request.Email} not found.", nameof(ApplicationUser));
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-
             if (!result.Succeeded)
-                throw new Exception($"Credentials for {request.Email} are not valid.");
+                throw new NotFoundException($"Credentials for {request.Email} are not valid.", nameof(ApplicationUser));
 
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 
@@ -64,16 +65,16 @@ namespace OnlineStore.Identity.Services
             return response;
         }
 
-        public async Task<IdentityResponse> Refresh(RefreshRequest refreshRequest, string userId)
+        public async Task<IdentityResponse> Refresh(RefreshRequest refreshRequest, Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
 
             if (user is null) 
                 throw new NotFoundException("There is no user with this id.", nameof(ApplicationUser));
             if (user.RefreshToken != refreshRequest.RefreshToken)
-                throw new Exception("Invalid refresh token.");
+                throw new SecurityTokenValidationException("Invalid refresh token.");
             if (user.RefreshTokenExpiry < DateTime.UtcNow)
-                throw new Exception("Refresh token expired.");
+                throw new SecurityTokenExpiredException("Refresh token expired.");
 
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 
@@ -91,9 +92,9 @@ namespace OnlineStore.Identity.Services
             return response;
         }
 
-        public async Task Logout(string userId)
+        public async Task Logout(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
 
             if (user is null) 
                 throw new NotFoundException("There is no user with this id.", nameof(ApplicationUser));
