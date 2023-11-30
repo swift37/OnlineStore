@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
 using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
@@ -35,7 +36,34 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition($"AuthToken", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        BearerFormat = "JWT",
+        Scheme = "bearer",
+        Name = "Authorization",
+        Description = "Authorization token"
+    });
+        
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = $"AuthToken"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+
+});
 
 var app = builder.Build();
 

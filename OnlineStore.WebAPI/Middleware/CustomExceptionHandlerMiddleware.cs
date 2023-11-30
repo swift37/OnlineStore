@@ -36,6 +36,8 @@ namespace OnlineStore.WebAPI.Middleware
                 case NotFoundException:
                     code = HttpStatusCode.NotFound;
                     break;
+                default:
+                    break;
             }
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
