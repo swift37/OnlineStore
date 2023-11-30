@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
+using OnlineStore.Identity;
 using OnlineStore.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddPersistence(builder.Configuration);
 
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddApplication();
+
+builder.Services.AddIdentity(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
