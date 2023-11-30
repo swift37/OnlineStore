@@ -25,12 +25,13 @@ namespace OnlineStore.Identity.Services
 
         public async Task Register(RegisterRequest request)
         {
-            var exitingUser = await _userManager.FindByEmailAsync(request.Email);
+            var exitingUser = await _userManager.FindByNameAsync(request.Username);
             if (exitingUser is { }) 
-                throw new Exception($"User with mail {request.Email} alredy exists.");
+                throw new Exception($"User {request.Username} alredy exists.");
 
             var newUser = new ApplicationUser
             {
+                UserName = request.Username,
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -48,13 +49,14 @@ namespace OnlineStore.Identity.Services
 
         public async Task<IdentityResponse> Login(LoginRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _userManager.FindByNameAsync(request.UsernameOrEmail) 
+                ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
             if (user is null)
-                throw new NotFoundException($"User with mail {request.Email} not found.", nameof(ApplicationUser));
+                throw new NotFoundException($"User {request.UsernameOrEmail} not found.", nameof(ApplicationUser));
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!result.Succeeded)
-                throw new NotFoundException($"Credentials for {request.Email} are not valid.", nameof(ApplicationUser));
+                throw new NotFoundException($"Credentials for {request.UsernameOrEmail} are not valid.", nameof(ApplicationUser));
 
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 

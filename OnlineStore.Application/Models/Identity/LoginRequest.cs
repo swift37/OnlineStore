@@ -5,8 +5,7 @@ namespace OnlineStore.Application.Models.Identity
     public class LoginRequest
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string UsernameOrEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

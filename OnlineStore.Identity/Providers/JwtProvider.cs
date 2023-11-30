@@ -33,7 +33,7 @@ namespace OnlineStore.Identity.Providers
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? string.Empty),
