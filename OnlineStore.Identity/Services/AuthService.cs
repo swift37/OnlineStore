@@ -30,7 +30,7 @@ namespace OnlineStore.Identity.Services
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var result = await _userManager.CreateAsync(newUser);
+            var result = await _userManager.CreateAsync(newUser, request.Password);
 
             if (result.Succeeded)
                 await _userManager.AddToRoleAsync(newUser, "User");
