@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
@@ -40,7 +42,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
         [HttpGet("exists/{id:int}")]
+        [Authorize(Roles = Roles.Employee)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<bool>> Exist(int id) =>
             Ok(await _repository.ExistsAsync(id));
 
@@ -55,7 +60,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns CategoryDTO</returns>
         /// <response code="200">Success</response>
         [HttpGet("{id:int}")]
+        [Authorize(Roles = Roles.Employee)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CategoryDTO>> Get(int id) => 
             Ok((await _repository.GetAsync(id)).ToDTO());
 
@@ -74,8 +82,11 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect category DTO was passed</response>
         [HttpPost]
+        [Authorize(Roles = Roles.Manager)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCategoryDTO createCategoryDTO)
         {
             var category = await _repository.CreateAsync(createCategoryDTO.FromDTO());
@@ -96,7 +107,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
+        [Authorize(Roles = Roles.Manager)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
             await _repository.UpdateAsync(updateCategoryDTO.FromDTO());
@@ -113,7 +127,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Delete(int id)
         {
             await _repository.DeleteAsync(id);
