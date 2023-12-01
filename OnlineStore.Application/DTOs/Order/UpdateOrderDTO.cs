@@ -1,11 +1,12 @@
 ﻿using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Domain;
 using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {
     public class UpdateOrderDTO : BaseDTO
     {
+        public string? Number { get; set; }
+
         public ICollection<UpdateOrderItemDTO> Items { get; set; } = new HashSet<UpdateOrderItemDTO>();
 
         public OrderStatus Status { get; set; }

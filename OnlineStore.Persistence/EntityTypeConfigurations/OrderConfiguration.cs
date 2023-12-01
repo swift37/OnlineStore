@@ -11,7 +11,9 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.HasIndex(order => order.UserId);
+            builder.HasIndex(order => order.Number);
             builder.HasIndex(order => order.TrackingNumber);
+            builder.Property(order => order.Number).HasMaxLength(16).IsRequired();
             builder.Property(order => order.UserId).IsRequired();
             builder.Property(order => order.FirstName).HasMaxLength(32);
             builder.Property(order => order.LastName).HasMaxLength(32);
