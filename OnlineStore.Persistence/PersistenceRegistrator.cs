@@ -13,9 +13,7 @@ namespace OnlineStore.DAL
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) => services
             .AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("DbConnection"));
-                })
+                    options.UseSqlServer(configuration.GetConnectionString("DbConnection")))
             .AddScoped<IProductsRepository, ProductsRepository>()
             .AddScoped<IReviewsRepository, ReviewsRepository>()
             .AddScoped<IOrdersRepository, OrdersRepository>()

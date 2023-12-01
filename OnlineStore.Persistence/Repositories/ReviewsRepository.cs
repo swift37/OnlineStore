@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.DAL.Context;
 using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.Repositories
 {
     public class ReviewsRepository : Repository<Review>, IReviewsRepository
     {
-        public ReviewsRepository(ApplicationDbContext context) : base(context) { }
+        public ReviewsRepository(IApplicationDbContext context) : base(context) { }
 
         public async Task<IEnumerable<Review>> GetReviewsByProductAsync(int productId, CancellationToken cancellation = default)
         {

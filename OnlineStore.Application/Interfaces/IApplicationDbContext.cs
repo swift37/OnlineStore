@@ -19,6 +19,8 @@ namespace OnlineStore.Application.Interfaces
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
 
+        DbSet<TEntity> Set<TEntity>() where TEntity : class; 
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
