@@ -16,8 +16,8 @@ namespace OnlineStore.Identity.Providers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtOptions _jwtOptions;
 
-        public JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtOptions) =>
-            (_userManager, _jwtOptions) = (userManager, jwtOptions.Value);
+        public JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> options) =>
+            (_userManager, _jwtOptions) = (userManager, options.Value);
 
         public async Task<string> GenerateAccessToken(string userId)
         {
@@ -33,11 +33,12 @@ namespace OnlineStore.Identity.Providers
 
             var claims = new[]
             {
+                new Claim("uid", userId),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? string.Empty),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }
             .Union(roleClaims);
 
@@ -48,7 +49,8 @@ namespace OnlineStore.Identity.Providers
                 Issuer = _jwtOptions.Issuer,
                 Audience = _jwtOptions.Audience,
                 Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenExpiryInMinutes),
-                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
+                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256),
+                Subject = new ClaimsIdentity(claims)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

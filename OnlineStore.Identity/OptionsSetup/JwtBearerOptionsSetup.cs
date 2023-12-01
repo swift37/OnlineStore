@@ -6,14 +6,17 @@ using System.Text;
 
 namespace OnlineStore.Identity.OptionsSetup
 {
-    public class JwtBearerOptionsSetup : IConfigureOptions<JwtBearerOptions>
+    public class JwtBearerOptionsSetup : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly JwtOptions _jwtOptions;
 
         public JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions) => 
             _jwtOptions = jwtOptions.Value; 
 
-        public void Configure(JwtBearerOptions options)
+        public void Configure(JwtBearerOptions options) => 
+            Configure(JwtBearerDefaults.AuthenticationScheme, options);
+
+        public void Configure(string? name, JwtBearerOptions options)
         {
             options.TokenValidationParameters = new()
             {
@@ -25,7 +28,7 @@ namespace OnlineStore.Identity.OptionsSetup
                 ValidIssuer = _jwtOptions.Issuer,
                 ValidAudience = _jwtOptions.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_jwtOptions.SecretKey))
+                Encoding.UTF8.GetBytes(_jwtOptions.SecretKey))
             };
         }
     }

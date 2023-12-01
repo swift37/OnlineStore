@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityDefinition($"AuthToken", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
+        Type = SecuritySchemeType.Http,
         BearerFormat = "JWT",
         Scheme = "bearer",
         Name = "Authorization",
@@ -93,6 +93,7 @@ app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
