@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Review;
+using OnlineStore.Application.DTOs.Wishlist;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.WebAPI.Controllers.Base;
+using System.Security.Claims;
 
 namespace OnlineStore.WebAPI.Controllers
 {
@@ -28,7 +30,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -48,7 +50,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("exists/{id:int}")]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -68,7 +70,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("{id:int}")]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -97,9 +99,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateReviewDTO createReviewDTO)
         {
-            var review = await _repository.CreateAsync(createReviewDTO.FromDTO());
-            if (review is null) return UnprocessableEntity();
-            return Ok(review.Id);
+            var review = createReviewDTO.FromDTO();
+            review.UserId = UserId;
+
+            var createdReview = await _repository.CreateAsync(review);
+            if (createdReview is null) return UnprocessableEntity();
+            return Ok(createdReview.Id);
         }
 
         /// <summary>
@@ -115,12 +120,23 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user tries to update the review that does not belong to him</response>
         [HttpPut]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateReviewDTO updateReviewDTO)
         {
+            if (!User.IsInRole(Roles.Administrator) || 
+                !User.IsInRole(Roles.Manager) || 
+                !User.IsInRole(Roles.Employee))
+            {
+                var review = await _repository.GetAsync(updateReviewDTO.Id);
+                if (review.UserId != UserId)
+                    return Forbid();
+            }
+
             await _repository.UpdateAsync(updateReviewDTO.FromDTO());
             return NoContent();
         }

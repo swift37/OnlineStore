@@ -97,9 +97,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateWishlistDTO createWishlistDTO)
         {
-            var wishlist = await _repository.CreateAsync(createWishlistDTO.FromDTO());
-            if (wishlist is null) return UnprocessableEntity();
-            return Ok(wishlist.Id);
+            var wishlist = createWishlistDTO.FromDTO();
+            wishlist.UserId = UserId;
+
+            var createdWishlist = await _repository.CreateAsync(wishlist);
+            if (createdWishlist is null) return UnprocessableEntity();
+            return Ok(createdWishlist.Id);
         }
 
         /// <summary>
@@ -115,12 +118,18 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user tries to update the wishlist that does not belong to him</response>
         [HttpPut]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
+            var wishlist = await _repository.GetAsync(updateWishlistDTO.Id);
+            if (wishlist.UserId != UserId)
+                return Forbid();
+
             await _repository.UpdateAsync(updateWishlistDTO.FromDTO());
             return NoContent();
         }
@@ -159,7 +168,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("user/{userId:Guid}")]
-        [Authorize(Roles = Roles.Manager)]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

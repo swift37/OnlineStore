@@ -3,8 +3,11 @@
     public static class Roles
     {
         public const string Administrator = "Administrator";
-        public const string Manager = $"{Administrator},Manager";
-        public const string Employee = $"{Manager},Employee";
-        public const string User = $"{Employee},User";
+        public const string ManagerOrHigher = $"{Administrator},Manager";
+        public const string Manager = $"Manager";
+        public const string EmployeeOrHigher = $"{ManagerOrHigher},Employee";
+        public const string Employee = $"Employee";
+        public const string UserOrHigher = $"{EmployeeOrHigher},User";
+        public const string User = $"User";
     }
 }

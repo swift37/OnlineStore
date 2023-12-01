@@ -28,7 +28,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -48,7 +48,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("exists/{id:int}")]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -94,9 +94,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateOrderDTO createOrderDTO)
         {
-            var order = await _repository.CreateAsync(createOrderDTO.FromDTO());
-            if (order is null) return UnprocessableEntity();
-            return Ok(order.Id);
+            var order = createOrderDTO.FromDTO();
+            order.UserId = UserId;
+
+            var createdOrder = await _repository.CreateAsync(order);
+            if (createdOrder is null) return UnprocessableEntity();
+            return Ok(createdOrder.Id);
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpPut]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -158,7 +161,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("user/{userId:Guid}")]
-        [Authorize(Roles = Roles.Employee)]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
