@@ -1,10 +1,11 @@
 using FluentValidation.AspNetCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using OnlineStore.Application;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.Identity;
 using OnlineStore.WebAPI.Middleware;
+using OnlineStore.WebAPI.OptionsSetup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,38 +35,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition($"AuthToken", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer",
-        Name = "Authorization",
-        Description = "Authorization token"
-    });
-        
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = $"AuthToken"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+builder.Services.ConfigureOptions<SwaggerGenOptionsSetup>();
 
-});
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiVersioning();
 
 var app = builder.Build();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -86,7 +65,16 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        foreach (var desc in provider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint(
+                $"/swagger/{desc.GroupName}/swagger.json",
+                desc.GroupName.ToUpperInvariant());
+        }
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
@@ -95,6 +83,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseApiVersioning();
 
 app.MapControllers();
 

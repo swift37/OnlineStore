@@ -8,6 +8,7 @@ using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
 {
+    [ApiVersionNeutral]
     [Produces("application/json")]
     public class OrdersController : BaseController
     {

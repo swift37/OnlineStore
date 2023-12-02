@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Review;
-using OnlineStore.Application.DTOs.Wishlist;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.WebAPI.Controllers.Base;
-using System.Security.Claims;
 
 namespace OnlineStore.WebAPI.Controllers
 {
+    [ApiVersionNeutral]
     [Produces("application/json")]
     public class ReviewsController : BaseController
     {
