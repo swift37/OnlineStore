@@ -1,0 +1,20 @@
+[
+  {
+    "inputFiles": [
+      "Styles/main.css"
+    ],
+    "outputFileName": "wwwroot/css/main.css"
+  },
+  {
+    "inputFiles": [
+      "Scripts/main.js"
+    ],
+    "outputFileName": "wwwroot/scripts/main.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/sliders.js"
+    ],
+    "outputFileName": "wwwroot/scripts/sliders.js"
+  }
+]
