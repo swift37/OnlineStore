@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.ContactRequest;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
 {
+    [ApiVersionNeutral]
     [Produces("application/json")]
     public class ContactRequestsController : BaseController
     {
@@ -24,8 +27,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// </remarks>
         /// <returns>Returns IEnumerable<ContactRequestDTO></returns>
         /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
         [HttpGet]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ContactRequestDTO>>> GetAll() =>
             Ok((await _repository.GetAllAsync()).ToDTO());
 
@@ -39,8 +47,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("exists/{id:int}")]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<bool>> Exist(int id) =>
             Ok(await _repository.ExistsAsync(id));
 
@@ -54,8 +67,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id (int)</param>
         /// <returns>Returns ContactRequestDTO</returns>
         /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("{id:int}")]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ContactRequestDTO>> Get(int id) =>
             Ok((await _repository.GetAsync(id)).ToDTO());
 
@@ -95,8 +113,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="updateContactRequestDTO">UpdateContactRequestDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
         [HttpPut]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
             await _repository.UpdateAsync(updateContactRequestDTO.FromDTO());
@@ -112,8 +135,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="id">ContactRequest id (int)</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Delete(int id)
         {
             await _repository.DeleteAsync(id);

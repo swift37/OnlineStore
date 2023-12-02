@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Exeptions;
+using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 
 namespace OnlineStore.DAL.Repositories
 {
     public class OrdersRepository : Repository<Order>, IOrdersRepository
     {
-        public OrdersRepository(ApplicationDbContext context) : base(context) { }
+        public OrdersRepository(IApplicationDbContext context) : base(context) { }
 
         public async Task<IEnumerable<Order>> GetUserOrdersAsync(
             Guid userId, 

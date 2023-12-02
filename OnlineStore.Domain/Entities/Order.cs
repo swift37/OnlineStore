@@ -7,6 +7,9 @@ namespace OnlineStore.Domain
     public class Order : Entity
     {
         [Required]
+        public string? Number { get; set; }
+
+        [Required]
         public Guid UserId { get; set; }
 
         public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>();

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Exeptions;
+using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.DAL.Context;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
 using OnlineStore.Domain.Enums;
@@ -10,7 +10,7 @@ namespace OnlineStore.DAL.Repositories
 {
     public class ProductsRepository : Repository<Product>, IProductsRepository
     {
-        public ProductsRepository(ApplicationDbContext context) : base(context) { }
+        public ProductsRepository(IApplicationDbContext context) : base(context) { }
 
         public async Task<ProductsPage> GetProductsByCategoryAsync(
             int categoryId, 

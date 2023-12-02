@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Exeptions;
+using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.DAL.Context;
 using OnlineStore.Domain.Base;
 
 namespace OnlineStore.DAL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : Entity, new()
     {
-        protected readonly ApplicationDbContext _context;
+        protected readonly IApplicationDbContext _context;
 
         protected DbSet<T> DbSet { get; }
 
@@ -16,7 +16,7 @@ namespace OnlineStore.DAL.Repositories
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public Repository(ApplicationDbContext context)
+        public Repository(IApplicationDbContext context)
         {
             _context = context;
             DbSet = context.Set<T>();

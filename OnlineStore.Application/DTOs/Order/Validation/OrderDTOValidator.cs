@@ -10,6 +10,10 @@ namespace OnlineStore.Application.DTOs.Order.Validation
             RuleFor(o => o.Id)
                 .GreaterThan(0);
 
+            RuleFor(o => o.Number)
+                .Length(16)
+                .Matches(new Regex("^[0-9]{16}$"));
+
             RuleFor(o => o.CreatedDate)
                 .NotEqual(default(DateTime));
 

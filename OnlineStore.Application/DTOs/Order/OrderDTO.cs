@@ -6,6 +6,8 @@ namespace OnlineStore.Application.DTOs.Order
 {
     public class OrderDTO : BaseDTO
     {
+        public string? Number { get; set; }
+
         public ICollection<OrderItemDTO> Items { get; set; } = new HashSet<OrderItemDTO>();
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;

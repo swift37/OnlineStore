@@ -8,6 +8,7 @@ namespace OnlineStore.Application.Mapping
         public static OrderDTO ToDTO(this Order order) => new OrderDTO
         {
             Id = order.Id,
+            Number = order.Number,
             Items = order.Items.ToDTO().ToArray(),
             Status = order.Status,
             CreatedDate = order.CreatedDate,
@@ -31,6 +32,7 @@ namespace OnlineStore.Application.Mapping
         public static Order FromDTO(this OrderDTO order) => new Order
         {
             Id = order.Id,
+            Number = order.Number,
             Items = order.Items.FromDTO().ToArray(),
             Status = order.Status,
             CreatedDate = order.CreatedDate,
@@ -73,6 +75,7 @@ namespace OnlineStore.Application.Mapping
         public static Order FromDTO(this UpdateOrderDTO order) => new Order
         {
             Id = order.Id,
+            Number = order.Number,
             Items = order.Items.FromDTO().ToArray(),
             Status = order.Status,
             PayDate = order.PayDate,

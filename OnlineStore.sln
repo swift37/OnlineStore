@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.WebAPI", "Onlin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Persistence", "OnlineStore.Persistence\OnlineStore.Persistence.csproj", "{93A6DC2F-B204-404D-B11E-7BFA4CD46AB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Identity", "OnlineStore.Identity\OnlineStore.Identity.csproj", "{1B759CDD-6F20-4AAC-9F78-65429AC7B3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{93A6DC2F-B204-404D-B11E-7BFA4CD46AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93A6DC2F-B204-404D-B11E-7BFA4CD46AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93A6DC2F-B204-404D-B11E-7BFA4CD46AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B759CDD-6F20-4AAC-9F78-65429AC7B3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B759CDD-6F20-4AAC-9F78-65429AC7B3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B759CDD-6F20-4AAC-9F78-65429AC7B3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B759CDD-6F20-4AAC-9F78-65429AC7B3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

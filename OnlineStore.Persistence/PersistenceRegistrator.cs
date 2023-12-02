@@ -6,6 +6,7 @@ using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Context;
 using OnlineStore.DAL.Repositories;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Persistence.Repositories;
 
 namespace OnlineStore.DAL
 {
@@ -13,18 +14,16 @@ namespace OnlineStore.DAL
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) => services
             .AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("DbConnection"));
-                })
+                    options.UseSqlServer(configuration.GetConnectionString("DbConnection")))
             .AddScoped<IProductsRepository, ProductsRepository>()
             .AddScoped<IReviewsRepository, ReviewsRepository>()
             .AddScoped<IOrdersRepository, OrdersRepository>()
             .AddScoped<IWishlistsRepository, WishlistsRepository>()
+            .AddScoped<ISubscribersRepository, SubscribersRepository>()
             .AddScoped<IRepository<Category>, Repository<Category>>()
             .AddScoped<IRepository<Coupon>, Repository<Coupon>>()
             .AddScoped<IRepository<Event>, Repository<Event>>()
             .AddScoped<IRepository<ContactRequest>, Repository<ContactRequest>>()
-            .AddScoped<IRepository<Subscriber>, Repository<Subscriber>>()
             ;
     }
 }
