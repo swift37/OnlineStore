@@ -1,3 +1,5 @@
+using OnlineStore.MVC.Services.ApiClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +18,9 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
     opt.SlidingExpiration = true;
 });
+
+builder.Services.AddHttpClient<IClient, Client>(client => 
+    client.BaseAddress = new Uri("https://localhost:7113"));
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
