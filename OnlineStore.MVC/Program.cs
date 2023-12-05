@@ -1,4 +1,5 @@
 using OnlineStore.MVC.Services.ApiClient;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.ConfigureApplicationCookie(opt =>
 
 builder.Services.AddHttpClient<IClient, Client>(client => 
     client.BaseAddress = new Uri("https://localhost:7113"));
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
