@@ -2,6 +2,15 @@
 {
     public class Response<T>
     {
+        public Response() { }
+
+        public Response(Response response)
+        {
+            Message = response.Message;
+            ValidationErrors = response.ValidationErrors;
+            Success = response.Success;
+        }
+
         public string Message { get; set; } = string.Empty;
 
         public string ValidationErrors { get; set; } = string.Empty;
