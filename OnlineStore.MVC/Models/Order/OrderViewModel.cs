@@ -1,4 +1,5 @@
-﻿using OnlineStore.MVC.Models.Product;
+﻿using OnlineStore.MVC.Models.Enums;
+using OnlineStore.MVC.Models.Product;
 
 namespace OnlineStore.MVC.Models.Order
 {
@@ -10,7 +11,7 @@ namespace OnlineStore.MVC.Models.Order
 
         public ICollection<OrderItemViewModel> Items { get; set; } = new HashSet<OrderItemViewModel>();
 
-        //public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public DateTimeOffset CreatedDate { get; set; }
 

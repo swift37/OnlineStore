@@ -1,10 +1,12 @@
-﻿namespace OnlineStore.MVC.Models.Order
+﻿using OnlineStore.MVC.Models.Enums;
+
+namespace OnlineStore.MVC.Models.Order
 {
     public class CreateOrderViewModel
     {
         public ICollection<CreateOrderItemViewModel> Items { get; set; } = new HashSet<CreateOrderItemViewModel>();
 
-        //public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public DateTimeOffset CreatedDate { get; set; }
 
