@@ -8,9 +8,9 @@ namespace OnlineStore.MVC.Services.Interfaces
     {
         Task<Response> Register(RegisterViewModel registerViewModel);
 
-        Task<IdentityResponse> Login(LoginViewModel loginViewModel);
+        Task<Response<IdentityResponse>> Login(LoginViewModel loginViewModel);
 
-        Task<IdentityResponse> Refresh(string refreshToken);
+        Task<Response<IdentityResponse>> Refresh(string refreshToken);
 
         Task Logout();
     }
