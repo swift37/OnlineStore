@@ -3,7 +3,7 @@ using OnlineStore.Application.DTOs.Category;
 
 namespace OnlineStore.Application.DTOs.Product
 {
-    public class ProductsPageDTO : BaseDTO
+    public class ProductsPageDTO
     {
         public IEnumerable<ProductDTO> Products { get; set; } = Enumerable.Empty<ProductDTO>();
 

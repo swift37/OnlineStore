@@ -98,7 +98,6 @@ namespace OnlineStore.Application.Mapping
         public static OrderItemDTO ToDTO(this OrderItem orderItem) => new OrderItemDTO
         {
             Id = orderItem.Id,
-            Order = orderItem.Order?.ToDTO(),
             Product = orderItem.Product?.ToDTO(),
             Quantity = orderItem.Quantity,
             UnitPrice = orderItem.UnitPrice,
@@ -108,7 +107,6 @@ namespace OnlineStore.Application.Mapping
         public static OrderItem FromDTO(this OrderItemDTO orderItem) => new OrderItem
         {
             Id = orderItem.Id,
-            Order = orderItem.Order?.FromDTO(),
             Product = orderItem.Product?.FromDTO(),
             Quantity = orderItem.Quantity,
             UnitPrice = orderItem.UnitPrice,
