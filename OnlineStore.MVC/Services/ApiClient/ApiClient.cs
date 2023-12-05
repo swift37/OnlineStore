@@ -375,7 +375,7 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateProductsAsync(string version, UpdateProductDTO body);
+        System.Threading.Tasks.Task UpdateProductAsync(string version, UpdateProductDTO body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
@@ -4602,7 +4602,7 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateProductsAsync(string version, UpdateProductDTO body)
+        public virtual System.Threading.Tasks.Task UpdateProductAsync(string version, UpdateProductDTO body)
         {
             return UpdateProductAsync(version, body, System.Threading.CancellationToken.None);
         }
