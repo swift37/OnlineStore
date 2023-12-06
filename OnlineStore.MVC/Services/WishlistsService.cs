@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public WishlistsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<WishlistViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<WishlistViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllWishlistsAsync(_usingVersion);
+                return new Response<IEnumerable<WishlistViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<WishlistViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<WishlistViewModel>>(exception);
+            }
         }
 
-        public Task<Response<WishlistViewModel>> Get(int id)
+        public async Task<Response<WishlistViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetWishlistAsync(id, _usingVersion);
+                return new Response<WishlistViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<WishlistViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<WishlistViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistWishlistAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateWishlistViewModel createWishlistViewModel)

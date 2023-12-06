@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public CouponsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<CouponViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<CouponViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllCouponsAsync(_usingVersion);
+                return new Response<IEnumerable<CouponViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<CouponViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<CouponViewModel>>(exception);
+            }
         }
 
-        public Task<Response<CouponViewModel>> Get(int id)
+        public async Task<Response<CouponViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetCouponAsync(id, _usingVersion);
+                return new Response<CouponViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<CouponViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<CouponViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistCouponAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateCouponViewModel createCouponViewModel)

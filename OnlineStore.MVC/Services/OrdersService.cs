@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public OrdersService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<OrderViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<OrderViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllOrdersAsync(_usingVersion);
+                return new Response<IEnumerable<OrderViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<OrderViewModel>>(exception);
+            }
         }
 
-        public Task<Response<OrderViewModel>> Get(int id)
+        public async Task<Response<OrderViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetOrderAsync(id, _usingVersion);
+                return new Response<OrderViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<OrderViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<OrderViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistOrderAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateOrderViewModel createOrderViewModel)

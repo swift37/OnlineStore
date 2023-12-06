@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public EventsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<EventViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<EventViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllEventsAsync(_usingVersion);
+                return new Response<IEnumerable<EventViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<EventViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<EventViewModel>>(exception);
+            }
         }
 
-        public Task<Response<EventViewModel>> Get(int id)
+        public async Task<Response<EventViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetEventAsync(id, _usingVersion);
+                return new Response<EventViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<EventViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<EventViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistEventAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateEventViewModel createEventViewModel)

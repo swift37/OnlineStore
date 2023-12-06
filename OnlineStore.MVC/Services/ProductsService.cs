@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public ProductsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<ProductViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<ProductViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllProductsAsync(_usingVersion);
+                return new Response<IEnumerable<ProductViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ProductViewModel>>(exception);
+            }
         }
 
-        public Task<Response<ProductViewModel>> Get(int id)
+        public async Task<Response<ProductViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetProductAsync(id, _usingVersion);
+                return new Response<ProductViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<ProductViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<ProductViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistProductAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateProductViewModel createProductViewModel)

@@ -11,20 +11,55 @@ namespace OnlineStore.MVC.Services
         public CategoriesService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<CategoryViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<CategoryViewModel>>> GetAll()
         {
-            //var response = await _client.GetAllCategoriesAsync(_usingVersion);
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllCategoriesAsync(_usingVersion);
+                return new Response<IEnumerable<CategoryViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<CategoryViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<CategoryViewModel>>(exception);
+            }
         }
 
-        public Task<Response<CategoryViewModel>> Get(int id)
+        public async Task<Response<CategoryViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetCategoryAsync(id, _usingVersion);
+                return new Response<CategoryViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<CategoryViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<CategoryViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistCategoryAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateCategoryViewModel createCategoryViewModel)
@@ -40,9 +75,9 @@ namespace OnlineStore.MVC.Services
                     Data = response
                 };
             }
-            catch (ApiException e)
+            catch (ApiException exception)
             {
-                var generatedResponse = GenerateResponse(e);
+                var generatedResponse = GenerateResponse(exception);
                 return new Response<int>(generatedResponse);
             }
         }
@@ -56,9 +91,9 @@ namespace OnlineStore.MVC.Services
                 await _client.UpdateCategoryAsync(_usingVersion, updateCategoryDTO);
                 return new Response { Success = true };
             }
-            catch (ApiException e)
+            catch (ApiException exception)
             {
-                return GenerateResponse(e);
+                return GenerateResponse(exception);
             }
         }
 
@@ -69,9 +104,9 @@ namespace OnlineStore.MVC.Services
                 await _client.DeleteCategoryAsync(id, _usingVersion);
                 return new Response { Success = true };
             }
-            catch (ApiException e)
+            catch (ApiException exception)
             {
-                return GenerateResponse(e);
+                return GenerateResponse(exception);
             }
         }
     }

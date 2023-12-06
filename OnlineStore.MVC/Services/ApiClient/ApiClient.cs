@@ -204,7 +204,7 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CouponDTO> Get3Async(int id, string version);
+        System.Threading.Tasks.Task<CouponDTO> GetCouponAsync(int id, string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
@@ -2650,7 +2650,7 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CouponDTO> Get3Async(int id, string version)
+        public virtual System.Threading.Tasks.Task<CouponDTO> GetCouponAsync(int id, string version)
         {
             return GetCouponAsync(id, version, System.Threading.CancellationToken.None);
         }

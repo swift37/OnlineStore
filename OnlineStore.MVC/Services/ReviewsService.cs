@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public ReviewsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<ReviewViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<ReviewViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllReviewsAsync(_usingVersion);
+                return new Response<IEnumerable<ReviewViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ReviewViewModel>>(exception);
+            }
         }
 
-        public Task<Response<ReviewViewModel>> Get(int id)
+        public async Task<Response<ReviewViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetReviewAsync(id, _usingVersion);
+                return new Response<ReviewViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<ReviewViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<ReviewViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistReviewAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateReviewViewModel createReviewViewModel)

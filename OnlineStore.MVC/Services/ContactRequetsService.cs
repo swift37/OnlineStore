@@ -11,19 +11,55 @@ namespace OnlineStore.MVC.Services
         public ContactRequetsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
-        public Task<Response<IEnumerable<ContactRequestViewModel>>> GetAll()
+        public async Task<Response<IEnumerable<ContactRequestViewModel>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetAllContactRequestsAsync(_usingVersion);
+                return new Response<IEnumerable<ContactRequestViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ContactRequestViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ContactRequestViewModel>>(exception);
+            }
         }
 
-        public Task<Response<ContactRequestViewModel>> Get(int id)
+        public async Task<Response<ContactRequestViewModel>> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetContactRequestAsync(id, _usingVersion);
+                return new Response<ContactRequestViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<ContactRequestViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<ContactRequestViewModel>(exception);
+            }
         }
 
-        public Task<Response<bool>> Exist(int id)
+        public async Task<Response<bool>> Exist(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.ExistContactRequestAsync(id, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = _mapper.Map<bool>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
         }
 
         public async Task<Response<int>> Create(CreateContactRequestViewModel createContactRequestViewModel)
