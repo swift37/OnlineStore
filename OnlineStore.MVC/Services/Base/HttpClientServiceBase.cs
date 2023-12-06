@@ -42,6 +42,12 @@ namespace OnlineStore.MVC.Services.Base
             }
         }
 
+        protected Response<T> GenerateResponse<T>(ApiException exception)
+        {
+            var response = GenerateResponse(exception);
+            return new Response<T>(response);
+        }
+
         private void AddTokenToHeaders()
         {
             var token = Request.Cookies[Constants.Authorization.XAccessToken]; 

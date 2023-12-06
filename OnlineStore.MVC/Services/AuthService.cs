@@ -45,8 +45,7 @@ namespace OnlineStore.MVC.Services
             }
             catch (ApiException e)
             {
-                var generatedResponse = GenerateResponse(e);
-                return new Response<Models.IdentityResponse>(generatedResponse);
+                return GenerateResponse<Models.IdentityResponse>(e);
             }
         }
 
@@ -72,8 +71,7 @@ namespace OnlineStore.MVC.Services
             }
             catch (ApiException e)
             {
-                var generatedResponse = GenerateResponse(e);
-                return new Response<Models.IdentityResponse>(generatedResponse);
+                return GenerateResponse<Models.IdentityResponse>(e);
             }
         }
 
