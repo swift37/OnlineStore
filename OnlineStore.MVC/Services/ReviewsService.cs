@@ -110,9 +110,21 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<Response<IEnumerable<ReviewViewModel>>> GetReviewsByProduct(int productId)
+        public async Task<Response<IEnumerable<ReviewViewModel>>> GetReviewsByProduct(int productId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categories = await _client.GetReviewsByProductAsync(productId, _usingVersion);
+                return new Response<IEnumerable<ReviewViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ReviewViewModel>>(exception);
+            }
         }
     }
 }

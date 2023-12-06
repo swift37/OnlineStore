@@ -110,13 +110,26 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<Response<ProductsPageViewModel>> GetProductsByCategory(
+        public async Task<Response<ProductsPageViewModel>> GetProductsByCategory(
             int categoryId, 
             int page = 1, 
             int itemsPerPage = 15, 
             Models.Enums.SortParameters sortBy = Models.Enums.SortParameters.Default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //var category = await _client
+                //    .GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy, _usingVersion);
+                return new Response<ProductsPageViewModel>
+                {
+                    Success = true,
+                    //Data = _mapper.Map<ProductsPageViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<ProductsPageViewModel>(exception);
+            }
         }
     }
 }

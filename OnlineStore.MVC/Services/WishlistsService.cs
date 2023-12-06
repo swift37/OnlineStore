@@ -110,14 +110,38 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<Response<WishlistViewModel>> GetUserWishlist(Guid userId)
+        public async Task<Response<WishlistViewModel>> GetUserWishlist(Guid userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetUserWishlistAsync(userId, _usingVersion);
+                return new Response<WishlistViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<WishlistViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<WishlistViewModel>(exception);
+            }
         }
 
-        public Task<Response<WishlistViewModel>> GetUserWishlist()
+        public async Task<Response<WishlistViewModel>> GetUserWishlist()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetUserWishlistAsync(_usingVersion);
+                return new Response<WishlistViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<WishlistViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<WishlistViewModel>(exception);
+            }
         }
     }
 }

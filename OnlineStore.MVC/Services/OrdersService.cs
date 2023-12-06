@@ -110,19 +110,55 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId)
+        public async Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetUserOrdersAsync(userId, _usingVersion);
+                return new Response<IEnumerable<OrderViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<OrderViewModel>>(exception);
+            }
         }
 
-        public Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders()
+        public async Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetUserOrdersAsync(_usingVersion);
+                return new Response<IEnumerable<OrderViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<OrderViewModel>>(exception);
+            }
         }
 
-        public Task<Response<OrderViewModel>> GetUserOrder(int id)
+        public async Task<Response<OrderViewModel>> GetUserOrder(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await _client.GetUserOrderAsync(id, _usingVersion);
+                return new Response<OrderViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<OrderViewModel>(category)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<OrderViewModel>(exception);
+            }
         }
     }
 }
