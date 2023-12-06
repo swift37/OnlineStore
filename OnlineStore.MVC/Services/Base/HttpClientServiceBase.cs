@@ -52,5 +52,21 @@ namespace OnlineStore.MVC.Services.Base
                     return new Response { Success = false, Message = exception.Message };
             }
         }
+
+        private void AddTokenToHeaders()
+        {
+            var token = Request.Cookies[Constants.Authorization.XAccessToken]; 
+
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                if (Request.Headers.ContainsKey(Constants.Authorization.Key)) 
+                    Request.Headers.Remove(Constants.Authorization.Key);
+
+                Request.Headers.TryAdd(Constants.Authorization.Key, $"Bearer {token}");
+            }
+            else
+                Request.Headers?
+                    .TryAdd(Constants.Authorization.Key, string.Empty);
+        }
     }
 }
