@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IOrdersService
     {
-        Task<IEnumerable<OrderViewModel>> GetAll();
+        Task<Response<IEnumerable<OrderViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<OrderViewModel> Get(int id);
+        Task<Response<OrderViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateOrderViewModel createOrderViewModel);
 
@@ -17,10 +17,10 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response> Delete(int id);
 
-        Task<IEnumerable<OrderViewModel>> GetUserOrders(Guid userId);
+        Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId);
 
-        Task<IEnumerable<OrderViewModel>> GetUserOrders();
+        Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders();
 
-        Task<OrderViewModel> GetUserOrder(int id);
+        Task<Response<OrderViewModel>> GetUserOrder(int id);
     }
 }

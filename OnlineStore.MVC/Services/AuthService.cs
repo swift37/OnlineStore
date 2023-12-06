@@ -8,7 +8,8 @@ namespace OnlineStore.MVC.Services
 {
     public class AuthService : HttpClientServiceBase, IAuthService
     {
-        public AuthService(IMapper mapper, IClient client) : base(mapper,client) { }
+        public AuthService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor) 
+            : base(mapper, client, httpContextAccessor) { }
 
         public async Task<Response> Register(RegisterViewModel registerViewModel)
         {
@@ -76,6 +77,13 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task Logout() => await _client.LogoutAsync(_usingVersion);
+        public async Task Logout()
+        {
+            try
+            {
+                await _client.LogoutAsync(_usingVersion);
+            }
+            catch (Exception) { }
+        }
     }
 }

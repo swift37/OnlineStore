@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class ReviewsService : HttpClientServiceBase, IReviewsService
     {
-        public ReviewsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public ReviewsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<ReviewViewModel>> GetAll()
+        public Task<Response<IEnumerable<ReviewViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ReviewViewModel> Get(int id)
+        public Task<Response<ReviewViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +74,7 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<IEnumerable<ReviewViewModel>> GetReviewsByProduct(int productId)
+        public Task<Response<IEnumerable<ReviewViewModel>>> GetReviewsByProduct(int productId)
         {
             throw new NotImplementedException();
         }

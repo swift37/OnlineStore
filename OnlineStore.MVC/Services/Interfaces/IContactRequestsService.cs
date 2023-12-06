@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IContactRequestsService
     {
-        Task<IEnumerable<ContactRequestViewModel>> GetAll();
+        Task<Response<IEnumerable<ContactRequestViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<ContactRequestViewModel> Get(int id);
+        Task<Response<ContactRequestViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateContactRequestViewModel createContactRequestViewModel);
 

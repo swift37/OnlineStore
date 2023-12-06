@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IWishlistsService
     {
-        Task<IEnumerable<WishlistViewModel>> GetAll();
+        Task<Response<IEnumerable<WishlistViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<WishlistViewModel> Get(int id);
+        Task<Response<WishlistViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateWishlistViewModel createWishlistViewModel);
 
@@ -17,8 +17,8 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response> Delete(int id);
 
-        Task<WishlistViewModel> GetUserWishlist(Guid userId);
+        Task<Response<WishlistViewModel>> GetUserWishlist(Guid userId);
 
-        Task<WishlistViewModel> GetUserWishlist();
+        Task<Response<WishlistViewModel>> GetUserWishlist();
     }
 }

@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IReviewsService
     {
-        Task<IEnumerable<ReviewViewModel>> GetAll();
+        Task<Response<IEnumerable<ReviewViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<ReviewViewModel> Get(int id);
+        Task<Response<ReviewViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateReviewViewModel createReviewViewModel);
 
@@ -17,6 +17,6 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response> Delete(int id);
 
-        Task<IEnumerable<ReviewViewModel>> GetReviewsByProduct(int productId);
+        Task<Response<IEnumerable<ReviewViewModel>>> GetReviewsByProduct(int productId);
     }
 }

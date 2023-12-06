@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class ProductsService : HttpClientServiceBase, IProductsService
     {
-        public ProductsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public ProductsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<ProductViewModel>> GetAll()
+        public Task<Response<IEnumerable<ProductViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ProductViewModel> Get(int id)
+        public Task<Response<ProductViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +74,7 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<ProductsPageViewModel> GetProductsByCategory(
+        public Task<Response<ProductsPageViewModel>> GetProductsByCategory(
             int categoryId, 
             int page = 1, 
             int itemsPerPage = 15, 

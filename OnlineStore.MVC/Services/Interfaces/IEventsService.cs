@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IEventsService
     {
-        Task<IEnumerable<EventViewModel>> GetAll();
+        Task<Response<IEnumerable<EventViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<EventViewModel> Get(int id);
+        Task<Response<EventViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateEventViewModel createEventViewModel);
 

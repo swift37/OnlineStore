@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class SubscribersService : HttpClientServiceBase, ISubscribersService
     {
-        public SubscribersService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public SubscribersService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<SubscriberViewModel>> GetAll()
+        public Task<Response<IEnumerable<SubscriberViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<SubscriberViewModel> Get(int id)
+        public Task<Response<SubscriberViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }

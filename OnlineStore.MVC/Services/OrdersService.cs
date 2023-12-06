@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class OrdersService : HttpClientServiceBase, IOrdersService
     {
-        public OrdersService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public OrdersService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<OrderViewModel>> GetAll()
+        public Task<Response<IEnumerable<OrderViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<OrderViewModel> Get(int id)
+        public Task<Response<OrderViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }
@@ -73,17 +74,17 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<IEnumerable<OrderViewModel>> GetUserOrders(Guid userId)
+        public Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<OrderViewModel>> GetUserOrders()
+        public Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders()
         {
             throw new NotImplementedException();
         }
 
-        public Task<OrderViewModel> GetUserOrder(int id)
+        public Task<Response<OrderViewModel>> GetUserOrder(int id)
         {
             throw new NotImplementedException();
         }

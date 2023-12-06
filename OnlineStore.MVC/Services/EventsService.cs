@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class EventsService : HttpClientServiceBase, IEventsService
     {
-        public EventsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public EventsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<EventViewModel>> GetAll()
+        public Task<Response<IEnumerable<EventViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<EventViewModel> Get(int id)
+        public Task<Response<EventViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }

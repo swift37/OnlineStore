@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class CouponsService : HttpClientServiceBase, ICouponsService
     {
-        public CouponsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public CouponsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<CouponViewModel>> GetAll()
+        public Task<Response<IEnumerable<CouponViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<CouponViewModel> Get(int id)
+        public Task<Response<CouponViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }

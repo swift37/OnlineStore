@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface ICategoriesService
     {
-        Task<IEnumerable<CategoryViewModel>> GetAll();
+        Task<Response<IEnumerable<CategoryViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<CategoryViewModel> Get(int id);
+        Task<Response<CategoryViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateCategoryViewModel createCategoryViewModel);
 

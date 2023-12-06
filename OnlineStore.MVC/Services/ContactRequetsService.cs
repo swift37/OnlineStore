@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class ContactRequetsService : HttpClientServiceBase, IContactRequestsService
     {
-        public ContactRequetsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public ContactRequetsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<ContactRequestViewModel>> GetAll()
+        public Task<Response<IEnumerable<ContactRequestViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ContactRequestViewModel> Get(int id)
+        public Task<Response<ContactRequestViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }

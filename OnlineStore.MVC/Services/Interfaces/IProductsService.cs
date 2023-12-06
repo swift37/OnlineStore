@@ -6,11 +6,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface IProductsService
     {
-        Task<IEnumerable<ProductViewModel>> GetAll();
+        Task<Response<IEnumerable<ProductViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<ProductViewModel> Get(int id);
+        Task<Response<ProductViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateProductViewModel createProductViewModel);
 
@@ -18,7 +18,7 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response> Delete(int id);
 
-        Task<ProductsPageViewModel> GetProductsByCategory(
+        Task<Response<ProductsPageViewModel>> GetProductsByCategory(
             int categoryId,
             int page = 1,
             int itemsPerPage = 15,

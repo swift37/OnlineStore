@@ -8,19 +8,21 @@ namespace OnlineStore.MVC.Services
 {
     public class CategoriesService : HttpClientServiceBase, ICategoriesService
     {
-        public CategoriesService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public CategoriesService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<CategoryViewModel>> GetAll()
+        public Task<Response<IEnumerable<CategoryViewModel>>> GetAll()
+        {
+            //var response = await _client.GetAllCategoriesAsync(_usingVersion);
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<CategoryViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CategoryViewModel> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }

@@ -8,19 +8,20 @@ namespace OnlineStore.MVC.Services
 {
     public class WishlistsService : HttpClientServiceBase, IWishlistsService
     {
-        public WishlistsService(IMapper mapper, IClient client) : base(mapper, client) { }
+        public WishlistsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+            : base(mapper, client, httpContextAccessor) { }
 
-        public Task<IEnumerable<WishlistViewModel>> GetAll()
+        public Task<Response<IEnumerable<WishlistViewModel>>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<WishlistViewModel> Get(int id)
+        public Task<Response<WishlistViewModel>> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Exist(int id)
+        public Task<Response<bool>> Exist(int id)
         {
             throw new NotImplementedException();
         }
@@ -73,12 +74,12 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public Task<WishlistViewModel> GetUserWishlist(Guid userId)
+        public Task<Response<WishlistViewModel>> GetUserWishlist(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<WishlistViewModel> GetUserWishlist()
+        public Task<Response<WishlistViewModel>> GetUserWishlist()
         {
             throw new NotImplementedException();
         }

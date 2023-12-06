@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface ICouponsService
     {
-        Task<IEnumerable<CouponViewModel>> GetAll();
+        Task<Response<IEnumerable<CouponViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<CouponViewModel> Get(int id);
+        Task<Response<CouponViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateCouponViewModel createCouponViewModel);
 

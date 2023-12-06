@@ -5,11 +5,11 @@ namespace OnlineStore.MVC.Services.Interfaces
 {
     public interface ISubscribersService
     {
-        Task<IEnumerable<SubscriberViewModel>> GetAll();
+        Task<Response<IEnumerable<SubscriberViewModel>>> GetAll();
 
-        Task<bool> Exist(int id);
+        Task<Response<bool>> Exist(int id);
 
-        Task<SubscriberViewModel> Get(int id);
+        Task<Response<SubscriberViewModel>> Get(int id);
 
         Task<Response<int>> Create(CreateSubscriberViewModel createSubscriberViewModel);
 
