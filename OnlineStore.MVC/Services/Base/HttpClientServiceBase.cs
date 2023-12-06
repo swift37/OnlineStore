@@ -8,10 +8,19 @@ namespace OnlineStore.MVC.Services.Base
     {
         protected readonly IClient _client;
         protected readonly IMapper _mapper;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly string _usingVersion = "1.0";
 
-        public HttpClientServiceBase(IMapper mapper, IClient client) => 
-            (_client, _mapper) = (client, mapper);
+        protected HttpRequest Request => _httpContextAccessor.HttpContext?.Request!;
+
+        public HttpClientServiceBase(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+        {
+            _client = client;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+
+            _client.RequestPreparation = AddTokenToHeaders;
+        }
 
         protected Response GenerateResponse(ApiException exception)
         {
