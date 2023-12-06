@@ -45,6 +45,8 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseStatusCodePagesWithRedirects("/error/{0}");
+
 app.UseRouting();
 
 app.UseAuthorization();
