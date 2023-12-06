@@ -26,39 +26,19 @@ namespace OnlineStore.MVC.Services.Base
         {
             switch (exception.StatusCode)
             {
-                case (int)HttpStatusCode.NotFound:
-                    return new Response
-                    {
-                        Success = false,
-                        Message = "The requested item is not found."
-                    };
-                case (int)HttpStatusCode.Unauthorized:
-                    return new Response
-                    {
-                        Success = false,
-                        Message = "User is unauthorized."
-                    };
-                case (int)HttpStatusCode.Forbidden:
-                    return new Response
-                    {
-                        Success = false,
-                        Message = "It is not enough access to perform this action."
-                    };
-                case (int)HttpStatusCode.UnprocessableEntity:
-                    return new Response
-                    {
-                        Success = false,
-                        Message = "It is unpossible to process this entity."
-                    };
                 case (int)HttpStatusCode.BadRequest:
                     return new Response 
                     { 
-                        Success = false, 
-                        Message = "Validation error has occured.",
+                        Success = false,
+                        Status = exception.StatusCode,
                         ValidationErrors = exception.Response
                     };
                 default:
-                    return new Response { Success = false, Message = exception.Message };
+                    return new Response 
+                    { 
+                        Success = false, 
+                        Status = exception.StatusCode
+                    };
             }
         }
 

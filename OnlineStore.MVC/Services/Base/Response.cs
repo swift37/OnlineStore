@@ -6,12 +6,11 @@
 
         public Response(Response response)
         {
-            Message = response.Message;
             ValidationErrors = response.ValidationErrors;
             Success = response.Success;
         }
 
-        public string Message { get; set; } = string.Empty;
+        public int Status { get; set; }
 
         public string ValidationErrors { get; set; } = string.Empty;
 
@@ -22,7 +21,7 @@
 
     public class Response
     {
-        public string Message { get; set; } = string.Empty;
+        public int Status { get; set; }
 
         public string ValidationErrors { get; set; } = string.Empty;
 
