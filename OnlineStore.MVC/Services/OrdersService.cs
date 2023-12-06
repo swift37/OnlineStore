@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllOrdersAsync(_usingVersion);
+                var orders = await _client.GetAllOrdersAsync(_usingVersion);
                 return new Response<IEnumerable<OrderViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(orders)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetOrderAsync(id, _usingVersion);
+                var order = await _client.GetOrderAsync(id, _usingVersion);
                 return new Response<OrderViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<OrderViewModel>(category)
+                    Data = _mapper.Map<OrderViewModel>(order)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistOrderAsync(id, _usingVersion);
+                var order = await _client.ExistOrderAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(order)
                 };
             }
             catch (ApiException exception)
@@ -114,11 +114,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetUserOrdersAsync(userId, _usingVersion);
+                var orders = await _client.GetUserOrdersAsync(userId, _usingVersion);
                 return new Response<IEnumerable<OrderViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(category)
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(orders)
                 };
             }
             catch (ApiException exception)
@@ -131,11 +131,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetUserOrdersAsync(_usingVersion);
+                var orders = await _client.GetUserOrdersAsync(_usingVersion);
                 return new Response<IEnumerable<OrderViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(category)
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(orders)
                 };
             }
             catch (ApiException exception)
@@ -148,11 +148,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetUserOrderAsync(id, _usingVersion);
+                var order = await _client.GetUserOrderAsync(id, _usingVersion);
                 return new Response<OrderViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<OrderViewModel>(category)
+                    Data = _mapper.Map<OrderViewModel>(order)
                 };
             }
             catch (ApiException exception)

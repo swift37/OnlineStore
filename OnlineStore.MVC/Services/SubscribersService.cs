@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllSubscribersAsync(_usingVersion);
+                var subscribers = await _client.GetAllSubscribersAsync(_usingVersion);
                 return new Response<IEnumerable<SubscriberViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<SubscriberViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<SubscriberViewModel>>(subscribers)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetSubscriberAsync(id, _usingVersion);
+                var subscriber = await _client.GetSubscriberAsync(id, _usingVersion);
                 return new Response<SubscriberViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<SubscriberViewModel>(category)
+                    Data = _mapper.Map<SubscriberViewModel>(subscriber)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistSubscriberAsync(id, _usingVersion);
+                var subscriber = await _client.ExistSubscriberAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(subscriber)
                 };
             }
             catch (ApiException exception)

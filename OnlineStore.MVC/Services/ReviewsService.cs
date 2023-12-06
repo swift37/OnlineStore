@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllReviewsAsync(_usingVersion);
+                var reviews = await _client.GetAllReviewsAsync(_usingVersion);
                 return new Response<IEnumerable<ReviewViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(reviews)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetReviewAsync(id, _usingVersion);
+                var review = await _client.GetReviewAsync(id, _usingVersion);
                 return new Response<ReviewViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<ReviewViewModel>(category)
+                    Data = _mapper.Map<ReviewViewModel>(review)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistReviewAsync(id, _usingVersion);
+                var review = await _client.ExistReviewAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(review)
                 };
             }
             catch (ApiException exception)
@@ -114,11 +114,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetReviewsByProductAsync(productId, _usingVersion);
+                var reviews = await _client.GetReviewsByProductAsync(productId, _usingVersion);
                 return new Response<IEnumerable<ReviewViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(reviews)
                 };
             }
             catch (ApiException exception)

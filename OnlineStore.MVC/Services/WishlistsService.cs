@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllWishlistsAsync(_usingVersion);
+                var wishlists = await _client.GetAllWishlistsAsync(_usingVersion);
                 return new Response<IEnumerable<WishlistViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<WishlistViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<WishlistViewModel>>(wishlists)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetWishlistAsync(id, _usingVersion);
+                var wishlist = await _client.GetWishlistAsync(id, _usingVersion);
                 return new Response<WishlistViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<WishlistViewModel>(category)
+                    Data = _mapper.Map<WishlistViewModel>(wishlist)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistWishlistAsync(id, _usingVersion);
+                var wishlist = await _client.ExistWishlistAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(wishlist)
                 };
             }
             catch (ApiException exception)
@@ -114,11 +114,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetUserWishlistAsync(userId, _usingVersion);
+                var wishlist = await _client.GetUserWishlistAsync(userId, _usingVersion);
                 return new Response<WishlistViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<WishlistViewModel>(category)
+                    Data = _mapper.Map<WishlistViewModel>(wishlist)
                 };
             }
             catch (ApiException exception)
@@ -131,11 +131,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetUserWishlistAsync(_usingVersion);
+                var wishlist = await _client.GetUserWishlistAsync(_usingVersion);
                 return new Response<WishlistViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<WishlistViewModel>(category)
+                    Data = _mapper.Map<WishlistViewModel>(wishlist)
                 };
             }
             catch (ApiException exception)

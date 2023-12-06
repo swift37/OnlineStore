@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllProductsAsync(_usingVersion);
+                var products = await _client.GetAllProductsAsync(_usingVersion);
                 return new Response<IEnumerable<ProductViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(products)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetProductAsync(id, _usingVersion);
+                var product = await _client.GetProductAsync(id, _usingVersion);
                 return new Response<ProductViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<ProductViewModel>(category)
+                    Data = _mapper.Map<ProductViewModel>(product)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistProductAsync(id, _usingVersion);
+                var product = await _client.ExistProductAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(product)
                 };
             }
             catch (ApiException exception)
@@ -118,12 +118,12 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                //var category = await _client
+                //var product = await _client
                 //    .GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy, _usingVersion);
                 return new Response<ProductsPageViewModel>
                 {
                     Success = true,
-                    //Data = _mapper.Map<ProductsPageViewModel>(category)
+                    //Data = _mapper.Map<ProductsPageViewModel>(product)
                 };
             }
             catch (ApiException exception)

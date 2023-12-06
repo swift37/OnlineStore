@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllCouponsAsync(_usingVersion);
+                var coupons = await _client.GetAllCouponsAsync(_usingVersion);
                 return new Response<IEnumerable<CouponViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<CouponViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<CouponViewModel>>(coupons)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetCouponAsync(id, _usingVersion);
+                var coupon = await _client.GetCouponAsync(id, _usingVersion);
                 return new Response<CouponViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<CouponViewModel>(category)
+                    Data = _mapper.Map<CouponViewModel>(coupon)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistCouponAsync(id, _usingVersion);
+                var coupon = await _client.ExistCouponAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(coupon)
                 };
             }
             catch (ApiException exception)

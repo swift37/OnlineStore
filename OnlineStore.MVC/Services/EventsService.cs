@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllEventsAsync(_usingVersion);
+                var events = await _client.GetAllEventsAsync(_usingVersion);
                 return new Response<IEnumerable<EventViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<EventViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<EventViewModel>>(events)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetEventAsync(id, _usingVersion);
+                var @event = await _client.GetEventAsync(id, _usingVersion);
                 return new Response<EventViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<EventViewModel>(category)
+                    Data = _mapper.Map<EventViewModel>(@event)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistEventAsync(id, _usingVersion);
+                var @event = await _client.ExistEventAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(@event)
                 };
             }
             catch (ApiException exception)

@@ -15,11 +15,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var categories = await _client.GetAllContactRequestsAsync(_usingVersion);
+                var contactRequests = await _client.GetAllContactRequestsAsync(_usingVersion);
                 return new Response<IEnumerable<ContactRequestViewModel>>
                 {
                     Success = true,
-                    Data = _mapper.Map<IEnumerable<ContactRequestViewModel>>(categories)
+                    Data = _mapper.Map<IEnumerable<ContactRequestViewModel>>(contactRequests)
                 };
             }
             catch (ApiException exception)
@@ -32,11 +32,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.GetContactRequestAsync(id, _usingVersion);
+                var contactRequest = await _client.GetContactRequestAsync(id, _usingVersion);
                 return new Response<ContactRequestViewModel>
                 {
                     Success = true,
-                    Data = _mapper.Map<ContactRequestViewModel>(category)
+                    Data = _mapper.Map<ContactRequestViewModel>(contactRequest)
                 };
             }
             catch (ApiException exception)
@@ -49,11 +49,11 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                var category = await _client.ExistContactRequestAsync(id, _usingVersion);
+                var contactRequest = await _client.ExistContactRequestAsync(id, _usingVersion);
                 return new Response<bool>
                 {
                     Success = true,
-                    Data = _mapper.Map<bool>(category)
+                    Data = _mapper.Map<bool>(contactRequest)
                 };
             }
             catch (ApiException exception)
