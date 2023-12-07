@@ -11,7 +11,9 @@ namespace OnlineStore.MVC.Services.Base
         protected readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly string _usingVersion = "1.0";
 
-        protected HttpRequest Request => _httpContextAccessor.HttpContext?.Request!;
+        protected HttpContext HttpContext => _httpContextAccessor.HttpContext!;
+
+        protected HttpRequest Request => HttpContext.Request!;
 
         public HttpClientServiceBase(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
         {
