@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using OnlineStore.MVC.Services.ApiClient;
 using System.Reflection;
 
@@ -18,6 +19,12 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.ExpireTimeSpan = TimeSpan.FromDays(14);
 
     opt.SlidingExpiration = true;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
+{
+    options.LoginPath = new PathString("/account/login");
 });
 
 builder.Services.AddHttpClient<IClient, Client>(client => 
