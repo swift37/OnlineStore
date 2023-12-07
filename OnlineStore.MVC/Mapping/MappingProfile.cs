@@ -29,8 +29,21 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<EventDTO, EventViewModel>().ReverseMap();
             CreateMap<CreateEventDTO, CreateEventViewModel>().ReverseMap();
 
-            CreateMap<OrderDTO, OrderViewModel>().ReverseMap();
-            CreateMap<CreateOrderDTO, CreateOrderViewModel>().ReverseMap();
+            // Cast Models.Enums.OrderStatus to ApiClient.OrderStatus and vice versa
+            // to separate automatically generated models from controllers and views.
+            // Leaving auto-generated models only inside the services.
+            CreateMap<OrderDTO, OrderViewModel>()
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (Models.Enums.OrderStatus)(int)src.Status))
+                .ReverseMap()
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (OrderStatus)(int)src.Status));
+            CreateMap<CreateOrderDTO, CreateOrderViewModel>()
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (Models.Enums.OrderStatus)(int)src.Status))
+                .ReverseMap()
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (OrderStatus)(int)src.Status));
             CreateMap<OrderItemDTO, OrderItemViewModel>().ReverseMap();
             CreateMap<CreateOrderItemDTO, CreateOrderItemViewModel>().ReverseMap();
 
