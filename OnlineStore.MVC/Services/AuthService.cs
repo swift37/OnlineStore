@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
 using OnlineStore.MVC.Services.Interfaces;
 using OnlineStore.WebAPI.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace OnlineStore.MVC.Services
 {
@@ -75,11 +79,17 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task Logout()
+        public async Task<Response> Logout()
         {
             try
             {
                 await _client.LogoutAsync(_usingVersion);
+
+                return new Response { Success = true };
+            }
+            catch (ApiException exception) 
+            {
+                return GenerateResponse(exception);
             }
             catch (Exception) { }
         }

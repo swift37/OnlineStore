@@ -12,6 +12,6 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response<IdentityResponse>> Refresh(string refreshToken);
 
-        Task Logout();
+        Task<Response> Logout();
     }
 }
