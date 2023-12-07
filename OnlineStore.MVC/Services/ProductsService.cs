@@ -118,12 +118,21 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                //var product = await _client
-                //    .GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy, _usingVersion);
+                var product = 
+                    await _client.GetProductsByCategoryAsync(
+                        categoryId, 
+                        page, 
+                        itemsPerPage,
+                        // Cast Models.Enums.SortParameters to ApiClient.SortParameters to separate
+                        // automatically generated models from controllers and views.
+                        // Leaving auto-generated models only inside the services.
+                        (SortParameters)(int)sortBy, 
+                        _usingVersion);
+
                 return new Response<ProductsPageViewModel>
                 {
                     Success = true,
-                    //Data = _mapper.Map<ProductsPageViewModel>(product)
+                    Data = _mapper.Map<ProductsPageViewModel>(product)
                 };
             }
             catch (ApiException exception)
