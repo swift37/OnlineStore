@@ -2,7 +2,7 @@
 
 namespace OnlineStore.MVC.Controllers
 {
-    public class AccountController : Controller
+    public class CartController : Controller
     {
         public IActionResult Index()
         {
