@@ -6,9 +6,9 @@ using OnlineStore.MVC.Services.Interfaces;
 
 namespace OnlineStore.MVC.Services
 {
-    public class ContactRequetsService : HttpClientServiceBase, IContactRequestsService
+    public class ContactRequestsService : HttpClientServiceBase, IContactRequestsService
     {
-        public ContactRequetsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
+        public ContactRequestsService(IMapper mapper, IClient client, IHttpContextAccessor httpContextAccessor)
             : base(mapper, client, httpContextAccessor) { }
 
         public async Task<Response<IEnumerable<ContactRequestViewModel>>> GetAll()
