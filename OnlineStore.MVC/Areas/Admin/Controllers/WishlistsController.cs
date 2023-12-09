@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Constants;
-using OnlineStore.MVC.Models.Event;
+using OnlineStore.MVC.Models.Wishlist;
 using OnlineStore.MVC.Services.Interfaces;
 
-namespace OnlineStore.MVC.Controllers
+namespace OnlineStore.MVC.Areas.Admin.Controllers
 {
-    public class EventsController : Controller
+    [Area(AreaNames.Admin)]
+    [Authorize(Roles = Roles.EmployeeOrHigher)]
+    public class WishlistsController : Controller
     {
-        private readonly IEventsService _eventsService;
+        private readonly IWishlistsService _wishlistsService;
 
-        public EventsController(IEventsService eventsService) => _eventsService = eventsService;
+        public WishlistsController(IWishlistsService wishlistsService) =>
+            _wishlistsService = wishlistsService;
 
         [HttpGet]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _eventsService.GetAll();
+            var response = await _wishlistsService.GetAll();
 
             if (response.Success) return View(response.Data);
 
@@ -23,9 +27,10 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Get(int id)
         {
-            var response = await _eventsService.Get(id);
+            var response = await _wishlistsService.Get(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -33,10 +38,10 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Exist(int id)
         {
-            var response = await _eventsService.Exist(id);
+            var response = await _wishlistsService.Exist(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -44,20 +49,18 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
         public IActionResult Create()
         {
-            var model = new CreateEventViewModel();
+            var model = new CreateWishlistViewModel();
             return View(model);
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
-        public async Task<IActionResult> Create(CreateEventViewModel model)
+        public async Task<IActionResult> Create(CreateWishlistViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _eventsService.Create(model);
+            var response = await _wishlistsService.Create(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -74,10 +77,9 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
         public async Task<IActionResult> Update(int id)
         {
-            var response = await _eventsService.Get(id);
+            var response = await _wishlistsService.Get(id);
 
             if (response.Success) return View(response.Data);
 
@@ -85,12 +87,11 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
-        public async Task<IActionResult> Update(EventViewModel model)
+        public async Task<IActionResult> Update(WishlistViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _eventsService.Update(model);
+            var response = await _wishlistsService.Update(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -110,9 +111,30 @@ namespace OnlineStore.MVC.Controllers
         [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await _eventsService.Delete(id);
+            var response = await _wishlistsService.Delete(id);
 
             if (response.Success) return RedirectToAction("GetAll");
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Administrator)]
+        public async Task<IActionResult> GetUserWishlist(Guid userId)
+        {
+            var response = await _wishlistsService.GetUserWishlist(userId);
+
+            if (!response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserWishlist()
+        {
+            var response = await _wishlistsService.GetUserWishlist();
+
+            if (!response.Success) return View(response.Data);
 
             return StatusCode(response.Status);
         }

@@ -1,23 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Constants;
-using OnlineStore.MVC.Models.ContactRequest;
+using OnlineStore.MVC.Models.Enums;
+using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Services.Interfaces;
 
-namespace OnlineStore.MVC.Controllers
+namespace OnlineStore.MVC.Areas.Admin.Controllers
 {
-    public class ContactRequestsController : Controller
+    [Area(AreaNames.Admin)]
+    [Authorize(Roles = Roles.EmployeeOrHigher)]
+    public class ProductsController : Controller
     {
-        private readonly IContactRequestsService _contactRequestsService;
+        private readonly IProductsService _productsService;
 
-        public ContactRequestsController(IContactRequestsService contactRequestsService) =>
-            _contactRequestsService = contactRequestsService;
+        public ProductsController(IProductsService productsService) => _productsService = productsService;
 
         [HttpGet]
         [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _contactRequestsService.GetAll();
+            var response = await _productsService.GetAll();
 
             if (response.Success) return View(response.Data);
 
@@ -25,10 +27,9 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
-            var response = await _contactRequestsService.Get(id);
+            var response = await _productsService.Get(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -39,7 +40,7 @@ namespace OnlineStore.MVC.Controllers
         [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
-            var response = await _contactRequestsService.Exist(id);
+            var response = await _productsService.Exist(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -47,18 +48,20 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
         public IActionResult Create()
         {
-            var model = new CreateContactRequestViewModel();
+            var model = new CreateProductViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateContactRequestViewModel model)
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        public async Task<IActionResult> Create(CreateProductViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _contactRequestsService.Create(model);
+            var response = await _productsService.Create(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -75,10 +78,10 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
         public async Task<IActionResult> Update(int id)
         {
-            var response = await _contactRequestsService.Get(id);
+            var response = await _productsService.Get(id);
 
             if (response.Success) return View(response.Data);
 
@@ -86,12 +89,12 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
-        public async Task<IActionResult> Update(ContactRequestViewModel model)
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        public async Task<IActionResult> Update(ProductViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _contactRequestsService.Update(model);
+            var response = await _productsService.Update(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -108,12 +111,26 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await _contactRequestsService.Delete(id);
+            var response = await _productsService.Delete(id);
 
             if (response.Success) return RedirectToAction("GetAll");
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductByCategory(
+            int categoryId,
+            int page = 1,
+            int itemsPerPage = 15,
+            SortParameters sortBy = SortParameters.Default)
+        {
+            var response = await _productsService.GetProductsByCategory(categoryId);
+
+            if (response.Success) return View(response.Data);
 
             return StatusCode(response.Status);
         }

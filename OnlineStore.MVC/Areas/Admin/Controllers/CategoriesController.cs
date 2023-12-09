@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Constants;
-using OnlineStore.MVC.Models.Subscriber;
+using OnlineStore.MVC.Models.Category;
 using OnlineStore.MVC.Services.Interfaces;
 
-namespace OnlineStore.MVC.Controllers
+namespace OnlineStore.MVC.Areas.Admin.Controllers
 {
-    public class SubscribersController : Controller
+    [Area(AreaNames.Admin)]
+    [Authorize(Roles = Roles.EmployeeOrHigher)]
+    public class CategoriesController : Controller
     {
-        private readonly ISubscribersService _subscribersService;
+        private readonly ICategoriesService _categoriesService;
 
-        public SubscribersController(ISubscribersService subscribersService) => 
-            _subscribersService = subscribersService;
+        public CategoriesController(ICategoriesService categoriesService) =>
+            _categoriesService = categoriesService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _subscribersService.GetAll();
+            var response = await _categoriesService.GetAll();
 
             if (response.Success) return View(response.Data);
 
@@ -28,7 +29,7 @@ namespace OnlineStore.MVC.Controllers
         [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
-            var response = await _subscribersService.Get(id);
+            var response = await _categoriesService.Get(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -39,7 +40,7 @@ namespace OnlineStore.MVC.Controllers
         [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
-            var response = await _subscribersService.Exist(id);
+            var response = await _categoriesService.Exist(id);
 
             if (!response.Success) return View(response.Data);
 
@@ -47,18 +48,20 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
         public IActionResult Create()
         {
-            var model = new CreateSubscriberViewModel();
+            var model = new CreateCategoryViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateSubscriberViewModel model)
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _subscribersService.Create(model);
+            var response = await _categoriesService.Create(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -75,10 +78,10 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
         public async Task<IActionResult> Update(int id)
         {
-            var response = await _subscribersService.Get(id);
+            var response = await _categoriesService.Get(id);
 
             if (response.Success) return View(response.Data);
 
@@ -86,12 +89,12 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
-        public async Task<IActionResult> Update(SubscriberViewModel model)
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        public async Task<IActionResult> Update(CategoryViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _subscribersService.Update(model);
+            var response = await _categoriesService.Update(model);
 
             if (response.Success)
                 return RedirectToAction("GetAll");
@@ -111,7 +114,7 @@ namespace OnlineStore.MVC.Controllers
         [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await _subscribersService.Delete(id);
+            var response = await _categoriesService.Delete(id);
 
             if (response.Success) return RedirectToAction("GetAll");
 
