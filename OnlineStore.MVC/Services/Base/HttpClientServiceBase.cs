@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineStore.MVC.Services.ApiClient;
 using System.Net;
+using System.Text.Json;
 
 namespace OnlineStore.MVC.Services.Base
 {
@@ -33,7 +34,8 @@ namespace OnlineStore.MVC.Services.Base
                     { 
                         Success = false,
                         Status = exception.StatusCode,
-                        ValidationErrors = exception.Response
+                        ValidationErrors = JsonSerializer.Deserialize<IEnumerable<ValidationFailure>>(exception.Response) 
+                            ?? Enumerable.Empty<ValidationFailure>()
                     };
                 default:
                     return new Response 

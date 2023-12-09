@@ -12,7 +12,7 @@
 
         public int Status { get; set; }
 
-        public string ValidationErrors { get; set; } = string.Empty;
+        public IEnumerable<ValidationFailure> ValidationErrors { get; set; } = Enumerable.Empty<ValidationFailure>();
 
         public bool Success { get; set; }
 
@@ -23,7 +23,7 @@
     {
         public int Status { get; set; }
 
-        public string ValidationErrors { get; set; } = string.Empty;
+        public IEnumerable<ValidationFailure> ValidationErrors { get; set; } = Enumerable.Empty<ValidationFailure>();
 
         public bool Success { get; set; }
     }
