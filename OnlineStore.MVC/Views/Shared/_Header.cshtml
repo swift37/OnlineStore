@@ -1,0 +1,200 @@
+﻿<div class="nav-main active-nav">
+    <div class="nav-wrap">
+        <a asp-controller="Home" asp-action="Index" class="nav-brand">
+            <img src="~/resources/images/store-logo.png" alt="">
+        </a>
+        <div class="nav-menu-wrap">
+            <nav class="nav-menu mobile-hide">
+                @* @await Component.InvokeAsync("MenuItemsGroup") *@
+            </nav>
+            <nav class="nav-menu right mobile-hide">
+                <div class="nav-link has-menu">
+                    <div class="content">
+                        Store
+                    </div>
+                    <div class="nav-link-menu">
+                        <div class="dpt-menu">
+                            <div class="second-links">
+                                <div class="link-item has-child beauty">
+                                    <div class="main-link">
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="child-menu">
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                    </div>
+                                </div>
+                                <div class="link-item has-child electric">
+                                    <div class="main-link">
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="child-menu">
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                    </div>
+                                </div>
+                                <div class="link-item has-child fashion">
+                                    <div class="main-link">
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="child-menu">
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                        <a href="/">Item</a>
+                                    </div>
+                                </div>
+                                <div class="link-item has-child homekit">
+                                    <div class="main-link">
+                                        Subcategory <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <div class="mega-menu">
+                                        <div class="flex-column">
+                                            <div class="row">
+                                                <h4><a href="/">Cat 1</a></h4>
+                                                <div class="links">
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <h4><a href="/">Cat 2</a></h4>
+                                                <div class="links">
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-column">
+                                            <div class="row">
+                                                <h4><a href="/">Cat 3</a></h4>
+                                                <div class="links">
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <h4><a href="/">Cat 4</a></h4>
+                                                <div class="links">
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                    <a href="/">Item2</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-column">
+                                            <div class="row">
+                                                <h4><a href="/">Cat 5</a></h4>
+                                                <div class="links">
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                    <a href="/">Item1</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="link-item">
+                                    <a class="main-link" href="/">Subcategory</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-link">
+                    <a class="content" asp-controller="Home" asp-action="About">
+                        About
+                    </a>
+                </div>
+                <div class="nav-link has-menu">
+                    <a class="content" asp-controller="Home" asp-action="Contact">
+                        Support
+                    </a>
+                    <div class="nav-link-menu">
+                        <div class="dpt-menu">
+                            <div class="second-links">
+                                <div class="link-item">
+                                    <a class="main-link" asp-controller="Home" asp-action="Contact" asp-fragment="main-contacts">Main Contacts</a>
+                                </div>
+                                <div class="link-item">
+                                    <a class="main-link" asp-controller="Home" asp-action="Contact" asp-fragment="our-shops">Our shops</a>
+                                </div>
+                                <div class="link-item">
+                                    <a class="main-link" asp-controller="Home" asp-action="Contact" asp-fragment="get-in-touch">Get in touch</a>
+                                </div>
+                                <div class="link-item">
+                                    <div class="item-content">
+                                        <div class="main-content">+194573567</div>
+                                        <div class="sub-content">from 9:00 to 21:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <nav class="nav-buttons">
+                <div id="miniCart" class="header-icon cart-button">
+                    @* @await Component.InvokeAsync("MiniCart") *@
+                </div>
+                <div class="header-icon wishlist-button">
+                    @* @await Component.InvokeAsync("WishlistStatus") *@
+                </div>
+                <div class="header-icon account-button mobile-hide">
+                    <div class="icon-container">
+                        <a href="/">
+                            <img src="~/resources/icons/user.png" width="20" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="header-icon side-menu-button desktop-hide">
+                    <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="side-menu-icon">
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<aside class="site-off desktop-hide">
+    <div class="off-canvas">
+        <div class="canvas-head">
+            <a asp-controller="Home" asp-action="Index" class="nav-brand">
+                <img src="/resources/images/store-logo.png" alt="">
+            </a>
+            <div class="t-close">
+                <img src="~/resources/icons/close.png" alt=""/>
+            </div>
+        </div>
+        <div class="departments"></div>
+        <nav></nav>
+        <div class="thetop-nav"></div>
+    </div>
+</aside>
