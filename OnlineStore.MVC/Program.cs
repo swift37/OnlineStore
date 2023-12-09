@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using OnlineStore.MVC.Services;
 using OnlineStore.MVC.Services.ApiClient;
+using OnlineStore.MVC.Services.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddHttpClient<IClient, Client>(client => 
     client.BaseAddress = new Uri("https://localhost:7113"));
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IReviewsService, ReviewsService>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddScoped<IWishlistsService, WishlistsService>();
+builder.Services.AddScoped<IEventsService, EventsService>();
+builder.Services.AddScoped<ICouponsService, CouponsService>();
+builder.Services.AddScoped<ISubscribersService, SubscribersService>();
+builder.Services.AddScoped<IContactRequestsService, ContactRequestsService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
