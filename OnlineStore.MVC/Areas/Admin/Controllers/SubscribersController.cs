@@ -16,7 +16,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
             _subscribersService = subscribersService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _subscribersService.GetAll();
@@ -27,7 +26,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _subscribersService.Get(id);
@@ -38,7 +36,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _subscribersService.Exist(id);
@@ -49,6 +46,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Administrator)]
         public IActionResult Create()
         {
             var model = new CreateSubscriberViewModel();
@@ -56,6 +54,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Create(CreateSubscriberViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -77,7 +76,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Update(int id)
         {
             var response = await _subscribersService.Get(id);
@@ -88,7 +86,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Update(SubscriberViewModel model)
         {
             if (!ModelState.IsValid) return View(model);

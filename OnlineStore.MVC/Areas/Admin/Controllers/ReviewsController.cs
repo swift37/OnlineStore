@@ -15,7 +15,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         public ReviewsController(IReviewsService reviewsService) => _reviewsService = reviewsService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _reviewsService.GetAll();
@@ -26,7 +25,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _reviewsService.Get(id);
@@ -37,7 +35,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _reviewsService.Exist(id);
@@ -48,7 +45,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = Roles.Administrator)]
         public IActionResult Create()
         {
             var model = new CreateReviewViewModel();
@@ -56,7 +53,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Create(CreateReviewViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -78,7 +75,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Update(int id)
         {
             var response = await _reviewsService.Get(id);
@@ -89,7 +85,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Update(ReviewViewModel model)
         {
             if (!ModelState.IsValid) return View(model);

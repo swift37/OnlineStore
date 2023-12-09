@@ -16,7 +16,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
             _contactRequestsService = contactRequestsService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _contactRequestsService.GetAll();
@@ -27,7 +26,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _contactRequestsService.Get(id);
@@ -38,7 +36,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _contactRequestsService.Exist(id);
@@ -49,6 +46,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Administrator)]
         public IActionResult Create()
         {
             var model = new CreateContactRequestViewModel();
@@ -56,6 +54,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Create(CreateContactRequestViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -110,7 +109,7 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _contactRequestsService.Delete(id);

@@ -26,7 +26,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _categoriesService.Get(id);
@@ -37,7 +36,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _categoriesService.Exist(id);
@@ -48,7 +46,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
         public IActionResult Create()
         {
             var model = new CreateCategoryViewModel();

@@ -138,7 +138,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

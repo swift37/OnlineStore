@@ -7,7 +7,7 @@ using OnlineStore.MVC.Services.Interfaces;
 namespace OnlineStore.MVC.Areas.Admin.Controllers
 {
     [Area(AreaNames.Admin)]
-    [Authorize(Roles = Roles.EmployeeOrHigher)]
+    [Authorize(Roles = Roles.Administrator)]
     public class WishlistsController : Controller
     {
         private readonly IWishlistsService _wishlistsService;
@@ -16,7 +16,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
             _wishlistsService = wishlistsService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _wishlistsService.GetAll();
@@ -27,7 +26,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _wishlistsService.Get(id);
@@ -38,7 +36,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _wishlistsService.Exist(id);
@@ -108,7 +105,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _wishlistsService.Delete(id);
@@ -119,20 +115,9 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> GetUserWishlist(Guid userId)
         {
             var response = await _wishlistsService.GetUserWishlist(userId);
-
-            if (!response.Success) return View(response.Data);
-
-            return StatusCode(response.Status);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetUserWishlist()
-        {
-            var response = await _wishlistsService.GetUserWishlist();
 
             if (!response.Success) return View(response.Data);
 

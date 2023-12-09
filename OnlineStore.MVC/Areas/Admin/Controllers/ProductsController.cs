@@ -16,7 +16,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         public ProductsController(IProductsService productsService) => _productsService = productsService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _productsService.GetAll();
@@ -37,7 +36,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _productsService.Exist(id);
@@ -117,20 +115,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
             var response = await _productsService.Delete(id);
 
             if (response.Success) return RedirectToAction("GetAll");
-
-            return StatusCode(response.Status);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetProductByCategory(
-            int categoryId,
-            int page = 1,
-            int itemsPerPage = 15,
-            SortParameters sortBy = SortParameters.Default)
-        {
-            var response = await _productsService.GetProductsByCategory(categoryId);
-
-            if (response.Success) return View(response.Data);
 
             return StatusCode(response.Status);
         }

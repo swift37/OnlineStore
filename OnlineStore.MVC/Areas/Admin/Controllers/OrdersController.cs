@@ -15,7 +15,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         public OrdersController(IOrdersService ordersService) => _ordersService = ordersService;
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _ordersService.GetAll();
@@ -26,7 +25,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Get(int id)
         {
             var response = await _ordersService.Get(id);
@@ -37,7 +35,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _ordersService.Exist(id);
@@ -76,7 +73,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Update(int id)
         {
             var response = await _ordersService.Get(id);
@@ -87,7 +83,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> Update(OrderViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -120,32 +115,9 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         public async Task<IActionResult> GetUserOrders(Guid userId)
         {
             var response = await _ordersService.GetUserOrders(userId);
-
-            if (response.Success) return View(response.Data);
-
-            return StatusCode(response.Status);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetUserOrders()
-        {
-            var response = await _ordersService.GetUserOrders();
-
-            if (response.Success) return View(response.Data);
-
-            return StatusCode(response.Status);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetUserOrder(int id)
-        {
-            var response = await _ordersService.GetUserOrder(id);
 
             if (response.Success) return View(response.Data);
 

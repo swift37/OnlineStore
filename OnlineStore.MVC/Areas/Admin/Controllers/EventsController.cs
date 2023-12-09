@@ -35,7 +35,6 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
         public async Task<IActionResult> Exist(int id)
         {
             var response = await _eventsService.Exist(id);
