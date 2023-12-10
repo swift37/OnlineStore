@@ -13,9 +13,9 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class SubscribersController : BaseController
     {
-        private readonly IRepository<Subscriber> _repository;
+        private readonly ISubscribersRepository _repository;
 
-        public SubscribersController(IRepository<Subscriber> repository) =>
+        public SubscribersController(ISubscribersRepository repository) =>
             _repository = repository;
 
         /// <summary>
@@ -147,5 +147,25 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.DeleteAsync(id);
             return NoContent();
         }
+
+        /// <summary>
+        /// Get the subscriber by email
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /subscribers/onlinestore@gmail.com
+        /// </remarks>
+        /// <param name="email">Subscriber email</param>
+        /// <returns>Returns SubscriberDTO</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpGet("{email}")]
+        [Authorize(Roles = Roles.Administrator)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<SubscriberDTO>> Get(string email) =>
+            Ok((await _repository.GetAsync(email)).ToDTO());
     }
 }
