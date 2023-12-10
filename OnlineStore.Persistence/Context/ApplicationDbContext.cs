@@ -3,6 +3,7 @@ using OnlineStore.Application.Interfaces;
 using OnlineStore.DAL.EntityTypeConfigurations;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Persistence.EntityTypeConfigurations;
 
 namespace OnlineStore.DAL.Context
 {
@@ -22,6 +23,7 @@ namespace OnlineStore.DAL.Context
         public DbSet<ContactRequest> ContactRequests { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +38,8 @@ namespace OnlineStore.DAL.Context
             builder.ApplyConfiguration(new CouponConfiguration());
             builder.ApplyConfiguration(new EventConfiguration());
             builder.ApplyConfiguration(new SubscriberConfiguration());
+            builder.ApplyConfiguration(new MenuItemConfiguration());
+            builder.ApplyConfiguration(new NestedMenuItemConfiguration());
             base.OnModelCreating(builder);
         }
     }
