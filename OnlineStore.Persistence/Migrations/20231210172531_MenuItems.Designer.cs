@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.DAL.Context;
 
@@ -11,9 +12,11 @@ using OnlineStore.DAL.Context;
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231210172531_MenuItems")]
+    partial class MenuItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +38,21 @@ namespace OnlineStore.Data.Migrations
                     b.HasIndex("NestedMenuItemId");
 
                     b.ToTable("CategoryNestedMenuItem");
+                });
+
+            modelBuilder.Entity("MenuItemNestedMenuItem", b =>
+                {
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NestedItemsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MenuItemId", "NestedItemsId");
+
+                    b.HasIndex("NestedItemsId");
+
+                    b.ToTable("MenuItemNestedMenuItem");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
@@ -241,15 +259,10 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int>("ParentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
                         .IsUnique();
-
-                    b.HasIndex("ParentId");
 
                     b.ToTable("NestedMenuItems");
                 });
@@ -624,6 +637,21 @@ namespace OnlineStore.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MenuItemNestedMenuItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.MenuItem", null)
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineStore.Domain.Entities.NestedMenuItem", null)
+                        .WithMany()
+                        .HasForeignKey("NestedItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Entities.Category", "Parent")
@@ -650,17 +678,6 @@ namespace OnlineStore.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.NestedMenuItem", b =>
-                {
-                    b.HasOne("OnlineStore.Domain.Entities.MenuItem", "Parent")
-                        .WithMany("NestedItems")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Review", b =>
@@ -732,11 +749,6 @@ namespace OnlineStore.Data.Migrations
                         .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.MenuItem", b =>
-                {
-                    b.Navigation("NestedItems");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Order", b =>
