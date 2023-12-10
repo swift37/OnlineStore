@@ -151,6 +151,26 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
+        /// Get the order by number
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /orders/057547564798
+        /// </remarks>
+        /// <param name="number">Order number</param>
+        /// <returns>Returns OrderDTO</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpGet("{number}")]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<OrderDTO>> Get(string number) =>
+            Ok((await _repository.GetAsync(number)).ToDTO());
+
+        /// <summary>
         /// Get the orders enumeration by category id
         /// </summary>
         /// <remarks>
