@@ -15,12 +15,12 @@ namespace OnlineStore.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var menuGroup = await _context.MenuItems
-                .Include(i => i.Category)
-                .Include(i => i.Categories)
-                .ToArrayAsync();
+            //var menuGroup = await _context.MenuItems
+            //    .Include(i => i.Category)
+            //    .Include(i => i.Categories)
+            //    .ToArrayAsync();
 
-            return View(menuGroup);
+            return View();
         }
     }
 }
