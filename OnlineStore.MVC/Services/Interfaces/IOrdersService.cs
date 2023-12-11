@@ -1,4 +1,5 @@
 ﻿using OnlineStore.MVC.Models.Order;
+using OnlineStore.MVC.Models.Subscriber;
 using OnlineStore.MVC.Services.Base;
 
 namespace OnlineStore.MVC.Services.Interfaces
@@ -16,6 +17,8 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Update(OrderViewModel orderViewModel);
 
         Task<Response> Delete(int id);
+
+        Task<Response<OrderViewModel>> Get(string number);
 
         Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId);
 

@@ -16,5 +16,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Update(SubscriberViewModel subscriberViewModel);
 
         Task<Response> Delete(int id);
+
+        Task<Response<SubscriberViewModel>> Get(string email);
     }
 }
