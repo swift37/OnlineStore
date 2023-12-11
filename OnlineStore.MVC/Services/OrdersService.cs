@@ -110,6 +110,23 @@ namespace OnlineStore.MVC.Services
             }
         }
 
+        public async Task<Response<OrderViewModel>> Get(string number)
+        {
+            try
+            {
+                var order = await _client.GetOrderAsync(number, _usingVersion);
+                return new Response<OrderViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<OrderViewModel>(order)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<OrderViewModel>(exception);
+            }
+        }
+
         public async Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders(Guid userId)
         {
             try

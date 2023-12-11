@@ -109,5 +109,22 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse(e);
             }
         }
+
+        public async Task<Response<SubscriberViewModel>> Get(string email)
+        {
+            try
+            {
+                var subscriber = await _client.GetSubscriberAsync(email, _usingVersion);
+                return new Response<SubscriberViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<SubscriberViewModel>(subscriber)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<SubscriberViewModel>(exception);
+            }
+        }
     }
 }
