@@ -11,6 +11,7 @@ html {
 html, body {
     position: relative;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 body {
@@ -20,6 +21,8 @@ body {
     line-height: 28px;
     font-weight: 400;
     height: auto;
+    margin: 0;
+    padding: 0;
 }
 
 main {
@@ -118,7 +121,7 @@ form {
 }
 
     .field :where(input, textarea) {
-        background-color: rgb(225 225 225 / 50%);
+        background-color: rgba(225, 225, 225, 0.5);
         font-family: inherit;
     }
 
@@ -374,11 +377,13 @@ form {
         position: static;
     }
 
-    .nav-link:where(.has-menu, .has-mega-menu) .nav-link-menu {
+    .nav-link.has-menu .nav-link-menu,
+    .nav-link.has-mega-menu .nav-link-menu {
         display: none;
     }
 
-    .nav-link:where(.has-menu, .has-mega-menu):hover .nav-link-menu {
+    .nav-link.has-menu:hover .nav-link-menu,
+    .nav-link.has-mega-menu:hover .nav-link-menu {
         display: block;
     }
 
@@ -527,7 +532,8 @@ form {
                     height: 14px;
                 }
 
-        .off-canvas .has-child :where(.child-menu, .mega-menu) {
+        .off-canvas .has-child .child-menu, 
+        .off-canvas .has-child .mega-menu {
             font-size: 13px;
             font-weight: 300;
             line-height: 28px;
@@ -538,7 +544,8 @@ form {
             transition: max-height 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
         }
 
-        .off-canvas .expand :where(.child-menu, .mega-menu) {
+        .off-canvas .expand .child-menu, 
+        .off-canvas .expand .mega-menu {
             max-height: 2000px;
         }
 
@@ -786,7 +793,8 @@ form {
             background: #f8f8f8;
         }
 
-        .dpt-menu .has-child:where(.links,.mega-menu)::before {
+        .dpt-menu .has-child.links::before,
+        .dpt-menu .has-child.mega-menu::before {
             content: '';
             position: absolute;
             top: 0;
@@ -944,6 +952,7 @@ form {
 .main-slider {
     position: relative;
     height: 660px;
+    overflow: hidden;
     --swiper-scrollbar-color: #ffffff;
 }
 
@@ -1400,6 +1409,7 @@ form {
             border: 0;
             outline: 0;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
         .subscribe-section .subscribe-form button {
@@ -1906,12 +1916,14 @@ form {
                 margin: 0;
             }
 
-            .reviews-section .reviews-block-body .review-item :where(.person, .review-title) {
+            .reviews-section .reviews-block-body .review-item .person,
+            .reviews-section .reviews-block-body .review-item .review-title {
                 font-weight: 600;
                 text-transform: uppercase;
             }
 
-            .reviews-section .reviews-block-body .review-item :where(.review-title, .view-more) {
+            .reviews-section .reviews-block-body .review-item .review-title,
+            .reviews-section .reviews-block-body .review-item .view-more {
                 font-size: 20px;
                 justify-content: end;
             }
@@ -2684,17 +2696,20 @@ form {
             transition: color 0.3s;
         }
 
-    .cat-navigation :where(.item-sortir, .item-options) .label, .cat-navigation ul {
+    .cat-navigation .item-sortir .label, .cat-navigation ul,
+    .cat-navigation .item-options .label, .cat-navigation ul {
         color: #7c899a;
         background-color: #f2f3f5;
         cursor: pointer;
     }
 
-    .cat-navigation :where(.label, ul li):hover {
+    .cat-navigation .label:hover,
+    .cat-navigation ul li:hover {
         color: #0a021c;
     }
 
-    .cat-navigation :where(.item-sortir, .item-options):hover ul {
+    .cat-navigation .item-sortir:hover ul,
+    .cat-navigation .item-options:hover ul {
         display: block;
     }
 
@@ -2713,7 +2728,7 @@ form {
     background-color: #ffffff;
     overflow: auto;
     z-index: 1000;
-    box-shadow: rgb(0 0 0 / 30%) 0 10px 50px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 10px 50px;
     visibility: hidden;
     opacity: 0;
 }
@@ -2808,12 +2823,13 @@ form {
     right: 0;
     background-color: #ffffff;
     z-index: 1000;
-    box-shadow: rgb(0 0 0 / 30%) 0 10px 50px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 10px 50px;
     visibility: hidden;
     opacity: 0;
 }
 
-    .mini-cart ul :where(li, .price) {
+    .mini-cart ul li,
+    .mini-cart ul .price {
         position: relative;
     }
 
@@ -2941,7 +2957,9 @@ form {
         }
 }
 
-:where(.mini-cart, .products.cart, .checkout .products) .thumbnail {
+.mini-cart, .thumbnail,
+.products.cart .thumbnail,
+.checkout .products .thumbnail {
     position: relative;
     width: 80px;
     height: 80px;
@@ -2949,7 +2967,8 @@ form {
     margin-right: 1em;
 }
 
-:where(.mini-cart .products, .products.cart) .thumbnail img {
+.mini-cart .products .thumbnail img,
+.products.cart .thumbnail img {
     transform: none;
     opacity: 1;
 }
@@ -2959,7 +2978,8 @@ form {
     flex-direction: column;
 }
 
-.products:where(.main, .one) .content {
+.products.main .content,
+.products.one .content {
     gap: 1em;
     margin-top: 1.25em;
 }
@@ -3118,10 +3138,12 @@ form {
     padding-left: 2em;
 }
 
-.products.cart table td :where(.content, .qty-control, p) {
-    margin: 0;
-    padding: 0;
-}
+    .products.cart table td .content,
+    .products.cart table td .qty-control,
+    .products.cart table td p {
+        margin: 0;
+        padding: 0;
+    }
 
 .products.cart table td .content a {
     color: #000000;
@@ -3157,7 +3179,8 @@ form {
     border-bottom: 1px solid #e5e8ec;
 }
 
-.products.cart :where(.item-add-to-cart, .item-remove) {
+.products.cart .item-add-to-cart,
+.products.cart .item-remove {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3167,9 +3190,10 @@ form {
     background-color: transparent;
 }
 
-    .products.cart :where(.item-add-to-cart, .item-remove):hover {
-        background-color: #ebebeb;
-    }
+.products.cart .item-add-to-cart:hover,
+.products.cart .item-remove:hover {
+    background-color: #ebebeb;
+}
 
 .products.cart .item-remove {
     margin-left: 15px;
@@ -3334,7 +3358,7 @@ form {
     .checkout .left {
         padding: 4em;
         background-color: #f2f3f5;
-        box-shadow: 0 15px 70px -8px rgb(0 0 0 / 20%);
+        box-shadow: 0 15px 70px -8px rgba(0, 0, 0, 0.20);
     }
 
         .checkout .left h1 {
@@ -3374,7 +3398,7 @@ form {
     }
 
     .checkout .field :where(input, textarea) {
-        background-color: rgb(225 225 225 / 50%);
+        background-color: rgba(225, 225, 225, 0.5);
         font-family: inherit;
     }
 
@@ -3689,7 +3713,9 @@ form {
         text-decoration: none;
     }
 
-    .pagination :where(.page-btn, .page-link):hover, .page-link.active {
+    .pagination .page-btn:hover,
+    .pagination .page-link:hover
+    .pagination .page-link.active {
         color: #ffffff;
         background-color: #000000;
     }
