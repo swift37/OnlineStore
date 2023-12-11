@@ -16,7 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Areas\Admin\Views\ContactRequests\" />
+    <Folder Include="Areas\Admin\Views\Coupons\" />
+    <Folder Include="Areas\Admin\Views\Events\" />
+    <Folder Include="Areas\Admin\Views\Wishlists\" />
+    <Folder Include="Areas\Admin\Views\Subscribers\" />
+    <Folder Include="Areas\Admin\Views\Reviews\" />
+    <Folder Include="Areas\Admin\Views\Products\" />
+    <Folder Include="Areas\Admin\Views\Orders\" />
+  </ItemGroup>
   </ItemGroup>
 
 </Project>
