@@ -115,6 +115,16 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Get(string number)
+        {
+            var response = await _ordersService.Get(number);
+
+            if (!response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetUserOrders(Guid userId)
         {
             var response = await _ordersService.GetUserOrders(userId);

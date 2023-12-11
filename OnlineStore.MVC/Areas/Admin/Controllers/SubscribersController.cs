@@ -116,5 +116,15 @@ namespace OnlineStore.MVC.Areas.Admin.Controllers
 
             return StatusCode(response.Status);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(string email)
+        {
+            var response = await _subscribersService.Get(email);
+
+            if (!response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
+        }
     }
 }
