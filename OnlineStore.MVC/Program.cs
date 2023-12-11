@@ -42,6 +42,7 @@ builder.Services.AddScoped<IEventsService, EventsService>();
 builder.Services.AddScoped<ICouponsService, CouponsService>();
 builder.Services.AddScoped<ISubscribersService, SubscribersService>();
 builder.Services.AddScoped<IContactRequestsService, ContactRequestsService>();
+builder.Services.AddScoped<IMenuItemsService, MenuItemsService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
