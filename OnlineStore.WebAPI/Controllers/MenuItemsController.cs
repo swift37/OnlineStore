@@ -45,7 +45,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("exists/{id:int}")]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -86,7 +86,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpPost]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -113,7 +113,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpPut]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
