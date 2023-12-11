@@ -3,6 +3,7 @@ using OnlineStore.MVC.Models.Category;
 using OnlineStore.MVC.Models.ContactRequest;
 using OnlineStore.MVC.Models.Coupon;
 using OnlineStore.MVC.Models.Event;
+using OnlineStore.MVC.Models.MenuItem;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Models.Review;
@@ -64,6 +65,15 @@ namespace OnlineStore.MVC.Mapping
 
             CreateMap<WishlistDTO, WishlistViewModel>().ReverseMap();
             CreateMap<CreateWishlistDTO, CreateWishlistViewModel>().ReverseMap();
+
+            CreateMap<MenuItemDTO, MenuItemViewModel>()
+                .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
+                .ReverseMap()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel));
+            CreateMap<NestedMenuItemDTO, NestedMenuItemViewModel>()
+                .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
+                .ReverseMap()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel)); 
 
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<RegisterViewModel, RegisterRequest>();
