@@ -1,0 +1,93 @@
+﻿@model OnlineStore.MVC.Models.Product.ProductViewModel
+
+<div class="product-card">
+    <div class="card-content">
+        <div class="special-status">
+            <div class="flags">
+                @if (Model.IsNewProduct)
+                {
+                    <div class="new-flag">NEW</div>
+                }
+                @if (Model.IsSale)
+                {
+                    <div class="sale-flag">SALE</div>
+                }
+            </div>
+        </div>
+        <div class="product-image">
+            <a class="image-link" href="product?id=@Model.Id">
+                <img src="@Model.Image" loading="lazy" alt="">
+            </a>
+        </div>
+        <div class="product-name">
+            <a class="product-link" href="product?id=@Model.Id">
+                @Model.Name
+            </a>
+        </div>
+        <div class="product-rating">
+            <a class="rating-link" href="/">
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                </span>
+                <span class="rating-star">
+                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                </span>
+                <span class="reviews-quantity">
+                    (58)
+                </span>
+            </a>
+        </div>
+        <ul class="product-main-specs">
+            @if (Model.Specifications != null)
+                foreach (var spec in Model.Specifications)
+                    if (spec.IsMain)
+                    {
+                        <li class="product-spec">
+                            @spec.Name: @spec.Value
+                        </li>
+                    }
+        </ul>
+        <div class="product-info">
+            <div class="info-container">
+                <div class="product-price">
+                    @if (Model.Discount > 0)
+                    {
+                        <span class="discount">$@Model.UnitPrice</span>
+                    }
+@*                     <span class="price">$@Model.PriceBeforeDiscount</span> *@
+                </div>
+                <div class="product-status">
+                    @if (Model.IsAvailable)
+                    {
+                        <span>Available</span>
+                    } else
+                    {
+                        <span>Not Available</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-to-wishlist">
+        <button class="add-to-wishlist-btn" data-itemid="@Model.Id">
+            <img src="~/resources/icons/like.png" alt="" />
+        </button>
+    </div>
+    @if (Model.IsAvailable)
+    {
+        <div class="add-to-cart">
+            <div class="add-to-cart-btn" data-itemid="@Model.Id">
+                <img src="~/resources/icons/shopping-cart.png" />
+            </div>
+        </div>
+    }
+</div>
