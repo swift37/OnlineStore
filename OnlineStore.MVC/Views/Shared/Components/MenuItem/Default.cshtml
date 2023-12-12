@@ -1,0 +1,58 @@
+﻿@model OnlineStore.MVC.Models.MenuItem.MenuItemViewModel
+
+<div class="nav-link has-mega-menu">
+    <div class="content">
+        @Model.NavigationLabel
+    </div>
+    @if (Model.IsMegaMenu)
+    {
+        <div class="nav-link-menu">
+            <div class="mega-menu">
+                <div class="mega-menu-container">
+                    <div class="wrapper">
+                        @if (Model.NestedItems.Count > 0)
+                            foreach (var nestedItem in Model.NestedItems)
+                            {
+                                <div class="flex-column flexcolumn">
+                                    <div class="row">
+                                        <h4>@nestedItem.NavigationLabel</h4>
+                                        <div class="links @(nestedItem.HasTwoColumns ? "two-columns" : string.Empty)">
+                                            @if (nestedItem.Categories.Count > 0)
+                                                foreach (var category in nestedItem.Categories)
+                                                {
+                                                    <a href="/">@category.Name</a>
+                                                }
+                                        </div>
+                                        @if (nestedItem.HasTwoColumns)
+                                        {
+                                            <a href="/" class="view-all">
+                                                View all brands <i class="fa-solid fa-chevron-right"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <div class="flex-column flexcolumn products">
+                                <div class="row">
+                                    <div class="media">
+                                        <div class="tumbnail object-cover">
+                                            <a href="/">
+                                                <img src="@Model.Image" alt="" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="text-content">
+                                        <h4>Most wanted!</h4>
+                                        <a href="/" class="primary-button">Order Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
