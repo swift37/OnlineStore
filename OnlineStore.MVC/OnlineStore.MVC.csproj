@@ -27,6 +27,30 @@
     <Folder Include="Areas\Admin\Views\Products\" />
     <Folder Include="Areas\Admin\Views\Orders\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Home\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\About.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Contact.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Events.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\Contact.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\Events.cshtml" />
   </ItemGroup>
 
 </Project>
