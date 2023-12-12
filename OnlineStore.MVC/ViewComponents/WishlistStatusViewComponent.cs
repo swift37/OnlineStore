@@ -17,7 +17,10 @@ namespace OnlineStore.MVC.ViewComponents
             var response = await _wishlistsService.GetUserWishlist();
             var wishlist = response.Data;
 
-            ViewBag.WishlistItems = wishlist.Products.Count;
+            if (response.Success) 
+                ViewBag.WishlistItems = wishlist.Products.Count;
+            else 
+                ViewBag.WishlistItems = 0;
 
             return View();
         }
