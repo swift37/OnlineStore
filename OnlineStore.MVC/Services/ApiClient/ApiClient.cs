@@ -8369,7 +8369,7 @@ namespace OnlineStore.MVC.Services.ApiClient
         public string Message { get; set; }
 
         [Newtonsoft.Json.JsonProperty("creationDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreationDate { get; set; }
+        public System.DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
     }
 
@@ -8380,7 +8380,7 @@ namespace OnlineStore.MVC.Services.ApiClient
         public string Number { get; set; }
 
         [Newtonsoft.Json.JsonProperty("creationDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreationDate { get; set; }
+        public System.DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("startDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset StartDate { get; set; }
@@ -8469,7 +8469,7 @@ namespace OnlineStore.MVC.Services.ApiClient
         public OrderStatus Status { get; set; }
 
         [Newtonsoft.Json.JsonProperty("createdDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedDate { get; set; }
+        public System.DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string FirstName { get; set; }
@@ -8586,7 +8586,7 @@ namespace OnlineStore.MVC.Services.ApiClient
         public int ProductId { get; set; }
 
         [Newtonsoft.Json.JsonProperty("creationDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreationDate { get; set; }
+        public System.DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Title { get; set; }
@@ -8620,10 +8620,10 @@ namespace OnlineStore.MVC.Services.ApiClient
         public string Email { get; set; }
 
         [Newtonsoft.Json.JsonProperty("subscribeDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset SubscribeDate { get; set; }
+        public System.DateTimeOffset SubscribeDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("isActive", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
     }
 
@@ -8631,10 +8631,10 @@ namespace OnlineStore.MVC.Services.ApiClient
     public partial record CreateWishlistDTO
     {
         [Newtonsoft.Json.JsonProperty("createDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreateDate { get; set; }
+        public System.DateTimeOffset CreateDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("lastChangeDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset LastChangeDate { get; set; }
+        public System.DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
 
         [Newtonsoft.Json.JsonProperty("products", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<ProductDTO> Products { get; set; }
