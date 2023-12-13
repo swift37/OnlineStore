@@ -77,7 +77,25 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
+        [HttpPost]
+        [ValidateAjax]
+        public async Task<JsonResult> SendContactRequest(CreateContactRequestViewModel model)
+        {
+            var response = await _contactRequestsService.Create(model);
 
+            if (response.Success) return Json(new { success = true });
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+                return Json(new
+                {
+                    success = false,
+                    errors = response.ValidationErrors
+                        .Select(error => error.ErrorMessage)
+                        .ToArray()
+                });
+
+            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
