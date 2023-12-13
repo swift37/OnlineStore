@@ -1,6 +1,4 @@
-﻿@model OnlineStore.MVC.Models.Subscriber.CreateSubscriberViewModel
-
-<section class="subscribe-section">
+﻿<section class="subscribe-section">
     <div class="content">
         <div class="subscribe-head">
             Newsletter
@@ -8,9 +6,10 @@
         <div class="paragraph-light subscribe-paragraph">
             Sign up to receive updates from our shop, including new tea selections and upcoming events.
         </div>
-        <form class="subscribe-form" asp-action="Subscribe" method="post">
-            <input type="email" asp-for="Email" placeholder="Enter your email" required>
+        <div class="subscribe-form">
+            <input type="email" placeholder="Enter your email" required>
             <button type="submit" class="subscribe-btn">Sign up</button>
-        </form>
+            <span id="subscribeResponse"></span>
+        </div>
     </div>
 </section>

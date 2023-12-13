@@ -78,14 +78,26 @@
             <div class="field">
                 <label>Name</label>
                 <input id="contactName" type="text" placeholder="Enter your name">
+                <div id="contactFormNameError" class="errors-area">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span></span>
+                </div>
             </div>
             <div class="field">
                 <label>Email</label>
                 <input id="contactEmail" type="email" placeholder="Enter your email">
+                <div id="contactFormEmailError" class="errors-area">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span></span>
+                </div>
             </div>
             <div class="field">
                 <label>Message</label>
                 <textarea id="contactMessage" rows="5" maxlength="5000" placeholder="Enter your message"></textarea>
+                <div id="contactFormMessageError" class="errors-area">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span></span>
+                </div>
             </div>
             <button class="primary-button contact-btn" type="submit">Submit</button>
             <div id="contactFormError" class="errors-area">
@@ -94,7 +106,7 @@
             </div>
             <div id="contactFormSuccess" class="success-msg">
                 <i class="fa-regular fa-circle-check"></i>
-                <span>Success!</span>
+                <span>Your request has been successfully received.</span>
             </div>
         </div>
     </div>

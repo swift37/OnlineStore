@@ -16,5 +16,11 @@
       "Scripts/sliders.js"
     ],
     "outputFileName": "wwwroot/scripts/sliders.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/ajax-requests.js"
+    ],
+    "outputFileName": "wwwroot/scripts/ajax-requests.js"
   }
 ]
