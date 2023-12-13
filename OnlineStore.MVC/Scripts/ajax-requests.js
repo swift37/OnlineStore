@@ -187,19 +187,22 @@ $(document).ready(function () {
         if (!validatedEmail) return alert('Invalid email address.');
 
         $.ajax({
-            url: '/Home/SubscribeToNewsletter',
+            url: '/home/subscribe',
             type: 'post',
             dataType: 'json',
             data:
             {
-                email: validatedEmail
+                Email: validatedEmail
             },
-            error: function () {
-                alert('Error occurred.');
+            error: function (response) {
+                if (response.responseJSON.data[0].key === "Email")
+                    $('#subscribeResponse').text(response.responseJSON.data[0].errors);
+                else
+                    $('#subscribeResponse').text("An error occurred.");
             },
             success: function (result) {
-                if (result.error == true)
-                    alert(result.message);
+                if (result.success == false)
+                    $('#subscribeResponse').text(result.errors);
                 else
                     input.val('');
             }
@@ -211,9 +214,20 @@ $(document).ready(function () {
         let email = $('#contactEmail').val();
         let message = $('#contactMessage').val();
         let validatedEmail = validateEmail(email);
+
         let error = $('#contactFormError span');
+        let errorName = $('#contactFormNameError span');
+        let errorEmail = $('#contactFormEmailError span');
+        let errorMessage = $('#contactFormMessageError span');
+
         $('#contactFormError').css('display', 'none');
+        $('#contactFormNameError').css('display', 'none');
+        $('#contactFormEmailError').css('display', 'none');
+        $('#contactFormErrorError').css('display', 'none');
         error.text('');
+        errorName.text('');
+        errorEmail.text('');
+        errorMessage.text('');
 
         if (!validatedEmail || !name || !message) {
 
@@ -222,32 +236,50 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '/Home/SendContactRequest',
+            url: '/home/sendcontactrequest',
             type: 'post',
             dataType: 'json',
             data:
             {
-                name: name,
-                email: validatedEmail,
-                message: message
+                ContactName: name,
+                Email: validatedEmail,
+                Message: message
             },
-            error: function () {
-                $('#contactFormError').css('display', 'block');
-                error.text('Error occurred.');
+            error: function (response) {
+                response.responseJSON.data.forEach((el) => {
+                    switch (el.key) {
+                        case "ContactName":
+                            $('#contactFormNameError').css('display', 'block');
+                            errorName.text(el.errors);
+                            break;
+                        case "Email":
+                            $('#contactFormEmailError').css('display', 'block');
+                            errorEmail.text(el.errors);
+                            break;
+                        case "Message":
+                            $('#contactFormMessageError').css('display', 'block');
+                            errorMessage.text(el.errors);
+                            break;
+                        default:
+                            $('#contactFormError').css('display', 'block');
+                            error.text(el.errors);
+                            break;
+                    }
+                })
             },
             success: function (result) {
-                if (result.error == true) {
-                    $('#contactFormError').css('display', 'block');
-                    error.text(result.message);
-                }
-                else {
+                if (result.success == true) {
                     $('#contactName').val('');
                     $('#contactEmail').val('');
                     $('#contactMessage').val('');
+
                     $('#contactFormSuccess').css('display', 'block');
                     setTimeout(function () {
                         $('#contactFormSuccess').css('display', 'none');
                     }, 2000);
+                }
+                else {
+                    $('#contactFormError').css('display', 'block');
                 }
             }
         });
