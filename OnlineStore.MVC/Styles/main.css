@@ -266,7 +266,7 @@ form {
 
 .nav-wrap {
     display: flex;
-    max-width: 1236px;
+    max-width: 1280px;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -1025,7 +1025,7 @@ form {
 
 .intro-header {
     display: flex;
-    height: 735px;
+    height: 650px;
     margin-bottom: 100px;
     justify-content: center;
     align-items: center;
