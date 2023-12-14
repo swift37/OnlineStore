@@ -31,24 +31,24 @@ $(document).ready(function () {
         if (!qty) qty = 1;
 
         $.ajax({
-            url: '/Product/AddToCart',
+            url: '/cart/add',
             type: 'post',
             dataType: 'json',
             data:
             {
                 productId: $(this).data('itemid'),
-                qty: qty
+                quantity: qty
             },
             error: function () {
                 alert('Error occurred.');
             },
             success: function (result) {
-                if (result.error == true) {
-                    alert(result.message);
+                if (result.success == false) {
+                    alert("An arror occurred.");
                 }
                 else {
                     $.ajax({
-                        url: '/Product/UpdateMiniCart',
+                        url: '/cart/updateminicart',
                         success: function (data) {
                             $("#miniCart").html(data);
                             checkCartQuantity();
