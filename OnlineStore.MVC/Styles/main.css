@@ -229,6 +229,29 @@ form {
     height: 100%;
 }
 
+.outlined-button {
+    display: inline-block;
+    min-height: 1em;
+    color: #fff;
+    background-color: transparent;
+    padding: 0.8em 1.5em;
+    font-weight: 600;
+    line-height: 1em;
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 0 0 0 2px #fff inset !important;
+    transition: all 0.2s ease;
+}
+
+    .outlined-button:hover {
+        background: #fff;
+        box-shadow: 0 0 0 2px #fff inset !important;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
 .nav-main {
     display: flex;
     justify-content: center;
@@ -771,6 +794,7 @@ form {
             padding: 0 1.5em;
         }
 
+
         .dpt-menu .has-child .child-menu, .dpt-menu .mega-menu {
             position: absolute;
             top: -1px;
@@ -1251,9 +1275,17 @@ form {
     }
 
     .events-header a {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
         margin-left: 12px;
         cursor: pointer;
     }
+
+        .events-header a i {
+            font-size: 13px;
+            margin-top: 2px;
+        }
 
 .events-slider-container {
     position: relative;
