@@ -11,13 +11,16 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+    options.Secure = CookieSecurePolicy.Always;
 });
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.Cookie.Name = "OnlineStore-GB";
     opt.Cookie.HttpOnly = true;
+    opt.Cookie.IsEssential = true;
+    opt.Cookie.Domain = "https://localhost:7019";
     opt.ExpireTimeSpan = TimeSpan.FromDays(14);
 
     opt.SlidingExpiration = true;
