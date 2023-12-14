@@ -36,27 +36,6 @@ namespace OnlineStore.MVC.Controllers
         [HttpGet]
         public IActionResult Events() => View();
 
-        //[HttpPost]
-        //public async Task<IActionResult> Subscribe(CreateSubscriberViewModel model)
-        //{
-        //    //if (string.IsNullOrWhiteSpace(email) || !email.Contains('@') || !email.Contains('.'))
-        //    //    return Json(new { error = true, message = "Invalid email address." });
-
-        //    var response = await _subscribersService.Create(model);
-
-        //    if (response.Success) return Ok();
-
-        //    if (response.Status == 400 && response.ValidationErrors.Count() > 0)
-        //    {
-        //        foreach (var error in response.ValidationErrors)
-        //            ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-
-        //        return View(model);
-        //    }
-
-        //    return StatusCode(response.Status);
-        //}
-
         [HttpPost]
         [ValidateAjax]
         public async Task<JsonResult> Subscribe(CreateSubscriberViewModel model)
