@@ -63,7 +63,7 @@
                     {
                         <span class="discount">$@Model.UnitPrice</span>
                     }
-@*                     <span class="price">$@Model.PriceBeforeDiscount</span> *@
+                    <span class="price">$@(Model.UnitPrice - Model.Discount)</span>
                 </div>
                 <div class="product-status">
                     @if (Model.IsAvailable)

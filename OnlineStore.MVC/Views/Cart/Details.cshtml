@@ -1,0 +1,160 @@
+﻿@model OnlineStore.MVC.Models.Cart.CartViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="single-cart">
+    <div class="container">
+        <div class="wrapper">
+            <div class="breadcrumb">
+                <ul class="flexitem">
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>Cart</li>
+                </ul>
+            </div>
+            <div class="page-title">
+                <h1>Cart (@Model.ItemsQuantity)</h1>
+            </div>
+            <div class="products one cart">
+                <div class="flexwrap">
+                    <div class="form-cart">
+                        <div class="item">
+                            <table id="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Items.Count > 0) 
+                                        foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <td class="flexitem">
+                                                    <div class="thumbnail object-contain">
+                                                        <a href="#"><img src="@item.Product?.Image" alt=""></a>
+                                                    </div>
+                                                    <div class="content">
+                                                        <strong><a href="#">@item.Product?.Name</a></strong>
+                                                        <p>RAM: 16 Gb</p>
+                                                    </div>
+                                                </td>
+                                                <td>$@item.Product?.UnitPrice</td>
+                                                <td>
+                                                    <div class="qty-control flexitem">
+                                                        <button class="qty-minus">-</button>
+                                                        <input class="qty-value" type="text" value="@item.Quantity" data-itemid="@item.ProductId" min="1" pattern="^[0-9]+$">
+                                                        <button class="qty-plus">+</button>
+                                                    </div>
+                                                </td>
+                                                <td>$<span class="line-price">LinePrice</span></td>
+                                                <td>
+                                                    <a class="item-remove from-cart" data-itemid="@item.ProductId">
+                                                        <img src="~/resources/icons/close.png" alt="">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="cart-summary styled">
+                        <div class="item">
+                            <div class="coupon">
+                                <input type="text" placeholder="Enter coupon">
+                                <button>Apply</button>
+                            </div>
+                            <div class="shipping-rate collapse">
+                                <div class="has-child expand">
+                                    <a href="#" class="icon-small">Estimate Shipping and Tax</a>
+                                    <div class="content">
+                                        <div class="countries">
+                                            <form action="" class="item-content">
+                                                <label for="country">Country</label>
+                                                <select name="country" id="country">
+                                                    <option value=""></option>
+                                                    <option value="1" selected="selected">United States</option>
+                                                    <option value="2">Canada</option>
+                                                    <option value="3">Australia</option>
+                                                    <option value="4">Japan</option>
+                                                    <option value="5">Others</option>
+                                                </select>
+                                            </form>
+                                        </div>
+                                        <div class="states">
+                                            <form action="" class="item-content">
+                                                <label for="state">State/Province</label>
+                                                <select name="state" id="state">
+                                                    <option value="">Select a region, satate or province</option>
+                                                    <option value="1">New York</option>
+                                                    <option value="2">Texas</option>
+                                                    <option value="3">Arizona</option>
+                                                    <option value="4">Alaska</option>
+                                                    <option value="5">Others</option>
+                                                </select>
+                                            </form>
+                                        </div>
+                                        <div class="postal-code">
+                                            <form action="" class="item-content">
+                                                <label for="postal">Zip/Postal Code</label>
+                                                <input type="number" name="postal" id="postal">
+                                            </form>
+                                        </div>
+                                        <div class="rate-options variant">
+                                            <form action="" class="item-content">
+                                                <p>
+                                                    <span>Flat: $10.00</span>
+                                                    <input type="radio" name="rate-option" id="flat" checked>
+                                                    <label for="flat" class="circle"></label>
+                                                </p>
+                                                <p>
+                                                    <span>Best: $0.00</span>
+                                                    <input type="radio" name="rate-option" id="best">
+                                                    <label for="best" class="circle"></label>
+                                                </p>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart-total">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Subtotal</th>
+                                            <td>$<span class="subtotal-price">Model.SubtotalPrice</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Discount</th>
+                                            <td>$<span class="total-discount">Model.TotalDiscount</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Shipping<span class="mini-text">(Flat)</span></th>
+                                            <td>$10.00</td>
+                                        </tr>
+                                        <tr>
+                                            <th>TOTAL</th>
+                                            <td>$<strong class="total-price">Model.TotalPrice</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a asp-controller="Order" asp-action="PersonalInfo" asp-route-cartId="Model.Id" class="secondary-button">
+                                    Checkout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_Newsletter" />
