@@ -1,0 +1,278 @@
+﻿@model OnlineStore.MVC.Models.Product.ProductsPageViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Category?.Name}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="single-category">
+    <div class="container">
+        <div class="wrapper">
+            <div class="column">
+                <div class="holder">
+                    <div class="row sidebar">
+                        <div class="filter">
+                            <div class="filter-block">
+                                <h4>Category</h4>
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="bags">
+                                        <label for="bags">
+                                            <span class="checked"></span>
+                                            <span>Bags</span>
+                                        </label>
+                                        <span class="count">15</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="beauty">
+                                        <label for="beauty">
+                                            <span class="checked"></span>
+                                            <span>Beauty</span>
+                                        </label>
+                                        <span class="count">2</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="clothing">
+                                        <label for="clothing">
+                                            <span class="checked"></span>
+                                            <span>Clothing</span>
+                                        </label>
+                                        <span class="count">3</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="jewelry">
+                                        <label for="jewelry">
+                                            <span class="checked"></span>
+                                            <span>Jewelry</span>
+                                        </label>
+                                        <span class="count">1</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="shoes">
+                                        <label for="shoes">
+                                            <span class="checked"></span>
+                                            <span>Shoes</span>
+                                        </label>
+                                        <span class="count">7</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="filter-block">
+                                <h4>Activity</h4>
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="bags2">
+                                        <label for="bags2">
+                                            <span class="checked"></span>
+                                            <span>Bags</span>
+                                        </label>
+                                        <span class="count">15</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="beauty2">
+                                        <label for="beauty2">
+                                            <span class="checked"></span>
+                                            <span>Beauty</span>
+                                        </label>
+                                        <span class="count">2</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="clothing2">
+                                        <label for="clothing2">
+                                            <span class="checked"></span>
+                                            <span>Clothing</span>
+                                        </label>
+                                        <span class="count">3</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="jewelry2">
+                                        <label for="jewelry2">
+                                            <span class="checked"></span>
+                                            <span>Jewelry</span>
+                                        </label>
+                                        <span class="count">1</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="shoes2">
+                                        <label for="shoes2">
+                                            <span class="checked"></span>
+                                            <span>Shoes</span>
+                                        </label>
+                                        <span class="count">7</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="filter-block">
+                                <h4>Brand</h4>
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="bags3">
+                                        <label for="bags3">
+                                            <span class="checked"></span>
+                                            <span>Bags</span>
+                                        </label>
+                                        <span class="count">15</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="beauty3">
+                                        <label for="beauty3">
+                                            <span class="checked"></span>
+                                            <span>Beauty</span>
+                                        </label>
+                                        <span class="count">2</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="clothing3">
+                                        <label for="clothing3">
+                                            <span class="checked"></span>
+                                            <span>Clothing</span>
+                                        </label>
+                                        <span class="count">3</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="jewelry3">
+                                        <label for="jewelry3">
+                                            <span class="checked"></span>
+                                            <span>Jewelry</span>
+                                        </label>
+                                        <span class="count">1</span>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" name="checkbox" id="shoes3">
+                                        <label for="shoes3">
+                                            <span class="checked"></span>
+                                            <span>Shoes</span>
+                                        </label>
+                                        <span class="count">7</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="filter-block pricing">
+                                <h4>Price</h4>
+                                <div class="byprice">
+                                    <div class="range-track">
+                                        <input type="range" range="5000">
+                                    </div>
+                                    <div class="price-range">
+                                        <span class="price-from">$50</span>
+                                        <span class="price-to">$5000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="row">
+                            <div class="cat-head">
+                                <div class="breadcrumb">
+                                    <ul class="flexitem">
+                                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                        @if (Model.Category != null)
+                                        {
+                                            <li>@Model.Category.Name</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="page-title">
+                                    <h1>@Model.Category?.Name</h1>
+                                </div>
+                                <div class="cat-navigation flexitem">
+                                    <div class="item-filter desktop-hide">
+                                        <a href="#" class="filter-trigger label">
+                                            <img src="~/resources/icons/sort.png" alt="">
+                                            <span>Filter</span>
+                                        </a>
+                                    </div>
+                                    <div class="item-sortir">
+                                        <div class="label">
+                                            <span class="mobile-hide">Sort by <span class="selected-value">Default</span></span>
+                                            <div class="desktop-hide selected-value">Default</div>
+                                            <i class="angle down icon"></i>
+                                        </div>
+                                        <ul>
+                                            <li data-option="0">Default</li>
+                                            <li data-option="1">Customer rating: from the best</li>
+                                            <li data-option="2">Price: from the cheapest</li>
+                                            <li data-option="3">Price: from the most expensive</li>
+                                        </ul>
+                                    </div>
+                                    <div class="item-perpage mobile-hide">
+                                        <div class="label">Items @Model.Products.Count() per page</div>
+                                    </div>
+                                    <div class="item-options">
+                                        <div class="label">
+                                            <span class="mobile-hide">Show <span class="selected-value">15</span> per page</span>
+                                            <div class="desktop-hide selected-value">15</div>
+                                            <i class="angle down icon"></i>
+                                        </div>
+                                        <ul>
+                                            <li data-option="15">15</li>
+                                            <li data-option="20">20</li>
+                                            <li data-option="25">25</li>
+                                            <li data-option="30">30</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @await Component.InvokeAsync("ProductCardsList", new { model = Model.Products })
+                        <div class="pagination">
+                            <button id="startBtn" class="page-btn" disabled>
+                                <i class="fa-solid fa-angles-left"></i>
+                            </button>
+                            <button id="prevBtn" class="page-btn prevNext" disabled>
+                                <i class="fa-solid fa-angle-left"></i>
+                            </button>
+
+                            <div class="page-links">
+                                @if (Model.TotalPages <= 5)
+                                    @for (int i = 1; i <= Model.TotalPages; i++)
+                                    {
+                                        <a asp-controller="Catalog" asp-action="Index" asp-route-categoryid="@Model.Category?.Id" asp-route-page="@i" class="page-link">@i</a>
+                                    }
+                                else
+                                    if (Model.CurrentPage < 5)
+                                        for (int i = 1; i < 5; i++)
+                                        {
+                                            <a asp-route="products" asp-route-subcatid="@Model.Category?.Id" asp-route-page="@i" class="page-link">@i</a>
+                                        }
+                                    else if (Model.CurrentPage > Model.TotalPages - 4)
+                                        for (int i = Model.TotalPages - 4; i <= Model.TotalPages; i++)
+                                        {
+                                            <a asp-route="products" asp-route-subcatid="@Model.Category?.Id" asp-route-page="@i" class="page-link">@i</a>
+                                        }
+                                    else
+                                        for (int i = Model.CurrentPage - 2; i <= Model.CurrentPage + 2; i++)
+                                        {
+                                            <a asp-route="products" asp-route-subcatid="@Model.Category?.Id" asp-route-page="@i" class="page-link">@i</a>
+                                        }
+                            </div>
+
+                            <button id="nextBtn" class="page-btn prevNext">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                            <button id="endBtn" class="page-btn">
+                                <i class="fa-solid fa-angles-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
