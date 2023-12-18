@@ -246,28 +246,48 @@ form {
     height: 100%;
 }
 
-.outlined-button {
+.button {
     display: inline-block;
+    vertical-align: baseline;
     min-height: 1em;
-    color: #fff;
-    background-color: transparent;
+    margin: 0 0.25em 0 0;
     padding: 0.8em 1.5em;
-    font-weight: 600;
+    background: #e0e1e2 none;
+    color: rgba(0,0,0,.6);
+    font-weight: 700;
     line-height: 1em;
-    border-radius: 7px;
+    text-align: center;
+    outline: 0;
     border: none;
-    outline: none;
+    border-radius: 7px;
     user-select: none;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
+    transition: all 0.2s ease;
     cursor: pointer;
+}
+
+    .button.outlined {
+        color: #fff;
+        background-color: transparent;
     box-shadow: 0 0 0 2px #fff inset !important;
     transition: all 0.2s ease;
 }
 
-    .outlined-button:hover {
+        .button.outlined:hover {
         background: #fff;
         box-shadow: 0 0 0 2px #fff inset !important;
         color: rgba(0, 0, 0, 0.8);
     }
+
+    .button.black {
+        box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.15) inset;
+        background-color: #1b1c1d;
+        color: #fff;
+    }
+
+        .button.black:hover {
+            background-color: #27292a;
+        }
 
 .nav-main {
     display: flex;
