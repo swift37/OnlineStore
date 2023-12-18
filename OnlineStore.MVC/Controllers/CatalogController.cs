@@ -25,5 +25,15 @@ namespace OnlineStore.MVC.Controllers
 
             return StatusCode(response.Status);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Product(int id)
+        {
+            var response = await _productsService.Get(id);
+
+            if (response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
+        }
     }
 }
