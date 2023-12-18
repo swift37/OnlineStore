@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using OnlineStore.MVC.Services;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Interfaces;
+using Stripe;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
