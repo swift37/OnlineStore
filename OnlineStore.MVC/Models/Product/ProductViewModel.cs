@@ -9,9 +9,9 @@ namespace OnlineStore.MVC.Models.Product
 
         public string? Name { get; set; }
 
-        public double UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
-        public double Discount { get; set; }
+        public decimal Discount { get; set; }
 
         public int UnitsInStock { get; set; }
 
@@ -40,5 +40,8 @@ namespace OnlineStore.MVC.Models.Product
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
+
+
+        public decimal PriceAfterDiscount => UnitPrice - Discount;
     }
 }
