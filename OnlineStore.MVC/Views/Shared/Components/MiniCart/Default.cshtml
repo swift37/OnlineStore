@@ -27,7 +27,7 @@
                                 <div class="item-content">
                                     <p><a href="/product?id=@cartItem.ProductId">@cartItem.Product.Name</a></p>
                                     <span class="price">
-                                        <span>$@cartItem.Product.UnitPrice</span>
+                                        <span>@cartItem.Product.UnitPrice.ToString("C")</span>
                                         <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
                                     </span>
                                 </div>
@@ -43,11 +43,11 @@
         <div class="cart-footer">
             <div class="subtotal">
                 <p>Subtotal</p>
-                <p><strong>$Model.SubtotalPrice</strong></p>
+                <p><strong>@Model.Subtotal.ToString("C")</strong></p>
             </div>
             <div class="actions">
                 <a asp-controller="Order" asp-action="PersonalInfo" class="primary-button">Checkout</a>
-                <a href="/cart" class="primary-button">View Cart</a>
+                <a asp-controller="Cart" asp-action="Details" class="primary-button">View Cart</a>
             </div>
         </div>
     </div>

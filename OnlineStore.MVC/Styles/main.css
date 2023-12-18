@@ -3288,6 +3288,7 @@ form {
             line-height: 51px;
             background-color: #ffffff;
             border: 3px solid #0a021c;
+            border-radius: 0px;
         }
 
         .cart-summary .coupon button {

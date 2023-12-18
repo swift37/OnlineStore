@@ -45,7 +45,7 @@
                                                         <p>RAM: 16 Gb</p>
                                                     </div>
                                                 </td>
-                                                <td>$@item.Product?.UnitPrice</td>
+                                                <td>@item.Product?.UnitPrice.ToString("C")</td>
                                                 <td>
                                                     <div class="qty-control flexitem">
                                                         <button class="qty-minus">-</button>
@@ -53,7 +53,7 @@
                                                         <button class="qty-plus">+</button>
                                                     </div>
                                                 </td>
-                                                <td>$<span class="line-price">LinePrice</span></td>
+                                                <td><span class="line-price">@item.Subtotal.ToString("C")</span></td>
                                                 <td>
                                                     <a class="item-remove from-cart" data-itemid="@item.ProductId">
                                                         <img src="~/resources/icons/close.png" alt="">
@@ -129,11 +129,11 @@
                                     <tbody>
                                         <tr>
                                             <th>Subtotal</th>
-                                            <td>$<span class="subtotal-price">@Model.Subtotal</span></td>
+                                            <td><span class="subtotal-price">@Model.Subtotal.ToString("C")</span></td>
                                         </tr>
                                         <tr>
                                             <th>Discount</th>
-                                            <td>$<span class="total-discount">@Model.Discount</span></td>
+                                            <td><span class="total-discount">@Model.Discount.ToString("C")</span></td>
                                         </tr>
                                         <tr>
                                             <th>Shipping<span class="mini-text">(Flat)</span></th>
@@ -141,7 +141,7 @@
                                         </tr>
                                         <tr>
                                             <th>TOTAL</th>
-                                            <td>$<strong class="total-price">@Model.Subtotal</strong></td>
+                                            <td><strong class="total-price">@Model.Subtotal.ToString("C")</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
