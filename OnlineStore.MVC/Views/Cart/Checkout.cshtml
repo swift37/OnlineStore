@@ -1,0 +1,140 @@
+﻿@model OnlineStore.MVC.Models.Cart.CartViewModel;
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="single-checkout">
+    <div class="container">
+        <div class="wrapper">
+            <div class="checkout flexwrap">
+                <div class="item left styled">
+                    <h1>Shipping Address</h1>
+                    <form asp-controller="Order" asp-action="Checkout" method="post">
+                        <div class="field">
+                            <label for="email">Email Address <span></span></label>
+                            <input type="email" name="Email" id="email" autocomplete="off" required>
+                        </div>
+                        <div class="field">
+                            <label for="fname">First Name <span></span></label>
+                            <input type="text" name="FirstName" id="fname" required>
+                        </div>
+                        <div class="field">
+                            <label for="lname">Last Name <span></span></label>
+                            <input type="text" name="LastName" id="lname" required>
+                        </div>
+                        <div class="field">
+                            <label for="cname">Company Name</label>
+                            <input type="text" name="CompanyName" id="cname">
+                        </div>
+                        <div class="field">
+                            <label for="address">Street Address <span></span></label>
+                            <input type="text" name="StreetAddress" id="address" required>
+                            <input type="text" name="Apartment" id="address" required>
+                        </div>
+                        <div class="field">
+                            <label for="city">City <span></span></label>
+                            <input type="text" name="City" id="city" required>
+                        </div>
+                        <div class="field">
+                            <label for="state">State / Province <span></span></label>
+                            <input type="text" name="State" id="state" required>
+                        </div>
+                        <div class="field">
+                            <label for="postal">Zip / Postal Code <span></span></label>
+                            <input type="number" name="Postcode" id="postal" required>
+                        </div>
+                        <div class="field">
+                            <label for="country">Country <span></span></label>
+                            <select name="Country" id="country">
+                                <option value=""></option>
+                                <option value="1" selected="selected">United States</option>
+                                <option value="2">Canada</option>
+                                <option value="3">Australia</option>
+                                <option value="4">Japan</option>
+                                <option value="5">Others</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="phone">Phone Number <span></span></label>
+                            <input type="number" name="Phone" id="phone" required>
+                        </div>
+                        <div class="field">
+                            <label for="notes">Order Notes (optional)</label>
+                            <textarea cols="30" rows="3" type="number" name="Notes" id="notes"></textarea>
+                        </div>
+                        <div class="field checkset">
+                            <input type="checkbox" id="anaccount">
+                            <label for="anaccount">Create an account?</label>
+                        </div>
+                        <div class="shipping-methods">
+                            <h2>Shipping Methods</h2>
+                            <div class="field rate-options">
+                                <p>
+                                    <span>Flat: $10.00</span>
+                                    <input type="radio" name="rate-option" id="flat" checked>
+                                    <label for="flat" class="circle"></label>
+                                </p>
+                                <p>
+                                    <span>Best: $0.00</span>
+                                    <input type="radio" name="rate-option" id="best">
+                                    <label for="best" class="circle"></label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="primary-checkout">
+                            <button class="primary-button" type="submit">Place Order</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="item right">
+                    <h2>Order Summary</h2>
+                    <div class="summary-order">
+                        <div class="summary-totals">
+                            <ul>
+                                <li>
+                                    <span>Subtotal</span>
+                                    <span>@Model.Subtotal.ToString("C")</span>
+                                </li>
+                                <li>
+                                    <span>Discount</span>
+                                    <span>-@Model.Discount.ToString("C")</span>
+                                </li>
+                                <li>
+                                    <span>Shipping: Flat</span>
+                                    <span>$10.00</span>
+                                </li>
+                                <li>
+                                    <span>Total</span>
+                                    <strong>@Model.Subtotal.ToString("C")</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="products mini">
+                            @if (!Model.IsEmpty)
+                                foreach (var cartItem in Model.Items)
+                                    if (cartItem.Product is { })
+                                    {
+                                        <li class="item">
+                                            <div class="thumbnail object-contain">
+                                                <img src="@cartItem.Product.Image" alt="Image">
+                                            </div>
+                                            <div class="item-content">
+                                                <p>@cartItem.Product.Name</p>
+                                                <span class="price">
+                                                    <span>$@cartItem.Product.UnitPrice</span>
+                                                    <span>x @cartItem.Quantity</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_Newsletter" />
