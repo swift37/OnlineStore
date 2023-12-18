@@ -59,6 +59,69 @@ $(document).ready(function () {
         });
     });
 
+    $('.qty-value').change(function () {
+        $.ajax({
+            url: '/cart/update',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+                quantity: $(this).val()
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                if (result.success == true)
+                    location.reload();
+            }
+        });
+    });
+
+    $('.item-remove.from-cart').click(function () {
+        $.ajax({
+            url: '/cart/remove',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                if (result.success == true)
+                    location.reload();
+            }
+        });
+    });
+
+    $('.item-remove.from-minicart').click(function () {
+        $.ajax({
+            url: '/cart/remove',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(this).data('itemid'),
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                $.ajax({
+                    url: '/cart/updateminicart',
+                    success: function (data) {
+                        $("#miniCart").html(data);
+                        checkCartQuantity();
+                    }
+                });
+            }
+        });
+    });
+
     $('.add-to-wishlist-btn').click(function () {
         $.ajax({
             url: '/Product/AddToWishlist',
@@ -84,72 +147,6 @@ $(document).ready(function () {
                     $('#wishlistQuantity').text(newQty);
                     checkWishlistQuantity();
                 }
-            }
-        });
-    });
-
-    $('.qty-value').change(function () {
-        $.ajax({
-            url: '/Product/UpdateCart',
-            type: 'post',
-            dataType: 'json',
-            data:
-            {
-                productId: $(this).data('itemid'),
-                qty: $(this).val()
-            },
-            error: function () {
-                alert('Error occured.');
-            },
-            success: function (result) {
-                if (result.error == true) {
-                    alert(result.message);
-                }
-                else {
-                    location.reload();
-                }
-            }
-        });
-    });
-
-    $('.item-remove.from-cart').click(function () {
-        $.ajax({
-            url: '/Product/RemoveFromCart',
-            type: 'post',
-            dataType: 'json',
-            data:
-            {
-                productId: $(this).data('itemid'),
-            },
-            error: function () {
-                alert('Error occured.');
-            },
-            success: function (result) {
-                if (result) location.reload();
-            }
-        });
-    });
-
-    $('.item-remove.from-minicart').click(function () {
-        $.ajax({
-            url: '/Product/RemoveFromCart',
-            type: 'post',
-            dataType: 'json',
-            data:
-            {
-                productId: $(this).data('itemid'),
-            },
-            error: function () {
-                alert('Error occured.');
-            },
-            success: function (result) {
-                $.ajax({
-                    url: '/Product/UpdateMiniCart',
-                    success: function (data) {
-                        $("#miniCart").html(data);
-                        checkCartQuantity();
-                    }
-                });
             }
         });
     });

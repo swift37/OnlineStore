@@ -2934,6 +2934,7 @@ form {
         justify-content: flex-end;
         margin-left: 1em;
         flex: 1;
+        cursor: pointer;
     }
 
         .mini-cart .item-remove img {
@@ -3244,6 +3245,7 @@ form {
     height: 40px;
     border-radius: 50%;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .products.cart .item-add-to-cart:hover,
