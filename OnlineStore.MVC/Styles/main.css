@@ -424,7 +424,7 @@ form {
 .header-icon {
     position: relative;
     display: inline-block;
-    height: 44px;
+    height: 100%;
     width: 42px;
     cursor: pointer;
     padding: 13px 12px;
@@ -2962,6 +2962,7 @@ form {
     .mini-cart .subtotal {
         display: flex;
         flex-direction: column;
+        gap: 0.7em;
         padding-top: 1em;
         margin-bottom: 2em;
         border-top: 1px solid #e5e8ec;
@@ -3012,7 +3013,7 @@ form {
         }
 }
 
-.mini-cart, .thumbnail,
+.mini-cart .thumbnail,
 .products.cart .thumbnail,
 .checkout .products .thumbnail {
     position: relative;
