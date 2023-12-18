@@ -184,7 +184,7 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult PaymentFailed() => View();
+        public IActionResult PaymentFailure() => View();
 
     }
 }
