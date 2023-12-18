@@ -11,6 +11,8 @@ namespace OnlineStore.MVC.Models.Cart
         public decimal Subtotal => Items.Sum(i => i.Subtotal);
 
         public decimal Discount => Items.Sum(i => i.Discount);
+
+        public bool IsEmpty => Items.Count < 1;
     }
 
     public class CartItemViewModel
