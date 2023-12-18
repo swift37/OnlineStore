@@ -26,18 +26,18 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(int productId)
+        public IActionResult Add(int productId, int quantity)
         {
-            if (!_cartService.Add(productId))
+            if (!_cartService.Add(productId, quantity))
                 return Json(new { success = false });
 
             return Json(new { success = true });
         }
 
         [HttpPost]
-        public IActionResult Decrement(int productId)
+        public IActionResult Update(int productId, int quantity)
         {
-            if (!_cartService.Decrement(productId))
+            if (!_cartService.Update(productId, quantity))
                 return Json(new { success = false });
 
             return Json(new { success = true });

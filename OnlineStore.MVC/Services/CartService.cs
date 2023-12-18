@@ -34,26 +34,23 @@ namespace OnlineStore.MVC.Services
             return true;
         }
 
-        public bool Decrement(int id)
+        public bool Update(int productId, int quantity)
         {
             var cart = _cartStore.Cart;
-            var item = cart?.Items.FirstOrDefault(i => i.ProductId == id);
+            var item = cart?.Items.FirstOrDefault(i => i.ProductId == productId);
             if (item is null) return false;
 
-            if (item.Quantity > 0)
-                item.Quantity--;
-
-            if (item.Quantity == 0)
-                cart?.Items.Remove(item);
+            if (item.Quantity > 0 && quantity > 0 && quantity < 1000)
+                item.Quantity = quantity;
 
             _cartStore.Cart = cart;
             return true;
         }
 
-        public bool Remove(int id)
+        public bool Remove(int productId)
         {
             var cart = _cartStore.Cart;
-            var item = cart?.Items.FirstOrDefault(i => i.ProductId == id);
+            var item = cart?.Items.FirstOrDefault(i => i.ProductId == productId);
             if (item is null) return false;
 
             cart?.Items.Remove(item);

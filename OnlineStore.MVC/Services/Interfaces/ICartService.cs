@@ -4,7 +4,7 @@
     {
         bool Add(int productId, int quantity = 1);
 
-        bool Decrement(int productId);
+        bool Update(int productId, int quantity);
 
         bool Remove(int productId);
 
