@@ -4,8 +4,6 @@
     {
         public int ProductId { get; set; }
 
-        public DateTimeOffset CreationDate { get; set; }
-
         public string? Title { get; set; }
 
         public int Rating { get; set; }

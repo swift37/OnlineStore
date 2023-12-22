@@ -8,8 +8,6 @@ namespace OnlineStore.MVC.Models.Order
 
         public OrderStatus Status { get; set; }
 
-        public DateTimeOffset CreatedDate { get; set; }
-
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -37,14 +35,8 @@ namespace OnlineStore.MVC.Models.Order
 
     public class CreateOrderItemViewModel
     {
-        public int OrderId { get; set; }
-
         public int ProductId { get; set; }
 
         public int Quantity { get; set; }
-
-        public double UnitPrice { get; set; }
-
-        public double Discount { get; set; }
     }
 }
