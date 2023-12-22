@@ -97,7 +97,9 @@ namespace OnlineStore.WebAPI.Controllers
         {
             var order = createOrderDTO.FromDTO();
             order.UserId = UserId;
-
+            // Temporarily
+                order.Number = DateTime.Now.ToOADate().ToString().Substring(0, 15);
+            //
             var createdOrder = await _repository.CreateAsync(order);
             if (createdOrder is null) return UnprocessableEntity();
             return Ok(createdOrder.Id);
