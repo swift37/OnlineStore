@@ -48,7 +48,7 @@ namespace OnlineStore.DAL.Repositories
         {
             if (entity is null) throw new ArgumentNullException(nameof(T));
 
-            DbSet.Entry(entity).State = EntityState.Added;
+            await DbSet.AddAsync(entity, cancellation);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
             return entity;
@@ -60,7 +60,7 @@ namespace OnlineStore.DAL.Repositories
 
             if (!await ExistsAsync(entity.Id)) throw new NotFoundException(nameof(T), entity.Id);
 
-            DbSet.Entry(entity).State = EntityState.Modified;
+            DbSet.Update(entity);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
@@ -72,7 +72,7 @@ namespace OnlineStore.DAL.Repositories
                 .ConfigureAwait(false);
             if (entity is not { }) throw new NotFoundException(nameof(T), id);
 
-            DbSet.Entry(entity).State = EntityState.Deleted;
+            DbSet.Remove(entity);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
