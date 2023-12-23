@@ -31,8 +31,6 @@ namespace OnlineStore.MVC.Services.Base
             switch (exception.StatusCode)
             {
                 case (int)HttpStatusCode.BadRequest:
-                    var temp = exception;
-                    var temp2 = JsonSerializer.Deserialize<BadResponse>(exception.Response);
                     return new Response 
                     { 
                         Success = false,

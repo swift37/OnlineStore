@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Enums;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Services.Interfaces;
@@ -72,7 +73,7 @@ namespace OnlineStore.MVC.Controllers
         public IActionResult UpdateMiniCart() => ViewComponent("MiniCart");
 
         [HttpGet]
-        public async Task<IActionResult> Checkout(int cartId)
+        public async Task<IActionResult> Checkout()
         {
             var cart = _cartStorage.Cart;
 
@@ -81,31 +82,52 @@ namespace OnlineStore.MVC.Controllers
             foreach (var item in cart.Items)
                 item.Product = (await _productsService.Get(item.ProductId)).Data;
 
-            return View(cart);
+            var model = new CheckoutViewModel() { Cart = cart };
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(CreateOrderViewModel model)
+        public async Task<IActionResult> Checkout(CheckoutViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await _ordersService.Create(model);
+            var cart = _cartStorage.Cart!;
+            var order = model.Order;
 
-            if (response.Success)
-                return RedirectToAction("Payment", new { orderId = response.Data });
-
-            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+            foreach (var item in cart.Items)
             {
-                foreach (var error in response.ValidationErrors)
+                var checkProductResponse = await _productsService.Exist(item.ProductId);
+                if (!checkProductResponse.Success) return StatusCode(checkProductResponse.Status);
+                if (!checkProductResponse.Data) continue;
+
+                order.Items.Add(new CreateOrderItemViewModel 
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity
+                });
+            }
+
+            var orderCreateResponse = await _ordersService.Create(order);
+
+            if (orderCreateResponse.Success)
+            {
+                _cartService.Clear();
+                return RedirectToAction("Payment", new { orderId = orderCreateResponse.Data });
+            }
+
+            if (orderCreateResponse.Status == 400 && orderCreateResponse.ValidationErrors.Count() > 0)
+            {
+                foreach (var error in orderCreateResponse.ValidationErrors)
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 
                 return View(model);
             }
 
-            return StatusCode(response.Status);
+            return StatusCode(orderCreateResponse.Status);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Payment(int orderId)
         {
             var response = await _ordersService.Get(orderId);
@@ -118,8 +140,8 @@ namespace OnlineStore.MVC.Controllers
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
                 PaymentMethodTypes = new List<string> { "card" },
-                SuccessUrl = domain + $"/cart/checkoutsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&orderId=" + order.Id,
-                CancelUrl = domain + "/cart/checkoutfailed"
+                SuccessUrl = domain + $"/cart/paymentsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&orderId=" + order.Id,
+                CancelUrl = domain + "/cart/paymentfailure"
             };
 
             foreach (var item in order.Items)
@@ -128,7 +150,7 @@ namespace OnlineStore.MVC.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmountDecimal = item.Product?.UnitPrice,
+                        UnitAmountDecimal = item.Product?.UnitPrice * 100,
                         Currency = "USD",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
@@ -165,18 +187,10 @@ namespace OnlineStore.MVC.Controllers
             order.Email = customerEmail;
             order.PayDate = payDate;
 
-            if (!ModelState.IsValid) return View(order);
-
             var orderUpdateResponse = await _ordersService.Update(order);
-
             if (orderUpdateResponse.Success)
-                return RedirectToAction("GetAll");
-
-            if (orderUpdateResponse.Status == 400 && orderUpdateResponse.ValidationErrors.Count() > 0)
             {
-                foreach (var error in orderUpdateResponse.ValidationErrors)
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-
+                ViewBag.OrderNumber = order.Number;
                 return View();
             }
 

@@ -4,7 +4,7 @@ namespace OnlineStore.MVC.Controllers
 {
     public class ErrorController : Controller
     {
-        [Route("error/{statusCode}")]
+        [Route("error/{statusCode:int}")]
         public IActionResult Index(int statusCode)
         {
             Response.Clear();
