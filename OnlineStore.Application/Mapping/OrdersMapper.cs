@@ -16,6 +16,7 @@ namespace OnlineStore.Application.Mapping
             ShippedDate = order.ShippedDate,
             Email = order.Email,
             Phone = order.Phone,
+            Total = order.Total,
             ShippingCost = order.ShippingCost,
             TrackingNumber = order.TrackingNumber,
             FirstName = order.FirstName,
@@ -40,6 +41,7 @@ namespace OnlineStore.Application.Mapping
             ShippedDate = order.ShippedDate,
             Email = order.Email,
             Phone = order.Phone,
+            Total= order.Total,
             ShippingCost = order.ShippingCost,
             TrackingNumber = order.TrackingNumber,
             FirstName = order.FirstName,
@@ -82,6 +84,7 @@ namespace OnlineStore.Application.Mapping
             ShippedDate = order.ShippedDate,
             Email = order.Email,
             Phone = order.Phone,
+            Total = order.Total,
             ShippingCost = order.ShippingCost,
             TrackingNumber = order.TrackingNumber,
             FirstName = order.FirstName,
@@ -115,11 +118,8 @@ namespace OnlineStore.Application.Mapping
 
         public static OrderItem FromDTO(this CreateOrderItemDTO orderItem) => new OrderItem
         {
-            OrderId = orderItem.OrderId,
             ProductId = orderItem.ProductId,
             Quantity = orderItem.Quantity,
-            UnitPrice = orderItem.UnitPrice,
-            Discount = orderItem.Discount
         };
 
         public static OrderItem FromDTO(this UpdateOrderItemDTO orderItem) => new OrderItem

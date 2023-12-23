@@ -53,17 +53,8 @@ namespace OnlineStore.Application.DTOs.Order.Validation
     {
         public CreateOrderItemDTOValidator()
         {
-            RuleFor(o => o.OrderId)
-                .NotEqual(0);
-
             RuleFor(o => o.ProductId)
                 .NotEqual(0);
-
-            RuleFor(o => o.UnitPrice)
-                .GreaterThan(0);
-
-            RuleFor(o => o.Discount)
-                .GreaterThanOrEqualTo(0);
 
             RuleFor(o => o.Quantity)
                 .GreaterThan(0);
