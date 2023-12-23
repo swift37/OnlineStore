@@ -4,6 +4,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
 {
     public interface IOrdersRepository : IRepository<Order>
     {
+        Task<int> CountAsync(CancellationToken cancellation = default);
+
+        Task<int> CountForLastMonthAsync(CancellationToken cancellation = default);
+
         Task<Order> GetAsync(
             string number,
             CancellationToken cancellation = default);

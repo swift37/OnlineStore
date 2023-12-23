@@ -3,13 +3,22 @@ using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain;
-using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.Repositories
 {
     public class OrdersRepository : Repository<Order>, IOrdersRepository
     {
         public OrdersRepository(IApplicationDbContext context) : base(context) { }
+
+        public async Task<int> CountAsync(CancellationToken cancellation = default) => await Entities
+            .CountAsync(cancellation)
+            .ConfigureAwait(false);
+
+        public async Task<int> CountForLastMonthAsync(CancellationToken cancellation = default) => await Entities
+            .Where(o => o.CreatedDate.Year == DateTime.Now.Year && 
+                        o.CreatedDate.Month == DateTime.Now.Month)
+            .CountAsync(cancellation)
+            .ConfigureAwait(false);
 
         public async Task<Order> GetAsync(string? number, CancellationToken cancellation = default)
         {
