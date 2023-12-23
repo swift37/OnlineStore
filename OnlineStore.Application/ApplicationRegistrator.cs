@@ -9,8 +9,6 @@ namespace OnlineStore.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services) => services
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
-            .AddScoped<ICartStore, CookiesCartStore>()
-            .AddScoped<ICartService, CartService>()
             .AddScoped<IEmailSender, EmailSender>()
             ;
     }
