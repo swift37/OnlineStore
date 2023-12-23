@@ -10,6 +10,8 @@ namespace OnlineStore.MVC.Models.Enums
         Paid,
         [StringValue("Processed")]
         Processed,
+        [StringValue("Shipped")]
+        Shipped,
         [StringValue("Completed")]
         Completed,
         [StringValue("Canceled")]
