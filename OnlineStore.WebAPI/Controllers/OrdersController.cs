@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Order;
+using OnlineStore.Application.Infrastructure;
+using OnlineStore.Application.Interfaces.Infrastructure;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Enums;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -12,10 +15,16 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class OrdersController : BaseController
     {
-        private readonly IOrdersRepository _repository;
+        private readonly IOrdersRepository _ordersRepository;
+        private readonly IProductsRepository _productsRepository;
+        private readonly IOrderNumbersProvider _orderNumbersProvider;
 
-        public OrdersController(IOrdersRepository repository) =>
-            _repository = repository;
+        public OrdersController(
+            IOrdersRepository ordersRepository, 
+            IProductsRepository productsRepository,
+            IOrderNumbersProvider orderNumbersProvider) =>
+            (_ordersRepository, _productsRepository, _orderNumbersProvider) = 
+            (ordersRepository, productsRepository, orderNumbersProvider);
 
         /// <summary>
         /// Get the enumeration of orders
@@ -34,7 +43,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok((await _ordersRepository.GetAllAsync()).ToDTO());
 
         /// <summary>
         /// Get true if order exists
@@ -54,7 +63,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<bool>> Exist(int id) =>
-             Ok(await _repository.ExistsAsync(id));
+             Ok(await _ordersRepository.ExistsAsync(id));
 
         /// <summary>
         /// Get the order by id
@@ -74,7 +83,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<OrderDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok((await _ordersRepository.GetAsync(id)).ToDTO());
 
         /// <summary>
         /// Create a order
@@ -97,10 +106,19 @@ namespace OnlineStore.WebAPI.Controllers
         {
             var order = createOrderDTO.FromDTO();
             order.UserId = UserId;
-            // Temporarily
-                order.Number = DateTime.Now.ToOADate().ToString().Substring(0, 15);
-            //
-            var createdOrder = await _repository.CreateAsync(order);
+            order.Number = await _orderNumbersProvider.GenerateNumberAsync(order);
+            foreach (var item in order.Items)
+            {
+                var product = await _productsRepository.GetAsync(item.ProductId);
+                if (!product.IsAvailable || product.UnitsInStock < item.Quantity)
+                    order.Items.Remove(item);
+                item.UnitPrice = product.UnitPrice;
+                item.Discount = product.Discount;
+                product.UnitsInStock -= item.Quantity;
+                await _productsRepository.UpdateAsync(product);
+            }
+
+            var createdOrder = await _ordersRepository.CreateAsync(order);
             if (createdOrder is null) return UnprocessableEntity();
             return Ok(createdOrder.Id);
         }
@@ -126,7 +144,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateOrderDTO updateOrderDTO)
         {
-            await _repository.UpdateAsync(updateOrderDTO.FromDTO());
+            await _ordersRepository.UpdateAsync(updateOrderDTO.FromDTO());
             return NoContent();
         }
 
@@ -148,7 +166,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Delete(int id)
         {
-            await _repository.DeleteAsync(id);
+            await _ordersRepository.DeleteAsync(id);
             return NoContent();
         }
 
@@ -170,7 +188,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<OrderDTO>> Get(string number) =>
-            Ok((await _repository.GetAsync(number)).ToDTO());
+            Ok((await _ordersRepository.GetAsync(number)).ToDTO());
 
         /// <summary>
         /// Get the orders enumeration by category id
@@ -189,7 +207,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders(Guid userId) =>
-            Ok((await _repository.GetUserOrdersAsync(userId)).ToDTO());
+            Ok((await _ordersRepository.GetUserOrdersAsync(userId)).ToDTO());
 
         /// <summary>
         /// Get the orders enumeration by category id
@@ -205,7 +223,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrders() => 
-            Ok((await _repository.GetUserOrdersAsync(UserId)).ToDTO());
+            Ok((await _ordersRepository.GetUserOrdersAsync(UserId)).ToDTO());
 
         /// <summary>
         /// Get the order belonging to the current user by id
@@ -223,6 +241,6 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<OrderDTO>> GetUserOrder(int id) => 
-            Ok((await _repository.GetUserOrderAsync(id, UserId)).ToDTO());
+            Ok((await _ordersRepository.GetUserOrderAsync(id, UserId)).ToDTO());
     }
 }
