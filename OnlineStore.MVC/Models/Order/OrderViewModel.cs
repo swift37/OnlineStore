@@ -27,7 +27,9 @@ namespace OnlineStore.MVC.Models.Order
 
         public string? Email { get; set; }
 
-        public double ShippingCost { get; set; }
+        public decimal Total { get; set; }
+
+        public decimal ShippingCost { get; set; }
 
         public string? TrackingNumber { get; set; }
 
@@ -58,8 +60,8 @@ namespace OnlineStore.MVC.Models.Order
 
         public int Quantity { get; set; }
 
-        public double UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
-        public double Discount { get; set; }
+        public decimal Discount { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 
         public DateTimeOffset? FinishDate { get; set; }
 
-        public double DiscountSize { get; set; }
+        public decimal DiscountSize { get; set; }
 
         public double PercentDiscountSize { get; set; }
 

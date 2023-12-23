@@ -180,10 +180,11 @@ namespace OnlineStore.MVC.Controllers
             var payDate = session.Created;
 
             var response = await _ordersService.Get(orderId);
-            if (!response.Success) return StatusCode(response.Status); ;
+            if (!response.Success) return StatusCode(response.Status);
             var order = response.Data;
 
             order.Status = OrderStatus.Paid;
+            order.Total = total;
             order.Email = customerEmail;
             order.PayDate = payDate;
 

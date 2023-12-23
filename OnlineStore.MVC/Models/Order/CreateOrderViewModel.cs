@@ -16,7 +16,7 @@ namespace OnlineStore.MVC.Models.Order
 
         public string? Email { get; set; }
 
-        public double ShippingCost { get; set; }
+        public decimal ShippingCost { get; set; }
 
         public string? Country { get; set; }
 

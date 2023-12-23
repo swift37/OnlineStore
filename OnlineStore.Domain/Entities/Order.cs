@@ -30,6 +30,8 @@ namespace OnlineStore.Domain
 
         public string? Email { get; set; }
 
+        public decimal Total { get; set; }
+
         public decimal ShippingCost { get; set; }
 
         public string? TrackingNumber { get; set; }

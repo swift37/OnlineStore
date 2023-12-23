@@ -33,6 +33,9 @@ namespace OnlineStore.Application.DTOs.Order.Validation
                 .MaximumLength(15)
                 .Matches(new Regex("^\\+?[1-9][0-9]{7,14}$"));
 
+            RuleFor(o => o.Total)
+                .GreaterThanOrEqualTo(0);
+
             RuleFor(o => o.ShippingCost)
                 .GreaterThanOrEqualTo(0);
 
