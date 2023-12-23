@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Extensions;
 using OnlineStore.MVC.Services.ApiClient;
 using System.Net;
 using System.Text.Json;
@@ -30,11 +31,15 @@ namespace OnlineStore.MVC.Services.Base
             switch (exception.StatusCode)
             {
                 case (int)HttpStatusCode.BadRequest:
+                    var temp = exception;
+                    var temp2 = JsonSerializer.Deserialize<BadResponse>(exception.Response);
                     return new Response 
                     { 
                         Success = false,
                         Status = exception.StatusCode,
-                        ValidationErrors = JsonSerializer.Deserialize<IEnumerable<ValidationFailure>>(exception.Response) 
+                        ValidationErrors = 
+                            JsonSerializer.Deserialize<BadResponse>(exception.Response)?.Errors
+                            .ToValidationFailures() 
                             ?? Enumerable.Empty<ValidationFailure>()
                     };
                 default:
