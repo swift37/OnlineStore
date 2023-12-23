@@ -1,4 +1,4 @@
-﻿@model OnlineStore.MVC.Models.Cart.CartViewModel;
+﻿@model CheckoutViewModel;
 
 @{
     ViewData["Title"] = "Checkout";
@@ -11,43 +11,39 @@
             <div class="checkout flexwrap">
                 <div class="item left styled">
                     <h1>Shipping Address</h1>
-                    <form asp-controller="Order" asp-action="Checkout" method="post">
+                    <form asp-controller="Cart" asp-action="Checkout" method="post">
                         <div class="field">
-                            <label for="email">Email Address <span></span></label>
-                            <input type="email" name="Email" id="email" autocomplete="off" required>
+                            <label asp-for="Order.Email">Email Address <span></span></label>
+                            <input asp-for="Order.Email" type="email" autocomplete="off" required>
                         </div>
                         <div class="field">
-                            <label for="fname">First Name <span></span></label>
-                            <input type="text" name="FirstName" id="fname" required>
+                            <label asp-for="Order.FirstName">First Name <span></span></label>
+                            <input asp-for="Order.FirstName" type="text" required>
                         </div>
                         <div class="field">
-                            <label for="lname">Last Name <span></span></label>
-                            <input type="text" name="LastName" id="lname" required>
+                            <label asp-for="Order.LastName">Last Name <span></span></label>
+                            <input asp-for="Order.LastName" type="text" required>
                         </div>
                         <div class="field">
-                            <label for="cname">Company Name</label>
-                            <input type="text" name="CompanyName" id="cname">
+                            <label asp-for="Order.StreetAddress">Street Address <span></span></label>
+                            <input asp-for="Order.StreetAddress" type="text" required>
+                            <input asp-for="Order.Apartment" type="text" required>
                         </div>
                         <div class="field">
-                            <label for="address">Street Address <span></span></label>
-                            <input type="text" name="StreetAddress" id="address" required>
-                            <input type="text" name="Apartment" id="address" required>
+                            <label asp-for="Order.City">City <span></span></label>
+                            <input asp-for="Order.City" type="text" required>
                         </div>
                         <div class="field">
-                            <label for="city">City <span></span></label>
-                            <input type="text" name="City" id="city" required>
+                            <label asp-for="Order.State">State / Province <span></span></label>
+                            <input asp-for="Order.State" type="text" required>
                         </div>
                         <div class="field">
-                            <label for="state">State / Province <span></span></label>
-                            <input type="text" name="State" id="state" required>
+                            <label asp-for="Order.Postcode">Zip / Postal Code <span></span></label>
+                            <input asp-for="Order.Postcode" type="number" required>
                         </div>
                         <div class="field">
-                            <label for="postal">Zip / Postal Code <span></span></label>
-                            <input type="number" name="Postcode" id="postal" required>
-                        </div>
-                        <div class="field">
-                            <label for="country">Country <span></span></label>
-                            <select name="Country" id="country">
+                            <label asp-for="Order.Country">Country <span></span></label>
+                            <select asp-for="Order.Country">
                                 <option value=""></option>
                                 <option value="1" selected="selected">United States</option>
                                 <option value="2">Canada</option>
@@ -57,12 +53,12 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label for="phone">Phone Number <span></span></label>
-                            <input type="number" name="Phone" id="phone" required>
+                            <label asp-for="Order.Phone">Phone Number <span></span></label>
+                            <input asp-for="Order.Phone" type="number" required>
                         </div>
                         <div class="field">
-                            <label for="notes">Order Notes (optional)</label>
-                            <textarea cols="30" rows="3" type="number" name="Notes" id="notes"></textarea>
+                            <label asp-for="Order.Notes">Order Notes (optional)</label>
+                            <textarea asp-for="Order.Notes" cols="30" rows="3" type="number"></textarea>
                         </div>
                         <div class="field checkset">
                             <input type="checkbox" id="anaccount">
@@ -73,18 +69,18 @@
                             <div class="field rate-options">
                                 <p>
                                     <span>Flat: $10.00</span>
-                                    <input type="radio" name="rate-option" id="flat" checked>
+                                    @Html.RadioButtonFor(model => model.Order.ShippingCost, 10)
                                     <label for="flat" class="circle"></label>
                                 </p>
                                 <p>
                                     <span>Best: $0.00</span>
-                                    <input type="radio" name="rate-option" id="best">
+                                    @Html.RadioButtonFor(model => model.Order.ShippingCost, 0)
                                     <label for="best" class="circle"></label>
                                 </p>
                             </div>
                         </div>
                         <div class="primary-checkout">
-                            <button class="primary-button" type="submit">Place Order</button>
+                            <button class="primary-button" type="submit">Place And Pay</button>
                         </div>
                     </form>
                 </div>
@@ -95,11 +91,11 @@
                             <ul>
                                 <li>
                                     <span>Subtotal</span>
-                                    <span>@Model.Subtotal.ToString("C")</span>
+                                    <span>@Model.Cart.Subtotal.ToString("C")</span>
                                 </li>
                                 <li>
                                     <span>Discount</span>
-                                    <span>-@Model.Discount.ToString("C")</span>
+                                    <span>-@Model.Cart.Discount.ToString("C")</span>
                                 </li>
                                 <li>
                                     <span>Shipping: Flat</span>
@@ -107,13 +103,13 @@
                                 </li>
                                 <li>
                                     <span>Total</span>
-                                    <strong>@Model.Subtotal.ToString("C")</strong>
+                                    <strong>@Model.Cart.Subtotal.ToString("C")</strong>
                                 </li>
                             </ul>
                         </div>
                         <ul class="products mini">
-                            @if (!Model.IsEmpty)
-                                foreach (var cartItem in Model.Items)
+                            @if (!Model.Cart.IsEmpty)
+                                foreach (var cartItem in Model.Cart.Items)
                                     if (cartItem.Product is { })
                                     {
                                         <li class="item">
