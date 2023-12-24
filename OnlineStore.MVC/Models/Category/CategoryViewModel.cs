@@ -12,6 +12,10 @@
 
         public int? ParentId { get; set; }
 
+        public ICollection<CategoryViewModel> ChildCategories { get; set; } = new HashSet<CategoryViewModel>();
+
         public bool IsMainCategory { get; set; }
+
+        public bool HasChildCategories => ChildCategories.Count > 0;
     }
 }
