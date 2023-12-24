@@ -16,6 +16,7 @@ namespace OnlineStore.DAL
             .AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DbConnection")))
             .AddScoped<IProductsRepository, ProductsRepository>()
+            .AddScoped<ICategoriesRepository, CategoriesRepository>()
             .AddScoped<IReviewsRepository, ReviewsRepository>()
             .AddScoped<IOrdersRepository, OrdersRepository>()
             .AddScoped<IWishlistsRepository, WishlistsRepository>()
