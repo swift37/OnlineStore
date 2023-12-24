@@ -16,5 +16,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Update(CategoryViewModel categoryViewModel);
 
         Task<Response> Delete(int id);
+
+        Task<Response<IEnumerable<CategoryViewModel>>> GetMainCategories();
     }
 }

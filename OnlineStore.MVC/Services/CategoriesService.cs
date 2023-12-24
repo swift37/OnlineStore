@@ -109,5 +109,22 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse(exception);
             }
         }
+
+        public async Task<Response<IEnumerable<CategoryViewModel>>> GetMainCategories()
+        {
+            try
+            {
+                var categories = await _client.GetMainCategoriesAsync(_usingVersion);
+                return new Response<IEnumerable<CategoryViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<CategoryViewModel>>(categories)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<CategoryViewModel>>(exception);
+            }
+        }
     }
 }
