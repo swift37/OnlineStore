@@ -4,7 +4,6 @@ using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
-using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -13,9 +12,9 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class CategoriesController : BaseController
     {
-        private readonly IRepository<Category> _repository;
+        private readonly ICategoriesRepository _repository;
 
-        public CategoriesController(IRepository<Category> repository) =>
+        public CategoriesController(ICategoriesRepository repository) =>
             _repository = repository;
 
         /// <summary>
@@ -137,5 +136,19 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.DeleteAsync(id);
             return NoContent();
         }
+
+        /// <summary>
+        /// Get the enumeration of main categories with child categories
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /categories/main
+        /// </remarks>
+        /// <returns>Returns IEnumerable<CategoryDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("main")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetMainCategories() =>
+            Ok((await _repository.GetMainCategoriesAsync()).ToDTO());
     }
 }
