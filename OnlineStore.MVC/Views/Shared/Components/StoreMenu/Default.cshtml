@@ -1,0 +1,95 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Category.CategoryViewModel>
+
+<div class="nav-link-menu">
+    <div class="dpt-menu">
+        <div class="second-links">
+            @foreach (var category in Model)
+                if (category.IsMainCategory)
+                {
+                    <div class="link-item @(category.HasChildCategories ? "has-child" : string.Empty)">
+                        <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@category.Id" class="main-link">
+                            @category.Name
+                        </a>
+                        @if (category.HasChildCategories)
+                        {
+                            <div class="child-menu">
+                                @foreach (var childCategory in category.ChildCategories)
+                                {
+                                    <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@childCategory.Id">
+                                        @childCategory.Name
+                                    </a>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            @* <div class="link-item has-child">
+                <div class="main-link">
+                    Subcategory
+                </div>
+                <div class="mega-menu">
+                    <div class="flex-column">
+                        <div class="row">
+                            <h4><a href="/">Cat 1</a></h4>
+                            <div class="links">
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4><a href="/">Cat 2</a></h4>
+                            <div class="links">
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column">
+                        <div class="row">
+                            <h4><a href="/">Cat 3</a></h4>
+                            <div class="links">
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4><a href="/">Cat 4</a></h4>
+                            <div class="links">
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                                <a href="/">Item2</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column">
+                        <div class="row">
+                            <h4><a href="/">Cat 5</a></h4>
+                            <div class="links">
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                                <a href="/">Item1</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+        </div>
+    </div>
+</div>
