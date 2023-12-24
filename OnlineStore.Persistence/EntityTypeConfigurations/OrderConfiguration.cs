@@ -18,6 +18,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder.Property(order => order.FirstName).HasMaxLength(32);
             builder.Property(order => order.LastName).HasMaxLength(32);
             builder.Property(order => order.Phone).HasMaxLength(16);
+            builder.Property(order => order.Total).HasColumnType("decimal(18,2)");
             builder.Property(order => order.ShippingCost).HasColumnType("decimal(18,2)");
             builder.Property(order => order.TrackingNumber).HasMaxLength(32);
             builder.Property(order => order.Country).HasMaxLength(32);
