@@ -819,11 +819,15 @@ form {
         top: calc(100% + 1px);
         left: 50%;
         transform: translate(-50%);
-        width: 180px;
+        width: max-content;
         background-color: #ffffff;
         border: 1px solid #e5e8ec;
         border-bottom: 0;
     }
+
+        .dpt-menu.support {
+            width: 180px;
+        }
 
         .dpt-menu .second-links .link-item {
             font-weight: 500;
