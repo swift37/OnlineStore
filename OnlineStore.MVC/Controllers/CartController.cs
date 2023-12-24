@@ -174,6 +174,12 @@ namespace OnlineStore.MVC.Controllers
             var sessionService = new SessionService();
             var session = sessionService.Get(sessionId);
 
+            if (session.Status == "open")
+                return RedirectToAction("PaymentInProcess");
+
+            if (session.PaymentStatus != "paid") 
+                return RedirectToAction("PaymentFailure");
+
             // Saving order and customer details to the database.
             var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
             var customerEmail = session.CustomerDetails.Email;
