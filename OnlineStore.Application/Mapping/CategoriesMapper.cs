@@ -12,6 +12,7 @@ namespace OnlineStore.Application.Mapping
             Description = category.Description,
             RootId = category.RootId,
             ParentId = category.ParentId,
+            ChildCategories = category.ChildCategories.ToDTO().ToArray(),
             IsMainCategory = category.IsRootCategory
         };
 
@@ -22,6 +23,7 @@ namespace OnlineStore.Application.Mapping
             Description = category.Description,
             RootId = category.RootId,
             ParentId = category.ParentId,
+            ChildCategories = category.ChildCategories.FromDTO().ToArray(),
             IsRootCategory = category.IsMainCategory
         };
 

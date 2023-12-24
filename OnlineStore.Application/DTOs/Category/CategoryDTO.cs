@@ -12,6 +12,8 @@ namespace OnlineStore.Application.DTOs.Category
 
         public int? ParentId { get; set; }
 
+        public ICollection<CategoryDTO> ChildCategories { get; set; } = new HashSet<CategoryDTO>();
+
         public bool IsMainCategory { get; set; }
     }
 }
