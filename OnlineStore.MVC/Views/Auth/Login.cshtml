@@ -1,0 +1,35 @@
+﻿@model LoginViewModel;
+
+@{
+    ViewData["Title"] = "Sign In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-form">
+        <form asp-controller="Auth" asp-action="Login">
+            <h2>Sign In</h2>
+
+            <div class="auth-field">
+                <input asp-for="UsernameOrEmail" type="email" placeholder="Email or login" required />
+                <i class="fa-regular fa-envelope auth-icon"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="Password" type="password" placeholder="Password" required />
+                <i class="fa-solid fa-fingerprint auth-icon"></i>
+                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+            </div>
+            <div class="options-field">
+                <span class="checkbox">
+                    <input type="checkbox" id="check" />
+                    <label for="check">Remember me</label>
+                </span>
+                <a asp-controller="Auth" asp-action="#" class="forgot_pswd">Forgot password?</a>
+            </div>
+            <button class="button black">Sign In</button>
+        </form>
+        <div class="auth-switch">
+            Don't have an account yet? <a asp-controller="Auth" asp-action="Register">Sign Up</a>
+        </div>
+    </div>
+</div>
