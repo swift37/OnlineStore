@@ -1,0 +1,46 @@
+﻿@model RegisterViewModel;
+
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-form">
+        <form asp-controller="Auth" asp-action="Login">
+            <h2>Sign In</h2>
+
+            <div class="auth-field">
+                <input asp-for="FirstName" type="text" placeholder="First name" required />
+                <i class="fa-regular fa-address-card auth-icon"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="LastName" type="text" placeholder="Last name" required />
+                <i class="fa-solid fa-signature auth-icon"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="Email" type="email" placeholder="Email" required />
+                <i class="fa-regular fa-envelope auth-icon"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="Username" type="text" placeholder="Login" required />
+                <i class="fa-regular fa-user auth-icon"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="Password" type="password" placeholder="Password" required />
+                <i class="fa-solid fa-fingerprint auth-icon"></i>
+                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+            </div>
+            <div class="auth-field">
+                <input asp-for="PasswordConfirmation" type="password" placeholder="Password confirmation" required />
+                <i class="fa-solid fa-shield-halved auth-icon"></i>
+                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+            </div>
+            <button class="button black">Sign Up</button>
+        </form>
+        <div class="auth-switch">
+            Already have an account? <a asp-controller="Auth" asp-action="Login">Sign In</a>
+        </div>
+    </div>
+</div>
+
