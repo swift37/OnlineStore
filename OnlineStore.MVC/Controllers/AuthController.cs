@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Constants;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Services.Interfaces;
-using OnlineStore.WebAPI.Models;
 
 namespace OnlineStore.MVC.Controllers
 {

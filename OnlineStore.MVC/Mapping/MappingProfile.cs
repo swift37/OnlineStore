@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Category;
 using OnlineStore.MVC.Models.ContactRequest;
 using OnlineStore.MVC.Models.Coupon;
@@ -10,7 +11,6 @@ using OnlineStore.MVC.Models.Review;
 using OnlineStore.MVC.Models.Subscriber;
 using OnlineStore.MVC.Models.Wishlist;
 using OnlineStore.MVC.Services.ApiClient;
-using OnlineStore.WebAPI.Models;
 
 namespace OnlineStore.MVC.Mapping
 {

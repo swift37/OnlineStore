@@ -7,7 +7,7 @@
 <div class="dropdown-menu">
     @if (User.Identity?.IsAuthenticated ?? false)
     {
-        <h3>Name Surname <br/> <span>Developer</span></h3>
+        <h3>@User.Identity.Name <br/> <span>Developer</span></h3>
         <ul>
             <li>
                 <i class="fa-regular fa-user"></i>
@@ -27,14 +27,14 @@
             </li>
             <li>
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <a href="/">Logout</a>
+                <a asp-controller="Auth" asp-action="Logout">Logout</a>
             </li>
         </ul>
     }
     else
     {
         <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
-        <div class="separator">OR</div>
+        <div class="separator">Or</div>
         <a asp-controller="Auth" asp-action="Register" class="button black">Sign Up</a>
     }
 </div>

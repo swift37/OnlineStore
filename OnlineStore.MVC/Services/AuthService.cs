@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
 using OnlineStore.MVC.Services.Interfaces;
-using OnlineStore.WebAPI.Models;
+using OnlineStore.MVC.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

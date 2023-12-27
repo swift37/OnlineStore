@@ -1,6 +1,5 @@
 ﻿using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Services.Base;
-using OnlineStore.WebAPI.Models;
 
 namespace OnlineStore.MVC.Services.Interfaces
 {
