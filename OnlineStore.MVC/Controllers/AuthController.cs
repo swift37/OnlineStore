@@ -75,7 +75,7 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Refresh()
         {
@@ -95,7 +95,7 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
