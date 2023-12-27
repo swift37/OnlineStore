@@ -54,11 +54,7 @@
                     @await Component.InvokeAsync("WishlistStatus")
                 </div>
                 <div class="header-icon account-button mobile-hide">
-                    <div class="icon-container">
-                        <a href="/">
-                            <img src="~/resources/icons/user.png" width="20" alt="">
-                        </a>
-                    </div>
+                    @await Component.InvokeAsync("AccountMenu")
                 </div>
                 <div class="header-icon side-menu-button desktop-hide">
                     <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="side-menu-icon">

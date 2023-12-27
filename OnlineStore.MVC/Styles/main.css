@@ -441,18 +441,18 @@ form {
         position: static;
     }
 
-    .nav-link.has-menu .nav-link-menu,
-    .nav-link.has-mega-menu .nav-link-menu {
+        .nav-link.has-menu .nav-link-menu,
+        .nav-link.has-mega-menu .nav-link-menu {
             opacity: 0;
             visibility: hidden;
             transition: 0.4s;
-    }
+        }
 
-    .nav-link.has-menu:hover .nav-link-menu,
-    .nav-link.has-mega-menu:hover .nav-link-menu {
+        .nav-link.has-menu:hover .nav-link-menu,
+        .nav-link.has-mega-menu:hover .nav-link-menu {
             opacity: 1;
             visibility: visible;
-    }
+        }
 
 .header-icon {
     position: relative;
@@ -3835,9 +3835,77 @@ form {
         background-color: #000000;
     }
 
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: -10px;
+    padding: 10px 20px;
+    background: #fff;
+    width: 200px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
 
+    .dropdown-menu h3 {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        margin: 0;
+        padding: 10px 0 15px;
+        font-weight: 500;
+        color: #555;
+        line-height: 1.2em;
+    }
 
+        .dropdown-menu h3 span {
+            font-size: 14px;
+            color: #cecece;
+            font-weight: 400;
+        }
 
+    .dropdown-menu ul li {
+        list-style: none;
+        padding: 10px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+    }
+
+        .dropdown-menu ul li i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            font-size: 20px;
+            margin-right: 10px;
+            opacity: 0.5;
+            transition: 0.5s;
+        }
+
+        .dropdown-menu ul li:hover i {
+            opacity: 1;
+        }
+
+        .dropdown-menu ul li a {
+            display: inline-block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.5s;
+        }
+
+        .dropdown-menu ul li:hover a {
+            color: #000;
+        }
+
+@media screen and (min-width: 992px) {
+    .account-button:hover .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+    }
+}
 
 
 
