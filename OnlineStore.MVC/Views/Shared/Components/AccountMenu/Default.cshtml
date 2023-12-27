@@ -4,13 +4,37 @@
     </a>
 </div>
 
-<div class="dropdown-menu active">
-    <h3>Name Surname <br/> <span>Developer</span></h3>
-    <ul>
-        <li><i class="fa-regular fa-user"></i><a>Profile</a></li>
-        <li><i class="fa-regular fa-clipboard"></i><a>Orders</a></li>
-        <li><i class="fa-regular fa-message"></i><a>Reviews</a></li>
-        <li><i class="fa-solid fa-gear"></i><a>Settings & Privacy</a></li>
-        <li><i class="fa-solid fa-arrow-right-from-bracket"></i><a>Logout</a></li>
-    </ul>
+<div class="dropdown-menu">
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <h3>Name Surname <br/> <span>Developer</span></h3>
+        <ul>
+            <li>
+                <i class="fa-regular fa-user"></i>
+                <a href="/">Profile</a>
+            </li>
+            <li>
+                <i class="fa-regular fa-clipboard"></i>
+                <a href="/">Orders</a>
+            </li>
+            <li>
+                <i class="fa-regular fa-message"></i>
+                <a href="/">Reviews</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                <a href="/">Settings & Privacy</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <a href="/">Logout</a>
+            </li>
+        </ul>
+    }
+    else
+    {
+        <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
+        <div class="separator">OR</div>
+        <a asp-controller="Auth" asp-action="Register" class="button black">Sign Up</a>
+    }
 </div>
