@@ -8,7 +8,7 @@ namespace OnlineStore.WebAPI.Controllers.Base
     public class BaseController : ControllerBase
     {
         internal Guid UserId => (User.Identity?.IsAuthenticated ?? false)
-            ? Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty)
+            ? Guid.Parse(User.FindFirst("uid")?.Value ?? string.Empty)
             : Guid.Empty;
     }
 }
