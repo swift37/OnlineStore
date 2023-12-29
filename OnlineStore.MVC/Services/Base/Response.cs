@@ -6,8 +6,9 @@
 
         public Response(Response response)
         {
-            ValidationErrors = response.ValidationErrors;
             Success = response.Success;
+            Status = response.Status;
+            ValidationErrors = response.ValidationErrors;
         }
 
         public int Status { get; set; }
