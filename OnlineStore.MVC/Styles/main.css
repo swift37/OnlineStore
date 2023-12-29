@@ -124,7 +124,7 @@ form {
     font-weight: 700;
     line-height: 32px;
     color: rgba(0, 0, 0, 0.87);
-    margin: 30px 0 16px;
+    padding: 30px 0 16px;
     padding-bottom: 7px;
     border-bottom: 1px solid rgba(34, 36, 38, 0.15);
     text-transform: none;
@@ -2152,7 +2152,12 @@ form {
             }
 
             .reviews-section .review-form .review-fields button {
-                border: 0;
+                display: block;
+                width: fit-content;
+                font-size: 16px;
+                align-self: start;
+                text-align: center;
+                border-radius: 2em;
                 cursor: pointer;
             }
 
