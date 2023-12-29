@@ -462,12 +462,15 @@ form {
             opacity: 0;
             visibility: hidden;
             transition: 0.4s;
+            pointer-events: none;
+            user-select: none;
         }
 
         .nav-link.has-menu:hover .nav-link-menu,
         .nav-link.has-mega-menu:hover .nav-link-menu {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
 
 .header-icon {
