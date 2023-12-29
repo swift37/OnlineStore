@@ -4,6 +4,6 @@
     {
         public HttpClient HttpClient { get; }
 
-        public Action RequestPreparation { get; set; }
+        public Action<HttpClient, HttpRequestMessage, string> RequestPreparation { get; set; }
     }
 }

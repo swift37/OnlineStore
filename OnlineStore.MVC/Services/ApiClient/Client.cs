@@ -4,9 +4,9 @@
     {
         public HttpClient HttpClient => _httpClient;
 
-        public Action RequestPreparation { get; set; }
+        public Action<HttpClient, HttpRequestMessage, string> RequestPreparation { get; set; }
 
         partial void PrepareRequest(HttpClient client, HttpRequestMessage request, string url) =>
-            RequestPreparation(); 
+            RequestPreparation(client, request, url); 
     }
 }

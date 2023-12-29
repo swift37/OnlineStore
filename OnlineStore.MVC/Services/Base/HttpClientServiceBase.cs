@@ -2,6 +2,7 @@
 using OnlineStore.MVC.Extensions;
 using OnlineStore.MVC.Services.ApiClient;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace OnlineStore.MVC.Services.Base
@@ -55,20 +56,11 @@ namespace OnlineStore.MVC.Services.Base
             return new Response<T>(response);
         }
 
-        private void AddTokenToHeaders()
+        private void AddTokenToHeaders(HttpClient client, HttpRequestMessage request, string url)
         {
-            var token = Request.Cookies[Constants.Authorization.XAccessToken]; 
+            var token = Request.Cookies[Constants.Authorization.XAccessToken];
 
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                if (Request.Headers.ContainsKey(Constants.Authorization.Key)) 
-                    Request.Headers.Remove(Constants.Authorization.Key);
-
-                Request.Headers.TryAdd(Constants.Authorization.Key, $"Bearer {token}");
-            }
-            else
-                Request.Headers?
-                    .TryAdd(Constants.Authorization.Key, string.Empty);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
 }
