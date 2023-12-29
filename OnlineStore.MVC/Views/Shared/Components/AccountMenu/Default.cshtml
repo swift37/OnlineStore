@@ -1,4 +1,6 @@
-﻿<div class="icon-container">
+﻿@using System.IdentityModel.Tokens.Jwt
+
+<div class="icon-container">
     <a href="/">
         <img src="~/resources/icons/user.png" width="20" alt="Account">
     </a>
@@ -7,7 +9,11 @@
 <div class="dropdown-menu">
     @if (User.Identity?.IsAuthenticated ?? false)
     {
-        <h3>@User.Identity.Name <br/> <span>Developer</span></h3>
+        <h3>
+            @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
+            @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br /> 
+            <span>Developer</span>
+        </h3>
         <ul>
             <li>
                 <i class="fa-regular fa-user"></i>
