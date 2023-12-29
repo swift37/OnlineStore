@@ -230,6 +230,11 @@ form {
         margin-left: 5px;
     }
 
+.failure {
+    font-size: 12px;
+    color: #cc0000;
+}
+
 .object-cover img {
     display: block;
     position: absolute;
@@ -3963,8 +3968,10 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100%;
+    padding: 75px 0;
 }
 
 .auth-form {

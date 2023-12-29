@@ -96,13 +96,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// }
         /// </remarks>
         /// <param name="createOrderDTO">CreateOrderDTO</param>
-        /// <returns>Returns entity id</returns>
+        /// <returns>Returns entity id or number</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect order DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<int>> Create([FromBody] CreateOrderDTO createOrderDTO)
+        public async Task<IActionResult> Create([FromBody] CreateOrderDTO createOrderDTO, bool returnNumber = false)
         {
             var order = createOrderDTO.FromDTO();
             order.UserId = UserId;
@@ -120,7 +120,7 @@ namespace OnlineStore.WebAPI.Controllers
 
             var createdOrder = await _ordersRepository.CreateAsync(order);
             if (createdOrder is null) return UnprocessableEntity();
-            return Ok(createdOrder.Id);
+            return Ok(returnNumber ? createdOrder.Number : createdOrder.Id);
         }
 
         /// <summary>
@@ -242,5 +242,22 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<OrderDTO>> GetUserOrder(int id) => 
             Ok((await _ordersRepository.GetUserOrderAsync(id, UserId)).ToDTO());
+
+        ///// <summary>
+        ///// Check availability of items in the order
+        ///// </summary>
+        ///// <remarks>
+        ///// Sample request:
+        ///// GET /availability/057547564798
+        ///// </remarks>
+        ///// <param name="number">Order number</param>
+        ///// <returns>Returns OrderDTO</returns>
+        ///// <response code="200">Success</response>
+        //[HttpGet("availability/{number}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<ActionResult<bool>> CheckGoodsAvailability(string number)
+        //{
+        //    var order = await _ordersRepository.GetAsync(number);
+        //}
     }
 }
