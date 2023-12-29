@@ -15,34 +15,37 @@
             </div>
         </div>
         <div class="product-image">
-            <a class="image-link" href="product?id=@Model.Id">
-                <img src="@Model.Image" loading="lazy" alt="">
+            <a class="image-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id">
+                <img src="@Model.Image" loading="lazy" alt="Image">
             </a>
         </div>
         <div class="product-name">
-            <a class="product-link" href="product?id=@Model.Id">
+            <a class="product-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id">
                 @Model.Name
             </a>
         </div>
         <div class="product-rating">
-            <a class="rating-link" href="/">
-                <span class="rating-star">
-                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                </span>
-                <span class="rating-star">
-                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                </span>
-                <span class="rating-star">
-                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                </span>
-                <span class="rating-star">
-                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                </span>
-                <span class="rating-star">
-                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                </span>
+            <a class="rating-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id" asp-fragment="reviews">
+                @for (int i = 0; i < Model.Rating; i++)
+                {
+                    <span class="rating-star">
+                        <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                    </span>
+                }
+                @if (Model.Rating % 1.0 > 0.3)
+                {
+                    <span class="rating-star">
+                        <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                    </span>
+                }
+                @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                {
+                    <span class="rating-star">
+                        <img src="~/resources/icons/empty-star.png" loading="lazy" alt="★">
+                    </span>
+                }
                 <span class="reviews-quantity">
-                    (58)
+                    (@Model.Reviews.Count)
                 </span>
             </a>
         </div>
