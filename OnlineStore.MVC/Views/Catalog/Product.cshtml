@@ -14,23 +14,26 @@
                 <div class="product-details-header">
                     <h1 class="product-details-name">@Model.Name</h1>
                     <div class="product-rating">
-                        <a class="rating-link" href="/">
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="reviews-quantity">58 reviews</span>
+                        <a class="rating-link" asp-fragment="reviews">
+                            @for (int i = 0; i < Model.Rating; i++)
+                            {
+                                <span class="rating-star">
+                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                </span>
+                            }
+                            @if (Model.Rating % 1.0 > 0.3)
+                            {
+                                <span class="rating-star">
+                                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                                </span>
+                            }
+                            @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                            {
+                                <span class="rating-star">
+                                    <img src="~/resources/icons/empty-star.png" loading="lazy" alt="★">
+                                </span>
+                            }
+                            <span class="reviews-quantity">@Model.Reviews.Count reviews</span>
                         </a>
                     </div>
                     <div class="product-details-price">@Model.UnitPrice.ToString("C") USD</div>
@@ -84,11 +87,11 @@
                     <input type="submit" data-itemid="@Model.Id" value="Add to Cart" class="button black add-to-cart-btn">
                     <div class="wish-share">
                         <a class="add-to-wishlist-btn" data-itemid="@Model.Id">
-                            <img src="~/resources/icons/like.png" alt="">
+                            <img src="~/resources/icons/like.png" alt="Wishlist">
                             <span>Wishlist</span>
                         </a>
                         <a>
-                            <img src="~/resources/icons/share.png" alt="">
+                            <img src="~/resources/icons/share.png" alt="Share">
                             <span>Share</span>
                         </a>
                     </div>
@@ -125,6 +128,7 @@
     </section>
 }
 
+<a name="reviews"></a>
 <section class="reviews-section">
     <div class="container">
         <h3 class="dividing-header">Reviews</h3>
@@ -132,27 +136,30 @@
             <div class="reviews-block-head">
                 <div class="left-part">
                     <div class="rate-block">
-                        <span class="rate-sum">4.5 </span>
+                        <span class="rate-sum">@Model.Rating </span>
                         <span class="full-rate"> / 5.0</span>
                     </div>
                     <div class="product-rating">
-                        <span class="rating-star">
-                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                        </span>
-                        <span class="rating-star">
-                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                        </span>
-                        <span class="rating-star">
-                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                        </span>
-                        <span class="rating-star">
-                            <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                        </span>
-                        <span class="rating-star">
-                            <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                        </span>
+                        @for (int i = 0; i < Model.Rating; i++)
+                        {
+                            <span class="rating-star">
+                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                            </span>
+                        }
+                        @if (Model.Rating % 1.0 > 0.3)
+                        {
+                            <span class="rating-star">
+                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
+                            </span>
+                        }
+                        @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                        {
+                            <span class="rating-star">
+                                <img src="~/resources/icons/empty-star.png" loading="lazy" alt="★">
+                            </span>
+                        }
                     </div>
-                    <span class="reviews-quantity">(58 reviews)</span>
+                    <span class="reviews-quantity">(@Model.Reviews.Count reviews)</span>
                 </div>
                 <a asp-fragment="review-form" class="button black">Write review</a>
             </div>
@@ -223,7 +230,7 @@
                 <h4>Write a review</h4>
                 <div class="rating">
                     <div class="form-field">Are you satisfied enought?</div>
-                    <div class="rate-this">
+                    <div class="rate-this" id="reviewRating">
                         <input type="radio" name="rating" id="star5">
                         <label for="star5"><img src="~/resources/icons/empty-star.png"></label>
 
@@ -240,21 +247,34 @@
                         <label for="star1"><img src="~/resources/icons/empty-star.png"></label>
                     </div>
                 </div>
-                <form class="review-fields">
+                <div class="review-fields">
                     <div class="form-field">
-                        <label>Name</label>
-                        <input type="text">
-                    </div>
-                    <div class="form-field">
-                        <label>Summary</label>
-                        <input type="text">
+                        <label>Title</label>
+                        <input type="text" id="reviewTitle">
+                        <div id="reviewTitleError" class="errors-area">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span></span>
+                        </div>
                     </div>
                     <div class="form-field">
                         <label>Review</label>
-                        <textarea cols="30" rows="7" type="text"></textarea>
+                        <textarea cols="30" rows="7" type="text" id="reviewMessage"></textarea>
+                        <div id="reviewMessageError" class="errors-area">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span></span>
+                        </div>
                     </div>
-                    <button type="submit" class="secondary-button">Submit Review</button>
-                </form>
+                    <input type="number" value="@Model.Id" id="reviewProduct" readonly hidden />
+                    <button class="button black review-btn" type="submit">Submit Review</button>
+                    <div id="reviewError" class="errors-area">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span></span>
+                    </div>
+                    <div id="reviewSuccess" class="success-msg">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span>Your review has been successfully posted for moderation.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
