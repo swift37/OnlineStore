@@ -22,9 +22,6 @@ namespace OnlineStore.Domain
 
         public ICollection<Specification> Specifications { get; set; } = new HashSet<Specification>();
 
-        [Range(0.0, 5.0)]
-        public double Rating { get; set; }
-
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
         public string? Manufacturer { get; set; }

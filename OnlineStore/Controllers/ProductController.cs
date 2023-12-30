@@ -55,7 +55,7 @@ namespace OnlineStore.Controllers
                 default:
                     return products;
                 case SortParameter.RatingDescending:
-                    return products.OrderByDescending(p => p.Rating);
+                    return products.OrderByDescending(p => p.Id);
                 case SortParameter.PriceAscending:
                     return products.OrderBy(p => p.UnitPrice);
                 case SortParameter.PriceDescending:
