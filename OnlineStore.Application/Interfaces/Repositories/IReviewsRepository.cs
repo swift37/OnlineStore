@@ -7,5 +7,9 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<IEnumerable<Review>> GetReviewsByProductAsync(
             int productId,
             CancellationToken cancellation = default);
+
+        Task<int> GetReviewsCountByProductAsync(
+            int productId,
+            CancellationToken cancellation = default);
     }
 }

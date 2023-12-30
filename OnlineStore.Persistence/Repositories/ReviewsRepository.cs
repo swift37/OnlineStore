@@ -13,12 +13,19 @@ namespace OnlineStore.DAL.Repositories
         {
             var reviews = await Entities
                 .Where(r => r.ProductId == productId)
-                .ToArrayAsync();
+                .ToArrayAsync(cancellation)
+                .ConfigureAwait(false);
 
             if (reviews is not { Length: > 0 }) 
                 return Enumerable.Empty<Review>();
 
             return reviews;
         }
+
+        public async Task<int> GetReviewsCountByProductAsync(int productId, CancellationToken cancellation = default) => 
+            await Entities
+                .Where(r => r.ProductId == productId)
+                .CountAsync(cancellation)
+                .ConfigureAwait(false);
     }
 }
