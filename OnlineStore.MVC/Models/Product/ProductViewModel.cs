@@ -25,6 +25,8 @@ namespace OnlineStore.MVC.Models.Product
 
         public double Rating { get; set; }
 
+        public int ReviewsCount { get; set; }
+
         public ICollection<ReviewViewModel> Reviews { get; set; } = new HashSet<ReviewViewModel>();
 
         public string? Manufacturer { get; set; }
