@@ -24,6 +24,8 @@ namespace OnlineStore.Application.DTOs.Product
 
         public double Rating { get; set; }
 
+        public int ReviewsCount { get; set; }
+
         public IEnumerable<ReviewDTO> Reviews { get; set; } = Enumerable.Empty<ReviewDTO>();
 
         public string? Manufacturer { get; set; }

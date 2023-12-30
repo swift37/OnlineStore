@@ -16,6 +16,9 @@ namespace OnlineStore.Application.DTOs.Product.Validation
                 .GreaterThan(0)
                 .LessThanOrEqualTo(5);
 
+            RuleFor(p => p.ReviewsCount)
+                .GreaterThan(0);
+
             RuleFor(p => p.Discount)
                 .GreaterThanOrEqualTo(0);
 
