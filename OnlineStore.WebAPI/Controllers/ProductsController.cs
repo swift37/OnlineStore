@@ -13,10 +13,12 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class ProductsController : BaseController
     {
-        private readonly IProductsRepository _repository;
+        private readonly IProductsRepository _productsRepository;
 
-        public ProductsController(IProductsRepository repository) => 
-            _repository = repository;
+        private readonly IReviewsRepository _reviewsRepository;
+
+        public ProductsController(IProductsRepository productsRepository, IReviewsRepository reviewsRepository) => 
+            (_productsRepository, _reviewsRepository) = (productsRepository, reviewsRepository);
 
         /// <summary>
         /// Get the enumeration of products
@@ -35,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll() => 
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok((await _productsRepository.GetAllAsync()).ToDTO());
 
         /// <summary>
         /// Get true if product exists
@@ -54,7 +56,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<bool>> Exist(int id) => 
-            Ok(await _repository.ExistsAsync(id));
+            Ok(await _productsRepository.ExistsAsync(id));
 
         /// <summary>
         /// Get the product by id
@@ -68,8 +70,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProductDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+        public async Task<ActionResult<ProductDTO>> Get(int id)
+        {
+            var productDTO = (await _productsRepository.GetAsync(id)).ToDTO();
+            productDTO.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(id);
+            return Ok(productDTO);
+        }
 
         /// <summary>
         /// Create a product
@@ -95,7 +101,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateProductDTO createProductDTO)
         {
-            var product = await _repository.CreateAsync(createProductDTO.FromDTO());
+            var product = await _productsRepository.CreateAsync(createProductDTO.FromDTO());
             if (product is null) return UnprocessableEntity();
             return Ok(product.Id);
         }
@@ -121,7 +127,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            await _repository.UpdateAsync(updateProductDTO.FromDTO());
+            await _productsRepository.UpdateAsync(updateProductDTO.FromDTO());
             return NoContent();
         }
 
@@ -143,7 +149,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Delete(int id)
         {
-            await _repository.DeleteAsync(id);
+            await _productsRepository.DeleteAsync(id);
             return NoContent();
         }
 
@@ -165,9 +171,15 @@ namespace OnlineStore.WebAPI.Controllers
             int categoryId, 
             int page = 1, 
             int itemsPerPage = 15, 
-            SortParameters sortBy = SortParameters.Default) => 
-            Ok((await _repository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy))
-                .ToDTO());
+            SortParameters sortBy = SortParameters.Default)
+        {
+            var pageDTO = (await _productsRepository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy)).ToDTO();
+
+            foreach (var product in pageDTO.Products) 
+                product.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(product.Id);
+
+            return Ok(pageDTO);
+        }
 
     }
 }
