@@ -27,5 +27,13 @@ namespace OnlineStore.DAL.Repositories
                 .Where(r => r.ProductId == productId)
                 .CountAsync(cancellation)
                 .ConfigureAwait(false);
+
+        public async Task<double> GetProductRatingAsync(int productId, CancellationToken cancellation = default) =>
+            await Entities
+                .Where(r => r.ProductId == productId)
+                .Select(r => r.Rating)
+                .DefaultIfEmpty()
+                .AverageAsync(cancellation)
+                .ConfigureAwait(false);
     }
 }

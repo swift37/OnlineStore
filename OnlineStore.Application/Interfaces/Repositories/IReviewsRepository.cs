@@ -11,5 +11,9 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<int> GetReviewsCountByProductAsync(
             int productId,
             CancellationToken cancellation = default);
+
+        Task<double> GetProductRatingAsync(
+            int productId,
+            CancellationToken cancellation = default);
     }
 }
