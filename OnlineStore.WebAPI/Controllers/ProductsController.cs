@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Mapping;
+using OnlineStore.Domain;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Enums;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -73,6 +74,7 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<ProductDTO>> Get(int id)
         {
             var productDTO = (await _productsRepository.GetAsync(id)).ToDTO();
+            productDTO.Rating = await _reviewsRepository.GetProductRatingAsync(id);
             productDTO.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(id);
             return Ok(productDTO);
         }
@@ -173,13 +175,32 @@ namespace OnlineStore.WebAPI.Controllers
             int itemsPerPage = 15, 
             SortParameters sortBy = SortParameters.Default)
         {
-            var pageDTO = (await _productsRepository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy)).ToDTO();
+            var pageDTO = (await _productsRepository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage)).ToDTO();
 
-            foreach (var product in pageDTO.Products) 
+            pageDTO.Products = SortProducts(pageDTO.Products, sortBy);
+
+            foreach (var product in pageDTO.Products)
+            {
+                product.Rating = await _reviewsRepository.GetProductRatingAsync(product.Id);
                 product.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(product.Id);
+            }
 
             return Ok(pageDTO);
         }
 
+        private ICollection<ProductDTO> SortProducts(ICollection<ProductDTO> products, SortParameters sortBy)
+        {
+            switch (sortBy)
+            {
+                default:
+                    return products;
+                case SortParameters.RatingDescending:
+                    return products.OrderByDescending(p => p.Rating).ToArray();
+                case SortParameters.PriceAscending:
+                    return products.OrderBy(p => p.UnitPrice).ToArray();
+                case SortParameters.PriceDescending:
+                    return products.OrderByDescending(p => p.UnitPrice).ToArray();
+            }
+        }
     }
 }
