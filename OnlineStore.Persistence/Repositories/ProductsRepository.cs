@@ -32,9 +32,9 @@ namespace OnlineStore.DAL.Repositories
             var productsList = query
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .Include(p => p.Category).AsEnumerable();
+                .Include(p => p.Category);
 
-            var productsSortedList = SortProducts(productsList, sortBy);
+            var productsSortedList = SortProducts(productsList, sortBy).ToArray();
 
             var products = new ProductsPage
             {
