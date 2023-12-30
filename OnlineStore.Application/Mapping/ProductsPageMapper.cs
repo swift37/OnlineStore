@@ -7,7 +7,7 @@ namespace OnlineStore.Application.Mapping
     {
         public static ProductsPageDTO ToDTO(this ProductsPage productsPage) => new ProductsPageDTO
         {
-            Products = productsPage.Products.ToDTO(),
+            Products = productsPage.Products.ToDTO().ToArray(),
             Category = productsPage.Category?.ToDTO(),
             CurrentPage = productsPage.CurrentPage,
             TotalPages = productsPage.TotalPages,
@@ -16,7 +16,7 @@ namespace OnlineStore.Application.Mapping
 
         public static ProductsPage FromDTO(this ProductsPageDTO productsPage) => new ProductsPage
         {
-            Products = productsPage.Products.FromDTO(),
+            Products = productsPage.Products.FromDTO().ToArray(),
             Category = productsPage.Category?.FromDTO(),
             CurrentPage = productsPage.CurrentPage,
             TotalPages = productsPage.TotalPages,

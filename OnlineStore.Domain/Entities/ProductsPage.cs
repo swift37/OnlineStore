@@ -2,7 +2,7 @@
 {
     public class ProductsPage
     {
-        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
+        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
         public Category? Category { get; set; }
 

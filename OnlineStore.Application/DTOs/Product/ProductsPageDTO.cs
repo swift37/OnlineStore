@@ -5,7 +5,7 @@ namespace OnlineStore.Application.DTOs.Product
 {
     public class ProductsPageDTO
     {
-        public IEnumerable<ProductDTO> Products { get; set; } = Enumerable.Empty<ProductDTO>();
+        public ICollection<ProductDTO> Products { get; set; } = new HashSet<ProductDTO>();
 
         public CategoryDTO? Category { get; set; }
 
