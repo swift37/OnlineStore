@@ -26,7 +26,7 @@
         </div>
         <div class="product-rating">
             <a class="rating-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id" asp-fragment="reviews">
-                @for (int i = 0; i < Model.Rating; i++)
+                @for (int i = 0; i < Math.Floor(Model.Rating); i++)
                 {
                     <span class="rating-star">
                         <img src="~/resources/icons/star.png" loading="lazy" alt="★">
@@ -45,7 +45,7 @@
                     </span>
                 }
                 <span class="reviews-quantity">
-                    (@Model.Reviews.Count)
+                    (@Model.ReviewsCount)
                 </span>
             </a>
         </div>
