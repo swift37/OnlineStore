@@ -1,32 +1,6 @@
 $(document).ready(function () {
 
-    $('#productCategorySelect').change(function () {
-        var categoryId = $(this).val();
-
-        $.ajax({
-            url: '/Admin/GetSubCategories',
-            type: 'post',
-            dataType: 'json',
-            data:
-            {
-                id: categoryId
-            },
-            error: function () { },
-            success: function (result) {
-                $('#productSubcategorySelect').empty();
-                $.each(result, function (index, item) {
-                    $('#productSubcategorySelect').append(
-                        '<option value="' + item.value + '">' + item.text + '</option>');
-
-                    $('#productSubcategorySelect').parent('.field').removeClass('hidden');
-                    $('#productSubcategorySelect').dropdown();
-                });
-            }
-        });
-
-    });
-
-    $('.add-to-cart-btn, item-add-to-cart').click(function () {
+    $('.add-to-cart-btn, .item-add-to-cart').click(function () {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
@@ -44,7 +18,7 @@ $(document).ready(function () {
             },
             success: function (result) {
                 if (result.success == false) {
-                    alert("An arror occurred.");
+                    alert("An error occurred.");
                 }
                 else {
                     $.ajax({
@@ -124,7 +98,7 @@ $(document).ready(function () {
 
     $('.add-to-wishlist-btn').click(function () {
         $.ajax({
-            url: '/Product/AddToWishlist',
+            url: '/wishlist/add',
             type: 'post',
             dataType: 'json',
             data:
@@ -135,9 +109,8 @@ $(document).ready(function () {
                 alert('Error occurred.');
             },
             success: function (result) {
-                if (result.error == true) {
-                    alert(result.message);
-                }
+                if (result.success == false)
+                    alert(result.errors.toString());
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     if (newQty > 9) {
@@ -153,7 +126,7 @@ $(document).ready(function () {
 
     $('.item-remove.from-wishlist').click(function () {
         $.ajax({
-            url: '/Product/RemoveFromWishlist',
+            url: '/wishlist/remove',
             type: 'post',
             dataType: 'json',
             data:
@@ -164,7 +137,10 @@ $(document).ready(function () {
                 alert('Error occured.');
             },
             success: function (result) {
-                if (result) location.reload();
+                if (result.success == false)
+                    alert(result.errors.toString());
+                else
+                    location.reload();
             }
         });
     });
@@ -276,6 +252,7 @@ $(document).ready(function () {
                     }, 2000);
                 }
                 else {
+                    error.text(result.errors.toSting());
                     $('#contactFormError').css('display', 'block');
                 }
             }
@@ -342,6 +319,7 @@ $(document).ready(function () {
                     }, 2000);
                 }
                 else {
+                    error.text(result.errors.toSting());
                     $('#reviewError').css('display', 'block');
                 }
             }
