@@ -3445,6 +3445,11 @@ form {
             justify-content: space-between;
         }
 
+            .cart-summary .cart-total table tr.total {
+                font-size: 24px;
+                margin-top: 0.7em;
+            }
+
 .cart-summary .grand-total td {
     font-size: 2em;
     font-weight: 800;
