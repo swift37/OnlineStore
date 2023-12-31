@@ -143,5 +143,20 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse<WishlistViewModel>(exception);
             }
         }
+
+        public async Task<Response> UpdateProducts(WishlistViewModel wishlistViewModel)
+        {
+            var updateWishlistDTO = _mapper.Map<UpdateWishlistDTO>(wishlistViewModel);
+
+            try
+            {
+                await _client.UpdateWishlistProductsAsync(_usingVersion, updateWishlistDTO);
+                return new Response { Success = true };
+            }
+            catch (ApiException e)
+            {
+                return GenerateResponse(e);
+            }
+        }
     }
 }
