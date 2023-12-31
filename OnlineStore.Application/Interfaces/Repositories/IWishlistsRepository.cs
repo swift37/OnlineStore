@@ -7,5 +7,9 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<Wishlist> GetUserWishlistAsync(
             Guid userId, 
             CancellationToken cancellation = default);
+
+        Task<Wishlist> GetOrCreateAsync(
+            Guid userId,
+            CancellationToken cancellation = default);
     }
 }
