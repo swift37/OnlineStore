@@ -19,6 +19,8 @@ namespace OnlineStore.MVC.Models.Product
 
         public string? Image { get; set; }
 
+        public int CategoryId { get; set; }
+
         public CategoryViewModel? Category { get; set; }
 
         public ICollection<SpecificationViewModel> Specifications { get; set; } = new HashSet<SpecificationViewModel>();
