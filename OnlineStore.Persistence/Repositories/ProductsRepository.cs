@@ -9,6 +9,9 @@ namespace OnlineStore.DAL.Repositories
 {
     public class ProductsRepository : Repository<Product>, IProductsRepository
     {
+        protected override IQueryable<Product> Entities => base.Entities
+            .Include(product => product.Category);
+
         public ProductsRepository(IApplicationDbContext context) : base(context) { }
 
         public async Task<ProductsPage> GetProductsByCategoryAsync(
