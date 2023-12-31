@@ -36,5 +36,12 @@ namespace OnlineStore.DAL.Repositories
 
             return wishlist;
         }
+
+        public async Task<bool> VerifyOwnership(
+            int id, 
+            Guid userId,
+            CancellationToken cancellation = default) => await Entities
+            .AnyAsync(w => w.Id == id && w.UserId == userId, cancellation)
+            .ConfigureAwait(false);
     }
 }

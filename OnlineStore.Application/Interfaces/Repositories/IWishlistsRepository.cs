@@ -11,5 +11,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<Wishlist> GetOrCreateAsync(
             Guid userId,
             CancellationToken cancellation = default);
+
+        Task<bool> VerifyOwnership(
+            int id,
+            Guid userId,
+            CancellationToken cancellation = default);
     }
 }
