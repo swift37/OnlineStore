@@ -24,7 +24,6 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder
                 .HasMany(product => product.Specifications)
                 .WithMany();
-            builder.Navigation(product => product.Category).AutoInclude();
             builder.Navigation(product => product.Specifications).AutoInclude();
         }
     }
