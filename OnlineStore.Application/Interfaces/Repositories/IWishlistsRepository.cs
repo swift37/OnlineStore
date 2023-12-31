@@ -16,5 +16,9 @@ namespace OnlineStore.Application.Interfaces.Repositories
             int id,
             Guid userId,
             CancellationToken cancellation = default);
+
+        Task UpdateProductsAsync(
+            Wishlist? updatedWishlist,
+            CancellationToken cancellation = default);
     }
 }

@@ -43,5 +43,28 @@ namespace OnlineStore.DAL.Repositories
             CancellationToken cancellation = default) => await Entities
             .AnyAsync(w => w.Id == id && w.UserId == userId, cancellation)
             .ConfigureAwait(false);
+
+        public async Task UpdateProductsAsync(Wishlist? updatedWishlist, CancellationToken cancellation = default)
+        {
+            if (updatedWishlist is null) throw new ArgumentNullException(nameof(Wishlist));
+
+            var wishlist = await GetAsync(updatedWishlist.Id);
+            if (wishlist is null) throw new NotFoundException(nameof(Wishlist), updatedWishlist.Id);
+
+            wishlist.LastChangeDate = updatedWishlist.LastChangeDate;
+
+            var addProducts = updatedWishlist.Products
+                .ExceptBy(wishlist.Products.Select(p => p.Id), p => p.Id);
+
+            foreach (var item in addProducts) wishlist.Products.Add(item);
+
+            var removeProducts = wishlist.Products
+                .ExceptBy(updatedWishlist.Products.Select(p => p.Id), p => p.Id);
+
+            foreach (var item in removeProducts) wishlist.Products.Remove(item);
+
+            if (AutoSaveChanges)
+                await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
+        }
     }
 }
