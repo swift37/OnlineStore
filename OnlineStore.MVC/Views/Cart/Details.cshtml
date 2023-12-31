@@ -38,10 +38,10 @@
                                             <tr>
                                                 <td class="flexitem">
                                                     <div class="thumbnail object-contain">
-                                                        <a href="#"><img src="@item.Product?.Image" alt=""></a>
+                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId"><img src="@item.Product?.Image" alt=""></a>
                                                     </div>
                                                     <div class="content">
-                                                        <strong><a href="#">@item.Product?.Name</a></strong>
+                                                        <strong><a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">@item.Product?.Name</a></strong>
                                                         <p>RAM: 16 Gb</p>
                                                     </div>
                                                 </td>

@@ -22,10 +22,10 @@
                     {
                     <li class="item">
                         <div class="thumbnail object-contain">
-                            <a href="#"><img src="@cartItem.Product.Image" alt=""></a>
+                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id"><img src="@cartItem.Product.Image" alt=""></a>
                         </div>
                         <div class="item-content">
-                            <p><a href="/product?id=@cartItem.ProductId">@cartItem.Product.Name</a></p>
+                            <p><a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id">@cartItem.Product.Name</a></p>
                             <span class="price">
                                 <span>@cartItem.Product.UnitPrice.ToString("C")</span>
                                 <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
