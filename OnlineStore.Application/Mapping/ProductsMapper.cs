@@ -9,6 +9,7 @@ namespace OnlineStore.Application.Mapping
         {
             Id = product.Id,
             Name = product.Name,
+            CategoryId = product.CategoryId,
             Category = product.Category?.ToDTO(),
             Description = product.Description,
             Discount = product.Discount,
@@ -30,6 +31,7 @@ namespace OnlineStore.Application.Mapping
         {
             Id = product.Id,
             Name = product.Name,
+            CategoryId = product.CategoryId,
             Category = product.Category?.FromDTO(),
             Description = product.Description,
             Discount = product.Discount,

@@ -12,6 +12,9 @@ namespace OnlineStore.Application.DTOs.Product.Validation
             RuleFor(p => p.Name)
                 .MaximumLength(32);
 
+            RuleFor(p => p.CategoryId)
+                .NotEqual(0);
+
             RuleFor(p => p.Rating)
                 .GreaterThan(0)
                 .LessThanOrEqualTo(5);

@@ -18,6 +18,8 @@ namespace OnlineStore.Application.DTOs.Product
 
         public string? Image { get; set; }
 
+        public int CategoryId { get; set; }
+
         public CategoryDTO? Category { get; set; }
 
         public IEnumerable<SpecificationDTO> Specifications { get; set; } = Enumerable.Empty<SpecificationDTO>();
