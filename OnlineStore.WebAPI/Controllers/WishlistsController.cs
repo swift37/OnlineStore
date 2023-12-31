@@ -119,18 +119,12 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user tries to update the wishlist that does not belong to him</response>
         [HttpPut]
-        [Authorize]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
-            var wishlist = await _repository.GetAsync(updateWishlistDTO.Id);
-            if (wishlist.UserId != UserId)
-                return Forbid();
-
             await _repository.UpdateAsync(updateWishlistDTO.FromDTO());
             return NoContent();
         }
@@ -190,7 +184,38 @@ namespace OnlineStore.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<WishlistDTO>> GetUserWishlist() => 
-            Ok((await _repository.GetUserWishlistAsync(UserId)).ToDTO());
+        public async Task<ActionResult<WishlistDTO>> GetUserWishlist()
+        {
+            var temp = (await _repository.GetOrCreateAsync(UserId)).ToDTO();
+            return Ok(temp);
+        }
+
+        /// <summary>
+        /// Update products of the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PUT /wishlists
+        /// {
+        ///     products: []
+        /// }
+        /// </remarks>
+        /// <param name="updateWishlistDTO">UpdateWishlistDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user tries to update the wishlist that does not belong to him</response>
+        [HttpPatch]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> UpdateProducts([FromBody] UpdateWishlistDTO updateWishlistDTO)
+        {
+            if (!await _repository.VerifyOwnership(updateWishlistDTO.Id, UserId))
+                return Forbid();
+
+            await _repository.UpdateProductsAsync(updateWishlistDTO.FromDTO());
+            return NoContent();
+        }
     }
 }
