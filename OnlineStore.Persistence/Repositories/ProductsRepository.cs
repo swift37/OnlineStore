@@ -14,34 +14,44 @@ namespace OnlineStore.DAL.Repositories
 
         public ProductsRepository(IApplicationDbContext context) : base(context) { }
 
-        public async Task<ProductsPage> GetProductsByCategoryAsync(
-            int categoryId, 
-            int page = 1, 
-            int itemsPerPage = 15,
+        public async Task<ProductsPage> GetFilteredProductsAsync(
+            ProductsFilteringOptions options,
             CancellationToken cancellation = default)
         {
-            if (itemsPerPage > 30 || itemsPerPage < 15) itemsPerPage = 15;
+            if (options.ItemsPerPage > 30 || options.ItemsPerPage < 15) options.ItemsPerPage = 15;
 
             var category = await _context.Categories
-                .SingleOrDefaultAsync(c => c.Id == categoryId, cancellation)
+                .SingleOrDefaultAsync(c => c.Id == options.CategoryId, cancellation)
                 .ConfigureAwait(false);
 
-            if (category is null) throw new NotFoundException(nameof(Category), categoryId);
+            if (category is null) throw new NotFoundException(nameof(Category), options.CategoryId);
 
-            var query = Entities.Where(p => p.Category == null ? false : p.Category.Id == category.Id);
-            var pagesCount = (await query.CountAsync(cancellation) + itemsPerPage - 1) / itemsPerPage;
-            var productsList = await query
-                .Skip((page - 1) * itemsPerPage)
-                .Take(itemsPerPage)
-                .Include(p => p.Category).ToArrayAsync();
+            var query = Entities.Where(p =>
+                p.CategoryId == options.CategoryId &&
+                p.UnitPrice - p.Discount >= options.MinPrice &&
+                p.UnitPrice - p.Discount <= options.MaxPrice &&
+                p.Specifications
+                    .DefaultIfEmpty()
+                    .IntersectBy(options.Specifications.Select(s => s.Id), s => s.Id)
+                    .Count() == options.Specifications.Count);
+
+            var pagesCount = 
+                (await query.CountAsync(cancellation) + options.ItemsPerPage - 1) 
+                / options.ItemsPerPage;
+
+            var productsCollection = await query
+                .Skip((options.PageNumber - 1) * options.ItemsPerPage)
+                .Take(options.ItemsPerPage)
+                .Include(p => p.Category)
+                .ToArrayAsync();
 
             var products = new ProductsPage
             {
-                Products = productsList,
+                Products = productsCollection,
                 Category = category,
-                CurrentPage = page,
+                CurrentPage = options.PageNumber,
                 TotalPages = pagesCount,
-                ItemsPerPage = itemsPerPage
+                ItemsPerPage = options.ItemsPerPage
             };
 
             return products;

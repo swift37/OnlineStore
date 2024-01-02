@@ -159,25 +159,24 @@ namespace OnlineStore.WebAPI.Controllers
         /// Get the products page by category id
         /// </summary>
         /// <remarks>
-        /// GET /products/page?categoryId=1&page=3&itemsPerPage=20
+        /// POST /products/page
+        /// {
+        ///     categoryId: 1,
+        ///     pageNumber: 1,
+        ///     itemsPerPage: 15
+        /// }
         /// </remarks>
-        /// <param name="categoryId">Category id (int)</param>
-        /// <param name="page">Page number</param>
-        /// <param name="itemsPerPage">Number of items per page</param>
-        /// <param name="sortBy">Sort by statement</param>
+        /// <param name="options">Optins for product filtering</param>
         /// <returns>Returns ProductsPageDTO</returns>
         /// <response code="200">Success</response>
-        [HttpGet("page")]
+        [HttpPost("page")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProductsPageDTO>> GetProductsByCategory(
-            int categoryId, 
-            int page = 1, 
-            int itemsPerPage = 15, 
-            SortParameters sortBy = SortParameters.Default)
+        public async Task<ActionResult<ProductsPageDTO>> GetFilteredProducts(
+            ProductsFilteringOptions options)
         {
-            var pageDTO = (await _productsRepository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage)).ToDTO();
+            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(options)).ToDTO();
 
-            pageDTO.Products = SortProducts(pageDTO.Products, sortBy);
+            pageDTO.Products = SortProducts(pageDTO.Products, options.SortBy);
 
             foreach (var product in pageDTO.Products)
             {
@@ -188,17 +187,17 @@ namespace OnlineStore.WebAPI.Controllers
             return Ok(pageDTO);
         }
 
-        private ICollection<ProductDTO> SortProducts(ICollection<ProductDTO> products, SortParameters sortBy)
+        private ICollection<ProductDTO> SortProducts(ICollection<ProductDTO> products, SortParameter sortBy)
         {
             switch (sortBy)
             {
                 default:
                     return products;
-                case SortParameters.RatingDescending:
+                case SortParameter.RatingDescending:
                     return products.OrderByDescending(p => p.Rating).ToArray();
-                case SortParameters.PriceAscending:
+                case SortParameter.PriceAscending:
                     return products.OrderBy(p => p.UnitPrice).ToArray();
-                case SortParameters.PriceDescending:
+                case SortParameter.PriceDescending:
                     return products.OrderByDescending(p => p.UnitPrice).ToArray();
             }
         }
