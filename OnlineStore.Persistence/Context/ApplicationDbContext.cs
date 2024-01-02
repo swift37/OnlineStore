@@ -24,6 +24,7 @@ namespace OnlineStore.DAL.Context
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
+        public DbSet<FiltersGroup> FilterGoups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +41,7 @@ namespace OnlineStore.DAL.Context
             builder.ApplyConfiguration(new SubscriberConfiguration());
             builder.ApplyConfiguration(new MenuItemConfiguration());
             builder.ApplyConfiguration(new NestedMenuItemConfiguration());
+            builder.ApplyConfiguration(new FiltersGroupConfiguration());
             base.OnModelCreating(builder);
         }
     }

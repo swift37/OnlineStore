@@ -23,7 +23,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
                 .OnDelete(DeleteBehavior.Cascade);
             builder
                 .HasMany(product => product.Specifications)
-                .WithMany();
+                .WithMany(specification => specification.Products);
             builder.Navigation(product => product.Specifications).AutoInclude();
         }
     }
