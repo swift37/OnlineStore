@@ -2711,8 +2711,8 @@ form {
         width: 8px;
         height: 8px;
         background-color: #453c5c;
-        top: 2px;
-        left: 2px;
+        top: 3px;
+        left: 3px;
         opacity: 0;
     }
 
@@ -2732,40 +2732,6 @@ form {
         clip: rect(0, 0, 0, 0);
         overflow: hidden;
     }
-
-    .filter-block input[type="range"] {
-        -webkit-appearance: none;
-        width: 100%;
-    }
-
-        .filter-block input[type="range"]:focus {
-            outline: 0;
-        }
-
-        .filter-block input[type="range"]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 5px;
-            cursor: pointer;
-            background-color: #e5e8ec;
-            box-shadow: none;
-            border: 0;
-        }
-
-        .filter-block input[type="range"]::-webkit-slider-thumb {
-            position: relative;
-            height: 18px;
-            width: 12px;
-            margin-top: -7px;
-            background-color: #000000;
-            -webkit-appearance: none;
-        }
-
-        .filter-block .byprice .price-range {
-            display: flex;
-            justify-content: space-between;
-            color: #7c899a;
-            margin-top: 0.5em;
-        }
 
 .page-title h1 {
     font-size: 36px;
