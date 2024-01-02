@@ -7,6 +7,12 @@
   },
   {
     "inputFiles": [
+      "Styles/double-slider.css"
+    ],
+    "outputFileName": "wwwroot/css/double-slider.css"
+  },
+  {
+    "inputFiles": [
       "Scripts/main.js"
     ],
     "outputFileName": "wwwroot/scripts/main.js"
@@ -22,5 +28,11 @@
       "Scripts/ajax-requests.js"
     ],
     "outputFileName": "wwwroot/scripts/ajax-requests.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/double-slider.js"
+    ],
+    "outputFileName": "wwwroot/scripts/double-slider.js"
   }
 ]

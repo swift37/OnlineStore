@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section styles {
+    <link rel="stylesheet" href="~/css/double-slider.min.css" asp-append-version="true" />
+}
+
 <div class="single-category">
     <div class="container">
         <div class="wrapper">
@@ -164,13 +168,22 @@
 
                             <div class="filter-block pricing">
                                 <h4>Price</h4>
-                                <div class="byprice">
-                                    <div class="range-track">
-                                        <input type="range" range="5000">
+                                <div class="ds-container">
+                                    <div class="range-inputs">
+                                        <div class="ds-field">
+                                            <input type="number" id="minInput" value="3500" />
+                                        </div>
+                                        <div class="ds-separator">—</div>
+                                        <div class="ds-field">
+                                            <input type="number" id="maxInput" value="11500" />
+                                        </div>
                                     </div>
-                                    <div class="price-range">
-                                        <span class="price-from">$50</span>
-                                        <span class="price-to">$5000</span>
+                                    <div class="double-slider">
+                                        <div class="range"></div>
+                                        <div class="range-sliders">
+                                            <input type="range" id="minRange" min="0" max="15000" value="3500" />
+                                            <input type="range" id="maxRange" min="0" max="15000" value="11500" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -276,3 +289,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/scripts/double-slider.min.js" asp-append-version="true"></script>
+}
