@@ -1,5 +1,5 @@
 ﻿using OnlineStore.Application.DTOs.Product;
-using OnlineStore.Domain.Entities;
+using OnlineStore.Domain;
 
 namespace OnlineStore.Application.Mapping
 {

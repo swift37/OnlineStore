@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Domain.Enums
 {
-    public enum SortParameters
+    public enum SortParameter
     {
         Default,
         RatingDescending,

@@ -1,4 +1,6 @@
-﻿namespace OnlineStore.Domain.Entities
+﻿using OnlineStore.Domain.Entities;
+
+namespace OnlineStore.Domain
 {
     public class ProductsPage
     {
