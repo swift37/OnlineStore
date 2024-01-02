@@ -172,9 +172,10 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpPost("page")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductsPageDTO>> GetFilteredProducts(
-            ProductsFilteringOptions options)
+            ProductsFilteringOptionsDTO options)
         {
-            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(options)).ToDTO();
+            var filteringOptions = options.FromDTO();
+            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(filteringOptions)).ToDTO();
 
             pageDTO.Products = SortProducts(pageDTO.Products, options.SortBy);
 
