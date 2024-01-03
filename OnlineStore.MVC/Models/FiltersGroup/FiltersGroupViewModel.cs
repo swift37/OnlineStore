@@ -1,5 +1,4 @@
 ﻿using OnlineStore.MVC.Models.Category;
-using OnlineStore.MVC.Services.ApiClient;
 
 namespace OnlineStore.MVC.Models.FiltersGroup
 {
@@ -11,6 +10,6 @@ namespace OnlineStore.MVC.Models.FiltersGroup
 
         public CategoryViewModel? Category { get; set; }
 
-        public IDictionary<string, FilterDTO> Filters { get; set; } = new Dictionary<string, FilterDTO>(); 
+        public IDictionary<string, FilterViewModel> Filters { get; set; } = new Dictionary<string, FilterViewModel>(); 
     }
 }
