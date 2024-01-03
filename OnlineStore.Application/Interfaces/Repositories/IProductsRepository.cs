@@ -7,5 +7,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<ProductsPage> GetFilteredProductsAsync(
             ProductsFilteringOptions options,
             CancellationToken cancellation = default);
+
+        Task<int> GetCountByFilterAsync(
+            int categoryId,
+            int specificationId,
+            CancellationToken cancellation = default);
     }
 }

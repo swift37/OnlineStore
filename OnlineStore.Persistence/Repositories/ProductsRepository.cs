@@ -56,5 +56,12 @@ namespace OnlineStore.DAL.Repositories
 
             return products;
         }
+
+        public async Task<int> GetCountByFilterAsync(int categoryId, int specificationId, CancellationToken cancellation = default) => 
+            await Entities
+            .Where(p => p.CategoryId == categoryId && p.Specifications
+                .Any(s => s.Id == specificationId))
+            .CountAsync(cancellation)
+            .ConfigureAwait(false);
     }
 }
