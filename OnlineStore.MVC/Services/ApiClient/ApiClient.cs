@@ -9206,7 +9206,7 @@ namespace OnlineStore.MVC.Services.ApiClient
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum SortParameters
+    public enum SortParameter
     {
 
         _0 = 0,

@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.MVC.Models.Enums
 {
-    public enum SortParameters
+    public enum SortParameter
     {
         Default,
         RatingDescending,
