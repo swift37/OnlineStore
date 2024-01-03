@@ -1,4 +1,4 @@
-﻿using OnlineStore.MVC.Models.Enums;
+﻿using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Services.Base;
 
@@ -18,10 +18,6 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response> Delete(int id);
 
-        Task<Response<ProductsPageViewModel>> GetProductsByCategory(
-            int categoryId,
-            int page = 1,
-            int itemsPerPage = 15,
-            SortParameters sortBy = SortParameters.Default);
+        Task<Response<ProductsPageViewModel>> GetFilteredProducts(ProductsFilteringOptions options);
     }
 }

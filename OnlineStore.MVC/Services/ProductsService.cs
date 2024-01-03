@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
@@ -110,24 +111,16 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response<ProductsPageViewModel>> GetProductsByCategory(
-            int categoryId, 
-            int page = 1, 
-            int itemsPerPage = 15, 
-            Models.Enums.SortParameters sortBy = Models.Enums.SortParameters.Default)
+        public async Task<Response<ProductsPageViewModel>> GetFilteredProducts(ProductsFilteringOptions options)
         {
+            var optionsDTO = _mapper.Map<ProductsFilteringOptionsDTO>(options);
+
             try
             {
                 var product = 
-                    await _client.GetProductsByCategoryAsync(
-                        categoryId, 
-                        page, 
-                        itemsPerPage,
-                        // Cast Models.Enums.SortParameters to ApiClient.SortParameters to separate
-                        // automatically generated models from controllers and views.
-                        // Leaving auto-generated models only inside the services.
-                        (SortParameters)(int)sortBy, 
-                        _usingVersion);
+                    await _client.GetFilteredProductsAsync(
+                        _usingVersion,
+                        optionsDTO);
 
                 return new Response<ProductsPageViewModel>
                 {
