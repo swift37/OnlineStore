@@ -753,12 +753,12 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int? cateogoryId, string version, string id);
+        System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int categoryId, string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int? cateogoryId, string version, string id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int categoryId, string version, System.Threading.CancellationToken cancellationToken);
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -8996,21 +8996,21 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int? cateogoryId, string version, string id)
+        public virtual System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int categoryId, string version)
         {
-            return GetCategoryFiltersGroupAsync(cateogoryId, version, id, System.Threading.CancellationToken.None);
+            return GetCategoryFiltersGroupAsync(categoryId, version, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int? cateogoryId, string version, string id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FiltersGroupDTO> GetCategoryFiltersGroupAsync(int categoryId, string version, System.Threading.CancellationToken cancellationToken)
         {
+            if (categoryId == null)
+                throw new System.ArgumentNullException("categoryId");
+
             if (version == null)
                 throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -9027,17 +9027,11 @@ namespace OnlineStore.MVC.Services.ApiClient
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
-                    urlBuilder_.Append("filtersgroup");
+                    urlBuilder_.Append("filtergroups");
                     urlBuilder_.Append('/');
                     urlBuilder_.Append("category");
                     urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('?');
-                    if (cateogoryId != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("cateogoryId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(cateogoryId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-                    }
-                    urlBuilder_.Length--;
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(categoryId, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

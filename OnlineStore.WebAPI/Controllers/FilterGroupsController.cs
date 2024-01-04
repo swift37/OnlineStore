@@ -153,15 +153,15 @@ namespace OnlineStore.WebAPI.Controllers
         /// Sample request:
         /// GET /filtergroups/category/1
         /// </remarks>
-        /// <param name="cateogoryId">Category id (int)</param>
+        /// <param name="categoryId">Category id (int)</param>
         /// <returns>Returns FiltersGroupDTO</returns>
         /// <response code="200">Success</response>
-        [HttpGet("category/{id:int}")]
+        [HttpGet("category/{categoryId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int cateogoryId)
+        public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int categoryId)
         {
-            var filtersGroup = await _filterGroupsRepository.GetCategoryFiltersGroupAsync(cateogoryId);
+            var filtersGroup = await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId);
             var filtersGroupDTO = filtersGroup.ToDTO();
 
             foreach (var spec in filtersGroup.Specifications)
@@ -170,7 +170,7 @@ namespace OnlineStore.WebAPI.Controllers
                     {
                         Value = spec.Value,
                         ProductsCount = await _productsRepository
-                            .GetCountByFilterAsync(spec.Id, cateogoryId)
+                            .GetCountByFilterAsync(spec.Id, categoryId)
                     });
 
             return Ok(filtersGroup);
