@@ -15,9 +15,9 @@ namespace OnlineStore.Persistence.EntityTypeConfigurations
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             builder
-                .HasMany(filtersGroup => filtersGroup.Specifications)
+                .HasMany(filtersGroup => filtersGroup.SpecificationTypes)
                 .WithMany();
-            builder.Navigation(filtersGroup => filtersGroup.Specifications).AutoInclude();
+            builder.Navigation(filtersGroup => filtersGroup.SpecificationTypes).AutoInclude();
         }
     }
 }
