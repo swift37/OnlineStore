@@ -109,7 +109,12 @@ namespace OnlineStore.MVC.Mapping
                 .ReverseMap()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel));
 
-            CreateMap<ProductsFilteringOptionsDTO, ProductsFilteringOptions>().ReverseMap();
+            CreateMap<ProductsFilteringOptionsDTO, ProductsFilteringOptions>()
+                .ForMember(dest => dest.SortBy,
+                    opt => opt.MapFrom(src => (Models.Enums.SortParameter)(int)src.SortBy))
+                .ReverseMap()
+                .ForMember(dest => dest.SortBy,
+                    opt => opt.MapFrom(src => (SortParameter)(int)src.SortBy));
 
             CreateMap<FilterDTO, FilterViewModel>().ReverseMap();
 
