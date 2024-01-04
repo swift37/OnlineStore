@@ -13,6 +13,7 @@ namespace OnlineStore.DAL.Context
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<SpecificationType> SpecificationTypes { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
@@ -30,6 +31,7 @@ namespace OnlineStore.DAL.Context
         {
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new SpecificationConfiguration());
+            builder.ApplyConfiguration(new SpecificationTypeConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new OrderItemConfiguration());
