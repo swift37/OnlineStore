@@ -1,4 +1,4 @@
-﻿using OnlineStore.Application.DTOs.Product;
+﻿using OnlineStore.Application.DTOs.SpecificationType;
 
 namespace OnlineStore.Application.DTOs.FiltersGroup
 {
@@ -6,6 +6,6 @@ namespace OnlineStore.Application.DTOs.FiltersGroup
     {
         public int CategoryId { get; set; }
 
-        public ICollection<SpecificationDTO> Specifications { get; set; } = new HashSet<SpecificationDTO>();
+        public ICollection<SpecificationTypeDTO> SpecificationTypes { get; set; } = new HashSet<SpecificationTypeDTO>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OnlineStore.Application.DTOs.Base;
 using OnlineStore.Application.DTOs.Category;
+using OnlineStore.Application.DTOs.SpecificationType;
 
 namespace OnlineStore.Application.DTOs.FiltersGroup
 {
@@ -9,6 +10,6 @@ namespace OnlineStore.Application.DTOs.FiltersGroup
 
         public CategoryDTO? Category { get; set; }
 
-        public IDictionary<string, FilterDTO> Filters { get; set; } = new Dictionary<string, FilterDTO>();
+        public ICollection<SpecificationTypeDTO> SpecificationTypes { get; set; } = new HashSet<SpecificationTypeDTO>();
     }
 }
