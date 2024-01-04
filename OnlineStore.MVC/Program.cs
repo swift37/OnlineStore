@@ -49,6 +49,7 @@ builder.Services.AddScoped<ICouponsService, CouponsService>();
 builder.Services.AddScoped<ISubscribersService, SubscribersService>();
 builder.Services.AddScoped<IContactRequestsService, ContactRequestsService>();
 builder.Services.AddScoped<IMenuItemsService, MenuItemsService>();
+builder.Services.AddScoped<IFilterGroupsService, FilterGroupsService>();
 
 builder.Services.AddScoped<ICartStorage, CookieCartStorage>();
 builder.Services.AddScoped<ICartService, CartService>();
