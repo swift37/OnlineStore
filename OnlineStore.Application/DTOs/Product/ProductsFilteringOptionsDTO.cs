@@ -10,7 +10,7 @@ namespace OnlineStore.Application.DTOs.Product
 
         public int MaxPrice { get; set; }
 
-        public ICollection<SpecificationDTO> Specifications { get; set; } = new HashSet<SpecificationDTO>();
+        public ICollection<int> SpecificationIds { get; set; } = new HashSet<int>();
 
         public int PageNumber { get; set; }
 

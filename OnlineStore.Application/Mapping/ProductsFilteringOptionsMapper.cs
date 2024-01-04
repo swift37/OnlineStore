@@ -10,7 +10,7 @@ namespace OnlineStore.Application.Mapping
             CategoryId = options.CategoryId,
             MinPrice = options.MinPrice,
             MaxPrice = options.MaxPrice,
-            Specifications = options.Specifications.ToDTO().ToArray(),
+            SpecificationIds = options.SpecificationIds,
             PageNumber = options.PageNumber,
             ItemsPerPage = options.ItemsPerPage,
             SortBy = options.SortBy
@@ -21,7 +21,7 @@ namespace OnlineStore.Application.Mapping
             CategoryId = options.CategoryId,
             MinPrice = options.MinPrice,
             MaxPrice = options.MaxPrice,
-            Specifications = options.Specifications.FromDTO().ToArray(),
+            SpecificationIds = options.SpecificationIds,
             PageNumber = options.PageNumber,
             ItemsPerPage = options.ItemsPerPage,
             SortBy = options.SortBy

@@ -1,5 +1,4 @@
-﻿using OnlineStore.Domain.Entities;
-using OnlineStore.Domain.Enums;
+﻿using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Domain
 {
@@ -11,7 +10,7 @@ namespace OnlineStore.Domain
 
         public int MaxPrice { get; set; }
 
-        public ICollection<Specification> Specifications { get; set; } = new HashSet<Specification>();
+        public ICollection<int> SpecificationIds { get; set; } = new HashSet<int>();
 
         public int PageNumber {  get; set; }
 
