@@ -4,6 +4,7 @@ using OnlineStore.MVC.Models.Category;
 using OnlineStore.MVC.Models.ContactRequest;
 using OnlineStore.MVC.Models.Coupon;
 using OnlineStore.MVC.Models.Event;
+using OnlineStore.MVC.Models.FiltersGroup;
 using OnlineStore.MVC.Models.MenuItem;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Product;
@@ -107,6 +108,14 @@ namespace OnlineStore.MVC.Mapping
                 .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
                 .ReverseMap()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel));
+
+            CreateMap<ProductsFilteringOptionsDTO, ProductsFilteringOptions>().ReverseMap();
+
+            CreateMap<FilterDTO, FilterViewModel>().ReverseMap();
+
+            CreateMap<FiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
+            CreateMap<UpdateFiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
+            CreateMap<CreateFiltersGroupDTO, CreateFiltersGroupViewModel>().ReverseMap();
 
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<RegisterViewModel, RegisterRequest>();
