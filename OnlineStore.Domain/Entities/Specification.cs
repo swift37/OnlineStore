@@ -2,11 +2,13 @@
 
 namespace OnlineStore.Domain.Entities
 {
-    public class Specification : NamedEntity
-    {
-        public string? Value { get; set; }
+    public class Specification : Entity
+    { 
+        public int SpecificationTypeId { get; set; }
 
-        public bool IsMain { get; set; }
+        public SpecificationType? SpecificationType { get; set; }
+
+        public string? Value { get; set; }
 
         public ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }

@@ -8,6 +8,6 @@ namespace OnlineStore.Domain.Entities
 
         public Category? Category { get; set; }
 
-        public ICollection<Specification> Specifications { get; set; } = new HashSet<Specification>();
+        public ICollection<SpecificationType> SpecificationTypes { get; set; } = new HashSet<SpecificationType>();
     }
 }
