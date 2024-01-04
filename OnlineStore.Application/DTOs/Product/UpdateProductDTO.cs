@@ -1,6 +1,5 @@
 ﻿using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Application.DTOs.Category;
-using OnlineStore.Application.DTOs.Review;
+using OnlineStore.Application.DTOs.Specification;
 
 namespace OnlineStore.Application.DTOs.Product
 {
@@ -20,7 +19,7 @@ namespace OnlineStore.Application.DTOs.Product
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<UpdateSpecificationDTO> Specifications { get; set; } = Enumerable.Empty<UpdateSpecificationDTO>();
+        public IEnumerable<SpecificationDTO> Specifications { get; set; } = Enumerable.Empty<SpecificationDTO>();
 
         public double Rating { get; set; }
 
@@ -37,14 +36,5 @@ namespace OnlineStore.Application.DTOs.Product
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
-    }
-
-    public class UpdateSpecificationDTO : BaseDTO
-    {
-        public string? Name { get; set; }
-
-        public string? Value { get; set; }
-
-        public bool IsMain { get; set; }
     }
 }

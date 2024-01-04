@@ -1,6 +1,4 @@
-﻿using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Application.DTOs.Category;
-using OnlineStore.Application.DTOs.Review;
+﻿using OnlineStore.Application.DTOs.Specification;
 
 namespace OnlineStore.Application.DTOs.Product
 {
@@ -20,7 +18,7 @@ namespace OnlineStore.Application.DTOs.Product
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<CreateSpecificationDTO> Specifications { get; set; } = Enumerable.Empty<CreateSpecificationDTO>();
+        public IEnumerable<SpecificationDTO> Specifications { get; set; } = Enumerable.Empty<SpecificationDTO>();
 
         public string? Manufacturer { get; set; }
 
@@ -35,14 +33,5 @@ namespace OnlineStore.Application.DTOs.Product
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
-    }
-
-    public class CreateSpecificationDTO
-    {
-        public string? Name { get; set; }
-
-        public string? Value { get; set; }
-
-        public bool IsMain { get; set; }
     }
 }

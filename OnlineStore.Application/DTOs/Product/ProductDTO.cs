@@ -1,6 +1,7 @@
 ﻿using OnlineStore.Application.DTOs.Base;
 using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.DTOs.Review;
+using OnlineStore.Application.DTOs.Specification;
 
 namespace OnlineStore.Application.DTOs.Product
 {
@@ -43,14 +44,5 @@ namespace OnlineStore.Application.DTOs.Product
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
-    }
-
-    public class SpecificationDTO : BaseDTO
-    {
-        public string? Name { get; set; }
-
-        public string? Value { get; set; }
-
-        public bool IsMain { get; set; }
     }
 }

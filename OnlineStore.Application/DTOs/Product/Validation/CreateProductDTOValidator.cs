@@ -31,16 +31,4 @@ namespace OnlineStore.Application.DTOs.Product.Validation
                 .MaximumLength(32);
         }
     }
-
-    public class CreateSpecificationDTOValidator : AbstractValidator<CreateSpecificationDTO>
-    {
-        public CreateSpecificationDTOValidator()
-        {
-            RuleFor(s => s.Name)
-                .MaximumLength(32);
-
-            RuleFor(s => s.Value)
-                .MaximumLength(32);
-        }
-    }
 }
