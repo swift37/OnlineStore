@@ -5,29 +5,18 @@ namespace OnlineStore.Application.Mapping
 {
     public static class FiltersGroupMapper
     {
-        public static FiltersGroupDTO ToDTO(this FiltersGroup filtersGroup)
+        public static FiltersGroupDTO ToDTO(this FiltersGroup filtersGroup) => new FiltersGroupDTO
         {
-            var filtersGroupDTO = new FiltersGroupDTO
-            {
-                Id = filtersGroup.Id,
-                CategoryId = filtersGroup.CategoryId,
-                Category = filtersGroup.Category?.ToDTO()
-            };
-
-            foreach (var spec in filtersGroup.Specifications)
-                if (!string.IsNullOrEmpty(spec.Name))
-                    filtersGroupDTO.Filters.Add(spec.Name, new FilterDTO
-                    {
-                        Value = spec.Value,
-                    });
-
-            return filtersGroupDTO;
-        }
+            Id = filtersGroup.Id,
+            CategoryId = filtersGroup.CategoryId,
+            Category = filtersGroup.Category?.ToDTO(),
+            SpecificationTypes = filtersGroup.SpecificationTypes.ToDTO().ToArray()
+        };
 
         public static FiltersGroup FromDTO(this CreateFiltersGroupDTO filtersGroup) => new FiltersGroup
         {
             CategoryId = filtersGroup.CategoryId,
-            Specifications = filtersGroup.Specifications.FromDTO().ToArray()
+            SpecificationTypes = filtersGroup.SpecificationTypes.FromDTO().ToArray()
         };
 
         public static FiltersGroup FromDTO(this UpdateFiltersGroupDTO filtersGroup) => new FiltersGroup
@@ -35,7 +24,7 @@ namespace OnlineStore.Application.Mapping
             Id = filtersGroup.Id,
             CategoryId = filtersGroup.CategoryId,
             Category = filtersGroup.Category?.FromDTO(),
-            Specifications = filtersGroup.Specifications.FromDTO().ToArray()
+            SpecificationTypes = filtersGroup.SpecificationTypes.FromDTO().ToArray()
         };
 
         public static IEnumerable<FiltersGroupDTO> ToDTO(this IEnumerable<FiltersGroup> filtersGroup) => filtersGroup.Select(f => f.ToDTO());
