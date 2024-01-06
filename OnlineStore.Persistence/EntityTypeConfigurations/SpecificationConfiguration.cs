@@ -17,7 +17,6 @@ namespace OnlineStore.Persistence.EntityTypeConfigurations
                 .HasForeignKey(specification => specification.SpecificationTypeId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
-            builder.Navigation(specification => specification.SpecificationType).AutoInclude();
         }
     }
 }
