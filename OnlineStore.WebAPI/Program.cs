@@ -1,15 +1,25 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using OnlineStore.Application;
+using OnlineStore.Application.Interfaces;
+using OnlineStore.Application.Mapping;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.Identity;
 using OnlineStore.WebAPI.Middleware;
 using OnlineStore.WebAPI.OptionsSetup;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+    config.AddProfile(new AssemblyMappingProfile(typeof(IApplicationDbContext).Assembly));
+});
+
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddApplication();
