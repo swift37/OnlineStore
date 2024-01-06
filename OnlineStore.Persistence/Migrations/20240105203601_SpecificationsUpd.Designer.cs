@@ -12,7 +12,7 @@ using OnlineStore.DAL.Context;
 namespace OnlineStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240104215139_SpecificationsUpd")]
+    [Migration("20240105203601_SpecificationsUpd")]
     partial class SpecificationsUpd
     {
         /// <inheritdoc />
