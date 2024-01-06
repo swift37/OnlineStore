@@ -10,7 +10,9 @@ namespace OnlineStore.DAL.Repositories
     public class ProductsRepository : Repository<Product>, IProductsRepository
     {
         protected override IQueryable<Product> Entities => base.Entities
-            .Include(product => product.Category);
+            .Include(product => product.Category)
+            .Include(product => product.Specifications)
+                .ThenInclude(specification => specification.SpecificationType);
 
         public ProductsRepository(IApplicationDbContext context) : base(context) { }
 
@@ -30,10 +32,9 @@ namespace OnlineStore.DAL.Repositories
                 p.CategoryId == options.CategoryId &&
                 p.UnitPrice - p.Discount >= options.MinPrice &&
                 p.UnitPrice - p.Discount <= options.MaxPrice &&
-                p.Specifications
-                    .DefaultIfEmpty()
-                    .IntersectBy(options.Specifications.Select(s => s.Id), s => s.Id)
-                    .Count() == options.Specifications.Count);
+                p.Specifications.Select(s => s.Id)
+                    .Intersect(options.SpecificationIds)
+                    .Count() == options.SpecificationIds.Count);
 
             var pagesCount = 
                 (await query.CountAsync(cancellation) + options.ItemsPerPage - 1) 
