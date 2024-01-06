@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.DAL.EntityTypeConfigurations;
-using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
 using OnlineStore.Persistence.EntityTypeConfigurations;
 

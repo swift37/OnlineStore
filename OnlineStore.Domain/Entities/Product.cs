@@ -1,7 +1,6 @@
 ﻿using OnlineStore.Domain.Base;
-using OnlineStore.Domain.Entities;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Product : NamedEntity
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Domain;
 using OnlineStore.DAL.EntityTypeConfigurations.Base;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {

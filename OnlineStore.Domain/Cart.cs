@@ -1,4 +1,6 @@
-﻿namespace OnlineStore.Domain
+﻿using OnlineStore.Domain.Entities;
+
+namespace OnlineStore.Domain
 {
     public class Cart
     {

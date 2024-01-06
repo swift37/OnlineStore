@@ -2,7 +2,7 @@
 using OnlineStore.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Order : Entity
     {

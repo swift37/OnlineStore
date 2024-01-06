@@ -2,7 +2,7 @@
 using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.Repositories
 {
