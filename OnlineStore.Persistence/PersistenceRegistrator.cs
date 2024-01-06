@@ -21,12 +21,14 @@ namespace OnlineStore.DAL
             .AddScoped<IOrdersRepository, OrdersRepository>()
             .AddScoped<IWishlistsRepository, WishlistsRepository>()
             .AddScoped<ISubscribersRepository, SubscribersRepository>()
+            .AddScoped<IFilterGroupsRepository, FilterGroupsRepository>()
+            .AddScoped<IRepository<SpecificationType>, SpecificationTypesRepository>()
+            .AddScoped<IRepository<Specification>, SpecificationsRepository>()
             .AddScoped<IRepository<Category>, Repository<Category>>()
             .AddScoped<IRepository<Coupon>, Repository<Coupon>>()
             .AddScoped<IRepository<Event>, Repository<Event>>()
             .AddScoped<IRepository<ContactRequest>, Repository<ContactRequest>>()
             .AddScoped<IRepository<MenuItem>, Repository<MenuItem>>()
-            .AddScoped<IFilterGroupsRepository, FilterGroupsRepository>()
             ;
     }
 }
