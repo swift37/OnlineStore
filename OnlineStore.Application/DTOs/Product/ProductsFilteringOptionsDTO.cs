@@ -1,8 +1,10 @@
-﻿using OnlineStore.Domain.Enums;
+﻿using AutoMapper;
+using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Product
 {
-    public class ProductsFilteringOptionsDTO
+    public class ProductsFilteringOptionsDTO : IMapWith<Domain.ProductsFilteringOptions>
     {
         public int CategoryId { get; set; }
 
@@ -17,5 +19,8 @@ namespace OnlineStore.Application.DTOs.Product
         public int ItemsPerPage { get; set; }
 
         public SortParameter SortBy { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.ProductsFilteringOptions, ProductsFilteringOptionsDTO>().ReverseMap();
     }
 }

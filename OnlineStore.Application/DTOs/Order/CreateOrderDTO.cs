@@ -1,8 +1,10 @@
-﻿using OnlineStore.Domain.Enums;
+﻿using AutoMapper;
+using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {
-    public class CreateOrderDTO
+    public class CreateOrderDTO : IMapWith<Domain.Entities.Order>
     {
         public ICollection<CreateOrderItemDTO> Items { get; set; } = new HashSet<CreateOrderItemDTO>();
 
@@ -33,12 +35,18 @@ namespace OnlineStore.Application.DTOs.Order
         public string? Apartment { get; set; }
 
         public string? Notes { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Order, CreateOrderDTO>().ReverseMap();
     }
 
-    public class CreateOrderItemDTO
+    public class CreateOrderItemDTO : IMapWith<Domain.Entities.OrderItem>
     {
         public int ProductId { get; set; }
 
         public int Quantity { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.OrderItem, CreateOrderItemDTO>().ReverseMap();
     }
 }

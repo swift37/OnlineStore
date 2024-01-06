@@ -1,8 +1,10 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.ContactRequest
 {
-    public class ContactRequestDTO : BaseDTO
+    public class ContactRequestDTO : BaseDTO, IMapWith<Domain.Entities.ContactRequest>
     {
         public string? ContactName { get; set; }
 
@@ -13,5 +15,8 @@ namespace OnlineStore.Application.DTOs.ContactRequest
         public DateTime CreationDate { get; set; }
 
         public DateTime? ResponseDate { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.ContactRequest, ContactRequestDTO>().ReverseMap();
     }
 }

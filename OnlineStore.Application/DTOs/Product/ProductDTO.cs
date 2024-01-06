@@ -1,11 +1,13 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
 using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.DTOs.Review;
 using OnlineStore.Application.DTOs.Specification;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Product
 {
-    public class ProductDTO : BaseDTO
+    public class ProductDTO : BaseDTO, IMapWith<Domain.Entities.Product>
     {
         public string? Name { get; set; }
 
@@ -44,5 +46,8 @@ namespace OnlineStore.Application.DTOs.Product
         public bool IsSale { get; set; }
 
         public bool IsFeaturedProduct { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Product, ProductDTO>().ReverseMap();
     }
 }

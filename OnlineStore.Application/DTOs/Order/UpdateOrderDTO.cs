@@ -1,9 +1,11 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {
-    public class UpdateOrderDTO : BaseDTO
+    public class UpdateOrderDTO : BaseDTO, IMapWith<Domain.Entities.Order>
     {
         public string? Number { get; set; }
 
@@ -42,14 +44,20 @@ namespace OnlineStore.Application.DTOs.Order
         public string? Apartment { get; set; }
 
         public string? Notes { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Order, UpdateOrderDTO>().ReverseMap();
     }
 
-    public class UpdateOrderItemDTO : BaseDTO
+    public class UpdateOrderItemDTO : BaseDTO, IMapWith<Domain.Entities.OrderItem>
     {
         public int Quantity { get; set; }
 
         public decimal UnitPrice { get; set; }
 
         public decimal Discount { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.OrderItem, UpdateOrderItemDTO>().ReverseMap();
     }
 }

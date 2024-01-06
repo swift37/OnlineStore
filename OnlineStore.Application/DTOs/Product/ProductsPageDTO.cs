@@ -1,9 +1,10 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
 using OnlineStore.Application.DTOs.Category;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Product
 {
-    public class ProductsPageDTO
+    public class ProductsPageDTO : IMapWith<Domain.ProductsPage>
     {
         public ICollection<ProductDTO> Products { get; set; } = new HashSet<ProductDTO>();
 
@@ -14,5 +15,8 @@ namespace OnlineStore.Application.DTOs.Product
         public int TotalPages { get; set; }
 
         public int ItemsPerPage { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.ProductsPage, ProductsPageDTO>().ReverseMap();
     }
 }

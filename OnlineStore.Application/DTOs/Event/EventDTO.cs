@@ -1,8 +1,10 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Event
 {
-    public class EventDTO : BaseDTO
+    public class EventDTO : BaseDTO, IMapWith<Domain.Entities.Event>
     {
         public string? Name { get; set; }
 
@@ -13,5 +15,8 @@ namespace OnlineStore.Application.DTOs.Event
         public string? Description { get; set; }
 
         public string? Image { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Event, EventDTO>().ReverseMap();
     }
 }

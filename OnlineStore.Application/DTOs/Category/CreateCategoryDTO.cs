@@ -1,6 +1,9 @@
-﻿namespace OnlineStore.Application.DTOs.Category
+﻿using AutoMapper;
+using OnlineStore.Application.Mapping;
+
+namespace OnlineStore.Application.DTOs.Category
 {
-    public class CreateCategoryDTO
+    public class CreateCategoryDTO : IMapWith<Domain.Entities.Category>
     {
         public string? Name { get; set; }
 
@@ -11,5 +14,8 @@
         public int? ParentId { get; set; }
 
         public bool IsMainCategory { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Category, CreateCategoryDTO>().ReverseMap();
     }
 }

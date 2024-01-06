@@ -1,8 +1,10 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Coupon
 {
-    public class CouponDTO : BaseDTO
+    public class CouponDTO : BaseDTO, IMapWith<Domain.Entities.Coupon>
     {
         public string? Number { get; set; }
 
@@ -23,5 +25,8 @@ namespace OnlineStore.Application.DTOs.Coupon
         public bool IsNotUsesLimit { get; set; }
 
         public bool IsActive { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Coupon, CouponDTO>().ReverseMap();
     }
 }
