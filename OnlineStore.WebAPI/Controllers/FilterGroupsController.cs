@@ -159,21 +159,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet("category/{categoryId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int categoryId)
-        {
-            var filtersGroup = await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId);
-            var filtersGroupDTO = filtersGroup.ToDTO();
-
-            foreach (var spec in filtersGroup.Specifications)
-                if (!string.IsNullOrEmpty(spec.Name))
-                    filtersGroupDTO.Filters.Add(spec.Name, new FilterDTO
-                    {
-                        Value = spec.Value,
-                        ProductsCount = await _productsRepository
-                            .GetCountByFilterAsync(spec.Id, categoryId)
-                    });
-
-            return Ok(filtersGroup);
-        }
+        public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int categoryId) => 
+            Ok((await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId)).ToDTO());
     }
 }

@@ -166,7 +166,7 @@ namespace OnlineStore.WebAPI.Controllers
         ///     itemsPerPage: 15
         /// }
         /// </remarks>
-        /// <param name="options">Optins for product filtering</param>
+        /// <param name="options">Options for product filtering</param>
         /// <returns>Returns ProductsPageDTO</returns>
         /// <response code="200">Success</response>
         [HttpPost("page")]
@@ -174,8 +174,7 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<ProductsPageDTO>> GetFilteredProducts(
             ProductsFilteringOptionsDTO options)
         {
-            var filteringOptions = options.FromDTO();
-            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(filteringOptions)).ToDTO();
+            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(options.FromDTO())).ToDTO();
 
             pageDTO.Products = SortProducts(pageDTO.Products, options.SortBy);
 
