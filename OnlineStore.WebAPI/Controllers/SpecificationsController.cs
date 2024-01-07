@@ -1,0 +1,155 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Application.DTOs.Specification;
+using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
+using OnlineStore.WebAPI.Controllers.Base;
+using AutoMapper;
+
+namespace OnlineStore.WebAPI.Controllers
+{
+    [ApiVersionNeutral]
+    [Produces("application/json")]
+    public class SpecificationsController : BaseController
+    {
+        private readonly IRepository<Specification> _repository;
+
+        private readonly IMapper _mapper;
+
+        public SpecificationsController(IRepository<Specification> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
+
+        /// <summary>
+        /// Get the enumeration of specifications
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /specifications
+        /// </remarks>
+        /// <returns>Returns IEnumerable<SpecificationDTO></returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpGet]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<IEnumerable<SpecificationDTO>>> GetAll() =>
+            Ok(_mapper.Map<IEnumerable<SpecificationDTO>>(await _repository.GetAllAsync()));
+
+        /// <summary>
+        /// Get true if specification exists
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /specifications/exists/1
+        /// </remarks>
+        /// <param name="id">Specification id</param>
+        /// <returns>Returns bool</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpGet("exists/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<bool>> Exist(int id) =>
+            Ok(await _repository.ExistsAsync(id));
+
+        /// <summary>
+        /// Get the specification by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /specifications/1
+        /// </remarks>
+        /// <param name="id">Specification id (int)</param>
+        /// <returns>Returns SpecificationDTO</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<SpecificationDTO>> Get(int id) =>
+            Ok(_mapper.Map<SpecificationDTO>(await _repository.GetAsync(id)));
+
+        /// <summary>
+        /// Create a specification
+        /// </summary>
+        /// <remarks>
+        /// POST /specifications
+        /// {
+        ///     value: "Specification value",
+        /// }
+        /// </remarks>
+        /// <param name="createSpecificationDTO">CreateSpecificationDTO</param>
+        /// <returns>Returns entity id</returns>
+        /// <response code="200">Success</response>
+        /// <response code="422">If the incorrect specification DTO was passed</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPost]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<int>> Create([FromBody] CreateSpecificationDTO createSpecificationDTO)
+        {
+            var specification = await _repository.CreateAsync(_mapper.Map<Specification>(createSpecificationDTO));
+            if (specification is null) return UnprocessableEntity();
+            return Ok(specification.Id);
+        }
+
+        /// <summary>
+        /// Update the specification
+        /// </summary>
+        /// <remarks>
+        /// PUT /specifications
+        /// {
+        ///     value: "Updated specification value"
+        /// }
+        /// </remarks>
+        /// <param name="updateSpecificationDTO">UpdateSpecificationDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPut]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] UpdateSpecificationDTO updateSpecificationDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Specification>(updateSpecificationDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Delete the specification by id
+        /// </summary>
+        /// <remarks>
+        /// DELETE /specifications/1
+        /// </remarks>
+        /// <param name="id">Specification id (int)</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = Roles.Administrator)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
+    }
+}
