@@ -57,24 +57,17 @@
                 <div class="divider dark-divider"></div>
                 <div class="product-specs">
                     <ul role="list" class="w-list-unstyled">
-                        <li class="list-item">
-                            <div class="paragraph-light">Dimensions</div>
-                            <div class="product-detail-measurement">
-                                <div>32</div>
-                                <div class="product-detail-unit-text middle-text">in x</div>
-                                <div>36</div>
-                                <div class="product-detail-unit-text middle-text">in x</div>
-                                <div>54</div>
-                                <div class="product-detail-unit-text">in</div>
-                            </div>
-                        </li>
-                        <li class="list-item">
-                            <div class="paragraph-light">Weight</div>
-                            <div class="product-detail-measurement">
-                                <div>45</div>
-                                <div class="product-detail-unit-text">oz</div>
-                            </div>
-                        </li>
+                        @if (Model.Specifications != null)
+                            foreach (var spec in Model.Specifications)
+                                if (spec.SpecificationType?.IsMain ?? false)
+                                {
+                                    <li class="list-item">
+                                        <div class="product-detail">@spec.SpecificationType.DisplayName</div>
+                                        <div class="product-detail-value">
+                                            @spec.Value
+                                        </div>
+                                    </li>
+                                }
                     </ul>
                 </div>
                 <div class="divider"></div>
@@ -115,13 +108,13 @@
             <h3 class="dividing-header">Specifications</h3>
             <table class="ui definition table">
                 <tbody>
-                    @foreach (var spec in Model.Specifications)
+@*                     @foreach (var spec in Model.Specifications)
                     {
                         <tr>
                             <td>@spec.Name</td>
                             <td>@spec.Value</td>
                         </tr>
-                    }
+                    } *@
                 </tbody>
             </table>
         </div>
