@@ -17,6 +17,7 @@ namespace OnlineStore.Persistence.EntityTypeConfigurations
             builder
                 .HasMany(filtersGroup => filtersGroup.SpecificationTypes)
                 .WithMany();
+            builder.Navigation(filtersGroup => filtersGroup.Category).AutoInclude();
             builder.Navigation(filtersGroup => filtersGroup.SpecificationTypes).AutoInclude();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
@@ -10,6 +9,10 @@ namespace OnlineStore.Persistence.Repositories
 {
     public class FilterGroupsRepository : Repository<FiltersGroup>, IFilterGroupsRepository
     {
+        protected override IQueryable<FiltersGroup> Entities => base.Entities
+            .Include(filtersGroup => filtersGroup.SpecificationTypes)
+                .ThenInclude(filtersGroup => filtersGroup.Values);
+
         public FilterGroupsRepository(IApplicationDbContext context) : base(context) { }
 
         public async Task<FiltersGroup> GetCategoryFiltersGroupAsync(int categoryId, CancellationToken cancellation = default) => 
