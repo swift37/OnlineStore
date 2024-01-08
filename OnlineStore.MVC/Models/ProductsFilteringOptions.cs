@@ -10,7 +10,7 @@ namespace OnlineStore.MVC.Models
 
         public int MaxPrice { get; set; }
 
-        public ICollection<int> Specifications { get; set; } = new HashSet<int>();
+        public ICollection<int> SpecificationIds { get; set; } = new HashSet<int>();
 
         public int PageNumber { get; set; }
 
