@@ -9,6 +9,8 @@ using OnlineStore.MVC.Models.MenuItem;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Models.Review;
+using OnlineStore.MVC.Models.Specification;
+using OnlineStore.MVC.Models.SpecificationType;
 using OnlineStore.MVC.Models.Subscriber;
 using OnlineStore.MVC.Models.Wishlist;
 using OnlineStore.MVC.Services.ApiClient;
@@ -63,9 +65,15 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<ProductDTO, ProductViewModel>().ReverseMap();
             CreateMap<UpdateProductDTO, ProductViewModel>().ReverseMap();
             CreateMap<CreateProductDTO, CreateProductViewModel>().ReverseMap();
+
             CreateMap<SpecificationDTO, SpecificationViewModel>().ReverseMap();
             CreateMap<UpdateSpecificationDTO, SpecificationViewModel>().ReverseMap();
             CreateMap<CreateSpecificationDTO, CreateSpecificationViewModel>().ReverseMap();
+
+            CreateMap<SpecificationTypeDTO, SpecificationTypeViewModel>().ReverseMap();
+            CreateMap<UpdateSpecificationTypeDTO, SpecificationTypeViewModel>().ReverseMap();
+            CreateMap<CreateSpecificationTypeDTO, CreateSpecificationTypeViewModel>().ReverseMap();
+
             CreateMap<ProductsPageDTO, ProductsPageViewModel>();
 
             CreateMap<ReviewDTO, ReviewViewModel>().ReverseMap();
@@ -115,8 +123,6 @@ namespace OnlineStore.MVC.Mapping
                 .ReverseMap()
                 .ForMember(dest => dest.SortBy,
                     opt => opt.MapFrom(src => (SortParameter)(int)src.SortBy));
-
-            CreateMap<FilterDTO, FilterViewModel>().ReverseMap();
 
             CreateMap<FiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
             CreateMap<UpdateFiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
