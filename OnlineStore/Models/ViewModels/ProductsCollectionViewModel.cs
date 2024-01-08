@@ -1,7 +1,4 @@
-﻿using OnlineStore.Domain;
-using OnlineStore.Domain.Entities;
-
-namespace OnlineStore.Models.ViewModels
+﻿namespace OnlineStore.Models.ViewModels
 {
     public class ProductsCollectionViewModel
     {
