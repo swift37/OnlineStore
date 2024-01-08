@@ -1,4 +1,4 @@
-﻿using OnlineStore.MVC.Services.ApiClient;
+﻿using OnlineStore.MVC.Models.Enums;
 
 namespace OnlineStore.MVC.Models
 {
@@ -10,7 +10,7 @@ namespace OnlineStore.MVC.Models
 
         public int MaxPrice { get; set; }
 
-        public ICollection<SpecificationDTO> Specifications { get; set; } = new HashSet<SpecificationDTO>();
+        public ICollection<int> Specifications { get; set; } = new HashSet<int>();
 
         public int PageNumber { get; set; }
 

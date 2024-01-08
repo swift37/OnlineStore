@@ -1,4 +1,4 @@
-﻿using OnlineStore.MVC.Services.ApiClient;
+﻿using OnlineStore.MVC.Models.SpecificationType;
 
 namespace OnlineStore.MVC.Models.FiltersGroup
 {
@@ -6,6 +6,6 @@ namespace OnlineStore.MVC.Models.FiltersGroup
     {
         public int CategoryId { get; set; }
 
-        public ICollection<SpecificationDTO> Specifications { get; set; } = new HashSet<SpecificationDTO>();
+        public ICollection<SpecificationTypeViewModel> SpecificationTypes { get; set; } = new HashSet<SpecificationTypeViewModel>();
     }
 }

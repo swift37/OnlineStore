@@ -1,4 +1,6 @@
-﻿namespace OnlineStore.MVC.Models.Product
+﻿using OnlineStore.MVC.Models.Specification;
+
+namespace OnlineStore.MVC.Models.Product
 {
     public class CreateProductViewModel
     {
@@ -16,7 +18,7 @@
 
         public int CategoryId { get; set; }
 
-        public ICollection<CreateSpecificationViewModel> Specifications { get; set; } = new HashSet<CreateSpecificationViewModel>();
+        public ICollection<SpecificationViewModel> Specifications { get; set; } = new HashSet<SpecificationViewModel>();
 
         public string? Manufacturer { get; set; }
 

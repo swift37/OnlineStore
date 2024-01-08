@@ -1,5 +1,6 @@
 ﻿using OnlineStore.MVC.Models.Category;
 using OnlineStore.MVC.Models.Review;
+using OnlineStore.MVC.Models.Specification;
 
 namespace OnlineStore.MVC.Models.Product
 {
