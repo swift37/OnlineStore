@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Wishlist;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -14,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IWishlistsRepository _repository;
 
-        public WishlistsController(IWishlistsRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public WishlistsController(IWishlistsRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of wishlists
@@ -34,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<WishlistDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<WishlistDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if wishlist exists
@@ -74,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<WishlistDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<WishlistDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a wishlist
@@ -98,7 +101,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateWishlistDTO createWishlistDTO)
         {
-            var wishlist = createWishlistDTO.FromDTO();
+            var wishlist = _mapper.Map<Wishlist>(createWishlistDTO);
             wishlist.UserId = UserId;
 
             var createdWishlist = await _repository.CreateAsync(wishlist);
@@ -125,7 +128,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
-            await _repository.UpdateAsync(updateWishlistDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Wishlist>(updateWishlistDTO));
             return NoContent();
         }
 
@@ -168,7 +171,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<WishlistDTO>> GetUserWishlist(Guid userId) => 
-            Ok((await _repository.GetUserWishlistAsync(userId)).ToDTO());
+            Ok(_mapper.Map<WishlistDTO>(await _repository.GetUserWishlistAsync(userId)));
 
         /// <summary>
         /// Get the current user wishlist
@@ -184,11 +187,8 @@ namespace OnlineStore.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<WishlistDTO>> GetUserWishlist()
-        {
-            var temp = (await _repository.GetOrCreateAsync(UserId)).ToDTO();
-            return Ok(temp);
-        }
+        public async Task<ActionResult<WishlistDTO>> GetUserWishlist() => 
+            Ok(_mapper.Map<WishlistDTO>(await _repository.GetOrCreateAsync(UserId)));
 
         /// <summary>
         /// Update products of the wishlist
@@ -214,7 +214,7 @@ namespace OnlineStore.WebAPI.Controllers
             if (!await _repository.VerifyOwnership(updateWishlistDTO.Id, UserId))
                 return Forbid();
 
-            await _repository.UpdateProductsAsync(updateWishlistDTO.FromDTO());
+            await _repository.UpdateProductsAsync(_mapper.Map<Wishlist>(updateWishlistDTO));
             return NoContent();
         }
     }

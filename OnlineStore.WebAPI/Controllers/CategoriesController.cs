@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -14,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly ICategoriesRepository _repository;
 
-        public CategoriesController(ICategoriesRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public CategoriesController(ICategoriesRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of categories
@@ -29,7 +32,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<CategoryDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if category exists
@@ -65,7 +68,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CategoryDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<CategoryDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a category
@@ -89,7 +92,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCategoryDTO createCategoryDTO)
         {
-            var category = await _repository.CreateAsync(createCategoryDTO.FromDTO());
+            var category = await _repository.CreateAsync(_mapper.Map<Category>(createCategoryDTO));
             if (category is null) return UnprocessableEntity();
             return Ok(category.Id);
         }
@@ -113,7 +116,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
-            await _repository.UpdateAsync(updateCategoryDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Category>(updateCategoryDTO));
             return NoContent();
         }
 
@@ -149,6 +152,6 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet("main")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetMainCategories() =>
-            Ok((await _repository.GetMainCategoriesAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<CategoryDTO>>(await _repository.GetMainCategoriesAsync()));
     }
 }

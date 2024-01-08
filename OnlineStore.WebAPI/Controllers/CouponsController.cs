@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Coupon;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -15,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<Coupon> _repository;
 
-        public CouponsController(IRepository<Coupon> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public CouponsController(IRepository<Coupon> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of coupons
@@ -35,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<CouponDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<CouponDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if coupon exists
@@ -75,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CouponDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<CouponDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a coupon
@@ -101,7 +103,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCouponDTO createCouponDTO)
         {
-            var coupon = await _repository.CreateAsync(createCouponDTO.FromDTO());
+            var coupon = await _repository.CreateAsync(_mapper.Map<Coupon>(createCouponDTO));
             if (coupon is null) return UnprocessableEntity();
             return Ok(coupon.Id);
         }
@@ -127,7 +129,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCouponDTO updateCouponDTO)
         {
-            await _repository.UpdateAsync(updateCouponDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Coupon>(updateCouponDTO));
             return NoContent();
         }
 

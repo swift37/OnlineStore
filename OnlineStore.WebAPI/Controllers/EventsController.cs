@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Event;
 using OnlineStore.Application.Interfaces.Repositories;
@@ -15,8 +16,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<Event> _repository;
 
-        public EventsController(IRepository<Event> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public EventsController(IRepository<Event> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of events
@@ -30,7 +33,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<EventDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<EventDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if event exists
@@ -67,7 +70,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<EventDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<EventDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a event
@@ -93,7 +96,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateEventDTO createEventDTO)
         {
-            var @event = await _repository.CreateAsync(createEventDTO.FromDTO());
+            var @event = await _repository.CreateAsync(_mapper.Map<Event>(createEventDTO));
             if (@event is null) return UnprocessableEntity();
             return Ok(@event.Id);
         }
@@ -119,7 +122,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateEventDTO UpdateEventDTO)
         {
-            await _repository.UpdateAsync(UpdateEventDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Event>(UpdateEventDTO));
             return NoContent();
         }
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.FiltersGroup;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -17,8 +17,14 @@ namespace OnlineStore.WebAPI.Controllers
 
         private readonly IProductsRepository _productsRepository;
 
-        public FilterGroupsController(IFilterGroupsRepository filterGroupsRepository, IProductsRepository productsRepository) => 
-            (_filterGroupsRepository, _productsRepository) = (filterGroupsRepository, productsRepository);
+        private readonly IMapper _mapper;
+
+        public FilterGroupsController(
+            IFilterGroupsRepository filterGroupsRepository, 
+            IProductsRepository productsRepository,
+            IMapper mapper) => 
+            (_filterGroupsRepository, _productsRepository, _mapper) = 
+            (filterGroupsRepository, productsRepository, mapper);
 
         /// <summary>
         /// Get the enumeration of filters groups
@@ -32,7 +38,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<FiltersGroupDTO>>> GetAll() =>
-            Ok((await _filterGroupsRepository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<FiltersGroupDTO>>(await _filterGroupsRepository.GetAllAsync()));
 
         /// <summary>
         /// Get true if filters group exists
@@ -68,7 +74,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FiltersGroupDTO>> Get(int id) =>
-            Ok((await _filterGroupsRepository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<FiltersGroupDTO>(await _filterGroupsRepository.GetAsync(id)));
 
         /// <summary>
         /// Create a filters group
@@ -94,7 +100,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateFiltersGroupDTO createFiltersGroupDTO)
         {
-            var filtersGroup = await _filterGroupsRepository.CreateAsync(createFiltersGroupDTO.FromDTO());
+            var filtersGroup = await _filterGroupsRepository.CreateAsync(_mapper.Map<FiltersGroup>(createFiltersGroupDTO));
             if (filtersGroup is null) return UnprocessableEntity();
             return Ok(filtersGroup.Id);
         }
@@ -120,7 +126,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateFiltersGroupDTO UpdateFiltersGroupDTO)
         {
-            await _filterGroupsRepository.UpdateAsync(UpdateFiltersGroupDTO.FromDTO());
+            await _filterGroupsRepository.UpdateAsync(_mapper.Map<FiltersGroup>(UpdateFiltersGroupDTO));
             return NoContent();
         }
 
@@ -160,6 +166,6 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int categoryId) => 
-            Ok((await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId)).ToDTO());
+            Ok(_mapper.Map<FiltersGroupDTO>(await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId)));
     }
 }

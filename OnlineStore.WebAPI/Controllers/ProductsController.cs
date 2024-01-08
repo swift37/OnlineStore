@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.Domain.Enums;
 using OnlineStore.WebAPI.Controllers.Base;
 
@@ -18,8 +19,14 @@ namespace OnlineStore.WebAPI.Controllers
 
         private readonly IReviewsRepository _reviewsRepository;
 
-        public ProductsController(IProductsRepository productsRepository, IReviewsRepository reviewsRepository) => 
-            (_productsRepository, _reviewsRepository) = (productsRepository, reviewsRepository);
+        private readonly IMapper _mapper;
+
+        public ProductsController(
+            IProductsRepository productsRepository, 
+            IReviewsRepository reviewsRepository,
+            IMapper mapper) => 
+            (_productsRepository, _reviewsRepository, _mapper) = 
+            (productsRepository, reviewsRepository, mapper);
 
         /// <summary>
         /// Get the enumeration of products
@@ -38,7 +45,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll() => 
-            Ok((await _productsRepository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllAsync()));
 
         /// <summary>
         /// Get true if product exists
@@ -73,7 +80,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductDTO>> Get(int id)
         {
-            var productDTO = (await _productsRepository.GetAsync(id)).ToDTO();
+            var productDTO = _mapper.Map<ProductDTO>(await _productsRepository.GetAsync(id));
             productDTO.Rating = await _reviewsRepository.GetProductRatingAsync(id);
             productDTO.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(id);
             return Ok(productDTO);
@@ -103,7 +110,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateProductDTO createProductDTO)
         {
-            var product = await _productsRepository.CreateAsync(createProductDTO.FromDTO());
+            var product = await _productsRepository.CreateAsync(_mapper.Map<Product>(createProductDTO));
             if (product is null) return UnprocessableEntity();
             return Ok(product.Id);
         }
@@ -129,7 +136,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            await _productsRepository.UpdateAsync(updateProductDTO.FromDTO());
+            await _productsRepository.UpdateAsync(_mapper.Map<Product>(updateProductDTO));
             return NoContent();
         }
 
@@ -174,7 +181,8 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<ProductsPageDTO>> GetFilteredProducts(
             ProductsFilteringOptionsDTO options)
         {
-            var pageDTO = (await _productsRepository.GetFilteredProductsAsync(options.FromDTO())).ToDTO();
+            var optionsModel = _mapper.Map<ProductsFilteringOptions>(options);
+            var pageDTO = _mapper.Map<ProductsPageDTO>(await _productsRepository.GetFilteredProductsAsync(optionsModel));
 
             pageDTO.Products = SortProducts(pageDTO.Products, options.SortBy);
 

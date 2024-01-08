@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Review;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -14,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IReviewsRepository _repository;
 
-        public ReviewsController(IReviewsRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public ReviewsController(IReviewsRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of reviews
@@ -34,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if review exists
@@ -74,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ReviewDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<ReviewDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a review
@@ -98,7 +101,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateReviewDTO createReviewDTO)
         {
-            var review = createReviewDTO.FromDTO();
+            var review = _mapper.Map<Review>(createReviewDTO);
             review.UserId = UserId;
 
             var createdReview = await _repository.CreateAsync(review);
@@ -136,7 +139,7 @@ namespace OnlineStore.WebAPI.Controllers
                     return Forbid();
             }
 
-            await _repository.UpdateAsync(updateReviewDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Review>(updateReviewDTO));
             return NoContent();
         }
 
@@ -174,6 +177,6 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet("product/{productId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviewsByProduct(int productId) => 
-            Ok((await _repository.GetReviewsByProductAsync(productId)).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetReviewsByProductAsync(productId)));
     }
 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Subscriber;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -15,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly ISubscribersRepository _repository;
 
-        public SubscribersController(ISubscribersRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public SubscribersController(ISubscribersRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of subscribers
@@ -35,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<SubscriberDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<SubscriberDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if subscriber exists
@@ -75,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<SubscriberDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<SubscriberDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a subscriber
@@ -96,7 +98,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateSubscriberDTO createSubscriberDTO)
         {
-            var subscriber = await _repository.CreateAsync(createSubscriberDTO.FromDTO());
+            var subscriber = await _repository.CreateAsync(_mapper.Map<Subscriber>(createSubscriberDTO));
             if (subscriber is null) return UnprocessableEntity();
             return Ok(subscriber.Id);
         }
@@ -122,7 +124,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateSubscriberDTO updateSubscriberDTO)
         {
-            await _repository.UpdateAsync(updateSubscriberDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<Subscriber>(updateSubscriberDTO));
             return NoContent();
         }
 
@@ -166,6 +168,6 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<SubscriberDTO>> Get(string email) =>
-            Ok((await _repository.GetAsync(email)).ToDTO());
+            Ok(_mapper.Map<SubscriberDTO>(await _repository.GetAsync(email)));
     }
 }

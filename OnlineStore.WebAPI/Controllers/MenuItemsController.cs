@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Application.DTOs.MenuItem;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain.Constants;
@@ -15,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<MenuItem> _repository;
 
-        public MenuItemsController(IRepository<MenuItem> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public MenuItemsController(IRepository<MenuItem> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of menu items
@@ -30,7 +32,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<MenuItemDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<MenuItemDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if menu item exists
@@ -67,7 +69,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<MenuItemDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<MenuItem>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a menu item
@@ -93,7 +95,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateMenuItemDTO createMenuItemDTO)
         {
-            var menuItem = await _repository.CreateAsync(createMenuItemDTO.FromDTO());
+            var menuItem = await _repository.CreateAsync(_mapper.Map<MenuItem>(createMenuItemDTO));
             if (menuItem is null) return UnprocessableEntity();
             return Ok(menuItem.Id);
         }
@@ -119,7 +121,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateMenuItemDTO UpdateMenuItemDTO)
         {
-            await _repository.UpdateAsync(UpdateMenuItemDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<MenuItem>(UpdateMenuItemDTO));
             return NoContent();
         }
 

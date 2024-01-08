@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.ContactRequest;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -15,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<ContactRequest> _repository;
 
-        public ContactRequestsController(IRepository<ContactRequest> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public ContactRequestsController(IRepository<ContactRequest> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of contact requests
@@ -35,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ContactRequestDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ContactRequestDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if contact request exists
@@ -75,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ContactRequestDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<ContactRequestDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a contact request
@@ -96,7 +98,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateContactRequestDTO createContactRequestDTO)
         {
-            var contactRequest = await _repository.CreateAsync(createContactRequestDTO.FromDTO());
+            var contactRequest = await _repository.CreateAsync(_mapper.Map<ContactRequest>(createContactRequestDTO));
             if (contactRequest is null) return UnprocessableEntity();
             return Ok(contactRequest.Id);
         }
@@ -122,7 +124,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
-            await _repository.UpdateAsync(updateContactRequestDTO.FromDTO());
+            await _repository.UpdateAsync(_mapper.Map<ContactRequest>(updateContactRequestDTO));
             return NoContent();
         }
 
