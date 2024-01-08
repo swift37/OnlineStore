@@ -52,10 +52,10 @@
         <ul class="product-main-specs">
             @if (Model.Specifications != null)
                 foreach (var spec in Model.Specifications)
-                    if (spec.IsMain)
+                    if (spec.SpecificationType?.IsMain ?? false)
                     {
                         <li class="product-spec">
-                            @spec.Name: @spec.Value
+                            @spec.SpecificationType.DisplayName: @spec.Value
                         </li>
                     }
         </ul>
