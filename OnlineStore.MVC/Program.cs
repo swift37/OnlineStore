@@ -40,6 +40,7 @@ builder.Services.AddHttpClient<IClient, Client>(client =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<ISpecificationTypesService, SpecificationTypesService>();
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IReviewsService, ReviewsService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
