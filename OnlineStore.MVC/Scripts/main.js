@@ -10,6 +10,8 @@
 
     setItemsPerPageSlValue();
 
+    setPriceFilters();
+
     $('.side-menu-button').click(function () {
         $('.site-off').addClass('show-menu');
     });
@@ -195,6 +197,19 @@
             $('.item-options .selected-value').text(param);
     }
 
+    function setPriceFilters() {
+        let url = new window.URL(document.location);
+        let minPriceParam = url.searchParams.get("minPrice");
+        if (minPriceParam != null) {
+            $('#minPrice').val(minPriceParam);
+            $('#minPriceInput').val(minPriceParam);
+        }
+        let maxPriceParam = url.searchParams.get("maxPrice");
+        if (maxPriceParam != null) {
+            $('#maxPrice').val(maxPriceParam);
+            $('#maxPriceInput').val(maxPriceParam);
+        }
+    }
 
     $('.item-sortir li').click(function () {
         let sortParam = $(this).data('option');
