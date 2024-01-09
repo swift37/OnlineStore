@@ -183,7 +183,6 @@
     function setSortBySlValue() {
         let url = new window.URL(document.location);
         let param = url.searchParams.get("sortBy");
-        console.log(param);
         if (param != null) {
             var value = $('.item-sortir').find('[data-option="' + param + '"]').text();
             $('.item-sortir .selected-value').text(value);
@@ -226,6 +225,24 @@
 
         let url = new window.URL(document.location);
         url.searchParams.set("itemsperpage", itemsPerPage);
+        location.replace(url);
+    });
+
+    $('#minPriceInput, #minPrice').change(function () {
+        let minPrice = parseInt($(this).val());
+        if (!minPrice || minPrice < parseInt($(this).prop('min'))) minPrice = $(this).prop('min');
+
+        let url = new window.URL(document.location);
+        url.searchParams.set("minPrice", minPrice);
+        location.replace(url);
+    });
+
+    $('#maxPriceInput, #maxPrice').change(function () {
+        let maxPrice = parseInt($(this).val());
+        if (!maxPrice || maxPrice > parseInt($(this).prop('max'))) maxPrice = $(this).prop('max');
+
+        let url = new window.URL(document.location);
+        url.searchParams.set("maxPrice", maxPrice);
         location.replace(url);
     });
 
