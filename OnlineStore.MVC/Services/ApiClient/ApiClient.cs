@@ -11283,7 +11283,7 @@ namespace OnlineStore.MVC.Services.ApiClient
         public int MaxPrice { get; set; }
 
         [Newtonsoft.Json.JsonProperty("specificationIds", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<int> SpecificationIds { get; set; }
+        public System.Collections.Generic.IDictionary<int, System.Collections.Generic.ICollection<int>> SpecificationIds { get; set; }
 
         [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int PageNumber { get; set; }
