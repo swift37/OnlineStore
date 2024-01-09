@@ -3,28 +3,23 @@ const rangeSliders = document.querySelectorAll('.range-sliders input')
 const rangeBar = document.querySelector('.double-slider .range')
 
 const validateInputs = e => {
-	const minRangeGap = 500
 	let minValue = parseInt(rangeInputs[0].value)
 	let maxValue = parseInt(rangeInputs[1].value)
 
-	if (
-		maxValue - minValue < minRangeGap ||
+	if (maxValue - minValue < 0 ||
 		e.target.value > parseInt(rangeSliders[0].max) ||
 		e.target.value < parseInt(rangeSliders[0].min)
-	) {
-		if (e.target.id === 'minInput') {
-			rangeInputs[0].value = maxValue - minRangeGap
-		} else {
-			rangeInputs[1].value = minValue + minRangeGap
-		}
-	}
+	)
+		rangeInputs.forEach(input => input.style.borderColor = '#cc0000');
+	else
+		rangeInputs.forEach(input => input.style.borderColor = '#aaa');
 }
 
 rangeInputs.forEach(input =>
 	input.addEventListener('input', e => {
 		validateInputs(e)
 
-		if (e.target.id === 'minInput') {
+		if (e.target.id === 'minPriceInput') {
 			rangeSliders[0].value = rangeInputs[0].value
 			rangeBar.style.left =
 				(rangeInputs[0].value / rangeSliders[0].max) * 100 + '%'
@@ -38,7 +33,7 @@ rangeInputs.forEach(input =>
 
 rangeSliders.forEach(slider =>
 	slider.addEventListener('input', e => {
-		if (e.target.id === 'minRange') {
+		if (e.target.id === 'minPrice') {
 			rangeInputs[0].value = rangeSliders[0].value
 			rangeInputs[0].dispatchEvent(new Event('input'))
 		} else {
