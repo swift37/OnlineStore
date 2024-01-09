@@ -4,6 +4,7 @@ using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
+using System.Linq;
 
 namespace OnlineStore.DAL.Repositories
 {
@@ -27,14 +28,20 @@ namespace OnlineStore.DAL.Repositories
                 .ConfigureAwait(false);
 
             if (category is null) throw new NotFoundException(nameof(Category), options.CategoryId);
-
-            var query = Entities.Where(p =>
-                p.CategoryId == options.CategoryId &&
-                p.UnitPrice - p.Discount >= options.MinPrice &&
-                p.UnitPrice - p.Discount <= options.MaxPrice &&
-                p.Specifications.Select(s => s.Id)
-                    .Intersect(options.SpecificationIds)
-                    .Count() == options.SpecificationIds.Count);
+            var specificationIds = options.SpecificationIds.Values.SelectMany(v => v).ToList();
+            var query = Entities.Where(product =>
+                product.CategoryId == options.CategoryId &&
+                product.UnitPrice - product.Discount >= options.MinPrice &&
+                product.UnitPrice - product.Discount <= options.MaxPrice &&
+                product.Specifications.Select(spec => spec.SpecificationTypeId)
+                .Intersect(options.SpecificationIds.Keys)
+                .Count() == options.SpecificationIds.Keys.Count() &&
+                product.Specifications.Select(spec => spec.Id)
+                .Intersect(specificationIds)
+                .Count() >=
+                product.Specifications.Select(spec => spec.SpecificationTypeId)
+                .Intersect(options.SpecificationIds.Keys)
+                .Count());
 
             var pagesCount = 
                 (await query.CountAsync(cancellation) + options.ItemsPerPage - 1) 
