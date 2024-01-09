@@ -246,6 +246,19 @@
         location.replace(url);
     });
 
+    $('.filter-block.params input').change(function () {
+        let url = new window.URL(document.location);
+
+        if ($(this).prop('checked')) {
+            
+            url.searchParams.append("filters", $(this).prop('id'));
+        }
+        else
+            url.searchParams.delete("filters", $(this).prop('id'));
+
+        location.replace(url);
+    });
+
     $('#termsCheckbox').click(function () {
         if ($(this).is(':checked')) {
             $('#checkoutBtn').removeAttr('disabled');
