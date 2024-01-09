@@ -1,7 +1,7 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
 
 <div class="icon-container">
-    <a href="/">
+    <a asp-controller="Account" asp-action="Index">
         <img src="~/resources/icons/user.png" width="20" alt="Account">
     </a>
 </div>
@@ -17,19 +17,19 @@
         <ul>
             <li>
                 <i class="fa-regular fa-user"></i>
-                <a href="/">Profile</a>
+                <a asp-controller="Account" asp-action="Index">Profile</a>
             </li>
             <li>
                 <i class="fa-regular fa-clipboard"></i>
-                <a href="/">Orders</a>
+                <a asp-controller="Account" asp-action="Index">Orders</a>
             </li>
             <li>
                 <i class="fa-regular fa-message"></i>
-                <a href="/">Reviews</a>
+                <a asp-controller="Account" asp-action="Index">Reviews</a>
             </li>
             <li>
                 <i class="fa-solid fa-gear"></i>
-                <a href="/">Settings & Privacy</a>
+                <a asp-controller="Account" asp-action="Index">Settings & Privacy</a>
             </li>
             <li>
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
