@@ -304,6 +304,42 @@ form {
             background-color: #27292a;
         }
 
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    appearance: none;
+    width: 40px;
+    height: 22px;
+    background-color: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+    .toggle-switch::after {
+        content: '';
+        position: absolute;
+        left: 4px;
+        height: 8px;
+        width: 8px;
+        background-color: transparent;
+        border-radius: 50%;
+        transition-duration: 0.4s;
+        box-shadow: 5px 2px 7px rgba(8, 8, 8, 0.16);
+        border: 3px solid #fff;
+    }
+
+    .toggle-switch:checked::after {
+        transform: translateX(150%);
+        background-color: #fff;
+    }
+
+    .toggle-switch:checked {
+        background-color: #000;
+    }
+
 .single-field {
     display: flex;
     flex-direction: column;
