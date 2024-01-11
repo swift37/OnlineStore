@@ -19,6 +19,10 @@
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
+      "library": "boxicons@2.1.4",
+      "destination": "wwwroot/lib/boxicons/"
+    },
+    {
       "library": "Swiper@11.0.5",
       "destination": "wwwroot/lib/swiper/"
     }
