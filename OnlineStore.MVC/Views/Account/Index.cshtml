@@ -1,9 +1,9 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
 
-<div class="account-section">
+<div class="acc-section">
     <div class="container">
-        <div class="account-wrapper">
-            <div class="account-menu">
+        <div class="acc-wrapper">
+            <div class="acc-menu">
                 <header>
                     <h3>
                         @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
@@ -44,7 +44,34 @@
                     </li>
                 </ul>
             </div>
-            <div class="account-content">
+            <div class="acc-content">
+                <div class="content-box">
+                    <div class="acc-settings">
+                        <div class="tab-switch">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class='bx bx-info-circle'></i>
+                                        Personal Info
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class='bx bx-shield'></i>
+                                        Security
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class='bx bx-show-alt'></i>
+                                        Privacy
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
