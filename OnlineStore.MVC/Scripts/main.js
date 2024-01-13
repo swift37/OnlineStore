@@ -71,31 +71,6 @@
         }
     });
 
-    $('#add-spec').click(function () {
-        let specsCount = $('.product-specs-list .two.fields').length;
-
-        let element = '<div class="field spec-field"><label>Specs</label>' +
-            '<div class="two fields"><div class="field">' +
-            '<input name="ProductDetails[' + specsCount + '].PropertyName" type="text" placeholder="Name"></div><div class="field">' +
-            '<input name="ProductDetails[' + specsCount + '].PropertyValue" type="text" placeholder="Value"></div>' +
-            '<i class="remove circle icon remove-spec"></i></div></div>';
-
-        $('.product-specs-list').append(element);
-    });
-
-    $('.remove-spec').click(function () {
-        $(this).closest('.spec-field').remove();
-
-        $.each($('.spec-field'), function (index, item) {
-            console.log(index);
-            $(item).find('.property-name').attr('name', 'ProductDetails[' + index + '].PropertyName');
-            $(item).find('.property-value').attr('name', 'ProductDetails[' + index + '].PropertyValue');
-            $(item).find('.property-id').attr('name', 'ProductDetails[' + index + '].Id');
-        });
-    });
-
-
-
     function checkWishlistQuantity() {
         let qty = parseInt($('#wishlistQuantity').text());
         if (qty > 9) {
@@ -267,5 +242,4 @@
             $('#checkoutBtn').attr('disabled', true);
         }
     });
-
 });

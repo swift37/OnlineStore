@@ -49,20 +49,20 @@
                     <div class="acc-settings">
                         <div class="tab-switch">
                             <ul>
-                                <li>
-                                    <a href="#">
+                                <li id="t0">
+                                    <a href="#personal-info">
                                         <i class='bx bx-info-circle'></i>
                                         Personal Info
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="t1">
+                                    <a href="#security">
                                         <i class='bx bx-shield'></i>
                                         Security
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="t2">
+                                    <a href="#privacy">
                                         <i class='bx bx-show-alt'></i>
                                         Privacy
                                     </a>
@@ -70,7 +70,7 @@
                             </ul>
                         </div>
                         <div class="tab-content">
-                            <div class="info-tab">
+                            <div class="tab">
                                 <header class="tab-header">
                                     <h3>General Information</h3>
                                     <span>Here you can change your personal information.</span>
@@ -102,9 +102,9 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="security-tab">
+                            <div class="tab">
                                 <header class="tab-header">
-                                    <h3>Sucurity</h3>
+                                    <h3>Security</h3>
                                     <span>Here you can change your security settings.</span>
                                 </header>
                                 <div class="settings-group">
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="privacy-tab tab">
+                            <div class="tab">
                                 <header class="tab-header">
                                     <h3>Privacy</h3>
                                     <span>Here you can change your privacy settings.</span>
@@ -208,6 +208,7 @@
                                             <span>Decide whether the store can share your activity</span>
                                         </p>
                                         <input type="checkbox" class="toggle-switch" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -217,3 +218,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/scripts/account.min.js" asp-append-version="true"></script>
+}
