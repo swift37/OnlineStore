@@ -19,19 +19,19 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Orders">
                             <i class='bx bx-layer'></i>
                             Orders
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Reviews">
                             <i class='bx bx-message-square-dots'></i>
                             Reviews
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Wishlist">
                             <i class='bx bx-heart'></i>
                             Wishlist
                         </a>
@@ -52,170 +52,41 @@
             </div>
             <div class="acc-content">
                 <div class="content-box">
-                    <div class="acc-settings">
-                        <div class="tab-switch">
-                            <ul>
-                                <li id="t0">
-                                    <a href="#personal-info">
-                                        <i class='bx bx-info-circle'></i>
-                                        Personal Info
-                                    </a>
-                                </li>
-                                <li id="t1">
-                                    <a href="#security">
-                                        <i class='bx bx-shield'></i>
-                                        Security
-                                    </a>
-                                </li>
-                                <li id="t2">
-                                    <a href="#privacy">
-                                        <i class='bx bx-show-alt'></i>
-                                        Privacy
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <div class="tab">
-                                <header class="tab-header">
-                                    <h3>General Information</h3>
-                                    <span>Here you can change your personal information.</span>
-                                </header>
-                                <form>
-                                    <div class="double-field">
-                                        <div class="single-field">
-                                            <label>First Name</label>
-                                            <input type="text" placeholder="Unspecified" required />
-                                        </div>
-                                        <div class="single-field">
-                                            <label>Last Name</label>
-                                            <input type="text" placeholder="Unspecified" required />
-                                        </div>
-                                    </div>
-                                    <div class="single-field">
-                                        <label>Email Address</label>
-                                        <input type="email" placeholder="Unspecified" required />
-                                    </div>
-                                    <div class="double-field">
-                                        <div class="single-field">
-                                            <label>Login</label>
-                                            <input type="text" placeholder="Unspecified" required />
-                                        </div>
-                                        <div class="single-field">
-                                            <label>Phone Number</label>
-                                            <input type="tel" placeholder="Unspecified" required />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="tab">
-                                <header class="tab-header">
-                                    <h3>Security</h3>
-                                    <span>Here you can change your security settings.</span>
-                                </header>
-                                <div class="settings-group">
-                                    <header>
-                                        <h4>Login settings</h4>
-                                    </header>
-                                    <div class="settings-field">
-                                        <p>
-                                            Two-Step Authentication
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Email Authentication
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Login with Email Confirmation
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Login with SMS Confirmation
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
+                    <header class="box-header">
+                        <h3>Wishlist</h3>
+                        <span>Last change: 13.01.2024</span>
+                    </header>
+                    <div class="products-list">
+                        <div class="products-list-line">
+                            <div class="left-part">
+                                <div class="line-check">
+                                    <input type="checkbox" id="pSelect" />
+                                    <label for="pSelect"></label>
                                 </div>
-                                <div class="settings-group">
-                                    <header>
-                                        <h4>Password security</h4>
-                                    </header>
-                                    <div class="settings-field">
-                                        <p>
-                                            Password change
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <a href="#">Change Password</a>
-                                    </div>
-                                </div>
-                                <div class="settings-group">
-                                    <header>
-                                        <h4>Email security</h4>
-                                    </header>
-                                    <div class="settings-field">
-                                        <p>
-                                            Email change
-                                            <span>Lorem ipsum dolor sit amet consectetur</span>
-                                        </p>
-                                        <a href="#">Change email</a>
-                                    </div>
+                                <div class="line-image">
+                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
+                                        <img src="" alt="Image">
+                                    </a>
                                 </div>
                             </div>
-                            <div class="tab">
-                                <header class="tab-header">
-                                    <h3>Privacy</h3>
-                                    <span>Here you can change your privacy settings.</span>
-                                </header>
-                                <div class="settings-group">
-                                    <header>
-                                        <h4>Privacy settings</h4>
-                                    </header>
-                                    <div class="settings-field">
-                                        <p>
-                                            Share personal information with third-party partners
-                                            <span>Decide whether the store should share your info</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Receive marketing emails
-                                            <span>Opt in to receive store's promotional emails</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Allow location tracking
-                                            <span>Allow store to track your location for personalization</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Share browsing history with the store
-                                            <span>Share your browsing history for personalized recs</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
-                                    <div class="settings-field">
-                                        <p>
-                                            Allow social media sharing
-                                            <span>Decide whether the store can share your activity</span>
-                                        </p>
-                                        <input type="checkbox" class="toggle-switch" />
-                                    </div>
+                            <div class="middle-part">
+                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
+                                    ASUS ROG Strix G15
+                                </a>
+                                <p>$1250.00</p>
+                            </div>
+                            <div class="right-part">
+                                <div class="qty-control flexitem">
+                                    <button class="qty-minus">-</button>
+                                    <input class="qty-value" type="text" value="1" data-itemid="3" min="1" pattern="^[0-9]+$">
+                                    <button class="qty-plus">+</button>
                                 </div>
+                                <button class="item-add-to-cart" data-itemid="3">
+                                    <i class='bx bx-cart-add'></i>
+                                </button>
+                                <button class="item-remove from-wishlist" data-itemid="3">
+                                    <i class='bx bx-trash-alt'></i>
+                                </button>
                             </div>
                         </div>
                     </div>
