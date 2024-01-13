@@ -1,5 +1,10 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
 
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <div class="acc-section">
     <div class="container">
         <div class="acc-wrapper">
@@ -19,25 +24,25 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Orders">
                             <i class='bx bx-layer'></i>
                             Orders
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Reviews">
                             <i class='bx bx-message-square-dots'></i>
                             Reviews
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Index">
+                        <a asp-controller="Account" asp-action="Wishlist">
                             <i class='bx bx-heart'></i>
                             Wishlist
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Account" asp-action="Settings">
+                        <a class="active">
                             <i class='bx bx-cog'></i>
                             Settings & Privacy
                         </a>
@@ -55,7 +60,7 @@
                     <div class="acc-settings">
                         <div class="tab-switch">
                             <ul>
-                                <li id="t0">
+                                <li id="t0" class="active">
                                     <a href="#personal-info">
                                         <i class='bx bx-info-circle'></i>
                                         Personal Info
@@ -76,7 +81,7 @@
                             </ul>
                         </div>
                         <div class="tab-content">
-                            <div class="tab">
+                            <div class="tab active">
                                 <header class="tab-header">
                                     <h3>General Information</h3>
                                     <span>Here you can change your personal information.</span>

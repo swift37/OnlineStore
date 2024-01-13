@@ -8,5 +8,11 @@ namespace OnlineStore.MVC.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            return View();
+        }
     }
 }
