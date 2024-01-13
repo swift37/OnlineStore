@@ -24,7 +24,7 @@ namespace OnlineStore.DAL.Context
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
-        public DbSet<FiltersGroup> FilterGoups { get; set; }
+        public DbSet<FiltersGroup> FilterGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

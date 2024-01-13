@@ -79,16 +79,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        foreach (var desc in provider.ApiVersionDescriptions)
-        {
-            options.SwaggerEndpoint(
-                $"/swagger/{desc.GroupName}/swagger.json",
-                desc.GroupName.ToUpperInvariant());
-        }
-        options.RoutePrefix = string.Empty;
-    });
+    app.UseSwaggerUI();
+    //app.UseSwaggerUI(options =>
+    //{
+    //    foreach (var desc in provider.ApiVersionDescriptions)
+    //    {
+    //        options.SwaggerEndpoint(
+    //            $"/swagger/{desc.GroupName}/swagger.json",
+    //            desc.GroupName.ToUpperInvariant());
+    //    }
+    //    options.RoutePrefix = string.Empty;
+    //});
 }
 
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();

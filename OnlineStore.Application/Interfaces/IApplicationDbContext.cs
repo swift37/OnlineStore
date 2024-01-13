@@ -18,6 +18,8 @@ namespace OnlineStore.Application.Interfaces
         public DbSet<ContactRequest> ContactRequests { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
+        public DbSet<FiltersGroup> FilterGroups { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class; 
 
