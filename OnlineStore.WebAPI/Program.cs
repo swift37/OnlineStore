@@ -6,6 +6,7 @@ using OnlineStore.Application.Mapping;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.Identity;
+using OnlineStore.Identity.Context;
 using OnlineStore.WebAPI.Middleware;
 using OnlineStore.WebAPI.OptionsSetup;
 using System.Reflection;
@@ -64,6 +65,9 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
+        var identityContext = scope.ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>();
+        IdentityDbInitializer.Initialize(identityContext);
+
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         DbInitializer.Initialize(context);
     }

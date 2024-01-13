@@ -7,7 +7,7 @@ namespace OnlineStore.DAL
     {
         public static void Initialize(ApplicationDbContext context)
         {
-            context.Database.Migrate();
+            context.Database.EnsureCreated();
         }
     }
 }
