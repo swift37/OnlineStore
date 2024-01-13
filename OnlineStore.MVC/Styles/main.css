@@ -4230,7 +4230,8 @@ form {
             transition: 0.3s;
         }
 
-        .acc-menu ul li:hover {
+        .acc-menu ul li:hover,
+        .acc-menu ul li.active {
             background-color: #f6f8ff;
         }
 
@@ -4303,7 +4304,8 @@ form {
         transition: 0.3s;
     }
 
-    .acc-settings ul li:hover {
+    .acc-settings ul li:hover,
+    .acc-settings ul li.active {
         background-color: #f6f8ff;
     }
 
@@ -4374,13 +4376,28 @@ form {
         cursor: pointer;
     }
 
-.info-tab {
-    display: none;
-    padding-bottom: 3em;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
-    .info-tab form {
+.tab {
+    display: none;
+    padding-bottom: 3em;
+    animation: fadeIn 0.5s;
+}
+
+    .tab form {
         gap: 1.5em;
+    }
+
+    .tab.active {
+        display: block;
     }
 
 .tab-content .tab-header {
