@@ -29,24 +29,24 @@ namespace OnlineStore.MVC.Controllers
         [ValidateAjax]
         public async Task<IActionResult> Add(int productId)
         {
-            var getWishlistReponse = await _wishlistsService.GetUserWishlist();
-            if (!getWishlistReponse.Success) 
+            var getWishlistResponse = await _wishlistsService.GetUserWishlist();
+            if (!getWishlistResponse.Success) 
                 return Json(new 
                 { 
                     success = false, 
-                    errors = new[] { $"An error occurred. Status code: {getWishlistReponse.Status}" } 
+                    errors = new[] { $"An error occurred. Status code: {getWishlistResponse.Status}" } 
                 });
 
-            var getProductReponse = await _productsService.Get(productId);
-            if (!getProductReponse.Success) 
+            var getProductResponse = await _productsService.Get(productId);
+            if (!getProductResponse.Success) 
                 return Json(new 
                 { 
                     success = false, 
-                    errors = new[] { $"An error occurred. Status code: {getProductReponse.Status}" } 
+                    errors = new[] { $"An error occurred. Status code: {getProductResponse.Status}" } 
                 });
 
-            var wishlist = getWishlistReponse.Data;
-            var product = getProductReponse.Data;
+            var wishlist = getWishlistResponse.Data;
+            var product = getProductResponse.Data;
             
             if (wishlist.Products.Any(product => product.Id == productId))
                 return Json(new 
