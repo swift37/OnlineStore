@@ -4493,41 +4493,6 @@ form {
         object-fit: contain;
     }
 
-.products-list-line .line-check {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px;
-    margin-left: -11px;
-}
-
-    .products-list-line .line-check label {
-        width: 15px;
-        height: 15px;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        background-color: transparent;
-        color: #000;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .products-list-line .line-check input:checked + label {
-        border: 1px solid #000;
-    }
-
-        .products-list-line .line-check input:checked + label:after {
-            content: '\2714';
-            position: relative;
-            top: -8px;
-            left: 2px;
-            font-size: 13px;
-        }
-
-    .products-list-line .line-check input {
-        appearance: unset;
-    }
-
 .products-list-line .left-part {
     margin-right: 15px;
 }
@@ -4641,6 +4606,41 @@ form {
             .products-list-summary .products-total .total-line:last-child span {
                 font-weight: 600;
             }
+
+.line-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    margin-left: -11px;
+}
+
+    .line-check label {
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        background-color: transparent;
+        color: #000;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .line-check input:checked + label {
+        border: 1px solid #000;
+    }
+
+        .line-check input:checked + label:after, {
+            content: '\2714';
+            position: relative;
+            top: -8px;
+            left: 2px;
+            font-size: 13px;
+        }
+
+    .line-check input {
+        appearance: unset;
+    }
 
 
 
