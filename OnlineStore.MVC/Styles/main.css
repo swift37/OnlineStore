@@ -4429,16 +4429,6 @@ form {
     margin-bottom: 20px;
 }
 
-    .tab-content .tab-header::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 0;
-        height: 0.05em;
-        width: 100%;
-        background-color: #ddd;
-    }
-
     .tab-content .tab-header h3 {
         font-size: 24px;
         font-weight: 600;
@@ -4456,8 +4446,7 @@ form {
     }
 
 .products-list {
-    padding-top: 3em;
-    padding-bottom: 2em;
+    padding: 2em 0;
 }
 
 .products-list-header {
@@ -4533,10 +4522,14 @@ form {
         -webkit-box-pack: center;
     }
 
-        .products-list-line .line-image img {
-            position: relative;
-            height: 100%;
+        .products-list-line .line-image a {
             width: 100%;
+            height: 100%;
+        }
+
+        .products-list-line .line-image img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
@@ -4696,6 +4689,100 @@ form {
         cursor: pointer;
     }
 
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 3em;
+}
+
+.reviews-list-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; 
+    font-size: 22px;
+    line-height: 28px;
+    color: #181818;
+}
+
+    .reviews-list-header span {
+        color: #474747;
+        margin-left: 5px;
+    }
+
+.reviews-list-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 85px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.75em;
+    margin-bottom: 0.7em;
+    cursor: pointer;
+}
+
+    .reviews-list-line:hover {
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 1px;
+    }
+
+    .reviews-list-line .left-part {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .reviews-list-line .line-image {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 60px;
+        width: 70px;
+        padding: 0px;
+        overflow: hidden;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+    }
+
+        .reviews-list-line .line-image a {
+            width: 100%;
+            height: 100%;
+        }
+
+        .reviews-list-line .line-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+    .reviews-list-line .line-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 0.8em;
+    }
+
+        .reviews-list-line .line-content a {
+            font-size: 15px;
+            line-height: 20px;
+            color: #000;
+        }
+
+            .reviews-list-line .line-content a:hover {
+                text-decoration: underline;
+            }
+
+            .reviews-list-line .line-content a:last-child {
+                font-size: 13px;
+                color: #676767;
+            }
+
+    .reviews-list-line button {
+        font-weight: 500;
+        box-shadow: 0 0 0 1px #000 inset !important;
+    }
+    
 
 
 
@@ -4737,10 +4824,8 @@ form {
 
 
 
-
-
-@media screen and (min-width: 992px) {
-    .desktop-hide {
+    @media screen and (min-width: 992px) {
+        .desktop-hide {
         display: none;
     }
 }
