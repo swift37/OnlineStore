@@ -20,5 +20,11 @@ namespace OnlineStore.MVC.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Reviews()
+        {
+            return View();
+        }
     }
 }
