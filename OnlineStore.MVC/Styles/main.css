@@ -4256,16 +4256,6 @@ form {
         margin-bottom: 20px;
     }
 
-        .content-box .box-header::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 0;
-            height: 0.05em;
-            width: 100%;
-            background-color: #ddd;
-        }
-
         .content-box .box-header h3 {
             font-size: 24px;
             font-weight: 600;
@@ -4428,6 +4418,16 @@ form {
     padding-bottom: 14px;
     margin-bottom: 20px;
 }
+
+    .tab-content .tab-header::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        height: 0.05em;
+        width: 100%;
+        background-color: #ddd;
+    }
 
     .tab-content .tab-header h3 {
         font-size: 24px;
@@ -4699,7 +4699,7 @@ form {
 .reviews-list-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     font-size: 22px;
     line-height: 28px;
     color: #181818;
@@ -4867,41 +4867,137 @@ form {
         gap: 0.1em;
     }
 
-    .modal-field.rating p {
-        font-size: 18px;
-    }
-
-    .modal-field.rating .rate-this input {
-        display: none;
-    }
-
-    .modal-field.rating .rate-this label {
-        display: inline-flex;
-        position: relative;
-        align-items: center;
-        justify-content: center;
-        float: right;
-        padding: 3px;
-        margin-top: 3px;
-        height: 36px;
-        width: 36px;
-        vertical-align: text-bottom;
-        cursor: pointer;
-        overflow: hidden;
-    }
-
-        .modal-field.rating .rate-this label img {
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
+        .modal-field.rating p {
+            font-size: 18px;
         }
 
-    .modal-field.rating .rate-this input:checked ~ label img,
-    .rate-this:not(:checked) > label:hover,
-    .rate-this:not(:checked) > label:hover ~ label img {
-        content: url(../resources/icons/star.png);
+        .modal-field.rating .rate-this input {
+            display: none;
+        }
+
+        .modal-field.rating .rate-this label {
+            display: inline-flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            float: right;
+            padding: 3px;
+            margin-top: 3px;
+            height: 36px;
+            width: 36px;
+            vertical-align: text-bottom;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+            .modal-field.rating .rate-this label img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+
+        .modal-field.rating .rate-this input:checked ~ label img,
+        .rate-this:not(:checked) > label:hover,
+        .rate-this:not(:checked) > label:hover ~ label img {
+            content: url(../resources/icons/star.png);
+        }
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    padding: 2em 0;
+}
+
+.orders-list-header {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #575757;
+}
+
+.orders-list-line {
+    display: flex;
+    border: none;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 1px;
+}
+
+    .orders-list-line:hover {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 1px;
     }
 
+    .orders-list-line .left-part {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px;
+        min-width: 224px;
+        background-color: #f6f8ff;
+        border-radius: 8px 0px 0px 8px;
+    }
+
+        .orders-list-line .left-part h3 {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+            color: #181818;
+            padding: 0px;
+            margin: 0px 0px 10px;
+        }
+
+        .orders-list-line .left-part span {
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            color: #474747;
+        }
+
+            .orders-list-line .left-part span.price {
+                font-size: 15px;
+                line-height: 20px;
+                font-weight: 600;
+                color: #181818;
+                margin: 8px 0px 0px;
+            }
+
+    .orders-list-line .right-part {
+        display: flex;
+        align-items: center;
+        width: calc(100% - 224px);
+        padding: 0px 16px 8px;
+        margin: auto;
+        -webkit-box-align: center;
+    }
+
+        .orders-list-line .right-part .line-image {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 60px;
+            width: 70px;
+            padding: 0px;
+            margin-right: 12px;
+            overflow: hidden;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+        }
+
+            .orders-list-line .right-part .line-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+        .orders-list-line .right-part p {
+            max-height: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #373737;
+            word-break: break-all;
+        }
 
 
 
@@ -4938,8 +5034,8 @@ form {
 
 
 
-    @media screen and (min-width: 992px) {
-        .desktop-hide {
+@media screen and (min-width: 992px) {
+    .desktop-hide {
         display: none;
     }
 }
