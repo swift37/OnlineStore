@@ -4257,9 +4257,9 @@ form {
     }
 
         .content-box .box-header h3 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
-            line-height: 22px;
+            line-height: 32px;
             word-wrap: break-word;
             margin-bottom: 5px;
         }
@@ -4446,7 +4446,7 @@ form {
     }
 
 .products-list {
-    padding: 2em 0;
+    padding-bottom: 2em;
 }
 
 .products-list-header {
@@ -4693,8 +4693,15 @@ form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 3em;
 }
+
+    .reviews-list:not(:first-child) {
+        margin-top: 3em;
+    }
+
+    .reviews-list:last-child {
+        margin-bottom: 2em;
+    }
 
 .reviews-list-header {
     display: flex;
@@ -4906,7 +4913,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 0.7em;
-    padding: 2em 0;
+    padding-bottom: 2em;
 }
 
 .orders-list-header {
