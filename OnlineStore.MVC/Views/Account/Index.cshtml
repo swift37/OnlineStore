@@ -56,6 +56,47 @@
                         <h3>Reviews</h3>
                     </header>
 
+                    <div class="modal-container">
+                        <div class="modal">
+                            <div class="modal-content">
+                                <header class="modal-header">
+                                    <h2>Write a review</h2>
+                                    <i class="bx bx-x"></i>
+                                </header>
+                                <form>
+                                    <div class="modal-field rating">
+                                        <p>Are you satisfied enough?</p>
+                                        <div class="rate-this">
+                                            <input type="radio" name="rating" id="star5">
+                                            <label for="star5"><img src="~/resources/icons/empty-star.png"></label>
+
+                                            <input type="radio" name="rating" id="star4">
+                                            <label for="star4"><img src="~/resources/icons/empty-star.png"></label>
+
+                                            <input type="radio" name="rating" id="star3">
+                                            <label for="star3"><img src="~/resources/icons/empty-star.png"></label>
+
+                                            <input type="radio" name="rating" id="star2">
+                                            <label for="star2"><img src="~/resources/icons/empty-star.png"></label>
+
+                                            <input type="radio" name="rating" id="star1">
+                                            <label for="star1"><img src="~/resources/icons/empty-star.png"></label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-field">
+                                        <label>Title</label>
+                                        <input type="text" required />
+                                    </div>
+                                    <div class="modal-field">
+                                        <label>Review</label>
+                                        <textarea type="text"></textarea>
+                                    </div>
+                                    <button class="button black">Leave a review</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="reviews-list">
                         <div class="reviews-list-header">
                             Write review <span>(1)</span>
