@@ -26,5 +26,11 @@ namespace OnlineStore.MVC.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Orders()
+        {
+            return View();
+        }
     }
 }
