@@ -4456,6 +4456,7 @@ form {
         }
 
     .settings-group .settings-field a {
+        text-align: center;
         width: 150px;
         padding: 8px 16px;
         color: #000;
