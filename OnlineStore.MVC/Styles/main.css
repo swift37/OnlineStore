@@ -4261,7 +4261,7 @@ form {
             font-weight: 600;
             line-height: 32px;
             word-wrap: break-word;
-            margin-bottom: 5px;
+            margin: 0 0 5px;
         }
 
         .content-box .box-header h3 {
@@ -4523,6 +4523,10 @@ form {
     border-bottom: 0.05em solid #ddd;
 }
 
+    .products-list-header.empty {
+        padding: 0;
+    }
+
     .products-list-header .line-check {
         height: 37px;
         border-radius: 8px;
@@ -4607,7 +4611,7 @@ form {
         width: 100%;
         justify-content: space-between;
         margin-right: 40px;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 500;
         color: #000;
     }
@@ -4685,6 +4689,46 @@ form {
             margin-left: 16px
         }
 
+    .products-list-line .right-part .unit-price,
+    .products-list-line .right-part .line-price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+        .products-list-line .right-part .unit-price span,
+        .products-list-line .right-part .line-price span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #181818;
+            white-space: nowrap;
+        }
+
+        .products-list-line .right-part .line-price span {
+            font-size: 17px;
+        }
+
+            .products-list-line .right-part .unit-price span.without-disc {
+                display: block;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 16px;
+                color: #676767;
+                white-space: nowrap;
+                text-decoration: line-through;
+            }
+
+    .products-list-line .right-part .quantity {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: #676767;
+        margin: 0 4em 0 0.7em;
+        white-space: nowrap;
+    }
+
 .products-list-summary {
     display: flex;
     justify-content: space-between;
@@ -4719,6 +4763,7 @@ form {
         }
 
         .products-list-summary .products-total .total-sum {
+            font-size: 18px;
             font-weight: 600;
             padding: 12px 16px;
         }
