@@ -52,116 +52,57 @@
             </div>
             <div class="acc-content">
                 <div class="content-box">
-                    <a class="back-to-menu" asp-controller="Account" asp-action="Orders">
-                        <i class='bx bx-chevron-left'></i>
-                        <span>All Orders</span>
-                    </a>
-                    <header class="box-header">
-                        <h3>Order number <span>003453285345</span></h3>
-                        <p>placed January 16, 2024</p>
-                    </header>
-
-                    <h3 class="order-details-header">Delivery</h3>
-                    <div class="order-detail-stretch-box">
-                        <div class="stretch-box-content">
-                            <i class='bx bx-package'></i>
-                            <div class="info">
-                                <p>Courier - DHL</p>
-                                <span>Fast delivery</span>
-                            </div>
-                        </div>
+                    <div class="account-header">
+                        <h2>Orders</h2>
+                        <a asp-controller="Account" asp-action="Orders">
+                            <span>Show all</span>
+                            <i class='bx bx-chevron-right'></i>
+                        </a>
                     </div>
 
-                    <div class="details-double-box">
-                        <div class="order-detail-box">
-                            <h4 class="order-details-header">
-                                Pickup Address
-                            </h4>
-                            <div class="box-content">
-                                <h5>Meade Construction, 977 West Cermak Road</h5>
-                                <p>60608 Chicago</p>
-                                <p>Illinois (IL), Cook County</p>
-                                <p>United States</p>
-                            </div>
-                        </div>
-                        <div class="order-detail-box">
-                            <h4 class="order-details-header">
-                                The recipient's details
-                            </h4>
-                            <div class="box-content">
-                                <h5>Jonathan Winston</h5>
-                                <p>(206) 342-8631</p>
-                                <p>admin@onlinestore.com</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="order-details-header">Payment method</h3>
-                    <div class="order-detail-stretch-box">
-                        <div class="stretch-box-content">
-                            <i class='bx bx-wallet'></i>
-                            <div class="info">
-                                <p>Payment on receipt</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="order-details-header">Goods</h3>
-                    <div class="products-list">
-                        <div class="products-list-header empty"></div>
-                        <div class="products-list-line">
+                    <div class="account-last-order">
+                        <a href="#" class="orders-list-line">
                             <div class="left-part">
-                                <div class="line-image">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="middle-part">
-                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                    ASUS ROG Strix G15
-                                </a>
+                                <h3>Completed</h3>
+                                <span>15 January 2024</span>
+                                <span>0043589435532</span>
+                                <span class="price">$1249.00</span>
                             </div>
                             <div class="right-part">
-                                <div class="unit-price">
-                                    <span class="without-disc">$1500.00</span>
-                                    <span>$1200.00</span>
+                                <div class="line-image">
+                                    <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
                                 </div>
-                                <div class="quantity">
-                                    <span>x 3 pcs.</span>
-                                </div>
-                                <div class="line-price">
-                                    <span>$3600.00</span>
-                                </div>
+                                <p>ASUS ROG Strix G15</p>
                             </div>
-                        </div>
-                        <div class="products-list-summary">
-                            <div class="products-count">
-                                3 products
-                            </div>
-                            <div class="products-total">
-                                <div class="total-lines">
-                                    <div class="total-line">
-                                        <span>Subtotal:</span>
-                                        <span>$1500.00</span>
-                                    </div>
-                                    <div class="total-line">
-                                        <span>Discount:</span>
-                                        <span>-$100.00</span>
-                                    </div>
-                                    <div class="total-line">
-                                        <span>Delivery:</span>
-                                        <span>$15.00</span>
-                                    </div>
-                                </div>
-                                <div class="total-sum">
-                                    <span>Total:</span>
-                                    <span>$1415.00</span>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
+                    <div class="account-header">
+                        <h2>Wishlist</h2>
+                        <a asp-controller="Account" asp-action="Wishlist">
+                            <span>Show</span>
+                            <i class='bx bx-chevron-right'></i>
+                        </a>
+                    </div>
+
+                    <a class="account-wishlist-preview" asp-controller="Account" asp-action="Wishlist">
+                        <span class="last-change">Last change: January 13, 2024</span>
+                        <div class="product-previews">
+                            <div class="line-image">
+                                <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
+                            </div>
+                            <div class="line-image">
+                                <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
+                            </div>
+                            <div class="line-image">
+                                <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
+                            </div>
+                        </div>
+                        <div class="total">
+                            <span>Total:</span>
+                            <span>$9800.00</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
