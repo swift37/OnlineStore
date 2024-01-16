@@ -4624,28 +4624,38 @@ form {
     justify-content: space-between;
     align-items: flex-start;
     padding: 0.8em 0.5em;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
 }
 
     .products-list-summary .products-total {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3em;
+        align-items: stretch;
         width: 300px;
     }
 
-        .products-list-summary .products-total .total-line {
+        .products-list-summary .products-total .total-lines {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+            padding: 0px 16px 12px;
+            border-bottom: 0.05em solid #ddd;
+        } 
+
+        .products-list-summary .products-total .total-line,
+        .products-list-summary .products-total .total-sum {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             width: 100%;
         }
 
-            .products-list-summary .products-total .total-line span:first-child,
-            .products-list-summary .products-total .total-line:last-child span {
-                font-weight: 600;
-            }
+        .products-list-summary .products-total .total-sum {
+            font-weight: 600;
+            padding: 12px 16px;
+        }
 
 .line-check {
     display: flex;
