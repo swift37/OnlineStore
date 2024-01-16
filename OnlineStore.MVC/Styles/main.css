@@ -4256,13 +4256,44 @@ form {
         margin-bottom: 20px;
     }
 
-        .content-box .box-header h3 {
+        .content-box .box-header h2 {
             font-size: 28px;
             font-weight: 600;
             line-height: 32px;
             word-wrap: break-word;
             margin-bottom: 5px;
         }
+
+        .content-box .box-header h3 {
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 32px;
+            color: #181818;
+        }
+
+            .content-box .box-header h3 span {
+                font-weight: 700
+            }
+
+        .content-box .box-header p {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 24px;
+            color: #676767;
+        }
+
+@media screen and (max-width: 720px) {
+    .content-box .box-header h3 {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .content-box .box-header p {
+        font-size: 16px;
+        color: #676767;
+        margin-top: 4px;
+    }
+}
 
 .content-box .back-to-menu {
     display: inline-flex;
@@ -4292,15 +4323,16 @@ form {
         background-color: #ddd;
         color: #181818;
     }
-    .content-box:first-child {
-        margin-top: 0;
-    }
 
-    .content-box .acc-settings {
-        display: flex;
-        width: 100%;
-        height: 100%;
-    }
+.content-box:first-child {
+    margin-top: 0;
+}
+
+.content-box .acc-settings {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
 
 .acc-settings .tab-switch {
     position: relative;
@@ -4670,7 +4702,7 @@ form {
             width: 100%;
             padding: 0px 16px 12px;
             border-bottom: 0.05em solid #ddd;
-        } 
+        }
 
         .products-list-summary .products-total .total-line,
         .products-list-summary .products-total .total-sum {
@@ -5044,7 +5076,20 @@ form {
             word-break: break-all;
         }
 
+h3.order-details-header {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28px;
+    margin: 40px 0px 12px;
+}
 
+h3.order-details-header {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #181818;
+    margin-bottom: 8px;
+}
 
 
 
