@@ -4361,6 +4361,20 @@ form {
     height: 100%;
 }
 
+.acc-settings-btns {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0 1.5em;
+}
+
+    .acc-settings-btns .button {
+        width: 120px;
+        height: 40px;
+        font-size: 15px;
+    }
+
 .acc-settings .tab-switch {
     position: relative;
     width: 250px;
@@ -4493,7 +4507,9 @@ form {
     animation: fadeIn 0.5s;
 }
 
-    .tab form {
+    .tab .form {
+        display: flex;
+        flex-direction: column;
         gap: 1.5em;
     }
 
