@@ -96,5 +96,159 @@ namespace OnlineStore.WebAPI.Controllers
             await _authService.Logout(UserId);
             return Ok();
         }
+
+        /// <summary>
+        /// User email confirmation
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/confirm/email
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     token: "k30354g35gkrgergke34o54355435",
+        /// }
+        /// </remarks>
+        /// <param name="request">Confirm email request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("confirm/email")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailRequest request)
+        {
+            await _authService.ConfirmEmail(request);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update user data
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/user/update
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     firstName: "Updated Name",
+        ///     lastName: "Updated Surname"
+        /// }
+        /// </remarks>
+        /// <param name="request">Update user request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("user/update")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateUser(UpdateUserRequest request)
+        {
+            request.UserId = UserId;
+            await _authService.UpdateUser(request);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Change user email
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/change/email
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     newEmail: "test37@onlinestore.com"
+        /// }
+        /// </remarks>
+        /// <param name="request">Change email request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("change/email")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailRequest request)
+        {
+            request.UserId = UserId;
+            await _authService.ChangeEmail(request);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Confirmation of changing user email 
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/change/email/confirm
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     token: "k30354g35gkrgergke34o54355435",
+        ///     newEmail: "test37@onlinestore.com"
+        /// }
+        /// </remarks>
+        /// <param name="request">Confirm email changing request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("change/email/confirm")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ConfirmEmailChanging(ConfirmEmailChangingRequest request)
+        {
+            await _authService.ConfirmEmailChanging(request);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Change old user password to new one
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/change/password
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     oldPassword: "qwerty12345",
+        ///     newPassword: "p@ssword999",
+        ///     newPasswordConfirmation: "p@ssword999"
+        /// }
+        /// </remarks>
+        /// <param name="request">Change password request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("change/password")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+        {
+            request.UserId = UserId;
+            await _authService.ChangePassword(request);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Reset user password request
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/reset/password
+        /// </remarks>
+        /// <response code="200">Success</response>
+        [HttpPost("reset/password/request")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ResetPasswordRequest(string usernameOrEmail)
+        {
+            await _authService.ResetPasswordRequest(usernameOrEmail);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Reset user password
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/reset/password
+        /// {
+        ///     userId: "3293EAEE-275B-4331-9A78-30C8816C1BD6",
+        ///     token: "k30354g35gkrgergke34o54355435",
+        ///     newPassword: "p@ssword999",
+        ///     newPasswordConfirmation: "p@ssword999"
+        /// }
+        /// </remarks>
+        /// <param name="request">Reset password request model</param>
+        /// <response code="200">Success</response>
+        [HttpPost("reset/password")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            await _authService.ResetPassword(request);
+            return Ok();
+        }
     }
 }
