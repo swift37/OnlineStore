@@ -367,6 +367,13 @@ form {
         outline: none;
     }
 
+    .single-field input:read-only {
+        border: 1px solid #ddd;
+        color: rgba(0,0,0,.6);
+        user-select: none;
+        pointer-events: none;
+    }
+
 .double-field {
     display: flex;
     align-items: center;
