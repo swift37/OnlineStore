@@ -8,6 +8,10 @@ namespace OnlineStore.Identity.Models
 
         public string? LastName { get; set; }
 
+        public DateTime? DateOfBirth { get; set; }
+
+        public DateTime DateOfRegistration { get; set; }
+
         public string? RefreshToken { get; set; }
 
         public DateTime? RefreshTokenExpiry { get; set; }
