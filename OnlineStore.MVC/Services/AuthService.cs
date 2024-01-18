@@ -18,13 +18,13 @@ namespace OnlineStore.MVC.Services
             : base(mapper, client, httpContextAccessor) =>
             _tokenHandler = new JwtSecurityTokenHandler();
 
-        public async Task<Response> Register(RegisterViewModel registerViewModel)
+        public async Task<Response> Register(RegisterViewModel model)
         {
-            var registerRequest = _mapper.Map<RegisterRequest>(registerViewModel);
+            var requestBody = _mapper.Map<RegisterRequest>(model);
 
             try
             {
-                await _client.RegisterAsync(_usingVersion, registerRequest);
+                await _client.RegisterAsync(_usingVersion, requestBody);
                 return new Response { Success = true };
             }
             catch (ApiException exception)
@@ -33,13 +33,13 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response<Models.IdentityResponse>> Login(LoginViewModel loginViewModel)
+        public async Task<Response<Models.IdentityResponse>> Login(LoginViewModel model)
         {
-            var loginRequest = _mapper.Map<LoginRequest>(loginViewModel);
+            var requestBody = _mapper.Map<LoginRequest>(model);
 
             try
             {
-                var response = await _client.LoginAsync(_usingVersion, loginRequest);
+                var response = await _client.LoginAsync(_usingVersion, requestBody);
 
                 if (string.IsNullOrEmpty(response.AccessToken) || string.IsNullOrEmpty(response.RefreshToken)) 
                     return new Response<Models.IdentityResponse> { Success = false };
@@ -67,14 +67,14 @@ namespace OnlineStore.MVC.Services
 
         public async Task<Response<Models.IdentityResponse>> Refresh(string refreshToken)
         {
-            var refreshRequest = new RefreshRequest
+            var requestBody = new RefreshRequest
             {
                 RefreshToken = refreshToken
             };
 
             try
             {
-                var response = await _client.RefreshAsync(_usingVersion, refreshRequest);
+                var response = await _client.RefreshAsync(_usingVersion, requestBody);
                 return new Response<Models.IdentityResponse>
                 {
                     Success = true,
@@ -101,6 +101,118 @@ namespace OnlineStore.MVC.Services
                 return new Response { Success = true };
             }
             catch (ApiException exception) 
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ConfirmEmail(Guid userId, string token)
+        {
+            var requestBody = new ConfirmEmailRequest
+            {
+                UserId = userId,
+                Token = token
+            };
+
+            try
+            {
+                await _client.ConfirmEmailAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> UpdateUser(UpdateUserViewModel model)
+        {
+            var requestBody = _mapper.Map<UpdateUserRequest>(model);
+
+            try
+            {
+                await _client.UpdateUserAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ChangeEmail(ChangeEmailViewModel model)
+        {
+            var requestBody = _mapper.Map<ChangeEmailRequest>(model);
+
+            try
+            {
+                await _client.ChangeEmailAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ConfirmEmailChanging(Guid userId, string newEmail, string token)
+        {
+            var requestBody = new ConfirmEmailChangingRequest
+            {
+                UserId = userId,
+                NewEmail = newEmail,
+                Token = token
+            };
+
+            try
+            {
+                await _client.ConfirmEmailChangingAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ChangePassword(ChangePasswordViewModel model)
+        {
+            var requestBody = _mapper.Map<ChangePasswordRequest>(model);
+
+            try
+            {
+                await _client.ChangePasswordAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ResetPasswordRequest(string usernameOrEmail)
+        {
+            try
+            {
+                await _client.ResetPasswordRequestAsync(usernameOrEmail, _usingVersion);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse(exception);
+            }
+        }
+
+        public async Task<Response> ResetPassword(ResetPasswordViewModel model)
+        {
+            var requestBody = _mapper.Map<ResetPasswordRequest>(model);
+
+            try
+            {
+                await _client.ResetPasswordAsync(_usingVersion, requestBody);
+                return new Response { Success = true };
+            }
+            catch (ApiException exception)
             {
                 return GenerateResponse(exception);
             }
