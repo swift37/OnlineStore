@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces.Identity;
+using OnlineStore.Domain.Constants;
 using OnlineStore.Identity.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -33,12 +34,18 @@ namespace OnlineStore.Identity.Providers
 
             var claims = new[]
             {
-                new Claim("uid", userId),
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? string.Empty),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Birthdate, 
+                    user.DateOfBirth.HasValue ? 
+                    user.DateOfBirth.Value.ToString("yyyy-MM-dd") :
+                    string.Empty),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(CustomClaimNames.RegistrationDate, user.DateOfRegistration.ToString("yyyy-MM-dd")),
+                new Claim(CustomClaimNames.Phone, user.PhoneNumber ?? string.Empty)
             }
             .Union(roleClaims);
 
