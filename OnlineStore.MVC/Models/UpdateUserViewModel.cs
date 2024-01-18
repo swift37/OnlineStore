@@ -13,10 +13,6 @@ namespace OnlineStore.MVC.Models
         [Required]
         public string Username { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
         [Phone]
         public string? PhoneNumber { get; set; }
 
