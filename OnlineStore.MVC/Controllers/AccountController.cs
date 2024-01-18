@@ -39,6 +39,64 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChangeEmail() =>
+            View(new ChangeEmailViewModel());
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await _authService.ChangeEmail(model);
+            if (response.Success)
+                return RedirectToAction();
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+            {
+                foreach (var error in response.ValidationErrors)
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+
+                return View(model);
+            }
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeEmailConfirmation(Guid userId, string newEmail, string token)
+        {
+            var response = await _authService.ConfirmEmailChanging(userId, newEmail, token);
+            if (response.Success)
+                return RedirectToAction();
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword() =>
+            View(new ChangePasswordViewModel());
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await _authService.ChangePassword(model);
+            if (response.Success)
+                return RedirectToAction();
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+            {
+                foreach (var error in response.ValidationErrors)
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+
+                return View(model);
+            }
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
         public IActionResult Wishlist()
         {
             return View();
