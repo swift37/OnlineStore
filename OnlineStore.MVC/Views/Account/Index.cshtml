@@ -3,57 +3,11 @@
 <div class="acc-section">
     <div class="container">
         <div class="acc-wrapper">
-            <div class="acc-menu">
-                <header>
-                    <h3>
-                        @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
-                        @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br />
-                        <span>Developer</span>
-                    </h3>
-                </header>
-                <ul>
-                    <li>
-                        <a asp-controller="Account" asp-action="Index">
-                            <i class='bx bx-id-card'></i>
-                            Account
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Account" asp-action="Orders">
-                            <i class='bx bx-layer'></i>
-                            Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Account" asp-action="Reviews">
-                            <i class='bx bx-message-square-dots'></i>
-                            Reviews
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Account" asp-action="Wishlist">
-                            <i class='bx bx-heart'></i>
-                            Wishlist
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Account" asp-action="Settings">
-                            <i class='bx bx-cog'></i>
-                            Settings & Privacy
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Auth" asp-action="Logout">
-                            <i class='bx bx-log-out'></i>
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <partial name="_AccountMenu" />
             <div class="acc-content">
                 <div class="content-box">
                     <div class="account-header">
-                        <h2>Orders</h2>
+                        <h2>Your Last Order</h2>
                         <a asp-controller="Account" asp-action="Orders">
                             <span>Show all</span>
                             <i class='bx bx-chevron-right'></i>
