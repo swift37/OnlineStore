@@ -190,11 +190,11 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response> ResetPasswordRequest(string usernameOrEmail)
+        public async Task<Response> ResetPasswordRequest(ResetPasswordRequestViewModel model)
         {
             try
             {
-                await _client.ResetPasswordRequestAsync(usernameOrEmail, _usingVersion);
+                await _client.ResetPasswordRequestAsync(model.UsernameOrEmail, _usingVersion);
                 return new Response { Success = true };
             }
             catch (ApiException exception)
