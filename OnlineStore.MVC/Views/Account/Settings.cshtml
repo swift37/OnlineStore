@@ -1,4 +1,5 @@
-﻿@using System.IdentityModel.Tokens.Jwt
+﻿@model UpdateUserViewModel
+@using System.IdentityModel.Tokens.Jwt
 
 @{
     ViewData["Title"] = "Settings";
@@ -56,191 +57,213 @@
                 </ul>
             </div>
             <div class="acc-content">
-                <form>
-                    <div class="acc-settings-btns">
-                        <button class="button black" type="submit">Save</button>
-                        <button class="button black outlined" type="reset">Cancel</button>
-                    </div>
-                    <div class="content-box">
-                        <div class="acc-settings">
-                            <div class="tab-switch">
-                                <ul>
-                                    <li id="t0" class="active">
-                                        <a href="#personal-info">
-                                            <i class='bx bx-info-circle'></i>
-                                            Personal Info
-                                        </a>
-                                    </li>
-                                    <li id="t1">
-                                        <a href="#security">
-                                            <i class='bx bx-shield'></i>
-                                            Security
-                                        </a>
-                                    </li>
-                                    <li id="t2">
-                                        <a href="#privacy">
-                                            <i class='bx bx-show-alt'></i>
-                                            Privacy
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tab-content">
-                                <div class="tab active">
-                                    <header class="tab-header">
-                                        <h3>General Information</h3>
-                                        <span>Here you can change your personal information.</span>
-                                    </header>
-                                    <div class="form">
-                                        <div class="double-field">
-                                            <div class="single-field">
-                                                <label>First Name</label>
-                                                <input type="text" placeholder="Unspecified" required />
-                                            </div>
-                                            <div class="single-field">
-                                                <label>Last Name</label>
-                                                <input type="text" placeholder="Unspecified" required />
-                                            </div>
+                <div class="content-box">
+                    <div class="acc-settings">
+                        <div class="tab-switch">
+                            <ul>
+                                <li id="t0" class="active">
+                                    <a href="#personal-info">
+                                        <i class='bx bx-info-circle'></i>
+                                        Personal Info
+                                    </a>
+                                </li>
+                                <li id="t1">
+                                    <a href="#security">
+                                        <i class='bx bx-shield'></i>
+                                        Security
+                                    </a>
+                                </li>
+                                <li id="t2">
+                                    <a href="#privacy">
+                                        <i class='bx bx-show-alt'></i>
+                                        Privacy
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab active">
+                                <header class="tab-header">
+                                    <h3>General Information</h3>
+                                    <span>Here you can change your personal information.</span>
+                                </header>
+                                <form asp-controller="Account" asp-action="UpdateUser" method="post">
+                                    <div class="double-field">
+                                        <div class="single-field">
+                                            <label>First Name</label>
+                                            <input asp-for="FirstName"
+                                                   type="text"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value"
+                                                   placeholder="Unspecified"
+                                                   required />
                                         </div>
                                         <div class="single-field">
-                                            <label>Email Address</label>
-                                            <input type="email" placeholder="Unspecified" readonly />
+                                            <label>Last Name</label>
+                                            <input asp-for="LastName"
+                                                   type="text"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value"
+                                                   placeholder="Unspecified"
+                                                   required />
                                         </div>
-                                        <div class="double-field">
-                                            <div class="single-field">
-                                                <label>Login</label>
-                                                <input type="text" placeholder="Unspecified" required />
-                                            </div>
-                                            <div class="single-field">
-                                                <label>Phone Number</label>
-                                                <input type="tel" placeholder="Unspecified" required />
-                                            </div>
+                                    </div>
+                                    <div class="single-field">
+                                        <label>Email Address</label>
+                                        <input type="email"
+                                               value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value"
+                                               placeholder="Unspecified"
+                                               readonly />
+                                    </div>
+                                    <div class="double-field">
+                                        <div class="single-field">
+                                            <label>Login</label>
+                                            <input asp-for="Username"
+                                                   type="text"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.UniqueName)?.Value"
+                                                   placeholder="Unspecified"
+                                                   required />
                                         </div>
-                                        <div class="double-field">
-                                            <div class="single-field">
-                                                <label>Date of Birth</label>
-                                                <input type="date" placeholder="Unspecified" />
-                                            </div>
-                                            <div class="single-field">
-                                                <label>Date of Registration</label>
-                                                <input type="date" placeholder="Undefined" readonly />
-                                            </div>
+                                        <div class="single-field">
+                                            <label>Phone Number</label>
+                                            <input asp-for="PhoneNumber"
+                                                   type="tel"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == "tel")?.Value"
+                                                   placeholder="Unspecified" />
                                         </div>
+                                    </div>
+                                    <div class="double-field">
+                                        <div class="single-field">
+                                            <label>Date of Birth</label>
+                                            <input asp-for="DateOfBirth"
+                                                   type="date"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Birthdate)?.Value"
+                                                   placeholder="Unspecified" />
+                                        </div>
+                                        <div class="single-field">
+                                            <label>Date of Registration</label>
+                                            <input type="date"
+                                                   value="@User.Claims.FirstOrDefault(c => c.Type == "regdate")?.Value"
+                                                   placeholder="Undefined"
+                                                   readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-buttons">
+                                        <button class="button black" type="submit">Save</button>
+                                        <button class="button black outlined" type="reset">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab">
+                                <header class="tab-header">
+                                    <h3>Security</h3>
+                                    <span>Here you can change your security settings.</span>
+                                </header>
+                                <div class="settings-group">
+                                    <header>
+                                        <h4>Login settings</h4>
+                                    </header>
+                                    <div class="settings-field">
+                                        <p>
+                                            Two-Step Authentication
+                                            <span>Enhanced security: Protect your account with two-step authentication</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Email Authentication
+                                            <span>Log in easily, secure your account: Enable email authentication</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Login with Email Confirmation
+                                            <span>Added security, worry-free logins: Enable email confirmation</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Login with SMS Confirmation
+                                            <span>Protect your account: Enable SMS verification for secure logins</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
                                     </div>
                                 </div>
-                                <div class="tab">
-                                    <header class="tab-header">
-                                        <h3>Security</h3>
-                                        <span>Here you can change your security settings.</span>
+                                <div class="settings-group">
+                                    <header>
+                                        <h4>Password security</h4>
                                     </header>
-                                    <div class="settings-group">
-                                        <header>
-                                            <h4>Login settings</h4>
-                                        </header>
-                                        <div class="settings-field">
-                                            <p>
-                                                Two-Step Authentication
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Email Authentication
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Login with Email Confirmation
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Login with SMS Confirmation
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                    </div>
-                                    <div class="settings-group">
-                                        <header>
-                                            <h4>Password security</h4>
-                                        </header>
-                                        <div class="settings-field">
-                                            <p>
-                                                Password change
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <a href="#">Change Password</a>
-                                        </div>
-                                    </div>
-                                    <div class="settings-group">
-                                        <header>
-                                            <h4>Email security</h4>
-                                        </header>
-                                        <div class="settings-field">
-                                            <p>
-                                                Email change
-                                                <span>Lorem ipsum dolor sit amet consectetur</span>
-                                            </p>
-                                            <a href="#">Change email</a>
-                                        </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Password change
+                                            <span>Secure your account by updating your password</span>
+                                        </p>
+                                        <a asp-controller="Account" asp-action="ChangePassword">Change Password</a>
                                     </div>
                                 </div>
-                                <div class="tab">
-                                    <header class="tab-header">
-                                        <h3>Privacy</h3>
-                                        <span>Here you can change your privacy settings.</span>
+                                <div class="settings-group">
+                                    <header>
+                                        <h4>Email security</h4>
                                     </header>
-                                    <div class="settings-group">
-                                        <header>
-                                            <h4>Privacy settings</h4>
-                                        </header>
-                                        <div class="settings-field">
-                                            <p>
-                                                Share personal information with third-party partners
-                                                <span>Decide whether the store should share your info</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Receive marketing emails
-                                                <span>Opt in to receive store's promotional emails</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Allow location tracking
-                                                <span>Allow store to track your location for personalization</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Share browsing history with the store
-                                                <span>Share your browsing history for personalized recs</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
-                                        <div class="settings-field">
-                                            <p>
-                                                Allow social media sharing
-                                                <span>Decide whether the store can share your activity</span>
-                                            </p>
-                                            <input type="checkbox" class="toggle-switch" />
-                                        </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Email change
+                                            <span>Update your email address for a more secure and personalized experience</span>
+                                        </p>
+                                        <a asp-controller="Account" asp-action="ChangeEmail">Change email</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab">
+                                <header class="tab-header">
+                                    <h3>Privacy</h3>
+                                    <span>Here you can change your privacy settings.</span>
+                                </header>
+                                <div class="settings-group">
+                                    <header>
+                                        <h4>Privacy settings</h4>
+                                    </header>
+                                    <div class="settings-field">
+                                        <p>
+                                            Share personal information with third-party partners
+                                            <span>Decide whether the store should share your info</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Receive marketing emails
+                                            <span>Opt in to receive store's promotional emails</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Allow location tracking
+                                            <span>Allow store to track your location for personalization</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Share browsing history with the store
+                                            <span>Share your browsing history for personalized recs</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
+                                    </div>
+                                    <div class="settings-field">
+                                        <p>
+                                            Allow social media sharing
+                                            <span>Decide whether the store can share your activity</span>
+                                        </p>
+                                        <input type="checkbox" class="toggle-switch" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
