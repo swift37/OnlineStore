@@ -18,7 +18,7 @@ namespace OnlineStore.MVC.Controllers
         [HttpGet]
         public IActionResult Settings() => View(new UpdateUserViewModel());
 
-        [HttpPost]
+        [HttpPost("account/settings/user/update")]
         public async Task<IActionResult> UpdateUser(UpdateUserViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -38,18 +38,17 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpGet]
-        public IActionResult ChangeEmail() =>
-            View(new ChangeEmailViewModel());
+        [HttpGet("account/credentials/change/email")]
+        public IActionResult ChangeEmail() => View(new ChangeEmailViewModel());
 
-        [HttpPost]
+        [HttpPost("account/credentials/change/email")]
         public async Task<IActionResult> ChangeEmail(ChangeEmailViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
             var response = await _authService.ChangeEmail(model);
             if (response.Success)
-                return RedirectToAction();
+                return RedirectToRoute("account/credentials/change/confirmation");
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {
@@ -62,28 +61,27 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpGet]
+        [HttpGet("account/credentials/change/email/confirmation")]
         public async Task<IActionResult> ChangeEmailConfirmation(Guid userId, string newEmail, string token)
         {
             var response = await _authService.ConfirmEmailChanging(userId, newEmail, token);
             if (response.Success)
-                return RedirectToAction();
+                return RedirectToRoute("account/credentials/change/success");
 
             return StatusCode(response.Status);
         }
 
-        [HttpGet]
-        public IActionResult ChangePassword() =>
-            View(new ChangePasswordViewModel());
+        [HttpGet("account/credentials/change/password")]
+        public IActionResult ChangePassword() => View(new ChangePasswordViewModel());
 
-        [HttpPost]
+        [HttpPost("account/credentials/change/password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
             var response = await _authService.ChangePassword(model);
             if (response.Success)
-                return RedirectToAction();
+                return RedirectToRoute("account/credentials/change/success");
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {
