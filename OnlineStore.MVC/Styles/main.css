@@ -4250,7 +4250,7 @@ form {
 }
 
 .content-box {
-    padding: 24px;
+    padding: 24px 32px;
     margin-top: 20px;
     background: #ffffff;
     border-radius: 16px;
@@ -4371,6 +4371,7 @@ form {
     position: relative;
     width: 250px;
     height: auto;
+    margin-left: -8px;
     padding-right: 24px;
     border-right: 1px solid #ddd;
 }
@@ -5393,11 +5394,73 @@ h4.order-details-header {
         margin-top: 0.7em;
     }
 
+.credentials-upd {
+    gap: 1.5em;
+}
 
+    .credentials-upd .single-field {
+        max-width: 300px;
+    }
 
+    .credentials-upd .form-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.7em;
+        padding: 0.8em 0;
+        transition: all 0.3s ease;
+    }
 
+        .credentials-upd .form-buttons .button {
+            width: 120px;
+            height: 40px;
+            font-size: 15px;
+        }
 
+.content-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 6em 0;
+}
 
+    .content-block img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+    }
+
+        .content-block img.mail {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: -10px;
+        }
+
+    .content-block .text-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+        .content-block .text-block h3 {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 32px;
+            color: #181818;
+            margin: 0;
+        }
+
+        .content-block .text-block p {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #676767;
+            margin: 0;
+        }
 
 
 
