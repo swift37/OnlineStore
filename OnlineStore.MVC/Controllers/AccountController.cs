@@ -96,6 +96,12 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
+        [HttpGet("account/credentials/change/confirmation")]
+        public IActionResult ChangeCredentialsConfirmation() => View();
+
+        [HttpGet("account/credentials/change/success")]
+        public IActionResult ChangeCredentialsSuccess() => View();
+
         [HttpGet]
         public IActionResult Wishlist()
         {
