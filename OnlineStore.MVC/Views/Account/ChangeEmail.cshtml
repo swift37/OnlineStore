@@ -1,0 +1,36 @@
+﻿@model ChangeEmailViewModel
+
+@{
+    ViewData["Title"] = "Email changing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="acc-section">
+    <div class="container">
+        <div class="acc-wrapper">
+            <partial name="_AccountMenu" />
+            <div class="acc-content">
+                <div class="content-box">
+                    <header class="box-header">
+                        <h2>Email Changing</h2>
+                        <span>You are changing your email right now</span>
+                    </header>
+
+                    <form class="credentials-upd" asp-controller="Account" asp-action="ChangeEmail" method="post">
+                        <div class="single-field">
+                            <label>New Email</label>
+                            <input asp-for="NewEmail"
+                                   type="email"
+                                   placeholder="Enter your new email"
+                                   required />
+                        </div>
+                        <div class="form-buttons">
+                            <button class="button black" type="submit">Continue</button>
+                            <a asp-controller="Account" asp-action="Settings" class="button black outlined">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
