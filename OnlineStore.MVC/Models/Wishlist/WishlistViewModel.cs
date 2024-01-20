@@ -18,6 +18,10 @@ namespace OnlineStore.MVC.Models.Wishlist
 
         public decimal Total => Items.Sum(i => i.Product?.PriceAfterDiscount ?? default);
 
+        public int ItemsCount => Items.Count;
+
+        public int ProductsCount => Items.Sum(i => i.Quantity);
+
         public bool IsEmpty => Items.Count < 1;
     }
 
