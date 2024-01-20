@@ -12,13 +12,19 @@ namespace OnlineStore.Application.Interfaces.Repositories
             Guid userId,
             CancellationToken cancellation = default);
 
-        Task<bool> VerifyOwnership(
-            int id,
+        Task AddItem(
             Guid userId,
+            WishlistItem item,
             CancellationToken cancellation = default);
 
-        Task UpdateProductsAsync(
-            Wishlist? updatedWishlist,
+        Task UpdateItem(
+            Guid userId,
+            WishlistItem item,
+            CancellationToken cancellation = default);
+
+        Task RemoveItem(
+            Guid userId,
+            int itemId,
             CancellationToken cancellation = default);
     }
 }
