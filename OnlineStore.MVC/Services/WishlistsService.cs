@@ -144,13 +144,41 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response> UpdateProducts(WishlistViewModel wishlistViewModel)
+        public async Task<Response> AddItem(CreateWishlistItemViewModel model)
         {
-            var updateWishlistDTO = _mapper.Map<UpdateWishlistDTO>(wishlistViewModel);
+            var createWishlistItemDTO = _mapper.Map<CreateWishlistItemDTO>(model);
 
             try
             {
-                await _client.UpdateWishlistProductsAsync(_usingVersion, updateWishlistDTO);
+                await _client.AddItemAsync(_usingVersion, createWishlistItemDTO);
+                return new Response { Success = true };
+            }
+            catch (ApiException e)
+            {
+                return GenerateResponse(e);
+            }
+        }
+
+        public async Task<Response> UpdateItem(WishlistItemViewModel model)
+        {
+            var updateWishlistItemDTO = _mapper.Map<UpdateWishlistItemDTO>(model);
+
+            try
+            {
+                await _client.UpdateItemAsync(_usingVersion, updateWishlistItemDTO);
+                return new Response { Success = true };
+            }
+            catch (ApiException e)
+            {
+                return GenerateResponse(e);
+            }
+        }
+
+        public async Task<Response> RemoveItem(int itemId)
+        {
+            try
+            {
+                await _client.RemoveItemAsync(itemId, _usingVersion);
                 return new Response { Success = true };
             }
             catch (ApiException e)

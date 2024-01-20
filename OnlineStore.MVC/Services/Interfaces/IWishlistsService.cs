@@ -21,6 +21,10 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response<WishlistViewModel>> GetUserWishlist();
 
-        Task<Response> UpdateProducts(WishlistViewModel wishlistViewModel);
+        Task<Response> AddItem(CreateWishlistItemViewModel model);
+
+        Task<Response> UpdateItem(WishlistItemViewModel model);
+
+        Task<Response> RemoveItem(int itemId);
     }
 }
