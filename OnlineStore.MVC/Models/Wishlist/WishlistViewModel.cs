@@ -10,14 +10,27 @@ namespace OnlineStore.MVC.Models.Wishlist
 
         public DateTimeOffset LastChangeDate { get; set; }
 
-        public ICollection<ProductViewModel> Products { get; set; } = new HashSet<ProductViewModel>();
+        public ICollection<WishlistItemViewModel> Items { get; set; } = new HashSet<WishlistItemViewModel>();
 
-        public decimal Subtotal => Products.Sum(i => i.UnitPrice);
+        public decimal Subtotal => Items.Sum(i => i.Product?.UnitPrice ?? default);
 
-        public decimal Discount => Products.Sum(i => i.Discount);
+        public decimal Discount => Items.Sum(i => i.Product?.Discount ?? default);
 
-        public decimal Total => Products.Sum(i => i.PriceAfterDiscount);
+        public decimal Total => Items.Sum(i => i.Product?.PriceAfterDiscount ?? default);
 
-        public bool IsEmpty => Products.Count < 1;
+        public bool IsEmpty => Items.Count < 1;
+    }
+
+    public class WishlistItemViewModel
+    {
+        public int Id { get; set; }
+
+        public int WishlistId { get; set; }
+
+        public int ProductId { get; set; }
+
+        public ProductViewModel? Product { get; set; }
+
+        public int Quantity { get; set; }
     }
 }
