@@ -91,6 +91,9 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<WishlistDTO, WishlistViewModel>().ReverseMap();
             CreateMap<UpdateWishlistDTO, WishlistViewModel>().ReverseMap();
             CreateMap<CreateWishlistDTO, CreateWishlistViewModel>().ReverseMap();
+            CreateMap<WishlistItemDTO, WishlistItemViewModel>().ReverseMap();
+            CreateMap<UpdateWishlistItemDTO, WishlistItemViewModel>().ReverseMap();
+            CreateMap<CreateWishlistItemDTO, CreateWishlistItemViewModel>().ReverseMap();
 
             CreateMap<MenuItemDTO, MenuItemViewModel>()
                 .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
