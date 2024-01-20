@@ -22,6 +22,8 @@ namespace OnlineStore.DAL.Repositories
             CancellationToken cancellation = default)
         {
             var wishlist = await Entities
+                .Include(w => w.Items)
+                    .ThenInclude(i => i.Product)
                 .FirstOrDefaultAsync(w => w.UserId == userId, cancellation)
                 .ConfigureAwait(false);
 
@@ -37,31 +39,61 @@ namespace OnlineStore.DAL.Repositories
             return wishlist;
         }
 
-        public async Task<bool> VerifyOwnership(
-            int id, 
-            Guid userId,
-            CancellationToken cancellation = default) => await Entities
-            .AnyAsync(w => w.Id == id && w.UserId == userId, cancellation)
-            .ConfigureAwait(false);
-
-        public async Task UpdateProductsAsync(Wishlist? updatedWishlist, CancellationToken cancellation = default)
+        public async Task AddItem(
+            Guid userId, 
+            WishlistItem item, 
+            CancellationToken cancellation = default)
         {
-            if (updatedWishlist is null) throw new ArgumentNullException(nameof(Wishlist));
+            var wishlist = await GetOrCreateAsync(userId, cancellation).ConfigureAwait(false);
+            if (wishlist is null)
+                throw new Exception("An error occurred when obtaining the wishlist.");
+            if (wishlist.Items.Any(item => item.ProductId == item.ProductId))
+                throw new Exception("This product is already in your wishlist.");
 
-            var wishlist = await GetAsync(updatedWishlist.Id);
-            if (wishlist is null) throw new NotFoundException(nameof(Wishlist), updatedWishlist.Id);
+            wishlist.LastChangeDate = DateTime.UtcNow;
+            wishlist.Items.Add(item);
 
-            wishlist.LastChangeDate = updatedWishlist.LastChangeDate;
+            DbSet.Update(wishlist);
+            if (AutoSaveChanges)
+                await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
+        }
 
-            var addProducts = updatedWishlist.Products
-                .ExceptBy(wishlist.Products.Select(p => p.Id), p => p.Id);
+        public async Task UpdateItem(
+            Guid userId,
+            WishlistItem item,
+            CancellationToken cancellation = default)
+        {
+            if (Entities
+                .Where(w => w.UserId == userId)
+                .SelectMany(w => w.Items)
+                .SingleOrDefault(i => i.Id == item.Id)
+                is WishlistItem updatedItem)
+            {
+                updatedItem.Quantity = item.Quantity;
+            }
+            else
+                throw new NotFoundException("Your wishlist does not contain such a product.", nameof(Wishlist));
 
-            foreach (var item in addProducts) wishlist.Products.Add(item);
+            if (AutoSaveChanges)
+                await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
+        }
 
-            var removeProducts = wishlist.Products
-                .ExceptBy(updatedWishlist.Products.Select(p => p.Id), p => p.Id);
+        public async Task RemoveItem(
+            Guid userId,
+            int itemId,
+            CancellationToken cancellation = default)
+        {
+            var wishlist = await GetUserWishlistAsync(userId, cancellation).ConfigureAwait(false);
+            if (wishlist is null)
+                throw new NotFoundException("Wishlist doesn't exist.", nameof(Wishlist));
 
-            foreach (var item in removeProducts) wishlist.Products.Remove(item);
+            if (wishlist.Items.SingleOrDefault(item => item.Id == itemId) is WishlistItem item)
+            {
+                wishlist.Items.Remove(item);
+                wishlist.LastChangeDate = DateTime.UtcNow;
+            }
+            else
+                throw new Exception("Your wishlist does not contain such a product.");       
 
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
