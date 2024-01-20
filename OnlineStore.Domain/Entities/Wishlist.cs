@@ -10,8 +10,21 @@ namespace OnlineStore.Domain.Entities
 
         public DateTime LastChangeDate { get; set; } = DateTime.Now;
 
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        public ICollection<WishlistItem> Items { get; set; } = new HashSet<WishlistItem>();
 
-        public int ProductsQuantity => Products.Count;
+        public int ProductsQuantity => Items.Count;
+    }
+
+    public class WishlistItem : Entity
+    {
+        public int WishlistId { get; set; }
+
+        public Wishlist? Wishlist { get; set; }
+
+        public int ProductId { get; set; }
+
+        public Product? Product { get; set; }
+
+        public int Quantity { get; set; }
     }
 }
