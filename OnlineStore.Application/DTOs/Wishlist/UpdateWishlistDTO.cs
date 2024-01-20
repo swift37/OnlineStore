@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Wishlist
@@ -9,9 +8,19 @@ namespace OnlineStore.Application.DTOs.Wishlist
     {
         public DateTime LastChangeDate { get; set; } = DateTime.Now;
 
-        public ICollection<ProductDTO> Products { get; set; } = new HashSet<ProductDTO>();
+        public ICollection<WishlistItemDTO> Items { get; set; } = new HashSet<WishlistItemDTO>();
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Domain.Entities.Wishlist, UpdateWishlistDTO>().ReverseMap();
+    }
+
+    public class UpdateWishlistItemDTO : BaseDTO, IMapWith<Domain.Entities.WishlistItem>
+    {
+        public int ProductId { get; set; }
+
+        public int Quantity { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.WishlistItem, UpdateWishlistItemDTO>().ReverseMap();
     }
 }
