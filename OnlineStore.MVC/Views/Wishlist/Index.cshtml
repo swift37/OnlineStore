@@ -5,80 +5,96 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="single-cart">
+<div class="acc-section">
     <div class="container">
-        <div class="wrapper">
-            <div class="breadcrumb">
-                <ul class="flexitem">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li>Wishlist</li>
-                </ul>
-            </div>
-            <div class="page-title">
-                <h1>Wishlist</h1>
-            </div>
-            <div class="products one cart">
-                <div class="flexwrap">
-                    <form action="" class="form-cart">
-                        <div class="item">
-                            <table id="cart-table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Price</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model.Products != null && Model.Products.Count() > 0)
-                                    {
-                                        @foreach (var product in Model.Products)
-                                        {
-                                            <tr>
-                                                <td class="flexitem">
-                                                    <div class="thumbnail object-contain">
-                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@product.Id"><img src="@product.Image" alt="Image"></a>
-                                                    </div>
-                                                    <div class="content">
-                                                        <strong><a asp-controller="Catalog" asp-action="Product" asp-route-id="@product.Id">@product.Name</a></strong>
-                                                        <p>RAM: 16 Gb</p>
-                                                    </div>
-                                                </td>
-                                                <td>@product.UnitPrice.ToString("C")</td>
-                                                <td>
-                                                    <a href="#" class="item-add-to-cart" data-itemid="@product.Id">
-                                                        <img src="~/resources/icons/shopping-cart.png" alt="">
-                                                    </a>
-                                                    <a href="#" class="item-remove from-wishlist" data-itemid="@product.Id">
-                                                        <img src="~/resources/icons/close.png" alt="">
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+        <div class="acc-wrapper">
+            <partial name="_AccountMenu" />
+            <div class="acc-content">
+                <div class="content-box">
+                    <header class="box-header">
+                        <h2>Wishlist</h2>
+                        <span>Last change: @Model.LastChangeDate</span>
+                    </header>
+                    <div class="products-list">
+                        <div class="products-list-header">
+                            <div class="line-check">
+                                <input type="checkbox" id="allItems" />
+                                <label class="check" for="allItems"></label>
+                                <label class="text" for="allItems">Select all</label>
+                            </div>
+                            <div class="actions">
+                                <button>
+                                    <i class='bx bx-cart-add'></i>
+                                    Add to cart
+                                </button>
+                                <button>
+                                    <i class='bx bx-trash-alt'></i>
+                                    Remove
+                                </button>
+                            </div>
                         </div>
-                    </form>
-                    <div class="cart-summary styled">
-                        <div class="item">
-                            <div class="cart-total">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <th>Subtotal</th>
-                                            <td>@Model.Subtotal.ToString("C")</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Discount</th>
-                                            <td>@Model.Discount.ToString("C")</td>
-                                        </tr>
-                                        <tr class="total">
-                                            <th>TOTAL</th>
-                                            <td><strong>@Model.Total.ToString("C")</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        @if (!Model.IsEmpty)
+                            foreach (var item in Model.Items)
+                            {
+                                <div class="products-list-line">
+                                    <div class="left-part">
+                                        <div class="line-check">
+                                            <input type="checkbox" id="@($"item{item.Id}")" />
+                                            <label class="check" for="@($"item{item.Id}")"></label>
+                                        </div>
+                                        <div class="line-image">
+                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
+                                                <img src="@item.Product?.Image" alt="Image">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="middle-part">
+                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
+                                            @item.Product?.Name
+                                        </a>
+                                        <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
+                                    </div>
+                                    <div class="right-part">
+                                        <div class="qty-control flexitem">
+                                            <button class="qty-minus">-</button>
+                                            <input 
+                                                class="qty-value wl" 
+                                                type="text" 
+                                                value="@item.Quantity" 
+                                                data-itemid="@item.Id" 
+                                                data-productid="@item.ProductId" 
+                                                min="1" 
+                                                pattern="^[0-9]+$">
+                                            <button class="qty-plus">+</button>
+                                        </div>
+                                        <button class="item-add-to-cart" data-itemid="@item.Id">
+                                            <i class='bx bx-cart-add'></i>
+                                        </button>
+                                        <button class="item-remove from-wishlist" data-itemid="@item.Id">
+                                            <i class='bx bx-trash-alt'></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        <div class="products-list-summary">
+                            <div class="products-count">
+                                @Model.ProductsCount products
+                            </div>
+                            <div class="products-total">
+                                <div class="total-lines">
+                                    <div class="total-line">
+                                        <span>Subtotal:</span>
+                                        <span>@Model.Subtotal.ToString("C")</span>
+                                    </div>
+                                    <div class="total-line">
+                                        <span>Discount:</span>
+                                        <span>-@Model.Discount.ToString("C")</span>
+                                    </div>
+                                </div>
+                                <div class="total-sum">
+                                    <span>Total:</span>
+                                    <span>@Model.Total.ToString("C")</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,5 +103,3 @@
         </div>
     </div>
 </div>
-
-<partial name="_Newsletter" />
