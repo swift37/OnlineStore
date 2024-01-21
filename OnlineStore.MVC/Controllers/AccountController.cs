@@ -101,12 +101,6 @@ namespace OnlineStore.MVC.Controllers
         public IActionResult ChangeCredentialsSuccess() => View();
 
         [HttpGet]
-        public IActionResult Wishlist()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public IActionResult Reviews()
         {
             return View();

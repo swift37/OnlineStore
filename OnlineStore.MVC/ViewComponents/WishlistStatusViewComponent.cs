@@ -18,7 +18,7 @@ namespace OnlineStore.MVC.ViewComponents
             var wishlist = response.Data;
 
             if (response.Success) 
-                ViewBag.WishlistItems = wishlist.Products.Count;
+                ViewBag.WishlistItems = wishlist.ProductsCount;
             else 
                 ViewBag.WishlistItems = 0;
 
