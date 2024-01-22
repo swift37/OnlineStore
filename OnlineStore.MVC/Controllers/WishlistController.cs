@@ -24,7 +24,7 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize]
         [ValidateAjax]
         public async Task<IActionResult> Add(CreateWishlistItemViewModel model)
@@ -66,12 +66,33 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
         [ValidateAjax]
         public async Task<IActionResult> Remove(int itemId)
         {          
             var response = await _wishlistsService.RemoveItem(itemId);
+            if (response.Success)
+                return Json(new { success = true });
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+                return Json(new
+                {
+                    success = false,
+                    errors = response.ValidationErrors
+                        .Select(error => error.ErrorMessage)
+                        .ToArray()
+                });
+
+            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [ValidateAjax]
+        public async Task<IActionResult> RemoveRange(IEnumerable<int> itemIds)
+        {
+            var response = await _wishlistsService.RemoveItems(itemIds);
             if (response.Success)
                 return Json(new { success = true });
 
