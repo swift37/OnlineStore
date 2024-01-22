@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Review;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
@@ -124,6 +125,57 @@ namespace OnlineStore.MVC.Services
             catch (ApiException exception)
             {
                 return GenerateResponse<IEnumerable<ReviewViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<IEnumerable<ReviewViewModel>>> GetUserReviews(Guid userId)
+        {
+            try
+            {
+                var reviews = await _client.GetUserReviewsAsync(userId, _usingVersion);
+                return new Response<IEnumerable<ReviewViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(reviews)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ReviewViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<IEnumerable<ReviewViewModel>>> GetUserReviews()
+        {
+            try
+            {
+                var reviews = await _client.GetUserReviewsAsync(_usingVersion);
+                return new Response<IEnumerable<ReviewViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ReviewViewModel>>(reviews)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ReviewViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<ReviewViewModel>> GetUserReview(int id)
+        {
+            try
+            {
+                var review = await _client.GetUserReviewAsync(id, _usingVersion);
+                return new Response<ReviewViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<ReviewViewModel>(review)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<ReviewViewModel>(exception);
             }
         }
     }

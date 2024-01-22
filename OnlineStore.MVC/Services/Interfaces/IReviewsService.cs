@@ -18,5 +18,11 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Delete(int id);
 
         Task<Response<IEnumerable<ReviewViewModel>>> GetReviewsByProduct(int productId);
+
+        Task<Response<IEnumerable<ReviewViewModel>>> GetUserReviews(Guid userId);
+
+        Task<Response<IEnumerable<ReviewViewModel>>> GetUserReviews();
+
+        Task<Response<ReviewViewModel>> GetUserReview(int id);
     }
 }
