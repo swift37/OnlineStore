@@ -25,5 +25,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response<IEnumerable<OrderViewModel>>> GetUserOrders();
 
         Task<Response<OrderViewModel>> GetUserOrder(int id);
+
+        Task<Response<IEnumerable<OrderViewModel>>> GetUserOrdersAwaitingReview();
     }
 }

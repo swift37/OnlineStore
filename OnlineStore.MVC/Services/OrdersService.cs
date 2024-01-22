@@ -177,5 +177,22 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse<OrderViewModel>(exception);
             }
         }
+
+        public async Task<Response<IEnumerable<OrderViewModel>>> GetUserOrdersAwaitingReview()
+        {
+            try
+            {
+                var orders = await _client.GetUserOrdersAwaitingReviewAsync(_usingVersion);
+                return new Response<IEnumerable<OrderViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<OrderViewModel>>(orders)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<OrderViewModel>>(exception);
+            }
+        }
     }
 }
