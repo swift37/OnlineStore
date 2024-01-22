@@ -98,5 +98,26 @@ namespace OnlineStore.DAL.Repositories
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
+
+        public async Task RemoveItems(
+            Guid userId,
+            ICollection<int> itemIds,
+            CancellationToken cancellation = default)
+        {
+            var wishlist = await GetUserWishlistAsync(userId, cancellation).ConfigureAwait(false);
+            if (wishlist is null)
+                throw new NotFoundException("Wishlist doesn't exist.", nameof(Wishlist));
+
+            foreach (var itemId in itemIds)
+                if (wishlist.Items.SingleOrDefault(item => item.Id == itemId) is WishlistItem item)
+                    wishlist.Items.Remove(item);
+                else
+                    throw new Exception("Your wishlist does not contain one of the products.");
+
+            wishlist.LastChangeDate = DateTime.UtcNow;
+
+            if (AutoSaveChanges)
+                await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
+        }
     }
 }
