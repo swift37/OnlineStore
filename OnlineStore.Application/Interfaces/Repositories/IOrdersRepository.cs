@@ -20,5 +20,9 @@ namespace OnlineStore.Application.Interfaces.Repositories
             int id,
             Guid userId,
             CancellationToken cancellation = default);
+
+        Task<IEnumerable<Order>> GetUserOrdersAwaitingReviewAsync(
+            Guid userId,
+            CancellationToken cancellation = default);
     }
 }

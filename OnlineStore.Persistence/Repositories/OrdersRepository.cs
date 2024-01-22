@@ -50,5 +50,14 @@ namespace OnlineStore.DAL.Repositories
             await Entities.FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId)
             .ConfigureAwait(false)
             ?? throw new NotFoundException(nameof(Order), id);
+
+        public async Task<IEnumerable<Order>> GetUserOrdersAwaitingReviewAsync(
+            Guid userId,
+            CancellationToken cancellation = default) => await Entities
+            .Where(o => o.UserId == userId)
+            .Include(o => o.Items
+                .Where(i => !i.Product!.Reviews.Any(r => r.UserId == userId)))
+            .ToArrayAsync(cancellation)
+            .ConfigureAwait(false);
     }
 }
