@@ -234,11 +234,11 @@
         location.replace(url);
     });
 
-    $('#termsCheckbox').click(function () {
-        if ($(this).is(':checked')) {
-            $('#checkoutBtn').removeAttr('disabled');
-        }
+    $('#allItems').change(function () {
+        if ($(this).is(':checked'))
+            $('.line-check input').prop('checked', true);
         else {
+            $('.line-check input').prop('checked', false);
             $('#checkoutBtn').attr('disabled', true);
         }
     });
