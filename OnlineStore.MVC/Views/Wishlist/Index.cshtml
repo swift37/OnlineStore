@@ -13,9 +13,14 @@
                 <div class="content-box">
                     <header class="box-header">
                         <h2>Wishlist</h2>
-                        <span>Last change: @Model.LastChangeDate</span>
+                        @if (Model.LastChangeDate != default) 
+                        {
+                            <span>Last change: @Model.LastChangeDate.ToString("MMMM dd, yyyy")</span>
+                        }
                     </header>
-                    <div class="products-list">
+                    @if (!Model.IsEmpty)
+                    {
+                        <div class="products-list">
                         <div class="products-list-header">
                             <div class="line-check">
                                 <input type="checkbox" id="allItems" />
@@ -23,11 +28,11 @@
                                 <label class="text" for="allItems">Select all</label>
                             </div>
                             <div class="actions">
-                                <button>
+                                <button class="selected-to-cart">
                                     <i class='bx bx-cart-add'></i>
                                     Add to cart
                                 </button>
-                                <button>
+                                <button class="remove-selected">
                                     <i class='bx bx-trash-alt'></i>
                                     Remove
                                 </button>
@@ -98,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </div>
