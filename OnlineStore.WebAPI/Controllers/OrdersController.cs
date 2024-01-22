@@ -244,6 +244,22 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<OrderDTO>> GetUserOrder(int id) => 
             Ok(_mapper.Map<OrderDTO>(await _ordersRepository.GetUserOrderAsync(id, UserId)));
 
+        /// <summary>
+        /// Get the current user orders with products awaiting reviews
+        /// </summary>
+        /// <remarks>
+        /// GET /orders/user/current/awaiting-reviews
+        /// </remarks>
+        /// <returns>Returns IEnumerable<OrderDTO></returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("user/current/awaiting-reviews")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrdersAwaitingReview() =>
+            Ok(_mapper.Map<IEnumerable<Order>>(await _ordersRepository.GetUserOrdersAwaitingReviewAsync(UserId)));
+
         ///// <summary>
         ///// Check availability of items in the order
         ///// </summary>
