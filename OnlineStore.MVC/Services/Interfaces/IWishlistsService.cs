@@ -26,5 +26,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> UpdateItem(WishlistItemViewModel model);
 
         Task<Response> RemoveItem(int itemId);
+
+        Task<Response> RemoveItems(IEnumerable<int> itemIds);
     }
 }

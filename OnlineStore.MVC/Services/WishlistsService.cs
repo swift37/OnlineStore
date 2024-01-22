@@ -186,5 +186,18 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse(e);
             }
         }
+
+        public async Task<Response> RemoveItems(IEnumerable<int> itemIds)
+        {
+            try
+            {
+                await _client.RemoveItemsAsync(_usingVersion, itemIds);
+                return new Response { Success = true };
+            }
+            catch (ApiException e)
+            {
+                return GenerateResponse(e);
+            }
+        }
     }
 }
