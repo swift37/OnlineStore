@@ -15,5 +15,14 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<double> GetProductRatingAsync(
             int productId,
             CancellationToken cancellation = default);
+
+        Task<IEnumerable<Review>> GetUserReviewsAsync(
+            Guid userId,
+            CancellationToken cancellation = default);
+
+        Task<Review> GetUserReviewAsync(
+            int id,
+            Guid userId,
+            CancellationToken cancellation = default);
     }
 }
