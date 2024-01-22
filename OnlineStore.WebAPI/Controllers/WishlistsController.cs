@@ -265,5 +265,28 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.RemoveItem(UserId, itemId);
             return NoContent();
         }
+
+        /// <summary>
+        /// Remove the items by id from the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists/items
+        /// {
+        ///     itemIds: [1]
+        /// }
+        /// </remarks>
+        /// <param name="itemIds">WishlistItem Ids</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpDelete("items/many")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> RemoveItems(ICollection<int> itemIds)
+        {
+            await _repository.RemoveItems(UserId, itemIds);
+            return NoContent();
+        }
     }
 }

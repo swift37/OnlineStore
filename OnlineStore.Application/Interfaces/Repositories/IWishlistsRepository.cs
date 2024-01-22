@@ -26,5 +26,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
             Guid userId,
             int itemId,
             CancellationToken cancellation = default);
+
+        Task RemoveItems(
+            Guid userId,
+            ICollection<int> itemIds,
+            CancellationToken cancellation = default);
     }
 }
