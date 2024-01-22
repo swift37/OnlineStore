@@ -4,7 +4,6 @@ using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
-using System.Linq;
 
 namespace OnlineStore.DAL.Repositories
 {
@@ -65,8 +64,10 @@ namespace OnlineStore.DAL.Repositories
             return products;
         }
 
-        public async Task<int> GetCountByFilterAsync(int categoryId, int specificationId, CancellationToken cancellation = default) => 
-            await Entities
+        public async Task<int> GetCountByFilterAsync(
+            int categoryId, 
+            int specificationId, 
+            CancellationToken cancellation = default) => await Entities
             .Where(p => p.CategoryId == categoryId && p.Specifications
                 .Any(s => s.Id == specificationId))
             .CountAsync(cancellation)

@@ -1,12 +1,36 @@
 $(document).ready(function () {
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+            );
+    };
+
+    const checkWishlistQuantity = () => {
+        let qty = parseInt($('#wishlistQuantity').text());
+        if (qty > 9) {
+            let counter = $('#wishlistQuantity').parent('.counter');
+            if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+        }
+    };
+
+    const checkCartQuantity = () => {
+        let qty = parseInt($('#cartQuantity').text());
+        if (qty > 9) {
+            let counter = $('#cartQuantity').parent('.counter');
+            if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+        }
+    };
+
     $('.add-to-cart-btn, .item-add-to-cart').click(function () {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
         $.ajax({
             url: '/cart/add',
-            type: 'post',
+            type: 'put',
             dataType: 'json',
             data:
             {
@@ -77,7 +101,7 @@ $(document).ready(function () {
     $('.item-remove.from-cart').click(function () {
         $.ajax({
             url: '/cart/remove',
-            type: 'post',
+            type: 'delete',
             dataType: 'json',
             data:
             {
@@ -96,7 +120,7 @@ $(document).ready(function () {
     $('.item-remove.from-minicart').click(function () {
         $.ajax({
             url: '/cart/remove',
-            type: 'post',
+            type: 'delete',
             dataType: 'json',
             data:
             {
@@ -166,14 +190,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    function validateEmail(email) {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-            );
-    };
 
     $('.subscribe-btn').click(function () {
         let input = $(this).parent().find('input');

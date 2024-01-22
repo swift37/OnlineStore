@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.Cart;
 using OnlineStore.MVC.Models.Enums;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Services.Interfaces;
@@ -35,7 +36,7 @@ namespace OnlineStore.MVC.Controllers
             return View(cart);
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult Add(int productId, int quantity)
         {
             if (!_cartService.Add(productId, quantity))
@@ -53,7 +54,7 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Remove(int productId)
         {
             if (!_cartService.Remove(productId))
@@ -62,7 +63,7 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Clear()
         {
             _cartService.Clear();
