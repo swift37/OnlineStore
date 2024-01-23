@@ -11,119 +11,122 @@
             <partial name="_AccountMenu" />
             <div class="acc-content">
                 <div class="content-box">
-                    <header class="box-header">
-                        <h2>Reviews</h2>
-                    </header>
+                    @if (!Model.IsEmpty)
+                    {
+                        <header class="box-header">
+                            <h2>Reviews</h2>
+                        </header>
 
-                    <partial name="_ReviewModal"/>
+                        <partial name="_ReviewModal" />
 
-                    <div class="reviews-list">
-                        <div class="reviews-list-header">
-                            Awaiting review <span>(@Model.OrdersAwaitingReview.Count())</span>
-                        </div>
-                        @foreach (var order in Model.OrdersAwaitingReview)
-                            foreach (var item in order.Items)
-                            {
-                                <div class="reviews-list-line">
-                                    <div class="left-part">
-                                        <div class="line-image">
-                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
-                                                <img src="@item.Product?.Image" alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="line-content">
-                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
-                                                @item.Product?.Name
-                                            </a>
-                                            <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id">
-                                                Purchased @((DateTimeOffset.Now.Month - order.CreatedDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreatedDate.Year)) months ago
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="right-part">
-                                        <button 
-                                            class="button black outlined review-modal-btn" 
-                                            data-orderid="@order.Id" 
-                                            data-productid="@item.ProductId">
-                                            Write review
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                        <div class="reviews-list-line">
-                            <div class="left-part">
-                                <div class="line-image">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                    </a>
-                                </div>
-                                <div class="line-content">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        ASUS ROG Strix G15
-                                    </a>
-                                    <a href="#">
-                                        Purchased 5 months ago
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="right-part">
-                                <button class="button black outlined review-modal-btn"
-                                        data-orderid="1"
-                                        data-productid="3">
-                                    Write review
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="reviews-list">
-                        <div class="reviews-list-header">
-                            Your reviews <span>(@Model.Reviews.Count())</span>
-                        </div>
-                        @foreach (var review in Model.Reviews)
+                        @if (Model.OrdersAwaitingReview.Any())
                         {
-                            <div class="reviews-list-line">
-                                <div class="left-part">
-                                    <div class="line-image">
-                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
-                                            <img src="@review.Product?.Image" alt="Image">
-                                        </a>
-                                    </div>
-                                    <div class="line-content">
-                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
-                                            @review.Product?.Name
-                                        </a>
-                                        <a href="#">
-                                            @review.CreationDate.ToString("MMMM dd, yyyy")
-                                        </a>
-                                    </div>
+                            <div class="reviews-list">
+                                <div class="reviews-list-header">
+                                    Awaiting review <span>(@Model.OrdersAwaitingReview.Count())</span>
                                 </div>
-                                <div class="right-part">
-                                    <button class="button black outlined review-modal-btn">Edit review</button>
-                                </div>
+                                @foreach (var order in Model.OrdersAwaitingReview)
+                                    foreach (var item in order.Items)
+                                    {
+                                        <div class="awaiting-review">
+                                            <div class="reviews-list-line">
+                                                <div class="left-part">
+                                                    <div class="line-image">
+                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                                            <img src="@item.Product?.Image" alt="Image">
+                                                        </a>
+                                                    </div>
+                                                    <div class="line-content">
+                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                                            @item.Product?.Name
+                                                        </a>
+                                                        <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id">
+                                                            Purchased @((DateTimeOffset.Now.Month - order.CreatedDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreatedDate.Year)) months ago
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="right-part">
+                                                    <button class="button black outlined review-modal-btn"
+                                                            data-orderid="@order.Id"
+                                                            data-productid="@item.ProductId">
+                                                        Write review
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                             </div>
                         }
-                        <div class="reviews-list-line">
-                            <div class="left-part">
-                                <div class="line-image">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                    </a>
+
+                        @if (Model.Reviews.Any())
+                        { 
+                            <div class="reviews-list">
+                                <div class="reviews-list-header">
+                                    Your reviews <span>(@Model.Reviews.Count())</span>
                                 </div>
-                                <div class="line-content">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        ASUS ROG Strix G15
-                                    </a>
-                                    <a href="#">
-                                        Left 3 months ago
-                                    </a>
-                                </div>
+                                @foreach (var review in Model.Reviews)
+                                {
+                                    <div class="reviewed">
+                                        <div class="reviews-list-line">
+                                            <div class="left-part">
+                                                <div class="box-image">
+                                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
+                                                        <img src="@review.Product?.Image" alt="Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="right-part">
+                                                <div class="line-head">
+                                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
+                                                        @review.Product?.Name
+                                                    </a>
+                                                    <span class="from-us">
+                                                        Purchased from us
+                                                        <i class="bx bxs-check-circle"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="line-rating">
+                                                    <div class="stars">
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                    </div>
+                                                    <span class="date">
+                                                        @review.CreationDate.ToString("MMMM dd, yyyy")
+                                                    </span>
+                                                </div>
+                                                <div class="line-content">
+                                                    @if (review.Content?.Length < 285)
+                                                    {
+                                                        <span>@review.Content</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="full-review" hidden>@review.Content</span>
+                                                        <span class="short-review">@review.Content?.Substring(0, 285)</span>
+                                                        <span class="more">... More</span>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <button class="button black outlined review-modal-btn">Edit review</button>
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                            <div class="right-part">
-                                <button class="button black outlined review-modal-btn">Edit review</button>
+                        }
+                    }
+                    else
+                    {
+                        <div class="content-block no-reviews">
+                            <div class="text-block">
+                                <h3>No reviews</h3>
+                                <p>There are no reviews or purchased products awaiting reviews.</p>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
