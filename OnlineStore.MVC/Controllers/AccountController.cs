@@ -9,8 +9,15 @@ namespace OnlineStore.MVC.Controllers
     public class AccountController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly IReviewsService _reviewsService;
+        private readonly IOrdersService _ordersService;
 
-        public AccountController(IAuthService authService) => _authService = authService;
+        public AccountController(
+            IAuthService authService, 
+            IReviewsService reviewsService, 
+            IOrdersService ordersService) =>
+            (_authService, _reviewsService, _ordersService) = 
+            (authService, reviewsService, ordersService);
 
         [HttpGet]
         public IActionResult Index() => View();
@@ -101,9 +108,23 @@ namespace OnlineStore.MVC.Controllers
         public IActionResult ChangeCredentialsSuccess() => View();
 
         [HttpGet]
-        public IActionResult Reviews()
+        public async Task<IActionResult> Reviews()
         {
-            return View();
+            var reviewsResponse = await _reviewsService.GetUserReviews();
+            if (!reviewsResponse.Success)
+                return StatusCode(reviewsResponse.Status);
+
+            var ordersResponse = await _ordersService.GetUserOrdersAwaitingReview();
+            if (!ordersResponse.Success)
+                return StatusCode(ordersResponse.Status);
+
+            var model = new ReviewsPageViewModel
+            {
+                Reviews = reviewsResponse.Data,
+                OrdersAwaitingReview = ordersResponse.Data
+            };
+
+            return View(model);
         }
 
         [HttpGet]
