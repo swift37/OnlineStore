@@ -1,4 +1,9 @@
-﻿@using System.IdentityModel.Tokens.Jwt
+﻿@model ReviewsPageViewModel
+
+@{
+    ViewData["Title"] = "Reviews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="acc-section">
     <div class="container">
@@ -10,51 +15,41 @@
                         <h2>Reviews</h2>
                     </header>
 
-                    <div class="modal-container">
-                        <div class="modal">
-                            <div class="modal-content">
-                                <header class="modal-header">
-                                    <h2>Write a review</h2>
-                                    <i class="bx bx-x"></i>
-                                </header>
-                                <form>
-                                    <div class="modal-field rating">
-                                        <p>Are you satisfied enough?</p>
-                                        <div class="rate-this">
-                                            <input type="radio" name="rating" id="star5">
-                                            <label for="star5"><img src="~/resources/icons/empty-star.png"></label>
-
-                                            <input type="radio" name="rating" id="star4">
-                                            <label for="star4"><img src="~/resources/icons/empty-star.png"></label>
-
-                                            <input type="radio" name="rating" id="star3">
-                                            <label for="star3"><img src="~/resources/icons/empty-star.png"></label>
-
-                                            <input type="radio" name="rating" id="star2">
-                                            <label for="star2"><img src="~/resources/icons/empty-star.png"></label>
-
-                                            <input type="radio" name="rating" id="star1">
-                                            <label for="star1"><img src="~/resources/icons/empty-star.png"></label>
-                                        </div>
-                                    </div>
-                                    <div class="modal-field">
-                                        <label>Title</label>
-                                        <input type="text" required />
-                                    </div>
-                                    <div class="modal-field">
-                                        <label>Review</label>
-                                        <textarea type="text"></textarea>
-                                    </div>
-                                    <button class="button black">Leave a review</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <partial name="_ReviewModal"/>
 
                     <div class="reviews-list">
                         <div class="reviews-list-header">
-                            Write review <span>(1)</span>
+                            Awaiting review <span>(@Model.OrdersAwaitingReview.Count())</span>
                         </div>
+                        @foreach (var order in Model.OrdersAwaitingReview)
+                            foreach (var item in order.Items)
+                            {
+                                <div class="reviews-list-line">
+                                    <div class="left-part">
+                                        <div class="line-image">
+                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                                <img src="@item.Product?.Image" alt="Image">
+                                            </a>
+                                        </div>
+                                        <div class="line-content">
+                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                                @item.Product?.Name
+                                            </a>
+                                            <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id">
+                                                Purchased @((DateTimeOffset.Now.Month - order.CreatedDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreatedDate.Year)) months ago
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="right-part">
+                                        <button 
+                                            class="button black outlined review-modal-btn" 
+                                            data-orderid="@order.Id" 
+                                            data-productid="@item.ProductId">
+                                            Write review
+                                        </button>
+                                    </div>
+                                </div>
+                            }
                         <div class="reviews-list-line">
                             <div class="left-part">
                                 <div class="line-image">
@@ -72,15 +67,42 @@
                                 </div>
                             </div>
                             <div class="right-part">
-                                <button class="button black outlined">Write review</button>
+                                <button class="button black outlined review-modal-btn"
+                                        data-orderid="1"
+                                        data-productid="3">
+                                    Write review
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     <div class="reviews-list">
                         <div class="reviews-list-header">
-                            Edit review <span>(1)</span>
+                            Your reviews <span>(@Model.Reviews.Count())</span>
                         </div>
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <div class="reviews-list-line">
+                                <div class="left-part">
+                                    <div class="line-image">
+                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
+                                            <img src="@review.Product?.Image" alt="Image">
+                                        </a>
+                                    </div>
+                                    <div class="line-content">
+                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
+                                            @review.Product?.Name
+                                        </a>
+                                        <a href="#">
+                                            @review.CreationDate.ToString("MMMM dd, yyyy")
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="right-part">
+                                    <button class="button black outlined review-modal-btn">Edit review</button>
+                                </div>
+                            </div>
+                        }
                         <div class="reviews-list-line">
                             <div class="left-part">
                                 <div class="line-image">
@@ -98,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="right-part">
-                                <button class="button black outlined">Write review</button>
+                                <button class="button black outlined review-modal-btn">Edit review</button>
                             </div>
                         </div>
                     </div>
