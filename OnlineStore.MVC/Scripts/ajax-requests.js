@@ -57,7 +57,72 @@ $(document).ready(function () {
         });
     });
 
-    $('.qty-value').change(function () {
+    $('.selected-to-cart').click(function () {
+        let items = [];
+        $('.products-list-line').each((i, el) => {
+            if ($(el).find('.line-check input').is(':checked'))
+                items.push({
+                    productId: $(el).find('.qty-value').data('productid'),
+                    quantity: $(el).find('.qty-value').val()
+                });
+        });
+
+        $.ajax({
+            url: '/cart/addrange',
+            type: 'put',
+            dataType: 'json',
+            data:
+            {
+                items: items
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                if (result.success == false) {
+                    alert("An error occurred.");
+                }
+                else {
+                    $.ajax({
+                        url: '/cart/updateminicart',
+                        success: function (data) {
+                            $("#miniCart").html(data);
+                            checkCartQuantity();
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $('.remove-selected').click(function () {
+        let itemIds = [];
+        $('.products-list-line').each((i, el) => {
+            if ($(el).find('.line-check input').is(':checked'))
+                itemIds.push($(el).find('.qty-value').data('itemid'));    
+        });
+
+        $.ajax({
+            url: '/wishlist/removerange',
+            type: 'delete',
+            dataType: 'json',
+            data:
+            {
+                itemIds: itemIds,
+            },
+            error: function () {
+                alert('Error occured.');
+            },
+            success: function (result) {
+                if (result.success == false)
+                    alert(result.errors.toString());
+                else
+                    location.reload();
+            }
+        });
+    });
+
+    $('.qty-value.cart').change(function () {
         $.ajax({
             url: '/cart/update',
             type: 'post',
