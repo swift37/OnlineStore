@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.Order;
 using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Mapping;
 
@@ -11,9 +12,15 @@ namespace OnlineStore.Application.DTOs.Review
 
         public ProductDTO? Product { get; set; }
 
+        public int? OrderId { get; set; }
+
+        public OrderDTO? Order { get; set; }
+
         public DateTime CreationDate { get; set; }
 
-        public string? Title { get; set; }
+        public DateTime LastChangeDate { get; set; }
+
+        public string? Name { get; set; }
 
         public int Rating { get; set; }
 

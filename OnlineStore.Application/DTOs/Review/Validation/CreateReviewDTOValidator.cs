@@ -6,10 +6,13 @@ namespace OnlineStore.Application.DTOs.Review.Validation
     {
         public CreateReviewDTOValidator()
         {
-            RuleFor(r => r.Title)
+            RuleFor(r => r.Name)
                 .MaximumLength(32);
 
             RuleFor(r => r.CreationDate)
+                .NotEqual(default(DateTime));
+
+            RuleFor(r => r.LastChangeDate)
                 .NotEqual(default(DateTime));
 
             RuleFor(r => r.ProductId)

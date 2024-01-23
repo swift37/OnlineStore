@@ -7,9 +7,13 @@ namespace OnlineStore.Application.DTOs.Review
     {
         public int ProductId { get; set; }
 
+        public int? OrderId { get; set; }
+
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public string? Title { get; set; }
+        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+
+        public string? Name { get; set; }
 
         public int Rating { get; set; }
 

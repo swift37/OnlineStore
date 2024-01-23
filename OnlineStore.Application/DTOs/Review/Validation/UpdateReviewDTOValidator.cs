@@ -9,7 +9,7 @@ namespace OnlineStore.Application.DTOs.Review.Validation
             RuleFor(r => r.Id)
                 .GreaterThan(0);
 
-            RuleFor(r => r.Title)
+            RuleFor(r => r.Name)
                 .MaximumLength(32);
 
             RuleFor(r => r.Rating)
