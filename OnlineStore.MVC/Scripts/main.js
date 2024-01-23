@@ -262,4 +262,10 @@
         $('#reviewModal').removeClass('show');
         resetModal($('#reviewModal'));
     });
+
+    $('.more').click(function () {
+        $(this).hide();
+        $(this).closest('.short-review').hide();
+        $(this).closest('.full-review').show();
+    });
 });
