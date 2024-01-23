@@ -274,19 +274,19 @@ form {
     .button.outlined {
         color: #fff;
         background-color: transparent;
-        box-shadow: 0 0 0 2px #fff inset !important;
+        box-shadow: 0 0 0 2px #fff inset;
     }
 
         .button.outlined:hover {
             background-color: #fff;
-            box-shadow: 0 0 0 2px #fff inset !important;
+            box-shadow: 0 0 0 2px #fff inset;
             color: rgba(0, 0, 0, 0.8);
         }
 
         .button.outlined.black {
             color: #000;
             background-color: transparent;
-            box-shadow: 0 0 0 2px #000 inset !important;
+            box-shadow: 0 0 0 2px #000 inset;
         }
 
             .button.outlined.black:hover {
@@ -4588,6 +4588,7 @@ form {
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
+        user-select: none;
     }
 
         .products-list-header .line-check:hover {
@@ -4830,6 +4831,7 @@ form {
     align-items: center;
     padding: 14px;
     margin-left: -11px;
+    user-select: none;
 }
 
     .line-check label.check {
@@ -4962,7 +4964,8 @@ form {
                 color: #676767;
             }
 
-    .reviews-list-line button {
+    .reviews-list-line .review-modal-btn {
+        width: 120px;
         font-weight: 500;
         box-shadow: 0 0 0 1px #000 inset !important;
     }
@@ -4978,12 +4981,32 @@ form {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
 }
+
+    .modal-container.show {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+        .modal-container.show .modal {
+            height: 477px;
+            opacity: 1;
+        }
 
 .modal {
     position: absolute;
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
+    height: 0;
+    padding: 0 0.7em;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
 }
 
 .modal-content {
@@ -5038,6 +5061,7 @@ form {
         outline: none;
         font-size: 16px;
         font-weight: 400;
+        font-family: inherit;
         color: #474747;
     }
 
