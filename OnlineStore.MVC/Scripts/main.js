@@ -237,9 +237,29 @@
     $('#allItems').change(function () {
         if ($(this).is(':checked'))
             $('.line-check input').prop('checked', true);
-        else {
+        else
             $('.line-check input').prop('checked', false);
-            $('#checkoutBtn').attr('disabled', true);
-        }
+    });
+
+    const resetModal = (modal) => {
+        $(modal).find('.errors-area').each((i, el) => {
+            $(el).css('display', 'none');
+            $(el).children('span').text('');
+        });
+
+        $(modal).find('input[type=radio], input[type=checkbox]').each((i, el) => $(el).prop('checked', false));
+        $(modal).find('input, textarea').each((i, el) => $(el).val(''));
+    }
+
+    $('.review-modal-btn').click(function () {
+        resetModal($('#reviewModal'));
+        $('#reviewOrder').val($(this).data('orderid'));
+        $('#reviewProduct').val($(this).data('productid'));
+        $('#reviewModal').addClass('show');
+    });
+
+    $('#reviewModalClose').click(function () {
+        $('#reviewModal').removeClass('show');
+        resetModal($('#reviewModal'));
     });
 });
