@@ -45,6 +45,16 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = true });
         }
 
+        [HttpPut]
+        public IActionResult AddRange(IEnumerable<CartItemViewModel> items)
+        {
+            foreach (var item in items)
+                if (!_cartService.Add(item.ProductId, item.Quantity))
+                    return Json(new { success = false });
+
+            return Json(new { success = true });
+        }
+
         [HttpPost]
         public IActionResult Update(int productId, int quantity)
         {
