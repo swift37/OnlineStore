@@ -428,4 +428,61 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#postReviewBtn').click(function () {
+        let rating = 0;
+        $('#reviewRating input').each((i, el) => {
+            if ($(el).is(':checked'))
+                rating = $(el).prop('id').slice(4);
+        });
+
+        $.ajax({
+            url: '/catalog/createreview',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                OrderId: $('#reviewOrder').val(),
+                ProductId: $('#reviewProduct').val(),
+                Title: $('#reviewTitle').val(),
+                Content: $('#reviewMessage').val(),
+                Rating: rating
+            },
+            error: function (response) {
+                response.responseJSON.data.forEach((el) => {
+                    switch (el.key) {
+                        case "Title":
+                            $('#reviewTitleError').css('display', 'block');
+                            errorEmail.text(el.errors);
+                            break;
+                        case "Content":
+                            $('#reviewMessageError').css('display', 'block');
+                            errorMessage.text(el.errors);
+                            break;
+                        default:
+                            $('#reviewError').css('display', 'block');
+                            error.text(el.errors);
+                            break;
+                    }
+                })
+            },
+            success: function (result) {
+                if (result.success == true) {
+                    $('#reviewTitle').val('');
+                    $('#reviewMessage').val('');
+                    $('#reviewRating').children('input').each((i, el) =>
+                        $(el).prop('checked', false));
+
+                    $('#reviewSuccess').css('display', 'block');
+                    setTimeout(function () {
+                        $('#reviewSuccess').css('display', 'none');
+                    }, 2000);
+                }
+                else {
+                    error.text(result.errors.toSting());
+                    $('#reviewError').css('display', 'block');
+                }
+            }
+        });
+    });
 });
