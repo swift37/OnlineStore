@@ -11,8 +11,8 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.HasIndex(review => review.UserId);
-            builder.Property(review => review.UserId).IsRequired();
-            builder.Property(review => review.Title).HasMaxLength(32);
+            builder.Property(review => review.UserId).IsRequired(false);
+            builder.Property(review => review.Name).HasMaxLength(32);
             builder.Property(review => review.Content).HasMaxLength(256);
             builder
                 .HasOne(review => review.Product)
@@ -20,6 +20,12 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
                 .HasForeignKey(review => review.ProductId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
+            builder
+                .HasOne(review => review.Order)
+                .WithMany()
+                .HasForeignKey(review => review.OrderId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
         }
     }
 }
