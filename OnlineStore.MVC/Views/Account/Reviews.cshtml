@@ -17,7 +17,8 @@
                             <h2>Reviews</h2>
                         </header>
 
-                        <partial name="_ReviewModal" />
+                        <partial name="_CreateReviewModal" />
+                        <partial name="_UpdateReviewModal" />
 
                         @if (Model.OrdersAwaitingReview.Any())
                         {
@@ -46,7 +47,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="right-part">
-                                                    <button class="button black outlined review-modal-btn"
+                                                    <button class="button black outlined create-review-btn"
                                                             data-orderid="@order.Id"
                                                             data-productid="@item.ProductId">
                                                         Write review
@@ -80,18 +81,20 @@
                                                     <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
                                                         @review.Product?.Name
                                                     </a>
-                                                    <span class="from-us">
-                                                        Purchased from us
-                                                        <i class="bx bxs-check-circle"></i>
-                                                    </span>
+                                                    @if (review.OrderId > 0)
+                                                    {
+                                                        <span class="from-us">
+                                                            Purchased from us
+                                                            <i class='bx bxs-badge-check'></i>
+                                                        </span>
+                                                    }
                                                 </div>
                                                 <div class="line-rating">
                                                     <div class="stars">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
+                                                        @for (int i = 0; i < review.Rating; i++)
+                                                        {
+                                                            <i class='bx bxs-star'></i>
+                                                        }
                                                     </div>
                                                     <span class="date">
                                                         @review.CreationDate.ToString("MMMM dd, yyyy")
@@ -100,7 +103,7 @@
                                                 <div class="line-content">
                                                     @if (review.Content?.Length < 285)
                                                     {
-                                                        <span>@review.Content</span>
+                                                        <span class="full-review">@review.Content</span>
                                                     }
                                                     else
                                                     {
@@ -111,7 +114,11 @@
 
                                                 </div>
                                             </div>
-                                            <button class="button black outlined review-modal-btn">Edit review</button>
+                                            <button class="button black outlined update-review-btn"
+                                                    data-reviewid="@review.Id"
+                                                    data-rating="@review.Rating">
+                                                Edit Review
+                                            </button>
                                         </div>
                                     </div>
                                 }
