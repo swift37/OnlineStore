@@ -2013,7 +2013,7 @@ form {
             gap: 0.5em;
         }
 
-        .reviews-section .reviews-block-head a {
+        .reviews-section .reviews-block-head .button {
             display: block;
             font-size: 20px;
             width: 100%;
@@ -4874,7 +4874,7 @@ form {
     width: 100%;
 }
 
-    .reviews-list:not(:nth-child(3)) {
+    .reviews-list:not(:nth-child(4)) {
         margin-top: 3em;
     }
 
@@ -4964,7 +4964,7 @@ form {
                 color: #676767;
             }
 
-    .awaiting-review .reviews-list-line .review-modal-btn {
+    .awaiting-review .reviews-list-line .button {
         width: 120px;
         font-weight: 500;
         box-shadow: 0 0 0 1px #000 inset !important;
