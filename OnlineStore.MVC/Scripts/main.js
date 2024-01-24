@@ -251,16 +251,30 @@
         $(modal).find('input, textarea').each((i, el) => $(el).val(''));
     }
 
-    $('.review-modal-btn').click(function () {
-        resetModal($('#reviewModal'));
-        $('#reviewOrder').val($(this).data('orderid'));
-        $('#reviewProduct').val($(this).data('productid'));
-        $('#reviewModal').addClass('show');
+    $('.create-review-btn').click(function () {
+        let modal = $('#createReviewModal');
+        resetModal($(modal));
+        $(modal).find('.review-order').val($(this).data('orderid'));
+        $(modal).find('.review-product').val($(this).data('productid'));
+        $(modal).addClass('show');
+    });
+    
+    $('.update-review-btn').click(function () {
+        let modal = $('#updateReviewModal');
+        resetModal($(modal));
+        $(modal).find('.review-identifier').val($(this).data('reviewid'));
+        $(modal).find('.review-rating input').each((i, el) => {
+            if ($(el).prop('id').slice(6) == $(this).data('rating'))
+                $(el).prop('checked', true);
+        });
+        $(modal).find('.review-content').val($(this).closest('.reviewed').find('.full-review').text());
+        $(modal).addClass('show');
     });
 
-    $('#reviewModalClose').click(function () {
-        $('#reviewModal').removeClass('show');
-        resetModal($('#reviewModal'));
+    $('.close-modal').click(function () {
+        let modal = $(this).closest('.modal-container');
+        $(modal).removeClass('show');
+        resetModal($(modal));
     });
 
     $('.more').click(function () {
