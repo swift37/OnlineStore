@@ -1,4 +1,5 @@
-﻿using OnlineStore.MVC.Models.Product;
+﻿using OnlineStore.MVC.Models.Order;
+using OnlineStore.MVC.Models.Product;
 
 namespace OnlineStore.MVC.Models.Review
 {
@@ -10,9 +11,15 @@ namespace OnlineStore.MVC.Models.Review
 
         public ProductViewModel? Product { get; set; }
 
+        public int? OrderId { get; set; }
+
+        public OrderViewModel? Order { get; set; }
+
         public DateTimeOffset CreationDate { get; set; }
 
-        public string? Title { get; set; }
+        public DateTimeOffset LastChangeDate { get; set; }
+
+        public string? Name { get; set; }
 
         public int Rating { get; set; }
 

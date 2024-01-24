@@ -4,7 +4,9 @@
     {
         public int ProductId { get; set; }
 
-        public string? Title { get; set; }
+        public int? OrderId { get; set; }
+
+        public string? Name { get; set; }
 
         public int Rating { get; set; }
 
