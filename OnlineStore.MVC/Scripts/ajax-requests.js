@@ -24,6 +24,16 @@ $(document).ready(function () {
         }
     };
 
+    const resetModal = (modal) => {
+        $(modal).find('.errors-area').each((i, el) => {
+            $(el).css('display', 'none');
+            $(el).children('span').text('');
+        });
+
+        $(modal).find('input[type=radio], input[type=checkbox]').each((i, el) => $(el).prop('checked', false));
+        $(modal).find('input, textarea').each((i, el) => $(el).val(''));
+    }
+
     $('.add-to-cart-btn, .item-add-to-cart').click(function () {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
@@ -429,11 +439,12 @@ $(document).ready(function () {
         });
     });
 
-    $('#postReviewBtn').click(function () {
+    $('#createReviewBtn').click(function () {
+        let modal = $(this).closest('.modal-container');
         let rating = 0;
-        $('#reviewRating input').each((i, el) => {
+        $(modal).find('.review-rating input').each((i, el) => {
             if ($(el).is(':checked'))
-                rating = $(el).prop('id').slice(4);
+                rating = $(el).prop('id').slice(6);
         });
 
         $.ajax({
@@ -442,45 +453,93 @@ $(document).ready(function () {
             dataType: 'json',
             data:
             {
-                OrderId: $('#reviewOrder').val(),
-                ProductId: $('#reviewProduct').val(),
-                Title: $('#reviewTitle').val(),
-                Content: $('#reviewMessage').val(),
+                OrderId: $(modal).find('.review-order').val(),
+                ProductId: $(modal).find('.review-product').val(),
+                Name: $(modal).find('.review-name').val(),
+                Content: $(modal).find('.review-content').val(),
                 Rating: rating
             },
             error: function (response) {
                 response.responseJSON.data.forEach((el) => {
                     switch (el.key) {
-                        case "Title":
-                            $('#reviewTitleError').css('display', 'block');
-                            errorEmail.text(el.errors);
+                        case "Name":
+                            $(modal).find('.review-name-error').css('display', 'block');
+                            $(modal).find('.review-name-error span').text(el.errors);
                             break;
                         case "Content":
-                            $('#reviewMessageError').css('display', 'block');
-                            errorMessage.text(el.errors);
+                            $(modal).find('.review-content-error').css('display', 'block');
+                            $(modal).find('.review-content-error span').text(el.errors);
                             break;
                         default:
-                            $('#reviewError').css('display', 'block');
-                            error.text(el.errors);
+                            $(modal).find('.modal-error').css('display', 'block');
+                            $(modal).find('.modal-error span').text(el.errors);
                             break;
                     }
                 })
             },
             success: function (result) {
                 if (result.success == true) {
-                    $('#reviewTitle').val('');
-                    $('#reviewMessage').val('');
-                    $('#reviewRating').children('input').each((i, el) =>
-                        $(el).prop('checked', false));
-
-                    $('#reviewSuccess').css('display', 'block');
+                    $(modal).find('.modal-succes').css('display', 'block');
                     setTimeout(function () {
-                        $('#reviewSuccess').css('display', 'none');
+                        $(modal).find('.modal-succes').css('display', 'none');
                     }, 2000);
+
+                    $(modal).removeClass('show');
+                    resetModal($(modal));
                 }
                 else {
-                    error.text(result.errors.toSting());
-                    $('#reviewError').css('display', 'block');
+                    $(modal).find('.modal-error span').text(result.errors.toSting());
+                    $(modal).find('.modal-error').css('display', 'block');
+                }
+            }
+        });
+    });
+
+    $('#updateReviewBtn').click(function () {
+        let modal = $(this).closest('.modal-container');
+        let rating = 0;
+        $(modal).find('.review-rating input').each((i, el) => {
+            if ($(el).is(':checked'))
+                rating = $(el).prop('id').slice(6);
+        });
+
+        $.ajax({
+            url: '/catalog/updatereview',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                Id: $(modal).find('.review-identifier').val(),
+                Content: $(modal).find('.review-content').val(),
+                Rating: rating
+            },
+            error: function (response) {
+                response.responseJSON.data.forEach((el) => {
+                    switch (el.key) {
+                        case "Content":
+                            $(modal).find('.review-content-error').css('display', 'block');
+                            $(modal).find('.review-content-error span').text(el.errors);
+                            break;
+                        default:
+                            $(modal).find('.modal-error').css('display', 'block');
+                            $(modal).find('.modal-error span').text(el.errors);
+                            break;
+                    }
+                })
+            },
+            success: function (result) {
+                if (result.success == true) {
+                    $(modal).find('.modal-succes').css('display', 'block');
+                    setTimeout(function () {
+                        $(modal).find('.modal-succes').css('display', 'none');
+                    }, 2000);
+
+                    $(modal).removeClass('show');
+                    resetModal($(modal));
+                }
+                else {
+                    $(modal).find('.modal-error span').text(result.errors.toSting());
+                    $(modal).find('.modal-error').css('display', 'block');
                 }
             }
         });
