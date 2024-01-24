@@ -1,0 +1,61 @@
+﻿<div id="createReviewModal" class="modal-container">
+    <div class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Write a review</h2>
+                <i class="bx bx-x close-modal"></i>
+            </header>
+            <form>
+                <div class="modal-field rating">
+                    <p>Are you satisfied enough?</p>
+                    <div class="rate-this review-rating">
+                        <input type="radio" name="rating" id="crStar5">
+                        <label for="crStar5"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="crStar4">
+                        <label for="crStar4"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="crStar3">
+                        <label for="crStar3"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="crStar2">
+                        <label for="crStar2"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="crStar1">
+                        <label for="crStar1"><img src="~/resources/icons/empty-star.png"></label>
+                    </div>
+                </div>
+                @if (User.Identity is null || !User.Identity.IsAuthenticated)
+                {
+                    <div class="modal-field">
+                        <label>Name</label>
+                        <input class="review-name" type="text" required />
+                        <div class="errors-area review-name-error">
+                            <i class='bx bx-error-circle'></i>
+                            <span></span>
+                        </div>
+                    </div>
+                }
+                <div class="modal-field">
+                    <label>Review</label>
+                    <textarea class="review-content" type="text"></textarea>
+                    <div class="errors-area review-content-error">
+                        <i class='bx bx-error-circle'></i>
+                        <span></span>
+                    </div>
+                </div>
+                <input class="review-order" type="number" hidden />
+                <input class="review-product" type="number" hidden />
+                <button id="createReviewBtn" class="button black">Post review</button>
+                <div class="errors-area modal-error">
+                    <i class='bx bx-error-circle'></i>
+                    <span></span>
+                </div>
+                <div class="success-msg modal-success">
+                    <i class='bx bx-check-circle'></i>
+                    <span>Your review has been successfully posted for moderation.</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
