@@ -121,6 +121,8 @@
     </section>
 }
 
+<partial name="_CreateReviewModal" />
+
 <a name="reviews"></a>
 <section class="reviews-section">
     <div class="container">
@@ -154,39 +156,34 @@
                     </div>
                     <span class="reviews-quantity">(@Model.ReviewsCount reviews)</span>
                 </div>
-                <a asp-fragment="review-form" class="button black">Write review</a>
+                <button 
+                    class="button black create-review-btn" 
+                    data-productid="@Model.Id">
+                    Write review
+                </button>
             </div>
             <div class="reviews-block-body">
                 <div class="reviews-list">
-                    <div class="review-item">
-                        <div class="review-form">
-                            <p class="person">Review by John</p>
-                            <p class="paragraph-light">On 21.08.2023</p>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="review-item">
+                            <div class="review-form">
+                                <p class="person">Review by John</p>
+                                <p class="paragraph-light">On @review.CreationDate.ToString("MMMM dd, yyyy")</p>
+                            </div>
+                            <div class="review-rating">
+                                @for (int i = 0; i < review.Rating; i++)
+                                {
+                                    <span class="rating-star">
+                                        <img src="~/resources/icons/star.png" loading="lazy" alt="★">
+                                    </span>
+                                }
+                            </div>
+                            <div class="review-text">
+                                <p>@review.Content</p>
+                            </div>
                         </div>
-                        <div class="review-rating">
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                            </span>
-                        </div>
-                        <div class="review-title">
-                            <p>Good!</p>
-                        </div>
-                        <div class="review-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
+                    }            
                     <div class="review-item">
                         <div class="review-form">
                             <p class="person">Review by Alex</p>
@@ -215,57 +212,6 @@
                         <div class="review-text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <a name="review-form"></a>
-            <div class="review-form">
-                <h4>Write a review</h4>
-                <div class="rating">
-                    <div class="form-field">Are you satisfied enough?</div>
-                    <div class="rate-this" id="reviewRating">
-                        <input type="radio" name="rating" id="star5">
-                        <label for="star5"><img src="~/resources/icons/empty-star.png"></label>
-
-                        <input type="radio" name="rating" id="star4">
-                        <label for="star4"><img src="~/resources/icons/empty-star.png"></label>
-
-                        <input type="radio" name="rating" id="star3">
-                        <label for="star3"><img src="~/resources/icons/empty-star.png"></label>
-
-                        <input type="radio" name="rating" id="star2">
-                        <label for="star2"><img src="~/resources/icons/empty-star.png"></label>
-
-                        <input type="radio" name="rating" id="star1">
-                        <label for="star1"><img src="~/resources/icons/empty-star.png"></label>
-                    </div>
-                </div>
-                <div class="review-fields">
-                    <div class="form-field">
-                        <label>Title</label>
-                        <input type="text" id="reviewTitle">
-                        <div id="reviewTitleError" class="errors-area">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            <span></span>
-                        </div>
-                    </div>
-                    <div class="form-field">
-                        <label>Review</label>
-                        <textarea cols="30" rows="7" type="text" id="reviewMessage"></textarea>
-                        <div id="reviewMessageError" class="errors-area">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            <span></span>
-                        </div>
-                    </div>
-                    <input type="number" value="@Model.Id" id="reviewProduct" readonly hidden />
-                    <button class="button black review-btn" type="submit">Submit Review</button>
-                    <div id="reviewError" class="errors-area">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <span></span>
-                    </div>
-                    <div id="reviewSuccess" class="success-msg">
-                        <i class="fa-regular fa-circle-check"></i>
-                        <span>Your review has been successfully posted for moderation.</span>
                     </div>
                 </div>
             </div>
