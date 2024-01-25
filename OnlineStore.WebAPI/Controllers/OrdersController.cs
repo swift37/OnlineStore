@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Order;
+using OnlineStore.Application.Infrastructure;
 using OnlineStore.Application.Interfaces.Infrastructure;
 using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Application.Models;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -278,6 +280,23 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PaymentSessionResponse>> StripePayment(StripePaymentRequest stripePaymentRequest) =>
             Ok(await _paymentService.StripePayment(stripePaymentRequest));
+
+        /// <summary>
+        /// Confirm order payment via Stripe
+        /// </summary>
+        /// <remarks>
+        /// GET /orders/payment/stripe/confirm
+        /// {
+        ///     orderNumber: "098734573475",
+        /// }
+        /// </remarks>
+        /// <param name="orderNumber">Order number</param>
+        /// <returns>Returns PaymentStatusResponse</returns>
+        /// <response code="200">Success</response>
+        [HttpGet("payment/stripe/confirm")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PaymentStatusResponse>> ConfirmStripePayment(string orderNumber) => 
+            Ok(await _paymentService.ConfirmStripePayment(orderNumber));
 
         ///// <summary>
         ///// Check availability of items in the order
