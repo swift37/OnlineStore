@@ -17,6 +17,10 @@ namespace OnlineStore.Application.DTOs.Order
 
         public DateTime? ShippedDate { get; set; }
 
+        public string? PaymentMethod { get; set; }
+
+        public string? PaymentSession { get; set; }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
