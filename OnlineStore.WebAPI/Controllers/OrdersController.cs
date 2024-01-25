@@ -260,6 +260,25 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetUserOrdersAwaitingReview() =>
             Ok(_mapper.Map<IEnumerable<Order>>(await _ordersRepository.GetUserOrdersAwaitingReviewAsync(UserId)));
 
+        /// <summary>
+        /// Create a Stripe payment session for the order
+        /// </summary>
+        /// <remarks>
+        /// POST /orders/payment/stripe
+        /// {
+        ///     orderNumber: "098734573475",
+        ///     successUrl: "https://onlinestore.com/payment/success",
+        ///     cancelUrl: "https://onlinestore.com/payment/cancel"
+        /// }
+        /// </remarks>
+        /// <param name="stripePaymentRequest">StripePaymentRequest</param>
+        /// <returns>Returns PaymentSessionResponse</returns>
+        /// <response code="200">Success</response>
+        [HttpPost("payment/stripe")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PaymentSessionResponse>> StripePayment(StripePaymentRequest stripePaymentRequest) =>
+            Ok(await _paymentService.StripePayment(stripePaymentRequest));
+
         ///// <summary>
         ///// Check availability of items in the order
         ///// </summary>
