@@ -11,6 +11,7 @@ namespace OnlineStore.Application
         public static IServiceCollection AddApplication(this IServiceCollection services) => services
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
             .AddScoped<IOrderNumbersProvider, OrderNumbersProvider>()
+            .AddScoped<IPaymentService, PaymentService>()
             .AddScoped<IEmailSender, EmailSender>()
             ;
     }
