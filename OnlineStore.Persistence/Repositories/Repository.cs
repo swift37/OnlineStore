@@ -47,7 +47,7 @@ namespace OnlineStore.DAL.Repositories
         public async Task<T> CreateAsync(T? entity, CancellationToken cancellation = default)
         {
             if (entity is null) throw new ArgumentNullException(nameof(T));
-
+            
             await DbSet.AddAsync(entity, cancellation);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
@@ -77,7 +77,7 @@ namespace OnlineStore.DAL.Repositories
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
 
-        public async Task<int> SaveChanges(CancellationToken cancellation = default)
+        public async Task<int> SaveChangesAsync(CancellationToken cancellation = default)
         {
             return await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
