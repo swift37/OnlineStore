@@ -12,9 +12,6 @@ namespace OnlineStore.Application.DTOs.Subscriber.Validation
             RuleFor(s => s.Email)
                 .NotEmpty()
                 .EmailAddress();
-
-            RuleFor(c => c.SubscribeDate)
-                .NotEqual(default(DateTime));
         }
     }
 }
