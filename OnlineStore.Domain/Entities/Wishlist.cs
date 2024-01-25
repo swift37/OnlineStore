@@ -11,8 +11,6 @@ namespace OnlineStore.Domain.Entities
         public DateTime LastChangeDate { get; set; } = DateTime.Now;
 
         public ICollection<WishlistItem> Items { get; set; } = new HashSet<WishlistItem>();
-
-        public int ProductsQuantity => Items.Count;
     }
 
     public class WishlistItem : Entity
