@@ -7,7 +7,7 @@ namespace OnlineStore.Application.DTOs.SpecificationType.Validation
         public SpecificationTypeDTOValidator()
         {
             RuleFor(s => s.Id)
-                .GreaterThan(s => s.Id);
+                .GreaterThan(0);
 
             RuleFor(s => s.Name)
                 .NotEmpty()
