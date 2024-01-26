@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Application.DTOs.Category;
+using OnlineStore.Application.DTOs.NestedMenuItem;
 using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.MenuItem
@@ -19,17 +19,5 @@ namespace OnlineStore.Application.DTOs.MenuItem
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Domain.Entities.MenuItem, MenuItemDTO>().ReverseMap();
-    }
-
-    public class NestedMenuItemDTO : BaseDTO, IMapWith<Domain.Entities.NestedMenuItem>
-    {
-        public string? Name { get; set; }
-
-        public int ParentId { get; set; }
-
-        public ICollection<CategoryDTO> Categories { get; set; } = new HashSet<CategoryDTO>();
-
-        public void Mapping(Profile profile) =>
-            profile.CreateMap<Domain.Entities.NestedMenuItem, NestedMenuItemDTO>().ReverseMap();
     }
 }

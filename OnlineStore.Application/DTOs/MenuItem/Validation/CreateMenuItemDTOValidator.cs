@@ -13,16 +13,4 @@ namespace OnlineStore.Application.DTOs.MenuItem.Validation
                 .GreaterThan(0);
         }
     }
-
-    public class CreateNestedMenuItemDTOValidator : AbstractValidator<CreateNestedMenuItemDTO>
-    {
-        public CreateNestedMenuItemDTOValidator()
-        {
-            RuleFor(i => i.Name)
-                .MaximumLength(32);
-
-            RuleFor(i => i.ParentId)
-                .GreaterThan(0);
-        }
-    }
 }

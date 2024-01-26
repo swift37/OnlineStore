@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace OnlineStore.Application.DTOs.MenuItem.Validation
+namespace OnlineStore.Application.DTOs.NestedMenuItem.Validation
 {
-    public class MenuItemDTOValidator : AbstractValidator<MenuItemDTO>
+    public class NestedMenuItemDTOValidator : AbstractValidator<NestedMenuItemDTO>
     {
-        public MenuItemDTOValidator()
+        public NestedMenuItemDTOValidator()
         {
             RuleFor(i => i.Id)
                 .GreaterThan(0);
@@ -12,7 +12,7 @@ namespace OnlineStore.Application.DTOs.MenuItem.Validation
             RuleFor(i => i.Name)
                 .MaximumLength(32);
 
-            RuleFor(i => i.CategoryId)
+            RuleFor(i => i.ParentId)
                 .GreaterThan(0);
         }
     }
