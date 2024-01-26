@@ -10,13 +10,6 @@ namespace OnlineStore.Application.DTOs.Order.Validation
             RuleFor(o => o.Id)
                 .GreaterThan(0);
 
-            RuleFor(o => o.Number)
-                .Length(16)
-                .Matches(new Regex("^[0-9]{16}$"));
-
-            RuleFor(o => o.PayDate)
-                .NotEqual(default(DateTime));
-
             RuleFor(o => o.ShippedDate)
                 .NotEqual(default(DateTime));
 
@@ -62,24 +55,6 @@ namespace OnlineStore.Application.DTOs.Order.Validation
 
             RuleFor(o => o.Notes)
                 .MaximumLength(128);
-        }
-    }
-
-    public class UpdateOrderItemDTOValidator : AbstractValidator<UpdateOrderItemDTO>
-    {
-        public UpdateOrderItemDTOValidator()
-        {
-            RuleFor(o => o.Id)
-                .GreaterThan(0);
-
-            RuleFor(o => o.UnitPrice)
-                .GreaterThan(0);
-
-            RuleFor(o => o.Discount)
-                .GreaterThanOrEqualTo(0);
-
-            RuleFor(o => o.Quantity)
-                .GreaterThan(0);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using OnlineStore.Application.Interfaces.Repositories;
 using System.Text.RegularExpressions;
 
 namespace OnlineStore.Application.DTOs.Order.Validation
@@ -51,13 +52,55 @@ namespace OnlineStore.Application.DTOs.Order.Validation
 
     public class CreateOrderItemDTOValidator : AbstractValidator<CreateOrderItemDTO>
     {
-        public CreateOrderItemDTOValidator()
+        private readonly IProductsRepository _productsRepository;
+
+        public CreateOrderItemDTOValidator(IProductsRepository productsRepository)
         {
+            _productsRepository = productsRepository;
+
             RuleFor(o => o.ProductId)
                 .NotEqual(0);
 
+            RuleFor(o => o.ProductId)
+                .MustAsync(async (entity, value, context, cancellation) =>
+                    await CheckItemAvailability(value, context, cancellation))
+                .WithMessage("The {ProductName} is not available.");
+
             RuleFor(o => o.Quantity)
-                .GreaterThan(0);
+                .MustAsync(async (entity, value, context, cancellation) => 
+                    await CheckItemAvailability(entity.ProductId, value, context, cancellation))
+                .WithMessage("There are only {InStockQty} units of the {ProductName} in stock, so you want to buy {InOrderQty} units of the product.");
+
+            RuleFor(o => o.Quantity)
+                .GreaterThan(0)
+                .WithMessage("You need to order one unit of the product at list.");
+        }
+
+        public async Task<bool> CheckItemAvailability(
+            int productId,
+            ValidationContext<CreateOrderItemDTO> context,
+            CancellationToken cancellation = default)
+        {
+            var product = await _productsRepository.GetAsync(productId);
+            context.MessageFormatter
+                .AppendArgument("ProductName", product.Name);
+
+            return product.IsAvailable;
+        }
+
+        public async Task<bool> CheckItemAvailability(
+            int productId,
+            int quantity,
+            ValidationContext<CreateOrderItemDTO> context,
+            CancellationToken cancellation = default)
+        {
+            var product = await _productsRepository.GetAsync(productId);
+            context.MessageFormatter
+                .AppendArgument("ProductName", product.Name)
+                .AppendArgument("InOrderQty", quantity)
+                .AppendArgument("InStockQty", product.UnitsInStock);
+
+            return product.UnitsInStock >= quantity;
         }
     }
 }
