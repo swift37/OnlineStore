@@ -8,7 +8,7 @@ namespace OnlineStore.Application.DTOs.Wishlist
     {
         public DateTime LastChangeDate { get; set; } = DateTime.Now;
 
-        public ICollection<WishlistItemDTO> Items { get; set; } = new HashSet<WishlistItemDTO>();
+        public ICollection<UpdateWishlistItemDTO> Items { get; set; } = new HashSet<UpdateWishlistItemDTO>();
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Domain.Entities.Wishlist, UpdateWishlistDTO>().ReverseMap();
