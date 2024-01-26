@@ -29,6 +29,7 @@ namespace OnlineStore.DAL
             .AddScoped<IRepository<Event>, Repository<Event>>()
             .AddScoped<IRepository<ContactRequest>, Repository<ContactRequest>>()
             .AddScoped<IRepository<MenuItem>, Repository<MenuItem>>()
+            .AddScoped<IRepository<NestedMenuItem>, Repository<NestedMenuItem>>()
             ;
     }
 }
