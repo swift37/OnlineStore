@@ -7,19 +7,9 @@ namespace OnlineStore.Application.DTOs.Order
 {
     public class UpdateOrderDTO : BaseDTO, IMapWith<Domain.Entities.Order>
     {
-        public string? Number { get; set; }
-
-        public ICollection<UpdateOrderItemDTO> Items { get; set; } = new HashSet<UpdateOrderItemDTO>();
-
         public OrderStatus Status { get; set; }
 
-        public DateTime? PayDate { get; set; }
-
         public DateTime? ShippedDate { get; set; }
-
-        public string? PaymentMethod { get; set; }
-
-        public string? PaymentSession { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -51,17 +41,5 @@ namespace OnlineStore.Application.DTOs.Order
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Domain.Entities.Order, UpdateOrderDTO>().ReverseMap();
-    }
-
-    public class UpdateOrderItemDTO : BaseDTO, IMapWith<Domain.Entities.OrderItem>
-    {
-        public int Quantity { get; set; }
-
-        public decimal UnitPrice { get; set; }
-
-        public decimal Discount { get; set; }
-
-        public void Mapping(Profile profile) =>
-            profile.CreateMap<Domain.Entities.OrderItem, UpdateOrderItemDTO>().ReverseMap();
     }
 }
