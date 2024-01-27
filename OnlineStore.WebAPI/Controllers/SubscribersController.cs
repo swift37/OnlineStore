@@ -104,15 +104,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the subscriber
+        /// Full update the subscriber
         /// </summary>
         /// <remarks>
         /// PUT /subscribers
         /// {
+        ///     id: "1",
         ///     name: "Updated subscriber name"
         /// }
         /// </remarks>
-        /// <param name="updateSubscriberDTO">UpdateSubscriberDTO</param>
+        /// <param name="subscriberDTO">SubscriberDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -122,9 +123,40 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] SubscriberDTO subscriberDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Subscriber>(subscriberDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the subscriber
+        /// </summary>
+        /// <remarks>
+        /// PATCH /subscribers
+        /// {
+        ///     id: "1",
+        ///     name: "Updated subscriber name"
+        /// }
+        /// </remarks>
+        /// <param name="updateSubscriberDTO">UpdateSubscriberDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateSubscriberDTO updateSubscriberDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Subscriber>(updateSubscriberDTO));
+            var subscriber = await _repository.GetAsync(updateSubscriberDTO.Id);
+            subscriber.Email = updateSubscriberDTO.Email;
+            subscriber.IsActive = updateSubscriberDTO.IsActive;
+            
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
