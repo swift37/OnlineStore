@@ -116,15 +116,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the product
+        /// Full update the product
         /// </summary>
         /// <remarks>
         /// PUT /products
         /// {
+        ///     id: "1",
         ///     name: "Updated product name"
         /// }
         /// </remarks>
-        /// <param name="updateProductDTO">UpdateProductDTO</param>
+        /// <param name="productDTO">ProductDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -134,9 +135,62 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] ProductDTO productDTO)
+        {
+            await _productsRepository.UpdateAsync(_mapper.Map<Product>(productDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the product
+        /// </summary>
+        /// <remarks>
+        /// PATCH /products
+        /// {
+        ///     id: "1",
+        ///     name: "Updated product name"
+        /// }
+        /// </remarks>
+        /// <param name="updateProductDTO">UpdateProductDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            await _productsRepository.UpdateAsync(_mapper.Map<Product>(updateProductDTO));
+            var product = await _productsRepository.GetAsync(updateProductDTO.Id);
+            product.Name = updateProductDTO.Name;
+            product.Description = updateProductDTO.Description;
+            product.Image = updateProductDTO.Image;
+            product.CategoryId = updateProductDTO.CategoryId;
+            product.UnitPrice = updateProductDTO.UnitPrice;
+            product.UnitsInStock = updateProductDTO.UnitsInStock;
+            product.Discount = updateProductDTO.Discount;
+            product.Manufacturer = updateProductDTO.Manufacturer;
+            product.ManufacturersCode = updateProductDTO.ManufacturersCode;
+            product.StoreCode = updateProductDTO.StoreCode;
+            product.IsSale = updateProductDTO.IsSale;
+            product.IsNewProduct = updateProductDTO.IsNewProduct;
+            product.IsFeaturedProduct = updateProductDTO.IsFeaturedProduct;
+            product.IsAvailable = updateProductDTO.IsAvailable;
+
+            var removedItems = product.Specifications
+                .ExceptBy(updateProductDTO.Specifications.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                product.Specifications.Remove(item);
+
+            var addedItems = updateProductDTO.Specifications
+                .ExceptBy(product.Specifications.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                product.Specifications.Add(item);
+
+            await _productsRepository.SaveChangesAsync();
+
             return NoContent();
         }
 
