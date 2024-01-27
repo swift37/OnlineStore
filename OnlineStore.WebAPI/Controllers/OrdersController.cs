@@ -19,15 +19,17 @@ namespace OnlineStore.WebAPI.Controllers
         private readonly IOrdersRepository _ordersRepository;
         private readonly IProductsRepository _productsRepository;
         private readonly IOrderNumbersProvider _orderNumbersProvider;
+        private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
 
         public OrdersController(
             IOrdersRepository ordersRepository, 
             IProductsRepository productsRepository,
             IOrderNumbersProvider orderNumbersProvider,
+            IPaymentService paymentService,
             IMapper mapper) =>
-            (_ordersRepository, _productsRepository, _orderNumbersProvider, _mapper) = 
-            (ordersRepository, productsRepository, orderNumbersProvider, mapper);
+            (_ordersRepository, _productsRepository, _orderNumbersProvider, _paymentService, _mapper) = 
+            (ordersRepository, productsRepository, orderNumbersProvider, paymentService, mapper);
 
         /// <summary>
         /// Get the enumeration of orders
@@ -113,12 +115,11 @@ namespace OnlineStore.WebAPI.Controllers
             foreach (var item in order.Items)
             {
                 var product = await _productsRepository.GetAsync(item.ProductId);
-                if (!product.IsAvailable || product.UnitsInStock < item.Quantity)
-                    order.Items.Remove(item);
+                product.UnitsInStock -= item.Quantity;
+                await _productsRepository.SaveChangesAsync();
+
                 item.UnitPrice = product.UnitPrice;
                 item.Discount = product.Discount;
-                product.UnitsInStock -= item.Quantity;
-                await _productsRepository.UpdateAsync(product);
             }
 
             var createdOrder = await _ordersRepository.CreateAsync(order);
@@ -127,15 +128,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the order
+        /// Full update the order
         /// </summary>
         /// <remarks>
         /// PUT /orders
         /// {
+        ///     id: "1",
         ///     name: "Updated order name"
         /// }
         /// </remarks>
-        /// <param name="updateOrderDTO">UpdateOrderDTO</param>
+        /// <param name="orderDTO">OrderDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -145,9 +147,54 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] OrderDTO orderDTO)
+        {
+            await _ordersRepository.UpdateAsync(_mapper.Map<Order>(orderDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the order
+        /// </summary>
+        /// <remarks>
+        /// PATCH /orders
+        /// {
+        ///     id: "1",
+        ///     name: "Updated order name"
+        /// }
+        /// </remarks>
+        /// <param name="updateOrderDTO">UpdateOrderDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateOrderDTO updateOrderDTO)
         {
-            await _ordersRepository.UpdateAsync(_mapper.Map<Order>(updateOrderDTO));
+            var order = await _ordersRepository.GetAsync(updateOrderDTO.Id);
+            order.Status = updateOrderDTO.Status;
+            order.ShippedDate = updateOrderDTO.ShippedDate;
+            order.FirstName = updateOrderDTO.FirstName;
+            order.LastName = updateOrderDTO.LastName;
+            order.Phone = updateOrderDTO.Phone;
+            order.Email = updateOrderDTO.Email;
+            order.Total = updateOrderDTO.Total;
+            order.ShippingCost = updateOrderDTO.ShippingCost;
+            order.TrackingNumber = updateOrderDTO.TrackingNumber;
+            order.Country = updateOrderDTO.Country;
+            order.City = updateOrderDTO.City;
+            order.State = updateOrderDTO.State;
+            order.Postcode = updateOrderDTO.Postcode;
+            order.StreetAddress = updateOrderDTO.StreetAddress;
+            order.Apartment = updateOrderDTO.Apartment;
+            order.Notes = updateOrderDTO.Notes;
+
+            await _ordersRepository.SaveChangesAsync();
+
             return NoContent();
         }
 
