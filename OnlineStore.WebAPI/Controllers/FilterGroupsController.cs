@@ -5,6 +5,7 @@ using OnlineStore.Application.DTOs.FiltersGroup;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Persistence.Repositories;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -14,17 +15,16 @@ namespace OnlineStore.WebAPI.Controllers
     public class FilterGroupsController : BaseController
     {
         private readonly IFilterGroupsRepository _filterGroupsRepository;
-
-        private readonly IProductsRepository _productsRepository;
+        private readonly IRepository<SpecificationType> _specificationTypesRepository;
 
         private readonly IMapper _mapper;
 
         public FilterGroupsController(
-            IFilterGroupsRepository filterGroupsRepository, 
-            IProductsRepository productsRepository,
+            IFilterGroupsRepository filterGroupsRepository,
+            IRepository<SpecificationType> specificationTypesRepository,
             IMapper mapper) => 
-            (_filterGroupsRepository, _productsRepository, _mapper) = 
-            (filterGroupsRepository, productsRepository, mapper);
+            (_filterGroupsRepository, _specificationTypesRepository, _mapper) = 
+            (filterGroupsRepository, specificationTypesRepository, mapper);
 
         /// <summary>
         /// Get the enumeration of filters groups
@@ -100,21 +100,31 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateFiltersGroupDTO createFiltersGroupDTO)
         {
-            var filtersGroup = await _filterGroupsRepository.CreateAsync(_mapper.Map<FiltersGroup>(createFiltersGroupDTO));
-            if (filtersGroup is null) return UnprocessableEntity();
+            var filtersGroup = _mapper.Map<FiltersGroup>(createFiltersGroupDTO);
+
+            foreach (var specificationTypeId in createFiltersGroupDTO.SpecificationTypeIds)
+            {
+                var specificationType = await _specificationTypesRepository.GetAsync(specificationTypeId);
+                filtersGroup.SpecificationTypes.Add(specificationType);
+            };
+
+            if (await _filterGroupsRepository.CreateAsync(filtersGroup) is null)
+                return UnprocessableEntity();
+
             return Ok(filtersGroup.Id);
         }
 
         /// <summary>
-        /// Update the filters group
+        /// Full update the filters group
         /// </summary>
         /// <remarks>
         /// PUT /filtergroups
         /// {
+        ///     id: "1",
         ///     name: "Updated filters group name"
         /// }
         /// </remarks>
-        /// <param name="UpdateFiltersGroupDTO">UpdateFiltersGroupDTO</param>
+        /// <param name="filtersGroupDTO">filtersGroupDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -124,9 +134,52 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] UpdateFiltersGroupDTO UpdateFiltersGroupDTO)
+        public async Task<IActionResult> Update([FromBody] FiltersGroupDTO filtersGroupDTO)
         {
-            await _filterGroupsRepository.UpdateAsync(_mapper.Map<FiltersGroup>(UpdateFiltersGroupDTO));
+            await _filterGroupsRepository.UpdateAsync(_mapper.Map<FiltersGroup>(filtersGroupDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the filters group
+        /// </summary>
+        /// <remarks>
+        /// PATCH /filtergroups
+        /// {
+        ///     id: "1",
+        ///     name: "Updated filters group name"
+        /// }
+        /// </remarks>
+        /// <param name="updateFiltersGroupDTO">UpdateFiltersGroupDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.Administrator)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] UpdateFiltersGroupDTO updateFiltersGroupDTO)
+        {
+            var filterGroup = await _filterGroupsRepository.GetAsync(updateFiltersGroupDTO.Id);
+            filterGroup.CategoryId = updateFiltersGroupDTO.CategoryId;
+
+            var removedItems = filterGroup.SpecificationTypes
+                .ExceptBy(updateFiltersGroupDTO.SpecificationTypeIds, t => t.Id);
+            foreach (var item in removedItems)
+                filterGroup.SpecificationTypes.Remove(item);
+
+            var addedItemIds = updateFiltersGroupDTO.SpecificationTypeIds
+                .Except(filterGroup.SpecificationTypes.Select(t => t.Id));
+            foreach (var itemId in addedItemIds)
+            {
+                var item = await _specificationTypesRepository.GetAsync(itemId);
+                filterGroup.SpecificationTypes.Add(item);
+            }
+
+            await _filterGroupsRepository.SaveChangesAsync();
+
             return NoContent();
         }
 
