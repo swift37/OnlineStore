@@ -101,15 +101,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the menu item
+        /// Full update the menu item
         /// </summary>
         /// <remarks>
         /// PUT /menuitems
         /// {
+        ///     id: "1",
         ///     name: "Updated menu item name"
         /// }
         /// </remarks>
-        /// <param name="UpdateMenuItemDTO">UpdateMenuItemDTO</param>
+        /// <param name="menuItemDTO">menuItemDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -119,9 +120,42 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] UpdateMenuItemDTO UpdateMenuItemDTO)
+        public async Task<IActionResult> Update([FromBody] MenuItemDTO menuItemDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<MenuItem>(UpdateMenuItemDTO));
+            await _repository.UpdateAsync(_mapper.Map<MenuItem>(menuItemDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the menu item
+        /// </summary>
+        /// <remarks>
+        /// PATCH /menuitems
+        /// {
+        ///     id: "1",s
+        ///     name: "Updated menu item name"
+        /// }
+        /// </remarks>
+        /// <param name="updateMenuItemDTO">UpdateMenuItemDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.Administrator)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] UpdateMenuItemDTO updateMenuItemDTO)
+        {
+            var menuItem = await _repository.GetAsync(updateMenuItemDTO.Id);
+            menuItem.Name = updateMenuItemDTO.Name;
+            menuItem.IsMegaMenu = updateMenuItemDTO.IsMegaMenu;
+            menuItem.Image = updateMenuItemDTO.Image;
+            menuItem.CategoryId = updateMenuItemDTO.CategoryId;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
