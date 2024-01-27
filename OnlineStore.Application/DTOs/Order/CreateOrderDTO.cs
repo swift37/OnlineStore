@@ -10,8 +10,6 @@ namespace OnlineStore.Application.DTOs.Order
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }

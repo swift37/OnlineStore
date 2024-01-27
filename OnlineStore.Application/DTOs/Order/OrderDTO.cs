@@ -14,7 +14,7 @@ namespace OnlineStore.Application.DTOs.Order
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public DateTime? PayDate { get; set; }
 

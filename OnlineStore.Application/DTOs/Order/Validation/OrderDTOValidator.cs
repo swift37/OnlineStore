@@ -14,7 +14,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
                 .Length(16)
                 .Matches(new Regex("^[0-9]{16}$"));
 
-            RuleFor(o => o.CreatedDate)
+            RuleFor(o => o.CreationDate)
                 .NotEqual(default(DateTime));
 
             RuleFor(o => o.PayDate)

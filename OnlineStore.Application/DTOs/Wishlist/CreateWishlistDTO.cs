@@ -5,10 +5,6 @@ namespace OnlineStore.Application.DTOs.Wishlist
 {
     public class CreateWishlistDTO : IMapWith<Domain.Entities.Wishlist>
     {
-        public DateTime CreateDate { get; set; } = DateTime.Now;
-
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
-
         public ICollection<CreateWishlistItemDTO> Items { get; set; } = new HashSet<CreateWishlistItemDTO>();
 
         public void Mapping(Profile profile) =>

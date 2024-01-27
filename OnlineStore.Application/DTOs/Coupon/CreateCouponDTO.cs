@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Coupon
@@ -7,8 +6,6 @@ namespace OnlineStore.Application.DTOs.Coupon
     public class CreateCouponDTO : IMapWith<Domain.Entities.Coupon>
     {
         public string? Number { get; set; }
-
-        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime StartDate { get; set; }
 

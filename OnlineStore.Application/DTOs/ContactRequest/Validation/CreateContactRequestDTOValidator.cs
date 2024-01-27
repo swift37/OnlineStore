@@ -12,9 +12,6 @@ namespace OnlineStore.Application.DTOs.ContactRequest.Validation
 
             RuleFor(c => c.Message)
                 .MaximumLength(256);
-
-            RuleFor(c => c.CreationDate)
-                .NotEqual(default(DateTime));
         }
     }
 }

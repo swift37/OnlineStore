@@ -9,10 +9,6 @@ namespace OnlineStore.Application.DTOs.Review
 
         public int? OrderId { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
-
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
-
         public string? Name { get; set; }
 
         public int Rating { get; set; }

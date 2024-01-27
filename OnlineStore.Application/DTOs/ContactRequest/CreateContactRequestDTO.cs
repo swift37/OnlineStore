@@ -11,7 +11,7 @@ namespace OnlineStore.Application.DTOs.ContactRequest
 
         public string? Message { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public bool IsConsidered { get; set; }
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Domain.Entities.ContactRequest, CreateContactRequestDTO>().ReverseMap();

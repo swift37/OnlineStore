@@ -8,9 +8,6 @@ namespace OnlineStore.Application.DTOs.Order.Validation
     {
         public CreateOrderDTOValidator()
         {
-            RuleFor(o => o.CreatedDate)
-                .NotEqual(default(DateTime));
-
             RuleFor(o => o.FirstName)
                 .MaximumLength(32);
 
