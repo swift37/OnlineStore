@@ -98,15 +98,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the category
+        /// Full update the category
         /// </summary>
         /// <remarks>
         /// PUT /categories
         /// {
+        ///     id: "1",
         ///     name: "Updated category name"
         /// }
         /// </remarks>
-        /// <param name="updateCategoryDTO">UpdateCategoryDTO</param>
+        /// <param name="categoryDTO">CategoryDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         [HttpPut]
@@ -114,9 +115,41 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] CategoryDTO categoryDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Category>(categoryDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the category
+        /// </summary>
+        /// <remarks>
+        /// PATCH /categories
+        /// {
+        ///     id: "1",
+        ///     name: "Updated category name"
+        /// }
+        /// </remarks>
+        /// <param name="updateCategoryDTO">UpdateCategoryDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Category>(updateCategoryDTO));
+            var category = await _repository.GetAsync(updateCategoryDTO.Id);
+            category.Name = updateCategoryDTO.Name;
+            category.Description = updateCategoryDTO.Description;
+            category.RootId = updateCategoryDTO.RootId;
+            category.ParentId = updateCategoryDTO.ParentId;
+            category.IsRootCategory = updateCategoryDTO.IsMainCategory;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
