@@ -116,32 +116,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the filters group
-        /// </summary>
-        /// <remarks>
-        /// PUT /filtergroups
-        /// {
-        ///     id: "1",
-        ///     name: "Updated filters group name"
-        /// }
-        /// </remarks>
-        /// <param name="filtersGroupDTO">filtersGroupDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.Administrator)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] FiltersGroupDTO filtersGroupDTO)
-        {
-            await _filterGroupsRepository.UpdateAsync(_mapper.Map<FiltersGroup>(filtersGroupDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the filters group
         /// </summary>
         /// <remarks>

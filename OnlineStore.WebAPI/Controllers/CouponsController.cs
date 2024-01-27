@@ -113,32 +113,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the coupon
-        /// </summary>
-        /// <remarks>
-        /// PUT /coupons
-        /// {
-        ///     id: "1",
-        ///     name: "Updated coupon name"
-        /// }
-        /// </remarks>
-        /// <param name="couponDTO">CouponDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] CouponDTO couponDTO)
-        {
-            await _repository.UpdateAsync(_mapper.Map<Coupon>(couponDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the coupon
         /// </summary>
         /// <remarks>

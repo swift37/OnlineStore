@@ -112,30 +112,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the wishlist
-        /// </summary>
-        /// <remarks>
-        /// PUT /wishlists
-        /// {
-        ///     id: "1",
-        ///     name: "Updated wishlist name"
-        /// }
-        /// </remarks>
-        /// <param name="wishlistDTO">WishlistDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.Administrator)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Update([FromBody] WishlistDTO wishlistDTO)
-        {
-            await _repository.UpdateAsync(_mapper.Map<Wishlist>(wishlistDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the wishlist
         /// </summary>
         /// <remarks>

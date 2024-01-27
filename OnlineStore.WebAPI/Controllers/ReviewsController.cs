@@ -7,7 +7,6 @@ using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace OnlineStore.WebAPI.Controllers
 {
@@ -114,33 +113,6 @@ namespace OnlineStore.WebAPI.Controllers
             var createdReview = await _repository.CreateAsync(review);
             if (createdReview is null) return UnprocessableEntity();
             return Ok(createdReview.Id);
-        }
-
-        /// <summary>
-        /// Full update the review
-        /// </summary>  
-        /// <remarks>
-        /// PUT /reviews
-        /// {
-        ///     id: "1",
-        ///     name: "Updated review name",
-        ///     price: "2155"
-        /// }
-        /// </remarks>
-        /// <param name="reviewDTO">ReviewDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user tries to update the review that does not belong to him</response>
-        [HttpPut]
-        [Authorize(Roles.EmployeeOrHigher)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] ReviewDTO reviewDTO)
-        {
-            await _repository.UpdateAsync(_mapper.Map<Review>(reviewDTO));
-            return NoContent();
         }
 
         /// <summary>

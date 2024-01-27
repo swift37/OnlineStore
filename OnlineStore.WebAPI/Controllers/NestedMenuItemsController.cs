@@ -117,32 +117,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the nested menu item
-        /// </summary>
-        /// <remarks>
-        /// PUT /nestedmenuitems
-        /// {
-        ///     id: "1",
-        ///     name: "Updated nested menu item name"
-        /// }
-        /// </remarks>
-        /// <param name="nestedMenuItemDTO">nestedMenuItemDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.Administrator)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] NestedMenuItemDTO nestedMenuItemDTO)
-        {
-            await _nestedMenuItemsRepository.UpdateAsync(_mapper.Map<NestedMenuItem>(nestedMenuItemDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the nested menu item
         /// </summary>
         /// <remarks>

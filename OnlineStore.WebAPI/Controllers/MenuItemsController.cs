@@ -102,32 +102,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the menu item
-        /// </summary>
-        /// <remarks>
-        /// PUT /menuitems
-        /// {
-        ///     id: "1",
-        ///     name: "Updated menu item name"
-        /// }
-        /// </remarks>
-        /// <param name="menuItemDTO">menuItemDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.Administrator)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] MenuItemDTO menuItemDTO)
-        {
-            await _repository.UpdateAsync(_mapper.Map<MenuItem>(menuItemDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the menu item
         /// </summary>
         /// <remarks>

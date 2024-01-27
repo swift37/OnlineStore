@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Order;
-using OnlineStore.Application.Infrastructure;
 using OnlineStore.Application.Interfaces.Infrastructure;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Application.Models;
@@ -126,32 +125,6 @@ namespace OnlineStore.WebAPI.Controllers
             var createdOrder = await _ordersRepository.CreateAsync(order);
             if (createdOrder is null) return UnprocessableEntity();
             return Ok(returnNumber ? createdOrder.Number : createdOrder.Id);
-        }
-
-        /// <summary>
-        /// Full update the order
-        /// </summary>
-        /// <remarks>
-        /// PUT /orders
-        /// {
-        ///     id: "1",
-        ///     name: "Updated order name"
-        /// }
-        /// </remarks>
-        /// <param name="orderDTO">OrderDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] OrderDTO orderDTO)
-        {
-            await _ordersRepository.UpdateAsync(_mapper.Map<Order>(orderDTO));
-            return NoContent();
         }
 
         /// <summary>

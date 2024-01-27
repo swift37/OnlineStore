@@ -116,32 +116,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the product
-        /// </summary>
-        /// <remarks>
-        /// PUT /products
-        /// {
-        ///     id: "1",
-        ///     name: "Updated product name"
-        /// }
-        /// </remarks>
-        /// <param name="productDTO">ProductDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] ProductDTO productDTO)
-        {
-            await _productsRepository.UpdateAsync(_mapper.Map<Product>(productDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the product
         /// </summary>
         /// <remarks>

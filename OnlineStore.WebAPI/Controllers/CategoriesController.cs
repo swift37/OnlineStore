@@ -98,30 +98,6 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Full update the category
-        /// </summary>
-        /// <remarks>
-        /// PUT /categories
-        /// {
-        ///     id: "1",
-        ///     name: "Updated category name"
-        /// }
-        /// </remarks>
-        /// <param name="categoryDTO">CategoryDTO</param>
-        /// <returns>Returns NoContent</returns>
-        /// <response code="204">Success</response>
-        [HttpPut]
-        [Authorize(Roles = Roles.ManagerOrHigher)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] CategoryDTO categoryDTO)
-        {
-            await _repository.UpdateAsync(_mapper.Map<Category>(categoryDTO));
-            return NoContent();
-        }
-
-        /// <summary>
         /// Partially update the category
         /// </summary>
         /// <remarks>
