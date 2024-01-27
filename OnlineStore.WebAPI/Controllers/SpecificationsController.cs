@@ -106,7 +106,7 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the specification
+        /// Full update the specification
         /// </summary>
         /// <remarks>
         /// PUT /specifications
@@ -114,7 +114,7 @@ namespace OnlineStore.WebAPI.Controllers
         ///     value: "Updated specification value"
         /// }
         /// </remarks>
-        /// <param name="updateSpecificationDTO">UpdateSpecificationDTO</param>
+        /// <param name="specificationDTO">SpecificationDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -124,9 +124,40 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] SpecificationDTO specificationDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Specification>(specificationDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the specification
+        /// </summary>
+        /// <remarks>
+        /// PATCH /specifications
+        /// {
+        ///     id: "1",
+        ///     value: "Updated specification value"
+        /// }
+        /// </remarks>
+        /// <param name="updateSpecificationDTO">UpdateSpecificationDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateSpecificationDTO updateSpecificationDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Specification>(updateSpecificationDTO));
+            var specification = await _repository.GetAsync(updateSpecificationDTO.Id);
+            specification.Value = updateSpecificationDTO.Value;
+            specification.SpecificationTypeId = updateSpecificationDTO.SpecificationTypeId;
+            
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
