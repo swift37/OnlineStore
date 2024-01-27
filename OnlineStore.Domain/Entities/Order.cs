@@ -16,7 +16,7 @@ namespace OnlineStore.Domain.Entities
 
         public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime? PayDate { get; set; }
 

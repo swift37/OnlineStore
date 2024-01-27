@@ -15,8 +15,8 @@ namespace OnlineStore.DAL.Repositories
             .ConfigureAwait(false);
 
         public async Task<int> CountForLastMonthAsync(CancellationToken cancellation = default) => await Entities
-            .Where(o => o.CreatedDate.Year == DateTime.Now.Year && 
-                        o.CreatedDate.Month == DateTime.Now.Month)
+            .Where(o => o.CreationDate.Year == DateTime.Now.Year && 
+                        o.CreationDate.Month == DateTime.Now.Month)
             .CountAsync(cancellation)
             .ConfigureAwait(false);
 

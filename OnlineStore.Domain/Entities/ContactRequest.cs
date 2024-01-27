@@ -13,5 +13,7 @@ namespace OnlineStore.Domain.Entities
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime? ResponseDate { get; set; }
+
+        public bool IsConsidered { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace OnlineStore.Domain.Entities
     {
         public Guid UserId { get; set; }
 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime LastChangeDate { get; set; } = DateTime.Now;
 
