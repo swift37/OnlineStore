@@ -109,15 +109,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the coupon
+        /// Full update the coupon
         /// </summary>
         /// <remarks>
         /// PUT /coupons
         /// {
+        ///     id: "1",
         ///     name: "Updated coupon name"
         /// }
         /// </remarks>
-        /// <param name="updateCouponDTO">UpdateCouponDTO</param>
+        /// <param name="couponDTO">CouponDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -127,9 +128,47 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] CouponDTO couponDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Coupon>(couponDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the coupon
+        /// </summary>
+        /// <remarks>
+        /// PATCH /coupons
+        /// {
+        ///     id: "1",
+        ///     name: "Updated coupon name"
+        /// }
+        /// </remarks>
+        /// <param name="updateCouponDTO">UpdateCouponDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCouponDTO updateCouponDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Coupon>(updateCouponDTO));
+            var coupon = await _repository.GetAsync(updateCouponDTO.Id);
+            coupon.Number = updateCouponDTO.Number;
+            coupon.StartDate = updateCouponDTO.StartDate;
+            coupon.FinishDate = updateCouponDTO.FinishDate;
+            coupon.DiscountSize = updateCouponDTO.DiscountSize;
+            coupon.PercentDiscountSize = updateCouponDTO.PercentDiscountSize;
+            coupon.MaxUsesCount = updateCouponDTO.MaxUsesCount;
+            coupon.CurrentUsesCount = updateCouponDTO.CurrentUsesCount;
+            coupon.IsNotUsesLimit = updateCouponDTO.IsNotUsesLimit;
+            coupon.IsActive = updateCouponDTO.IsActive;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
