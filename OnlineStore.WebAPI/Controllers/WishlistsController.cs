@@ -110,15 +110,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the wishlist
+        /// Full update the wishlist
         /// </summary>
         /// <remarks>
         /// PUT /wishlists
         /// {
+        ///     id: "1",
         ///     name: "Updated wishlist name"
         /// }
         /// </remarks>
-        /// <param name="updateWishlistDTO">UpdateWishlistDTO</param>
+        /// <param name="wishlistDTO">WishlistDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -126,9 +127,47 @@ namespace OnlineStore.WebAPI.Controllers
         [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> Update([FromBody] WishlistDTO wishlistDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<Wishlist>(wishlistDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists
+        /// {
+        ///     id: "1",
+        ///     name: "Updated wishlist name"
+        /// }
+        /// </remarks>
+        /// <param name="updateWishlistDTO">UpdateWishlistDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.Administrator)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Wishlist>(updateWishlistDTO));
+            var wishlist = await _repository.GetAsync(updateWishlistDTO.Id);
+            wishlist.LastChangeDate = DateTime.Now;
+
+            var removedItems = wishlist.Items
+                .ExceptBy(updateWishlistDTO.Items.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                wishlist.Items.Remove(item);
+
+            var addedItems = updateWishlistDTO.Items
+                .ExceptBy(wishlist.Items.Select(t => t.Id), t => t.Id);
+            foreach (var item in addedItems)
+                wishlist.Items.Add(_mapper.Map<WishlistItem>(item));
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -208,7 +247,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
-        [HttpPut("items")]
+        [HttpPost("items")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -233,7 +272,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
-        [HttpPost("items")]
+        [HttpPut("items")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
