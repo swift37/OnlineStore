@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using OnlineStore.Application.DTOs.SpecificationType;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain.Constants;
@@ -12,6 +11,7 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/specification-types")]
     public class SpecificationTypesController : BaseController
     {
         private readonly IRepository<SpecificationType> _repository;

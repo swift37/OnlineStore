@@ -11,6 +11,7 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/menu-items")]
     public class MenuItemsController : BaseController
     {
         private readonly IRepository<MenuItem> _repository;

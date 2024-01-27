@@ -12,6 +12,7 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/nested-menu-items")]
     public class NestedMenuItemsController : BaseController
     {
         private readonly IRepository<NestedMenuItem> _nestedMenuItemsRepository;

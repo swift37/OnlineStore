@@ -12,6 +12,7 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/filter-groups")]
     public class FilterGroupsController : BaseController
     {
         private readonly IFilterGroupsRepository _filterGroupsRepository;

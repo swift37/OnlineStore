@@ -11,6 +11,7 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/contact-requests")]
     public class ContactRequestsController : BaseController
     {
         private readonly IRepository<ContactRequest> _repository;
