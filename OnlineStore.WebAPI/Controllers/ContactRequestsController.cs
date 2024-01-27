@@ -104,15 +104,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the contact request
+        /// Full update the contact request
         /// </summary>
         /// <remarks>
         /// PUT /contactrequests
         /// {
+        ///     id: "1",
         ///     name: "Updated contact request name"
         /// }
         /// </remarks>
-        /// <param name="updateContactRequestDTO">UpdateContactRequestDTO</param>
+        /// <param name="contactRequestDTO">ContactRequestDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -122,9 +123,42 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] ContactRequestDTO contactRequestDTO)
+        {
+            await _repository.UpdateAsync(_mapper.Map<ContactRequest>(contactRequestDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the contact request
+        /// </summary>
+        /// <remarks>
+        /// PATCH /contactrequests
+        /// {
+        ///     id: "1",
+        ///     name: "Updated contact request name"
+        /// }
+        /// </remarks>
+        /// <param name="updateContactRequestDTO">UpdateContactRequestDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<ContactRequest>(updateContactRequestDTO));
+            var contactRequest = await _repository.GetAsync(updateContactRequestDTO.Id);
+            contactRequest.ResponseDate = DateTime.Now;
+            contactRequest.ContactName = contactRequest.ContactName;
+            contactRequest.Email = contactRequest.Email;
+            contactRequest.Message = contactRequest.Message;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
