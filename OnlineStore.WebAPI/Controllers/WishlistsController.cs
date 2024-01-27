@@ -103,6 +103,8 @@ namespace OnlineStore.WebAPI.Controllers
         {
             var wishlist = _mapper.Map<Wishlist>(createWishlistDTO);
             wishlist.UserId = UserId;
+            wishlist.CreationDate = DateTime.UtcNow;
+            wishlist.LastChangeDate = DateTime.UtcNow;
 
             var createdWishlist = await _repository.CreateAsync(wishlist);
             if (createdWishlist is null) return UnprocessableEntity();

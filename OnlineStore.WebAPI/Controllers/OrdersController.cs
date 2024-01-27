@@ -112,6 +112,7 @@ namespace OnlineStore.WebAPI.Controllers
             var order = _mapper.Map<Order>(createOrderDTO);
             order.UserId = UserId;
             order.Number = await _orderNumbersProvider.GenerateNumberAsync(order);
+            order.CreationDate = DateTime.Now;
             foreach (var item in order.Items)
             {
                 var product = await _productsRepository.GetAsync(item.ProductId);

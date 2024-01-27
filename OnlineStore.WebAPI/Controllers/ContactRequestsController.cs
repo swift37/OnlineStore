@@ -99,8 +99,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateContactRequestDTO createContactRequestDTO)
         {
-            var contactRequest = await _repository.CreateAsync(_mapper.Map<ContactRequest>(createContactRequestDTO));
-            if (contactRequest is null) return UnprocessableEntity();
+            var contactRequest = _mapper.Map<ContactRequest>(createContactRequestDTO);
+            contactRequest.CreationDate = DateTime.Now;
+
+            if (await _repository.CreateAsync(contactRequest) is null) 
+                return UnprocessableEntity();
+
             return Ok(contactRequest.Id);
         }
 
@@ -153,10 +157,11 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
             var contactRequest = await _repository.GetAsync(updateContactRequestDTO.Id);
-            contactRequest.ResponseDate = DateTime.Now;
             contactRequest.ContactName = contactRequest.ContactName;
             contactRequest.Email = contactRequest.Email;
             contactRequest.Message = contactRequest.Message;
+            contactRequest.ResponseDate = updateContactRequestDTO.ResponseDate;
+            contactRequest.IsConsidered = contactRequest.IsConsidered;
 
             await _repository.SaveChangesAsync();
 

@@ -98,8 +98,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateSubscriberDTO createSubscriberDTO)
         {
-            var subscriber = await _repository.CreateAsync(_mapper.Map<Subscriber>(createSubscriberDTO));
-            if (subscriber is null) return UnprocessableEntity();
+            var subscriber = _mapper.Map<Subscriber>(createSubscriberDTO);
+            subscriber.SubscribeDate = DateTime.Now;
+
+            if (await _repository.CreateAsync(subscriber) is null) 
+                return UnprocessableEntity();
+
             return Ok(subscriber.Id);
         }
 

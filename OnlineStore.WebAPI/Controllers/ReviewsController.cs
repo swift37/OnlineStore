@@ -103,6 +103,8 @@ namespace OnlineStore.WebAPI.Controllers
         public async Task<ActionResult<int>> Create([FromBody] CreateReviewDTO createReviewDTO)
         {
             var review = _mapper.Map<Review>(createReviewDTO);
+            review.CreationDate = DateTime.Now;
+            review.LastChangeDate = DateTime.Now;
             if (User.Identity?.IsAuthenticated is true)
             {
                 review.UserId = UserId;

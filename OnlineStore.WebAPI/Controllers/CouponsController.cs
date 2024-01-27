@@ -103,8 +103,12 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCouponDTO createCouponDTO)
         {
-            var coupon = await _repository.CreateAsync(_mapper.Map<Coupon>(createCouponDTO));
-            if (coupon is null) return UnprocessableEntity();
+            var coupon = _mapper.Map<Coupon>(createCouponDTO);
+            coupon.CreationDate = DateTime.Now;
+            
+            if (await _repository.CreateAsync(coupon) is null) 
+                return UnprocessableEntity();
+
             return Ok(coupon.Id);
         }
 
