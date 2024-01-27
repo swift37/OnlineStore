@@ -102,15 +102,16 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the event
+        /// Full update the event
         /// </summary>
         /// <remarks>
         /// PUT /events
         /// {
+        ///     id: "1",
         ///     name: "Updated event name"
         /// }
         /// </remarks>
-        /// <param name="UpdateEventDTO">UpdateEventDTO</param>
+        /// <param name="eventDTO">EventDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -120,9 +121,43 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] UpdateEventDTO UpdateEventDTO)
+        public async Task<IActionResult> Update([FromBody] EventDTO eventDTO)
         {
-            await _repository.UpdateAsync(_mapper.Map<Event>(UpdateEventDTO));
+            await _repository.UpdateAsync(_mapper.Map<Event>(eventDTO));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Partially update the event
+        /// </summary>
+        /// <remarks>
+        /// PATCH /events
+        /// {
+        ///     id: "1",
+        ///     name: "Updated event name"
+        /// }
+        /// </remarks>
+        /// <param name="updateEventDTO">UpdateEventDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        /// <response code="403">If the user does not have the required access level</response>
+        [HttpPatch]
+        [Authorize(Roles = Roles.ManagerOrHigher)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> Update([FromBody] UpdateEventDTO updateEventDTO)
+        {
+            var @event = await _repository.GetAsync(updateEventDTO.Id);
+            @event.Name = updateEventDTO.Name;
+            @event.Image = updateEventDTO.Image;
+            @event.Description = updateEventDTO.Description;
+            @event.StartDate = updateEventDTO.StartDate;
+            @event.FinishDate = updateEventDTO.FinishDate;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
