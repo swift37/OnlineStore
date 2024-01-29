@@ -24,7 +24,7 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize]
         [ValidateAjax]
         public async Task<IActionResult> Add(CreateWishlistItemViewModel model)
@@ -45,7 +45,7 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize]
         [ValidateAjax]
         public async Task<IActionResult> Update(WishlistItemViewModel model)

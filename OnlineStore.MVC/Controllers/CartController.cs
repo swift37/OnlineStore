@@ -36,7 +36,7 @@ namespace OnlineStore.MVC.Controllers
             return View(cart);
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult Add(int productId, int quantity)
         {
             if (!_cartService.Add(productId, quantity))
@@ -45,7 +45,7 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult AddRange(IEnumerable<CartItemViewModel> items)
         {
             foreach (var item in items)
@@ -55,7 +55,7 @@ namespace OnlineStore.MVC.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult Update(int productId, int quantity)
         {
             if (!_cartService.Update(productId, quantity))
