@@ -4,6 +4,7 @@ using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Repositories;
 using OnlineStore.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OnlineStore.Persistence.Repositories
 {
@@ -13,19 +14,12 @@ namespace OnlineStore.Persistence.Repositories
 
         public async Task<Subscriber> GetAsync(string? email, CancellationToken cancellation = default)
         {
-            if (email is null) throw new ArgumentNullException(nameof(email));
+            if (string.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
 
-            switch (Entities)
-            {
-                case DbSet<Subscriber> dbSet:
-                    return await dbSet.FindAsync(new object[] { email }, cancellation).ConfigureAwait(false)
-                        ?? throw new NotFoundException(nameof(Subscriber), email);
-                case { } entities:
-                    return await entities.FirstOrDefaultAsync(s => s.Email == email, cancellation).ConfigureAwait(false)
-                        ?? throw new NotFoundException(nameof(Subscriber), email);
-                default:
-                    throw new InvalidOperationException("Data source defenition failed.");
-            }
+            return await Entities
+                .SingleOrDefaultAsync(s => s.Email == email, cancellation)
+            .ConfigureAwait(false)
+                ?? throw new NotFoundException(nameof(Subscriber), email);
         }
     }
 }
