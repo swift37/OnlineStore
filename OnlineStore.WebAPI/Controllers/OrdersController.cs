@@ -100,13 +100,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// }
         /// </remarks>
         /// <param name="createOrderDTO">CreateOrderDTO</param>
-        /// <returns>Returns entity id or number</returns>
+        /// <returns>Returns order number</returns>
         /// <response code="200">Success</response>
         /// <response code="422">If the incorrect order DTO was passed</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> Create([FromBody] CreateOrderDTO createOrderDTO, bool returnNumber = false)
+        public async Task<ActionResult<string>> Create([FromBody] CreateOrderDTO createOrderDTO)
         {
             var order = _mapper.Map<Order>(createOrderDTO);
             order.UserId = UserId;
@@ -124,7 +124,7 @@ namespace OnlineStore.WebAPI.Controllers
 
             var createdOrder = await _ordersRepository.CreateAsync(order);
             if (createdOrder is null) return UnprocessableEntity();
-            return Ok(returnNumber ? createdOrder.Number : createdOrder.Id);
+            return Ok(createdOrder.Number);
         }
 
         /// <summary>

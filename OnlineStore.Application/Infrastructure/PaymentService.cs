@@ -17,6 +17,9 @@ namespace OnlineStore.Application.Infrastructure
         {
             var order = await _ordersRepository.GetAsync(stripePaymentRequest.OrderNumber);
 
+            if (order.Status is not OrderStatus.NotPaid)
+                throw new Exception("The order has already been paid.");
+
             var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>(),
@@ -57,6 +60,9 @@ namespace OnlineStore.Application.Infrastructure
         {
             var order = await _ordersRepository.GetAsync(orderNumber);
 
+            if (order.Status is not OrderStatus.NotPaid)
+                return new PaymentStatusResponse { OrderNumber = order.Number!, IsPaid = true };
+
             if (order.PaymentMethod?.ToLower() != "stripe")
                 throw new Exception("Payment method is not 'Stripe'.");
 
@@ -75,13 +81,13 @@ namespace OnlineStore.Application.Infrastructure
             var payDate = session.Created;
 
             order.Status = OrderStatus.Paid;
-            order.Total = total;
+            order.Total = (decimal)total / 100;
             order.Email = customerEmail;
             order.PayDate = payDate;
 
             await _ordersRepository.SaveChangesAsync();
 
-            return new PaymentStatusResponse { OrderNumber = order.Number!, IsPaid = true }; ;
+            return new PaymentStatusResponse { OrderNumber = order.Number!, IsPaid = true };
         }
     }
 }
