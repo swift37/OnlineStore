@@ -6,6 +6,7 @@ using OnlineStore.MVC.Models.Coupon;
 using OnlineStore.MVC.Models.Event;
 using OnlineStore.MVC.Models.FiltersGroup;
 using OnlineStore.MVC.Models.MenuItem;
+using OnlineStore.MVC.Models.NestedMenuItem;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Models.Review;
@@ -59,8 +60,14 @@ namespace OnlineStore.MVC.Mapping
                 .ForMember(dest => dest.Status,
                     opt => opt.MapFrom(src => (OrderStatus)(int)src.Status));
             CreateMap<OrderItemDTO, OrderItemViewModel>().ReverseMap();
-            CreateMap<UpdateOrderItemDTO, OrderItemViewModel>().ReverseMap();
             CreateMap<CreateOrderItemDTO, CreateOrderItemViewModel>().ReverseMap();
+
+            CreateMap<Services.ApiClient.StripePaymentRequest, Models.StripePaymentRequest>()
+                .ReverseMap();
+            CreateMap<Services.ApiClient.PaymentSessionResponse, Models.PaymentSessionResponse>()
+                .ReverseMap();
+            CreateMap<Services.ApiClient.PaymentStatusResponse, Models.PaymentStatusResponse>()
+                .ReverseMap();
 
             CreateMap<ProductDTO, ProductViewModel>().ReverseMap();
             CreateMap<UpdateProductDTO, ProductViewModel>().ReverseMap();
@@ -111,7 +118,7 @@ namespace OnlineStore.MVC.Mapping
                 .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
                 .ReverseMap()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel));
-            CreateMap<UpdateNestedMenuItemDTO, NestedMenuItemViewModel>()
+            CreateMap<UpdateNestedMenuItemDTO, UpdateNestedMenuItemViewModel>()
                 .ForMember(dest => dest.NavigationLabel, opt => opt.MapFrom(src => src.Name))
                 .ReverseMap()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NavigationLabel));
@@ -128,7 +135,7 @@ namespace OnlineStore.MVC.Mapping
                     opt => opt.MapFrom(src => (SortParameter)(int)src.SortBy));
 
             CreateMap<FiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
-            CreateMap<UpdateFiltersGroupDTO, FiltersGroupViewModel>().ReverseMap();
+            CreateMap<UpdateFiltersGroupDTO, UpdateFiltersGroupViewModel>().ReverseMap();
             CreateMap<CreateFiltersGroupDTO, CreateFiltersGroupViewModel>().ReverseMap();
 
             CreateMap<LoginViewModel, LoginRequest>();
