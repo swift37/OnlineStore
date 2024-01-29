@@ -82,9 +82,9 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response> Update(FiltersGroupViewModel filtersGroupViewModel)
+        public async Task<Response> Update(UpdateFiltersGroupViewModel updateFiltersGroupViewModel)
         {
-            var updateFiltersGroupDTO = _mapper.Map<UpdateFiltersGroupDTO>(filtersGroupViewModel);
+            var updateFiltersGroupDTO = _mapper.Map<UpdateFiltersGroupDTO>(updateFiltersGroupViewModel);
 
             try
             {

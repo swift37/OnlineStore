@@ -13,7 +13,7 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response<int>> Create(CreateFiltersGroupViewModel createFiltersGroupViewModel);
 
-        Task<Response> Update(FiltersGroupViewModel filtersGroupViewModel);
+        Task<Response> Update(UpdateFiltersGroupViewModel updateFiltersGroupViewModel);
 
         Task<Response> Delete(int id);
 

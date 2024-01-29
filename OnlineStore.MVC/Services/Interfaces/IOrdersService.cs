@@ -1,4 +1,5 @@
-﻿using OnlineStore.MVC.Models.Order;
+﻿using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Models.Subscriber;
 using OnlineStore.MVC.Services.Base;
 
@@ -12,7 +13,7 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response<OrderViewModel>> Get(int id);
 
-        Task<Response<int>> Create(CreateOrderViewModel createOrderViewModel);
+        Task<Response<string>> Create(CreateOrderViewModel createOrderViewModel);
 
         Task<Response> Update(OrderViewModel orderViewModel);
 
@@ -27,5 +28,9 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response<OrderViewModel>> GetUserOrder(int id);
 
         Task<Response<IEnumerable<OrderViewModel>>> GetUserOrdersAwaitingReview();
+
+        Task<Response<PaymentSessionResponse>> StripePayment(StripePaymentRequest requestModel);
+
+        Task<Response<PaymentStatusResponse>> ConfirmStripePayment(string orderNumber);
     }
 }

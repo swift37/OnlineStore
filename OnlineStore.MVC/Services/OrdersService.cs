@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
@@ -62,14 +63,14 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response<int>> Create(CreateOrderViewModel createOrderViewModel)
+        public async Task<Response<string>> Create(CreateOrderViewModel createOrderViewModel)
         {
             var createOrderDTO = _mapper.Map<CreateOrderDTO>(createOrderViewModel);
 
             try
             {
                 var response = await _client.CreateOrderAsync(_usingVersion, createOrderDTO);
-                return new Response<int>
+                return new Response<string>
                 {
                     Success = true,
                     Data = response
@@ -78,7 +79,7 @@ namespace OnlineStore.MVC.Services
             catch (ApiException e)
             {
                 var generatedResponse = GenerateResponse(e);
-                return new Response<int>(generatedResponse);
+                return new Response<string>(generatedResponse);
             }
         }
 
@@ -192,6 +193,42 @@ namespace OnlineStore.MVC.Services
             catch (ApiException exception)
             {
                 return GenerateResponse<IEnumerable<OrderViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<Models.PaymentSessionResponse>> StripePayment(Models.StripePaymentRequest requestModel)
+        {
+            var request = _mapper.Map<ApiClient.StripePaymentRequest>(requestModel);
+
+            try
+            {
+                var response = await _client.StripePaymentAsync(_usingVersion, request);
+                return new Response<Models.PaymentSessionResponse>
+                {
+                    Success = true,
+                    Data = _mapper.Map<Models.PaymentSessionResponse>(response)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<Models.PaymentSessionResponse>(exception);
+            }
+        }
+
+        public async Task<Response<Models.PaymentStatusResponse>> ConfirmStripePayment(string orderNumber)
+        {
+            try
+            {
+                var response = await _client.ConfirmStripePaymentAsync(orderNumber, _usingVersion);
+                return new Response<Models.PaymentStatusResponse>
+                {
+                    Success = true,
+                    Data = _mapper.Map<Models.PaymentStatusResponse>(response)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<Models.PaymentStatusResponse>(exception);
             }
         }
     }
