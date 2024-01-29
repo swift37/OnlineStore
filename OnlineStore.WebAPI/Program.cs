@@ -9,10 +9,13 @@ using OnlineStore.Identity;
 using OnlineStore.Identity.Context;
 using OnlineStore.WebAPI.Middleware;
 using OnlineStore.WebAPI.OptionsSetup;
+using Stripe;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // Add services to the container.
 builder.Services.AddAutoMapper(config =>
