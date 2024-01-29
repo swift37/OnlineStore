@@ -1,4 +1,5 @@
 ﻿using OnlineStore.MVC.Models.Category;
+using OnlineStore.MVC.Models.NestedMenuItem;
 
 namespace OnlineStore.MVC.Models.MenuItem
 {
@@ -17,20 +18,5 @@ namespace OnlineStore.MVC.Models.MenuItem
         public ICollection<NestedMenuItemViewModel> NestedItems { get; set; } = new HashSet<NestedMenuItemViewModel>();
 
         public string? Image { get; set; }
-    }
-
-    public class NestedMenuItemViewModel
-    {
-        public int Id { get; set; }
-
-        public string? NavigationLabel { get; set; }
-
-        public int ParentId { get; set; }
-
-        public MenuItemViewModel? Parent { get; set; }
-
-        public ICollection<CategoryViewModel> Categories { get; set; } = new HashSet<CategoryViewModel>();
-
-        public bool HasTwoColumns { get; set; }
     }
 }

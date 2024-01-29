@@ -13,7 +13,7 @@ namespace OnlineStore.MVC.Models.Order
 
         public OrderStatus Status { get; set; }
 
-        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
 
         public DateTimeOffset? PayDate { get; set; }
 
