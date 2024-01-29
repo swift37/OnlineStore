@@ -127,6 +127,47 @@ namespace OnlineStore.MVC.Controllers
             return View(model);
         }
 
+        [HttpPost("account/reviews/create-review")]
+        [ValidateAjax]
+        public async Task<IActionResult> CreateReview(CreateReviewViewModel model)
+        {
+            var response = await _reviewsService.Create(model);
+
+            if (response.Success) return Json(new { success = true });
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+                return Json(new
+                {
+                    success = false,
+                    errors = response.ValidationErrors
+                        .Select(error => error.ErrorMessage)
+                        .ToArray()
+                });
+
+            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+        }
+
+        [HttpPut("account/reviews/update-review")]
+        [Authorize]
+        [ValidateAjax]
+        public async Task<IActionResult> UpdateReview(ReviewViewModel model)
+        {
+            var response = await _reviewsService.Update(model);
+
+            if (response.Success) return Json(new { success = true });
+
+            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
+                return Json(new
+                {
+                    success = false,
+                    errors = response.ValidationErrors
+                        .Select(error => error.ErrorMessage)
+                        .ToArray()
+                });
+
+            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+        }
+
         [HttpGet]
         public IActionResult Orders()
         {
