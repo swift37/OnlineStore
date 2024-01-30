@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Cart;
-using OnlineStore.MVC.Models.Enums;
 using OnlineStore.MVC.Models.Order;
 using OnlineStore.MVC.Services.Interfaces;
-using Stripe.Checkout;
 
 namespace OnlineStore.MVC.Controllers
 {
@@ -124,7 +122,7 @@ namespace OnlineStore.MVC.Controllers
             if (orderCreateResponse.Success)
             {
                 _cartService.Clear();
-                return RedirectToAction("Payment", new { orderId = orderCreateResponse.Data });
+                return RedirectToAction("Payment", new { orderNumber = orderCreateResponse.Data });
             }
 
             if (orderCreateResponse.Status == 400 && orderCreateResponse.ValidationErrors.Count() > 0)
@@ -139,83 +137,57 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Payment(int orderId)
+        public async Task<IActionResult> Payment(string orderNumber)
         {
-            var response = await _ordersService.Get(orderId);
-            if (!response.Success) return StatusCode(response.Status); ;
-            var order = response.Data;
-
             var domain = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
-            var options = new SessionCreateOptions
+
+            var request = new StripePaymentRequest
             {
-                LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment",
-                PaymentMethodTypes = new List<string> { "card" },
-                SuccessUrl = domain + $"/cart/paymentsuccess?sessionId=" + "{CHECKOUT_SESSION_ID}" + "&orderId=" + order.Id,
-                CancelUrl = domain + "/cart/paymentfailure"
+                OrderNumber = orderNumber,
+                SuccessUrl = Url.Action("PaymentSuccess", "Cart", new { orderNumber }, Request.Scheme)!,
+                CancelUrl = Url.Action("PaymentFailure", "Cart", new { orderNumber }, Request.Scheme)!,
             };
 
-            foreach (var item in order.Items)
-            {
-                options.LineItems.Add(new SessionLineItemOptions
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        UnitAmountDecimal = item.Product?.UnitPrice * 100,
-                        Currency = "USD",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = item.Product?.Name,
-                        }
-                    },
-                    Quantity = item.Quantity
-                });
-            }
+            var response = await _ordersService.StripePayment(request);
+            if (!response.Success) return StatusCode(response.Status); ;
 
-            var service = new SessionService();
-            Session session = service.Create(options);
-
-            Response.Headers.Append("Location", session.Url);
+            Response.Headers.Append("Location", response.Data.SessionUrl);
             return new StatusCodeResult(303);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> PaymentSuccess(string sessionId, int orderId)
+        [HttpGet("cart/payment-success")]
+        public async Task<IActionResult> PaymentSuccess(string orderNumber)
         {
-            var sessionService = new SessionService();
-            var session = sessionService.Get(sessionId);
-
-            if (session.Status == "open")
-                return RedirectToAction("PaymentInProcess");
-
-            if (session.PaymentStatus != "paid") 
-                return RedirectToAction("PaymentFailure");
-
-            // Saving order and customer details to the database.
-            var total = session.AmountTotal.HasValue ? session.AmountTotal.Value : 0;
-            var customerEmail = session.CustomerDetails.Email;
-            var payDate = session.Created;
-
-            var response = await _ordersService.Get(orderId);
+            var response = await _ordersService.ConfirmStripePayment(orderNumber);
             if (!response.Success) return StatusCode(response.Status);
-            var order = response.Data;
+            var paymentStatus = response.Data;
 
-            order.Status = OrderStatus.Paid;
-            order.Total = total;
-            order.Email = customerEmail;
-            order.PayDate = payDate;
+            if (paymentStatus.IsInProcess)
+                return RedirectToAction("PaymentInProcess", new { orderNumber });
+            if (paymentStatus.IsFailed)
+                return RedirectToAction("PaymentFailure", new { orderNumber });
 
-            var orderUpdateResponse = await _ordersService.Update(order);
-            if (orderUpdateResponse.Success)
+            if (paymentStatus.IsPaid)
             {
-                ViewBag.OrderNumber = order.Number;
+                ViewBag.OrderNumber = orderNumber;
                 return View();
             }
 
-            return StatusCode(orderUpdateResponse.Status);
+            return StatusCode(500);
         }
 
-        [HttpGet]
-        public IActionResult PaymentFailure() => View();
+        [HttpGet("cart/payment-in-process")]
+        public IActionResult PaymentInProcess(string orderNumber)
+        {
+            ViewBag.OrderNumber = orderNumber;
+            return View();
+        }
+
+        [HttpGet("cart/payment-failure")]
+        public IActionResult PaymentFailure(string orderNumber)
+        {
+            ViewBag.OrderNumber = orderNumber;
+            return View();
+        }
     }
 }
