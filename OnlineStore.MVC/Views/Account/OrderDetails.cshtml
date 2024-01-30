@@ -1,4 +1,4 @@
-﻿@using System.IdentityModel.Tokens.Jwt
+﻿@model OnlineStore.MVC.Models.Order.OrderViewModel
 
 <div class="acc-section">
     <div class="container">
@@ -12,11 +12,11 @@
                     </a>
                     <header class="box-header stretch">
                         <div class="left-part">
-                            <h3>Order number <span>003453285345</span></h3>
-                            <p>placed January 16, 2024</p>
+                            <h3>Order number <span>@Model.Number</span></h3>
+                            <p>placed @Model.CreationDate.ToString("MMMM dd, yyyy")</p>
                         </div>
                         <div class="right-part">
-                            <h3>Completed</h3>
+                            <h3>@Model.Status.ToString()</h3>
                         </div>
                     </header>
 
@@ -37,10 +37,10 @@
                                 Pickup Address
                             </h4>
                             <div class="box-content">
-                                <h5>Meade Construction, 977 West Cermak Road</h5>
-                                <p>60608 Chicago</p>
-                                <p>Illinois (IL), Cook County</p>
-                                <p>United States</p>
+                                <h5>@Model.StreetAddress, @Model.Apartment</h5>
+                                <p>@Model.Postcode @Model.City</p>
+                                <p>@Model.State</p>
+                                <p>@Model.Country</p>
                             </div>
                         </div>
                         <div class="order-detail-box">
@@ -48,9 +48,9 @@
                                 The recipient's details
                             </h4>
                             <div class="box-content">
-                                <h5>Jonathan Winston</h5>
-                                <p>(206) 342-8631</p>
-                                <p>admin@onlinestore.com</p>
+                                <h5>@Model.FirstName @Model.LastName</h5>
+                                <p>@Model.Phone</p>
+                                <p>@Model.Email</p>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="stretch-box-content">
                             <i class='bx bx-wallet'></i>
                             <div class="info">
-                                <p>Payment on receipt</p>
+                                <p>@Model.PaymentMethod</p>
                             </div>
                         </div>
                     </div>
@@ -68,54 +68,60 @@
                     <h3 class="order-details-header">Goods</h3>
                     <div class="products-list">
                         <div class="products-list-header empty"></div>
-                        <div class="products-list-line">
-                            <div class="left-part">
-                                <div class="line-image">
-                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                        <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
+                        @foreach (var item in Model.Items)
+                        {
+                            <div class="products-list-line">
+                                <div class="left-part">
+                                    <div class="line-image">
+                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
+                                            <img src="@item.Product?.Image" alt="Image">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="middle-part">
+                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
+                                        @item.Product?.Name
                                     </a>
                                 </div>
-                            </div>
-                            <div class="middle-part">
-                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="3">
-                                    ASUS ROG Strix G15
-                                </a>
-                            </div>
-                            <div class="right-part">
-                                <div class="unit-price">
-                                    <span class="without-disc">$1500.00</span>
-                                    <span>$1200.00</span>
-                                </div>
-                                <div class="quantity">
-                                    <span>x 3 pcs.</span>
-                                </div>
-                                <div class="line-price">
-                                    <span>$3600.00</span>
+                                <div class="right-part">
+                                    <div class="unit-price">
+                                        @if (item.Discount > 0)
+                                        {
+                                            <span class="without-disc">@item.UnitPrice.ToString("C")</span>
+                                        }
+                                        <span>@((item.UnitPrice - item.Discount).ToString("C")) </span>
+                                    </div>
+                                    <div class="quantity">
+                                        <span>x @item.Quantity pcs.</span>
+                                    </div>
+                                    <div class="line-price">
+                                        <span>@((item.UnitPrice * item.Quantity).ToString("C"))</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                         <div class="products-list-summary">
                             <div class="products-count">
-                                3 products
+                                @(Model.Items.Count > 1 ? $"{Model.Items.Count} products" : "1 product")
                             </div>
                             <div class="products-total">
                                 <div class="total-lines">
                                     <div class="total-line">
                                         <span>Subtotal:</span>
-                                        <span>$1500.00</span>
+                                        <span>@Model.Subtotal.ToString("C")</span>
                                     </div>
                                     <div class="total-line">
                                         <span>Discount:</span>
-                                        <span>-$100.00</span>
+                                        <span>-@Model.Discount.ToString("C")</span>
                                     </div>
                                     <div class="total-line">
                                         <span>Delivery:</span>
-                                        <span>$15.00</span>
+                                        <span>@Model.ShippingCost.ToString("C")</span>
                                     </div>
                                 </div>
                                 <div class="total-sum">
                                     <span>Total:</span>
-                                    <span>$1415.00</span>
+                                    <span>@Model.Total.ToString("C")</span>
                                 </div>
                             </div>
                         </div>
