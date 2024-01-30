@@ -1,4 +1,4 @@
-﻿@using System.IdentityModel.Tokens.Jwt
+﻿@model IEnumerable<IGrouping<string, OnlineStore.MVC.Models.Order.OrderViewModel>>?
 
 <div class="acc-section">
     <div class="container">
@@ -6,58 +6,63 @@
             <partial name="_AccountMenu" />
             <div class="acc-content">
                 <div class="content-box">
-                    <header class="box-header">
-                        <h2>Orders</h2>
-                    </header>
+                    @if (Model?.Any() is true)
+                    {
+                        <header class="box-header">
+                            <h2>Orders</h2>
+                        </header>
 
-                    <div class="orders-list">
-                        <div class="orders-list-header">
-                            January 2024
+                        @foreach (var item in Model)
+                        {
+                            <div class="orders-list">
+                                <div class="orders-list-header">
+                                    @item.Key
+                                </div>
+
+                                @foreach (var order in item)
+                                {
+                                    <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number" class="orders-list-line">
+                                        <div class="left-part">
+                                            <h3>@order.Status.ToString()</h3>
+                                            <span>@order.CreationDate.ToString("dd MMMM yyyy")</span>
+                                            <span>@order.Number</span>
+                                            @if (order.Status > OnlineStore.MVC.Models.Enums.OrderStatus.NotPaid)
+                                            {
+                                                <span class="price">@order.Total.ToString("C")</span>
+                                            }
+                                        </div>
+                                        <div class="right-part">
+                                            @if (order.Items.Count() > 1)
+                                            {
+                                                foreach (var orderItem in order.Items)
+                                                {
+                                                    <div class="line-image">
+                                                        <img src="@orderItem.Product?.Image" alt="Image">
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="line-image">
+                                                    <img src="@order.Items.First().Product?.Image" alt="Image">
+                                                </div>
+                                                <p>@order.Items.First().Product?.Name</p>
+                                            }
+                                        </div>
+                                    </a>
+                                }
                         </div>
-                        <a href="#" class="orders-list-line">
-                            <div class="left-part">
-                                <h3>Completed</h3>
-                                <span>15 January 2024</span>
-                                <span>0043589435532</span>
-                                <span class="price">$1249.00</span>
+                        }
+                    }
+                    else
+                    {
+                        <div class="content-block no-orders">
+                            <div class="text-block">
+                                <h3>No orders</h3>
+                                <p>You have not placed any orders yet.</p>
                             </div>
-                            <div class="right-part">
-                                <div class="line-image">
-                                    <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                </div>
-                                <p>ASUS ROG Strix G15</p>
-                            </div>
-                        </a>
-                        <a href="#" class="orders-list-line">
-                            <div class="left-part">
-                                <h3>Completed</h3>
-                                <span>15 January 2024</span>
-                                <span>0043589435532</span>
-                                <span class="price">$1249.00</span>
-                            </div>
-                            <div class="right-part">
-                                <div class="line-image">
-                                    <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                </div>
-                                <p>ASUS ROG Strix G15</p>
-                            </div>
-                        </a>
-                        <a href="#" class="orders-list-line">
-                            <div class="left-part">
-                                <h3>Completed</h3>
-                                <span>15 January 2024</span>
-                                <span>0043589435532</span>
-                                <span class="price">$1249.00</span>
-                            </div>
-                            <div class="right-part">
-                                <div class="line-image">
-                                    <img src="/resources/productsImages/asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" alt="Image">
-                                </div>
-                                <p>ASUS ROG Strix G15</p>
-                            </div>
-                        </a>
-                    </div>
-
+                        </div>
+                    }
                 </div>
             </div>
         </div>
