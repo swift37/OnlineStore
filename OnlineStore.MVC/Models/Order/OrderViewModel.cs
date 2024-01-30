@@ -19,6 +19,10 @@ namespace OnlineStore.MVC.Models.Order
 
         public DateTimeOffset? ShippedDate { get; set; }
 
+        public string? PaymentMethod { get; set; }
+
+        public string? PaymentSession { get; set; }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -46,6 +50,12 @@ namespace OnlineStore.MVC.Models.Order
         public string? Apartment { get; set; }
 
         public string? Notes { get; set; }
+
+        public int ItemsQuantity => Items.Sum(i => i.Quantity);
+
+        public decimal Discount => Items.Sum(i => i.Discount);
+
+        public decimal Subtotal => Items.Sum(i => i.UnitPrice * i.Quantity);
     }
 
     public class OrderItemViewModel
