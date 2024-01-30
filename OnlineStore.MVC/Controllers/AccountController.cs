@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.MVC.Attributes;
 using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.Review;
 using OnlineStore.MVC.Services.Interfaces;
 
 namespace OnlineStore.MVC.Controllers
@@ -169,15 +171,25 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Orders()
+        public async Task<IActionResult> Orders()
         {
-            return View();
+            var response = await _ordersService.GetUserOrders();
+
+            if (!response.Success) return StatusCode(response.Status);
+
+            var orders = response.Data.GroupBy(o => o.CreationDate.ToString("MMMM yyyy")).AsEnumerable();
+
+            return View(orders);
         }
 
         [HttpGet]
-        public IActionResult OrderDetails()
+        public async Task<IActionResult> OrderDetails(string orderNumber)
         {
-            return View();
+            var response = await _ordersService.Get(orderNumber);
+
+            if (response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
         }
     }
 }
