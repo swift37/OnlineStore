@@ -40,12 +40,44 @@ $(document).ready(function () {
 
         $.ajax({
             url: '/cart/add',
-            type: 'put',
+            type: 'post',
             dataType: 'json',
             data:
             {
                 productId: $(this).data('itemid'),
                 quantity: qty
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                if (result.success == false) {
+                    alert("An error occurred.");
+                }
+                else {
+                    $.ajax({
+                        url: '/cart/updateminicart',
+                        success: function (data) {
+                            $("#miniCart").html(data);
+                            checkCartQuantity();
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $('.to-cart-from-wl').click(function () {
+        let qtyControl = $(this).parent().find('.qty-value');
+        console.log($(qtyControl));
+        $.ajax({
+            url: '/cart/add',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId: $(qtyControl).data('productid'),
+                quantity: $(qtyControl).val()
             },
             error: function () {
                 alert('Error occurred.');
@@ -79,7 +111,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: '/cart/addrange',
-            type: 'put',
+            type: 'post',
             dataType: 'json',
             data:
             {
@@ -135,7 +167,7 @@ $(document).ready(function () {
     $('.qty-value.cart').change(function () {
         $.ajax({
             url: '/cart/update',
-            type: 'post',
+            type: 'put',
             dataType: 'json',
             data:
             {
@@ -155,7 +187,7 @@ $(document).ready(function () {
     $('.qty-value.wl').change(function () {
         $.ajax({
             url: '/wishlist/update',
-            type: 'post',
+            type: 'put',
             dataType: 'json',
             data:
             {
@@ -219,7 +251,7 @@ $(document).ready(function () {
     $('.add-to-wishlist-btn').click(function () {
         $.ajax({
             url: '/wishlist/add',
-            type: 'put',
+            type: 'post',
             dataType: 'json',
             data:
             {
@@ -448,7 +480,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: '/catalog/createreview',
+            url: '/account/reviews/create-review',
             type: 'post',
             dataType: 'json',
             data:
@@ -504,8 +536,8 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: '/catalog/updatereview',
-            type: 'post',
+            url: '/account/reviews/update-review',
+            type: 'put',
             dataType: 'json',
             data:
             {
