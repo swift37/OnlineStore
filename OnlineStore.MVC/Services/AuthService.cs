@@ -65,12 +65,9 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response<Models.IdentityResponse>> Refresh(string refreshToken)
+        public async Task<Response<Models.IdentityResponse>> Refresh(Models.RefreshRequest refreshRequest)
         {
-            var requestBody = new RefreshRequest
-            {
-                RefreshToken = refreshToken
-            };
+            var requestBody = _mapper.Map<ApiClient.RefreshRequest>(refreshRequest);
 
             try
             {

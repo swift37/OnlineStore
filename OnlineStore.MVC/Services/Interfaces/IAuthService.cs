@@ -9,7 +9,7 @@ namespace OnlineStore.MVC.Services.Interfaces
 
         Task<Response<IdentityResponse>> Login(LoginViewModel loginViewModel);
 
-        Task<Response<IdentityResponse>> Refresh(string refreshToken);
+        Task<Response<IdentityResponse>> Refresh(RefreshRequest refreshRequest);
 
         Task<Response> Logout();
 
