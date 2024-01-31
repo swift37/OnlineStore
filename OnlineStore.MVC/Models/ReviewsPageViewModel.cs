@@ -9,6 +9,10 @@ namespace OnlineStore.MVC.Models
 
         public IEnumerable<ReviewViewModel> Reviews { get; set; } = Enumerable.Empty<ReviewViewModel>();
 
-        public bool IsEmpty => !OrdersAwaitingReview.Any() && !Reviews.Any();
+        public bool HasOrdersAwaitingReview => OrdersAwaitingReview.Any(o => o.Items.Any());
+
+        public bool HasReviews => Reviews.Any();
+
+        public bool IsEmpty => !HasOrdersAwaitingReview && !HasReviews;
     }
 }
