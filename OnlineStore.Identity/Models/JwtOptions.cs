@@ -11,7 +11,5 @@
         public double AccessTokenExpiryInMinutes { get; init; }
 
         public double RefreshTokenExpiryInDays { get; init; }
-
-        public double ShortRefreshTokenExpiryInHours { get; init; }
     }
 }
