@@ -20,7 +20,7 @@
                         <partial name="_CreateReviewModal" />
                         <partial name="_UpdateReviewModal" />
 
-                        @if (Model.OrdersAwaitingReview.Any())
+                        @if (Model.HasOrdersAwaitingReview)
                         {
                             <div class="reviews-list">
                                 <div class="reviews-list-header">
@@ -59,7 +59,7 @@
                             </div>
                         }
 
-                        @if (Model.Reviews.Any())
+                        @if (Model.HasReviews)
                         { 
                             <div class="reviews-list">
                                 <div class="reviews-list-header">
