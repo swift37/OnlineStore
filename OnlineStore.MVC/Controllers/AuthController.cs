@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using OnlineStore.MVC.Constants;
 using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace OnlineStore.MVC.Controllers
 {
@@ -61,7 +64,7 @@ namespace OnlineStore.MVC.Controllers
                 Response.Cookies.Append(Authorization.XAccessToken, response.Data.AccessToken);
                 Response.Cookies.Append(Authorization.XRefreshToken, response.Data.RefreshToken);
 
-                var url = model.ReturnUrl ??= Url.Content("~/");
+                model.ReturnUrl ??= Url.Content("~/");
                 return LocalRedirect(model.ReturnUrl);
             }
 
@@ -78,22 +81,25 @@ namespace OnlineStore.MVC.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Refresh()
+        public async Task<IActionResult> Refresh(string? redirectUrl)
         {
             var token = Request.Cookies[Authorization.XRefreshToken];
             if (token is null) return RedirectToAction("Logout");
 
-            var response = await _authService.Refresh(token);
-
-            if (response.Success)
+            var request = new Models.RefreshRequest
             {
-                Response.Cookies.Append(Authorization.XAccessToken, response.Data.AccessToken);
-                Response.Cookies.Append(Authorization.XRefreshToken, response.Data.RefreshToken);
+                UserId = Guid.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? string.Empty),
+                RefreshToken = token
+            };
 
-                return LocalRedirect(Url.Content("~/"));
-            }
+            var response = await _authService.Refresh(request);
+            if (!response.Success) return RedirectToAction("Logout");
 
-            return StatusCode(response.Status);
+            Response.Cookies.Append(Authorization.XAccessToken, response.Data.AccessToken);
+            Response.Cookies.Append(Authorization.XRefreshToken, response.Data.RefreshToken);
+
+            return string.IsNullOrEmpty(redirectUrl) ? 
+                RedirectToAction("Index", "Home") : LocalRedirect(redirectUrl);
         }
 
         [HttpGet]
