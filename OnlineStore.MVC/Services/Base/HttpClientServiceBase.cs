@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using OnlineStore.MVC.Extensions;
+using OnlineStore.MVC.Models.Exceptions;
 using OnlineStore.MVC.Services.ApiClient;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -41,6 +43,8 @@ namespace OnlineStore.MVC.Services.Base
                             .ToValidationFailures() 
                             ?? Enumerable.Empty<ValidationFailure>()
                     };
+                case (int)HttpStatusCode.Unauthorized:
+                    throw new ApiAuthenticationException(HttpContext.Request.Path);
                 default:
                     return new Response 
                     { 
@@ -58,9 +62,12 @@ namespace OnlineStore.MVC.Services.Base
 
         private void AddTokenToHeaders(HttpClient client, HttpRequestMessage request, string url)
         {
-            var token = Request.Cookies[Constants.Authorization.XAccessToken];
+            if (!HttpContext.User.Identity?.IsAuthenticated is true) return;
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var accessToken = Request.Cookies[Constants.Authorization.XAccessToken];
+
+            request.Headers.Authorization = 
+                new AuthenticationHeaderValue("Bearer", accessToken);
         }
     }
 }

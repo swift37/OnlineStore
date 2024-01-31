@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using OnlineStore.MVC.Middleware;
 using OnlineStore.MVC.Services;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Interfaces;
@@ -25,7 +26,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.Cookie.IsEssential = true;
     opt.Cookie.Domain = "https://localhost:7019";
     opt.ExpireTimeSpan = TimeSpan.FromDays(14);
-
+    
     opt.SlidingExpiration = true;
 });
 
@@ -33,6 +34,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 .AddCookie(options =>
 {
     options.LoginPath = new PathString("/account/login");
+    options.LogoutPath = new PathString("/account/logout");
 });
 
 builder.Services.AddHttpClient<IClient, Client>(client => 
@@ -78,7 +80,7 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseStatusCodePagesWithRedirects("/error/{0}");
+app.UseStatusCodePagesWithRedirects("/error/status/{0}");
 
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 

@@ -4068,6 +4068,10 @@ form {
         margin-top: 30px;
     }
 
+    .auth-form .button.sign-in {
+        margin-top: 15px;
+    }
+
 .auth-field {
     position: relative;
     margin-top: 30px;
@@ -4118,9 +4122,9 @@ form {
 
 .options-field {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    margin-top: 14px;
+    margin-top: 10px;
 }
 
 .checkbox {

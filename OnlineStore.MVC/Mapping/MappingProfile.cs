@@ -140,6 +140,7 @@ namespace OnlineStore.MVC.Mapping
 
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<RegisterViewModel, RegisterRequest>();
+            CreateMap<Models.RefreshRequest, Services.ApiClient.RefreshRequest>();
             CreateMap<UpdateUserViewModel, UpdateUserRequest>();
             CreateMap<ChangeEmailViewModel, ChangeEmailRequest>();
             CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
