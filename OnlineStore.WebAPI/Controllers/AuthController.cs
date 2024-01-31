@@ -70,13 +70,10 @@ namespace OnlineStore.WebAPI.Controllers
         /// <param name="refreshRequest">Refresh request model</param>
         /// <returns>Returns identity response model</returns>
         /// <response code="200">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
         [HttpPost("refresh")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IdentityResponse>> Refresh(RefreshRequest refreshRequest) => 
-            Ok(await _authService.Refresh(refreshRequest, UserId));
+            Ok(await _authService.Refresh(refreshRequest));
 
         /// <summary>
         /// User logout

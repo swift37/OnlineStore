@@ -96,9 +96,9 @@ namespace OnlineStore.Identity.Services
             return response;
         }
 
-        public async Task<IdentityResponse> Refresh(RefreshRequest refreshRequest, Guid userId)
+        public async Task<IdentityResponse> Refresh(RefreshRequest refreshRequest)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(refreshRequest.UserId.ToString());
 
             if (user is null) 
                 throw new NotFoundException("There is no user with this id.", nameof(ApplicationUser));
@@ -110,7 +110,7 @@ namespace OnlineStore.Identity.Services
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpiryInDays);
 
             await _userManager.UpdateAsync(user);
 
