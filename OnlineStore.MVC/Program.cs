@@ -80,6 +80,8 @@ app.UseStaticFiles();
 
 app.UseStatusCodePagesWithRedirects("/error/{0}");
 
+app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+
 app.UseRouting();
 
 app.UseAuthorization();
