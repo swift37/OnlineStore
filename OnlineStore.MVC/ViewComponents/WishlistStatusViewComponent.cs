@@ -14,6 +14,13 @@ namespace OnlineStore.MVC.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            ViewBag.UserAuthenticated = false;
+
+            if (!User.Identity?.IsAuthenticated is true) 
+                return View();
+            else
+                ViewBag.UserAuthenticated = true;
+
             var response = await _wishlistsService.GetUserWishlist();
             var wishlist = response.Data;
 
