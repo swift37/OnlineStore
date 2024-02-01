@@ -11,14 +11,14 @@
             <h2>Sign In</h2>
 
             <div class="auth-field">
-                <input asp-for="UsernameOrEmail" type="email" placeholder="Email or login" required />
-                <i class="fa-regular fa-envelope auth-icon"></i>
+                <input asp-for="UsernameOrEmail" type="email" placeholder="Login or email" required />
+                <i class='bx bx-user auth-icon'></i>
             </div>
             <span asp-validation-for="UsernameOrEmail" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="Password" type="password" placeholder="Password" required />
-                <i class="fa-solid fa-fingerprint auth-icon"></i>
-                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+                <i class='bx bx-lock-alt auth-icon'></i>
+                <i class='bx bx-hide pswd-hide'></i>
             </div>
             <span asp-validation-for="Password" class="failure"></span>
             <div class="options-field">

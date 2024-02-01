@@ -12,34 +12,34 @@
 
             <div class="auth-field">
                 <input asp-for="FirstName" type="text" placeholder="First name" required />
-                <i class="fa-regular fa-address-card auth-icon"></i>
+                <i class='bx bx-id-card auth-icon'></i>
             </div>
             <span asp-validation-for="FirstName" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="LastName" type="text" placeholder="Last name" required />
-                <i class="fa-solid fa-signature auth-icon"></i>
+                <i class='bx bx-id-card auth-icon'></i>
             </div>
             <span asp-validation-for="LastName" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="Email" type="email" placeholder="Email" required />
-                <i class="fa-regular fa-envelope auth-icon"></i>
+                <i class='bx bx-envelope auth-icon'></i>
             </div>
             <span asp-validation-for="Email" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="Username" type="text" placeholder="Login" required />
-                <i class="fa-regular fa-user auth-icon"></i>
+                <i class='bx bx-user auth-icon'></i>
             </div>
             <span asp-validation-for="Username" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="Password" type="password" placeholder="Password" required />
-                <i class="fa-solid fa-fingerprint auth-icon"></i>
-                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+                <i class='bx bx-lock-alt auth-icon'></i>
+                <i class='bx bx-hide pswd-hide'></i>
             </div>
             <span asp-validation-for="Password" class="failure"></span>
             <div class="auth-field">
                 <input asp-for="PasswordConfirmation" type="password" placeholder="Password confirmation" required />
-                <i class="fa-solid fa-shield-halved auth-icon"></i>
-                <i class="fa-regular fa-eye-slash pswd-hide"></i>
+                <i class='bx bx-lock-alt auth-icon'></i>
+                <i class='bx bx-hide pswd-hide'></i>
             </div>
             <span asp-validation-for="PasswordConfirmation" class="failure"></span>
             <button class="button black">Sign Up</button>
