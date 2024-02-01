@@ -2,7 +2,6 @@
 using OnlineStore.MVC.Extensions;
 using OnlineStore.MVC.Models.Exceptions;
 using OnlineStore.MVC.Services.ApiClient;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -44,7 +43,14 @@ namespace OnlineStore.MVC.Services.Base
                             ?? Enumerable.Empty<ValidationFailure>()
                     };
                 case (int)HttpStatusCode.Unauthorized:
-                    throw new ApiAuthenticationException(HttpContext.Request.Path);
+                    if (HttpContext.User.Identity?.IsAuthenticated is true)
+                        throw new ApiAuthenticationException(HttpContext.Request.Path);
+                    else
+                        return new Response
+                        {
+                            Success = false,
+                            Status = 401
+                        };
                 default:
                     return new Response 
                     { 

@@ -24,6 +24,7 @@
             <div class="options-field">
                 <a asp-controller="Auth" asp-action="#" class="forgot_pswd">Forgot password?</a>
             </div>
+            <input asp-for="ReturnUrl" type="hidden" />
             <button class="button black sign-in">Sign In</button>
         </form>
         <div class="auth-switch">

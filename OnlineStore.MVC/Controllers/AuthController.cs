@@ -81,7 +81,7 @@ namespace OnlineStore.MVC.Controllers
             var token = Request.Cookies[Authorization.XRefreshToken];
             if (token is null) return RedirectToAction("Logout");
 
-            var request = new Models.RefreshRequest
+            var request = new RefreshRequest
             {
                 UserId = Guid.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? string.Empty),
                 RefreshToken = token

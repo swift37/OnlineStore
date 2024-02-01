@@ -33,8 +33,8 @@ builder.Services.ConfigureApplicationCookie(opt =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
 {
-    options.LoginPath = new PathString("/account/login");
-    options.LogoutPath = new PathString("/account/logout");
+    options.LoginPath = new PathString("/auth/login");
+    options.LogoutPath = new PathString("/auth/logout");
 });
 
 builder.Services.AddHttpClient<IClient, Client>(client => 
