@@ -320,14 +320,14 @@ form {
         }
 
         .button.outlined.black {
-            color: #000;
+            color: #1b1c1d;
             background-color: transparent;
-            box-shadow: 0 0 0 2px #000 inset;
+            box-shadow: 0 0 0 2px #1b1c1d inset;
         }
 
             .button.outlined.black:hover {
                 color: #fff;
-                background-color: #000;
+                background-color: #1b1c1d;
             }
 
     .button.black {
@@ -3153,6 +3153,8 @@ form {
         display: block;
         width: 100%;
         text-align: center;
+        font-size: 16px;
+        border-radius: 2em;
         margin-bottom: 1em;
     }
 
@@ -3238,7 +3240,7 @@ form {
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        background-color: #794afa;
+        background-color: #0a021c;
         bottom: 5px;
         right: 5px;
         z-index: -1;
