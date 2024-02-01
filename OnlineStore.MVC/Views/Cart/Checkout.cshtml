@@ -14,55 +14,53 @@
                     <form asp-controller="Cart" asp-action="Checkout" method="post">
                         <div class="field">
                             <label asp-for="Order.Email">Email Address <span></span></label>
-                            <input asp-for="Order.Email" type="email" autocomplete="off" required>
+                            <input asp-for="Order.Email" type="email" placeholder="Enter your email" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.FirstName">First Name <span></span></label>
-                            <input asp-for="Order.FirstName" type="text" required>
+                            <input asp-for="Order.FirstName" type="text" placeholder="Enter your first name" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.LastName">Last Name <span></span></label>
-                            <input asp-for="Order.LastName" type="text" required>
+                            <input asp-for="Order.LastName" type="text" placeholder="Enter your last name" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.StreetAddress">Street Address <span></span></label>
-                            <input asp-for="Order.StreetAddress" type="text" required>
-                            <input asp-for="Order.Apartment" type="text" required>
+                            <input asp-for="Order.StreetAddress" type="text" placeholder="Enter your street address" required>
+                            <input asp-for="Order.Apartment" type="text" placeholder="Enter your apartment number">
                         </div>
                         <div class="field">
                             <label asp-for="Order.City">City <span></span></label>
-                            <input asp-for="Order.City" type="text" required>
+                            <input asp-for="Order.City" type="text" placeholder="Enter your city" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.State">State / Province <span></span></label>
-                            <input asp-for="Order.State" type="text" required>
+                            <input asp-for="Order.State" type="text" placeholder="Enter your apartment state" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.Postcode">Zip / Postal Code <span></span></label>
-                            <input asp-for="Order.Postcode" type="number" required>
+                            <input asp-for="Order.Postcode" type="number" placeholder="Enter your zip/postal code" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.Country">Country <span></span></label>
-                            <select asp-for="Order.Country">
-                                <option value=""></option>
-                                <option value="1" selected="selected">United States</option>
-                                <option value="2">Canada</option>
-                                <option value="3">Australia</option>
-                                <option value="4">Japan</option>
-                                <option value="5">Others</option>
-                            </select>
+                            <div class="select-container">
+                                <select asp-for="Order.Country">
+                                    <option value=""></option>
+                                    <option value="1" selected="selected">United States</option>
+                                    <option value="2">Canada</option>
+                                    <option value="3">Australia</option>
+                                    <option value="4">Japan</option>
+                                    <option value="5">Others</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="field">
                             <label asp-for="Order.Phone">Phone Number <span></span></label>
-                            <input asp-for="Order.Phone" type="number" required>
+                            <input asp-for="Order.Phone" type="number" placeholder="Enter your phone" required>
                         </div>
                         <div class="field">
                             <label asp-for="Order.Notes">Order Notes (optional)</label>
-                            <textarea asp-for="Order.Notes" cols="30" rows="3" type="number"></textarea>
-                        </div>
-                        <div class="field checkset">
-                            <input type="checkbox" id="anaccount">
-                            <label for="anaccount">Create an account?</label>
+                            <textarea asp-for="Order.Notes" cols="30" rows="3" type="number" placeholder="Enter your notes"></textarea>
                         </div>
                         <div class="shipping-methods">
                             <h2>Shipping Methods</h2>

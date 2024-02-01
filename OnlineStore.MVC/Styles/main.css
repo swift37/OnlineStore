@@ -160,13 +160,49 @@ form {
         }
 
 .styled :where(input, select, textarea) {
+    width: 100%;
     padding: 11px 16px;
     outline: 0;
     background-color: #ffffff;
     border-width: 0 0 3px 0;
     border-style: solid;
     border-color: #e5e8ec;
-    border-radius: 5px;
+    border-radius: 8px;
+}
+
+.styled input::-webkit-outer-spin-button,
+.styled input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.styled input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.styled .select-container{
+    position: relative;
+}
+
+    .styled .select-container::after {
+        content: '<>';
+        position: absolute;
+        right: 11px;
+        top: 8px;
+        transform: rotate(90deg);
+        color: #333;
+        font: 17px "Consolas", monospace;
+        pointer-events: none;
+    }
+
+.styled select {
+    appearance: none;
+    padding: 11px 36px 11px 16px;
+    cursor: pointer;
+}
+
+.styled textarea {
+    resize: none;
 }
 
 .w-list-unstyled {
@@ -3229,7 +3265,6 @@ form {
 .products .collapse .has-child > a {
     position: relative;
     font-weight: 700;
-    text-transform: uppercase;
     padding: 1em 1.25em;
     border-top: 1px solid #e5e8ec;
 }
@@ -3594,11 +3629,6 @@ form {
         gap: 0.25em;
         margin-bottom: 2em;
     }
-
-        .checkout .field :where(input, textarea) {
-            background-color: rgba(225, 225, 225, 0.5);
-            font-family: inherit;
-        }
 
         .checkout .field:nth-child(5) input:nth-child(2) {
             margin-bottom: 0.7em;
