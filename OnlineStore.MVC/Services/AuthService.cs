@@ -72,6 +72,12 @@ namespace OnlineStore.MVC.Services
             try
             {
                 var response = await _client.RefreshAsync(_usingVersion, requestBody);
+
+                var tokenContent = _tokenHandler.ReadJwtToken(response.AccessToken);
+                var claims = tokenContent.Claims;
+                var user = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
+
                 return new Response<Models.IdentityResponse>
                 {
                     Success = true,

@@ -34,7 +34,7 @@ namespace OnlineStore.MVC.Controllers
 
             var response = await _authService.UpdateUser(model);
             if (response.Success)
-                return RedirectToAction("Settings");
+                return RedirectToAction("Refresh", "Auth", new { redirectUrl = "~/account/settings" });
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {
