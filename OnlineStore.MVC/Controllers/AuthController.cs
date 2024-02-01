@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using OnlineStore.MVC.Constants;
 using OnlineStore.MVC.Models;
-using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,9 +15,9 @@ namespace OnlineStore.MVC.Controllers
         public AuthController(IAuthService authService) => _authService = authService;
 
         [HttpGet]
-        public IActionResult Register(string? returnUrl)
+        public IActionResult Register()
         {
-            var model = new RegisterViewModel { ReturnUrl = returnUrl };
+            var model = new RegisterViewModel();
             return View(model);
         }
 
@@ -29,10 +27,7 @@ namespace OnlineStore.MVC.Controllers
             var response = await _authService.Register(model);
 
             if (response.Success)
-            {
-                var url = model.ReturnUrl ??= Url.Content("~/");
-                return LocalRedirect(model.ReturnUrl);
-            }
+                return RedirectToAction("Login");
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {
@@ -46,7 +41,7 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string? returnUrl = null)
+        public IActionResult Login(string? returnUrl)
         {
             var model = new LoginViewModel { ReturnUrl = returnUrl };
             return View(model);
@@ -64,8 +59,8 @@ namespace OnlineStore.MVC.Controllers
                 Response.Cookies.Append(Authorization.XAccessToken, response.Data.AccessToken);
                 Response.Cookies.Append(Authorization.XRefreshToken, response.Data.RefreshToken);
 
-                model.ReturnUrl ??= Url.Content("~/");
-                return LocalRedirect(model.ReturnUrl);
+                return string.IsNullOrEmpty(model.ReturnUrl) ? 
+                    RedirectToAction("Settings", "Account") : LocalRedirect(model.ReturnUrl);
             }
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
