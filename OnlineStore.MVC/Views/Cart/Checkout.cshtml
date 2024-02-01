@@ -10,7 +10,7 @@
         <div class="wrapper">
             <div class="checkout flexwrap">
                 <div class="item left styled">
-                    <h1>Shipping Address</h1>
+                    <h1>Recipient Data</h1>
                     <form asp-controller="Cart" asp-action="Checkout" method="post">
                         <div class="field">
                             <label asp-for="Order.Email">Email Address <span></span></label>
@@ -24,10 +24,12 @@
                             <label asp-for="Order.LastName">Last Name <span></span></label>
                             <input asp-for="Order.LastName" type="text" placeholder="Enter your last name" required>
                         </div>
-                        <div class="field">
+                        <div class="field address">
                             <label asp-for="Order.StreetAddress">Street Address <span></span></label>
-                            <input asp-for="Order.StreetAddress" type="text" placeholder="Enter your street address" required>
-                            <input asp-for="Order.Apartment" type="text" placeholder="Enter your apartment number">
+                            <div class="fields">
+                                <input asp-for="Order.StreetAddress" type="text" placeholder="Enter your street address" required>
+                                <input asp-for="Order.Apartment" type="text" placeholder="Apt.">
+                            </div>
                         </div>
                         <div class="field">
                             <label asp-for="Order.City">City <span></span></label>
@@ -60,7 +62,7 @@
                         </div>
                         <div class="field">
                             <label asp-for="Order.Notes">Order Notes (optional)</label>
-                            <textarea asp-for="Order.Notes" cols="30" rows="3" type="number" placeholder="Enter your notes"></textarea>
+                            <input asp-for="Order.Notes" type="text" placeholder="Enter your notes">
                         </div>
                         <div class="shipping-methods">
                             <h2>Shipping Methods</h2>
@@ -78,7 +80,7 @@
                             </div>
                         </div>
                         <div class="primary-checkout">
-                            <button class="primary-button" type="submit">Place And Pay</button>
+                            <button class="button black" type="submit">Place And Pay</button>
                         </div>
                     </form>
                 </div>
