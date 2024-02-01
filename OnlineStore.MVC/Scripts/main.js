@@ -282,4 +282,16 @@
         $(this).closest('.short-review').hide();
         $(this).closest('.full-review').show();
     });
+
+    $('.pswd-hide').click(function () {
+        let field = $(this).parent().children('input');
+        if ($(field).prop('type') === 'password') {
+            $(field).prop('type', 'text');
+            $(this).removeClass('bx-hide').addClass('bx-show');
+        }
+        else {
+            $(field).prop('type', 'password');
+            $(this).removeClass('bx-show').addClass('bx-hide');
+        }
+    });
 });
