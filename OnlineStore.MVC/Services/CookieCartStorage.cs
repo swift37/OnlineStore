@@ -45,7 +45,13 @@ namespace OnlineStore.MVC.Services
             _cartName = Constants.Cart.CookieCartName + username;
         }
 
-        private void ReplaceCookies(IResponseCookies cookies, string cookiesString)
+        public CartViewModel? GetUnauthCart()
+        {
+            TransferCookies(out var cartCookies);
+            return JsonConvert.DeserializeObject<CartViewModel>(cartCookies);
+        }
+
+        private void ReplaceCookies(string cookiesString)
         {
             cookies.Delete(_cartName);
             cookies.Append(_cartName, cookiesString);
