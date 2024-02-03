@@ -25,5 +25,7 @@ namespace OnlineStore.MVC.Models
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string PasswordConfirmation { get; set; }
+
+        public string? RedirectUrl { get; set; }
     }
 }
