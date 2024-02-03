@@ -11,98 +11,107 @@
             <partial name="_AccountMenu" />
             <div class="acc-content">
                 <div class="content-box">
-                    <header class="box-header">
+                    @if (!Model.IsEmpty)
+                    {
+                        <header class="box-header">
                         <h2>Wishlist</h2>
                         @if (Model.LastChangeDate != default) 
                         {
                             <span>Last change: @Model.LastChangeDate.ToString("MMMM dd, yyyy")</span>
                         }
-                    </header>
-                    @if (!Model.IsEmpty)
-                    {
+                        </header>
+
                         <div class="products-list">
-                        <div class="products-list-header">
-                            <div class="line-check">
-                                <input type="checkbox" id="allItems" />
-                                <label class="check" for="allItems"></label>
-                                <label class="text" for="allItems">Select all</label>
+                            <div class="products-list-header">
+                                <div class="line-check">
+                                    <input type="checkbox" id="allItems" />
+                                    <label class="check" for="allItems"></label>
+                                    <label class="text" for="allItems">Select all</label>
+                                </div>
+                                <div class="actions">
+                                    <button class="selected-to-cart">
+                                        <i class='bx bx-cart-add'></i>
+                                        Add to cart
+                                    </button>
+                                    <button class="remove-selected">
+                                        <i class='bx bx-trash-alt'></i>
+                                        Remove
+                                    </button>
+                                </div>
                             </div>
-                            <div class="actions">
-                                <button class="selected-to-cart">
-                                    <i class='bx bx-cart-add'></i>
-                                    Add to cart
-                                </button>
-                                <button class="remove-selected">
-                                    <i class='bx bx-trash-alt'></i>
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                        @if (!Model.IsEmpty)
-                            foreach (var item in Model.Items)
+                            @foreach (var item in Model.Items)
                             {
                                 <div class="products-list-line">
                                     <div class="left-part">
-                                        <div class="line-check">
-                                            <input type="checkbox" id="@($"item{item.Id}")" />
-                                            <label class="check" for="@($"item{item.Id}")"></label>
+                                            <div class="line-check">
+                                                <input type="checkbox" id="@($"item{item.Id}")" />
+                                                <label class="check" for="@($"item{item.Id}")"></label>
+                                            </div>
+                                            <div class="line-image">
+                                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
+                                                    <img src="@item.Product?.Image" alt="Image">
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="line-image">
+                                        <div class="middle-part">
                                             <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
-                                                <img src="@item.Product?.Image" alt="Image">
+                                                @item.Product?.Name
                                             </a>
+                                            <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
                                         </div>
-                                    </div>
-                                    <div class="middle-part">
-                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
-                                            @item.Product?.Name
-                                        </a>
-                                        <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
-                                    </div>
-                                    <div class="right-part">
-                                        <div class="qty-control flexitem">
-                                            <button class="qty-minus">-</button>
-                                            <input 
-                                                class="qty-value wl" 
-                                                type="text" 
-                                                value="@item.Quantity" 
-                                                data-itemid="@item.Id" 
-                                                data-productid="@item.ProductId" 
-                                                min="1" 
-                                                pattern="^[0-9]+$">
-                                            <button class="qty-plus">+</button>
-                                        </div>
-                                        <button class="to-cart-from-wl">
-                                            <i class='bx bx-cart-add'></i>
-                                        </button>
-                                        <button class="item-remove from-wishlist" data-itemid="@item.Id">
-                                            <i class='bx bx-trash-alt'></i>
-                                        </button>
+                                        <div class="right-part">
+                                            <div class="qty-control flexitem">
+                                                <button class="qty-minus">-</button>
+                                                <input 
+                                                    class="qty-value wl" 
+                                                    type="text" 
+                                                    value="@item.Quantity" 
+                                                    data-itemid="@item.Id" 
+                                                    data-productid="@item.ProductId" 
+                                                    min="1" 
+                                                    pattern="^[0-9]+$">
+                                                <button class="qty-plus">+</button>
+                                            </div>
+                                            <button class="to-cart-from-wl">
+                                                <i class='bx bx-cart-add'></i>
+                                            </button>
+                                            <button class="item-remove from-wishlist" data-itemid="@item.Id">
+                                                <i class='bx bx-trash-alt'></i>
+                                            </button>
                                     </div>
                                 </div>
                             }
-                        <div class="products-list-summary">
-                            <div class="products-count">
-                                @Model.ProductsCount products
-                            </div>
-                            <div class="products-total">
-                                <div class="total-lines">
-                                    <div class="total-line">
-                                        <span>Subtotal:</span>
-                                        <span>@Model.Subtotal.ToString("C")</span>
-                                    </div>
-                                    <div class="total-line">
-                                        <span>Discount:</span>
-                                        <span>-@Model.Discount.ToString("C")</span>
-                                    </div>
+                            <div class="products-list-summary">
+                                <div class="products-count">
+                                    @Model.ProductsCount products
                                 </div>
-                                <div class="total-sum">
-                                    <span>Total:</span>
-                                    <span>@Model.Total.ToString("C")</span>
+                                <div class="products-total">
+                                    <div class="total-lines">
+                                        <div class="total-line">
+                                            <span>Subtotal:</span>
+                                            <span>@Model.Subtotal.ToString("C")</span>
+                                        </div>
+                                        <div class="total-line">
+                                            <span>Discount:</span>
+                                            <span>-@Model.Discount.ToString("C")</span>
+                                        </div>
+                                    </div>
+                                    <div class="total-sum">
+                                        <span>Total:</span>
+                                        <span>@Model.Total.ToString("C")</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="content-block empty-wishlist">
+                            <div class="text-block">
+                                <h3>Wishlist is empty</h3>
+                                <p>There are no items in your wishlist at the moment.</p>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
