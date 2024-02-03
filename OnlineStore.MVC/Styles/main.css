@@ -4031,6 +4031,14 @@ form {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 1px;
 }
 
+    .auth-form.reset-waiting {
+        max-width: 700px;
+    }
+
+    .auth-form .content-block {
+        padding: 4em 0;
+    }
+
     .auth-form h2 {
         font-size: 22px;
         color: #0b0217;
