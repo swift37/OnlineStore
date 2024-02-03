@@ -81,10 +81,23 @@ namespace OnlineStore.MVC.Controllers
         [HttpGet]
         public IActionResult UpdateMiniCart() => ViewComponent("MiniCart");
 
-        [HttpGet]
-        public async Task<IActionResult> Checkout()
+        [HttpGet("cart/checkout/login")]
+        public IActionResult Login()
         {
-            var cart = _cartStorage.Cart;
+            if (User.Identity?.IsAuthenticated is true) return RedirectToAction("Checkout");
+
+            var model = new LoginViewModel() 
+            { 
+                RedirectUrl = Url.Action("Checkout", "Cart", new { useUnauthCart = true }) 
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Checkout(bool useUnauthCart = false)
+        {
+            var cart = useUnauthCart ? _cartStorage.GetUnauthCart() : _cartStorage.Cart;
 
             if (cart is null) return NotFound();
 
