@@ -132,8 +132,8 @@ namespace OnlineStore.MVC.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var response = await _authService.ResetPasswordRequest(model);
-            if (response.Success) 
-                return RedirectToAction();
+            if (response.Success)
+                return RedirectToAction("ResetPasswordWaiting", new { email = model.Email }) ;
 
             if (response.Status == 404)
             {
@@ -144,7 +144,14 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpGet]
+        [HttpGet("auth/reset/password/waiting")]
+        public IActionResult ResetPasswordWaiting(string email)
+        {
+            ViewBag.Email = email;
+            return View();
+        }
+
+        [HttpGet("auth/reset/password")]
         public IActionResult ResetPassword(Guid userId, string token)
         {
             var model = new ResetPasswordViewModel 
