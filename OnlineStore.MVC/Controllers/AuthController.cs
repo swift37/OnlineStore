@@ -122,11 +122,11 @@ namespace OnlineStore.MVC.Controllers
             return StatusCode(response.Status);
         }
 
-        [HttpGet]
+        [HttpGet("auth/reset/password/request")]
         public IActionResult ResetPasswordRequest() => 
             View(new ResetPasswordRequestViewModel());
 
-        [HttpPost]
+        [HttpPost("auth/reset/password/request")]
         public async Task<IActionResult> ResetPasswordRequest(ResetPasswordRequestViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -137,7 +137,7 @@ namespace OnlineStore.MVC.Controllers
 
             if (response.Status == 404)
             {
-                ModelState.AddModelError(nameof(model.UsernameOrEmail), "Such a user is not found.");
+                ModelState.AddModelError(nameof(model.Email), "Such a user is not found.");
                 return View(model);
             }
 
@@ -156,14 +156,14 @@ namespace OnlineStore.MVC.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("auth/reset/password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
             var response = await _authService.ResetPassword(model);
             if (response.Success)
-                return RedirectToAction();
+                return RedirectToAction("Login");
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {

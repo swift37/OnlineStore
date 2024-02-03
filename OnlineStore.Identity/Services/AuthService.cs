@@ -240,14 +240,11 @@ namespace OnlineStore.Identity.Services
                     throw new Exception($"Password has no changed: [{error.Code}] {error.Description}");
         }
 
-        public async Task ResetPasswordRequest(string usernameOrEmail)
+        public async Task ResetPasswordRequest(string email)
         {
-            var user = await _userManager.FindByNameAsync(usernameOrEmail)
-               ?? await _userManager.FindByEmailAsync(usernameOrEmail);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
-                throw new NotFoundException($"User {usernameOrEmail} not found.", nameof(ApplicationUser));
-            if (string.IsNullOrEmpty(user.Email)) 
-                throw new Exception("User email is undefined.");
+                throw new NotFoundException($"User {email} not found.", nameof(ApplicationUser));
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 

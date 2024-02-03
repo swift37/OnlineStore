@@ -197,7 +197,7 @@ namespace OnlineStore.MVC.Services
         {
             try
             {
-                await _client.ResetPasswordRequestAsync(model.UsernameOrEmail, _usingVersion);
+                await _client.ResetPasswordRequestAsync(model.Email, _usingVersion);
                 return new Response { Success = true };
             }
             catch (ApiException exception)

@@ -5,6 +5,7 @@ namespace OnlineStore.MVC.Models
     public class ResetPasswordRequestViewModel
     {
         [Required]
-        public string UsernameOrEmail { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }

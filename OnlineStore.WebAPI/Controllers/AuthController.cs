@@ -219,9 +219,9 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpPost("reset/password/request")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ResetPasswordRequest(string usernameOrEmail)
+        public async Task<IActionResult> ResetPasswordRequest(string email)
         {
-            await _authService.ResetPasswordRequest(usernameOrEmail);
+            await _authService.ResetPasswordRequest(email);
             return Ok();
         }
 

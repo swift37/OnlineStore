@@ -22,7 +22,7 @@ namespace OnlineStore.Application.Interfaces.Identity
 
         Task ChangePassword(ChangePasswordRequest request);
 
-        Task ResetPasswordRequest(string usernameOrEmail);
+        Task ResetPasswordRequest(string email);
 
         Task ResetPassword(ResetPasswordRequest request);
     }

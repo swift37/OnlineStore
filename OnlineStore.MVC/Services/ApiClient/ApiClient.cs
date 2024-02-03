@@ -106,12 +106,12 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ResetPasswordRequestAsync(string usernameOrEmail, string version);
+        System.Threading.Tasks.Task ResetPasswordRequestAsync(string email, string version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ResetPasswordRequestAsync(string usernameOrEmail, string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task ResetPasswordRequestAsync(string email, string version, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1854,15 +1854,15 @@ namespace OnlineStore.MVC.Services.ApiClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ResetPasswordRequestAsync(string usernameOrEmail, string version)
+        public virtual System.Threading.Tasks.Task ResetPasswordRequestAsync(string email, string version)
         {
-            return ResetPasswordRequestAsync(usernameOrEmail, version, System.Threading.CancellationToken.None);
+            return ResetPasswordRequestAsync(email, version, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ResetPasswordRequestAsync(string usernameOrEmail, string version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ResetPasswordRequestAsync(string email, string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -1883,9 +1883,9 @@ namespace OnlineStore.MVC.Services.ApiClient
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/auth/reset/password/request");
                     urlBuilder_.Append('?');
-                    if (usernameOrEmail != null)
+                    if (email != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("usernameOrEmail")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(usernameOrEmail, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(System.Uri.EscapeDataString("email")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
