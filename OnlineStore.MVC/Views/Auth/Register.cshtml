@@ -42,10 +42,14 @@
                 <i class='bx bx-hide pswd-hide'></i>
             </div>
             <span asp-validation-for="PasswordConfirmation" class="failure"></span>
+            <input asp-for="RedirectUrl" type="hidden" />
             <button class="button black">Sign Up</button>
         </form>
         <div class="auth-switch">
-            Already have an account? <a asp-controller="Auth" asp-action="Login">Sign In</a>
+            Already have an account? 
+            <a asp-controller="Auth" asp-action="Login" asp-route-redirectUrl="@Model.RedirectUrl">
+                Sign In
+            </a>
         </div>
     </div>
 </div>
