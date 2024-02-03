@@ -8,16 +8,12 @@
 <div class="single-cart">
     <div class="container">
         <div class="wrapper">
-            <div class="breadcrumb">
-                <ul class="flexitem">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li>Cart</li>
-                </ul>
+            @if (!Model.IsEmpty)
+            {
+                <div class="page-title">
+            <h1>Cart (@Model.ItemsQuantity)</h1>
             </div>
-            <div class="page-title">
-                <h1>Cart (@Model.ItemsQuantity)</h1>
-            </div>
-            <div class="products one cart">
+                <div class="products one cart">
                 <div class="flexwrap">
                     <div class="products-list cart">
                         <div class="products-list-header cart">
@@ -28,9 +24,8 @@
                                 </button>
                             </div>
                         </div>
-                        @if (!Model.IsEmpty)
-                            foreach (var item in Model.Items)
-                            {
+                        @foreach (var item in Model.Items)
+                        {
                                 <div class="products-list-line">
                                     <div class="left-part">
                                         <div class="line-image">
@@ -64,7 +59,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            }
+                        }
                     </div>
                     <div class="cart-summary styled">
                         <div class="item">
@@ -152,6 +147,16 @@
                     </div>
                 </div>
             </div>
+            }
+            else
+            {
+                <div class="content-block empty-cart">
+                    <div class="text-block">
+                        <h2>Your cart is empty</h2>
+                        <p>Dive into the latest gadgets and gear that will transform your world. From smart home hubs to immersive gaming experiences, explore the possibilities waiting to be unlocked.</p>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>

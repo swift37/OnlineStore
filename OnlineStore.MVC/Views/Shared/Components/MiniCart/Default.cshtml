@@ -10,7 +10,7 @@
 <div class="mini-cart">
     <div class="content">
         <div class="cart-head">
-            Cart (@Model.ItemsQuantity)
+            Cart @(Model.ItemsQuantity > 0 ? $"({Model.ItemsQuantity})" : null)
         </div>
         <div class="cart-body">
             @if (!Model.IsEmpty)
@@ -42,7 +42,7 @@
             else
             {
                 <p class="empty-cart-msg">Your cart is empty</p>
-                <p class="empty-cart-sub">Add the first item to see it here</p>
+                <p class="empty-cart-sub">Looks like you haven't added any items to your cart yet.</p>
             }
         </div>
         @if (!Model.IsEmpty)
