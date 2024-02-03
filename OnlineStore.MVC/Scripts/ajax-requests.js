@@ -171,7 +171,7 @@ $(document).ready(function () {
             dataType: 'json',
             data:
             {
-                productId: $(this).data('itemid'),
+                productId: $(this).data('productid'),
                 quantity: $(this).val()
             },
             error: function () {
@@ -248,7 +248,7 @@ $(document).ready(function () {
         });
     });
 
-    $('.add-to-wishlist-btn').click(function () {
+    $('.add-to-wishlist-btn, .to-wishlist').click(function () {
         $.ajax({
             url: '/wishlist/add',
             type: 'post',
