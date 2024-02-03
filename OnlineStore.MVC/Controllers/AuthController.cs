@@ -15,9 +15,9 @@ namespace OnlineStore.MVC.Controllers
         public AuthController(IAuthService authService) => _authService = authService;
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(string? redirectUrl)
         {
-            var model = new RegisterViewModel();
+            var model = new RegisterViewModel { RedirectUrl = redirectUrl };
             return View(model);
         }
 
@@ -27,7 +27,7 @@ namespace OnlineStore.MVC.Controllers
             var response = await _authService.Register(model);
 
             if (response.Success)
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", new { redirectUrl = model.RedirectUrl });
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
             {
@@ -41,9 +41,9 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string? returnUrl)
+        public IActionResult Login(string? redirectUrl)
         {
-            var model = new LoginViewModel { ReturnUrl = returnUrl };
+            var model = new LoginViewModel { RedirectUrl = redirectUrl };
             return View(model);
         }
 
@@ -59,8 +59,8 @@ namespace OnlineStore.MVC.Controllers
                 Response.Cookies.Append(Authorization.XAccessToken, response.Data.AccessToken);
                 Response.Cookies.Append(Authorization.XRefreshToken, response.Data.RefreshToken);
 
-                return string.IsNullOrEmpty(model.ReturnUrl) ? 
-                    RedirectToAction("Settings", "Account") : LocalRedirect(model.ReturnUrl);
+                return string.IsNullOrEmpty(model.RedirectUrl) ? 
+                    RedirectToAction("Settings", "Account") : LocalRedirect(model.RedirectUrl);
             }
 
             if (response.Status == 400 && response.ValidationErrors.Count() > 0)
