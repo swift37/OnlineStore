@@ -106,17 +106,16 @@
     <section class="full-specs-section">
         <div class="container">
             <h3 class="dividing-header">Specifications</h3>
-            <table class="ui definition table">
-                <tbody>
-@*                     @foreach (var spec in Model.Specifications)
-                    {
-                        <tr>
-                            <td>@spec.Name</td>
-                            <td>@spec.Value</td>
-                        </tr>
-                    } *@
-                </tbody>
-            </table>
+            <div class="specs-list">
+            @foreach (var spec in Model.Specifications)
+                if (spec.SpecificationType?.DisplayName is not null)
+                {
+                    <div class="spec-row">
+                        <div class="spec-left-col">@spec.SpecificationType.DisplayName</div>
+                        <div class="spec-right-col">@spec.Value</div>
+                    </div>
+                }
+            </div>
         </div>
     </section>
 }
