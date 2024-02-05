@@ -1977,15 +1977,75 @@ form {
     margin-bottom: 65px;
 }
 
-    .full-specs-section .ui.header {
-        font-size: 22px;
-        font-family: Montserrat, sans-serif;
-        font-weight: 600;
+    .full-specs-section .specs-list {
+        border-spacing: 0;
+        width: 100%;
     }
 
-    .full-specs-section .ui.table {
-        width: 95%;
+        .full-specs-section .specs-list .spec-row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            padding: 10px 8px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 22px;
+            color: #181818;
+            margin: 0;
+        }
+
+            .full-specs-section .specs-list .spec-row:nth-child(2n+1) {
+                background-color: #f6f6f6;
+            }
+
+            .full-specs-section .specs-list .spec-row:hover {
+                background-color: #ebebeb;
+            }
+
+        .full-specs-section .specs-list .spec-left-col {
+            width: 33.33%;
+            padding: 0 8px;
+            margin-left: 0;
+            font-weight: 700;
+        }
+
+        .full-specs-section .specs-list .spec-right-col {
+            width: 66.66%;
+            padding: 0 8px;
+        }
+
+@media screen and (min-width: 520px) {
+    .full-specs-section .specs-list .spec-left-col {
+        width: 41.66%;
+        padding: 0 8px;
+        margin-left: 0;
     }
+
+    .full-specs-section .specs-list .spec-right-col {
+        width: 58.33%;
+        padding: 0 8px;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .full-specs-section .specs-list .spec-left-col {
+        width: 25%;
+        padding: 0 12px;
+        margin-left: 16.66%;
+    }
+
+    .full-specs-section .specs-list .spec-right-col {
+        width: 41.66%;
+        padding: 0 12px;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .full-specs-section .specs-list .spec-left-col,
+    .full-specs-section .specs-list .spec-right-col {
+        padding: 0 16px;
+    }
+}
 
 .description-paragraph {
     width: 95%;
