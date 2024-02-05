@@ -3,11 +3,11 @@ using OnlineStore.MVC.Services.Interfaces;
 
 namespace OnlineStore.MVC.ViewComponents
 {
-    public class StoreMenuViewComponent : ViewComponent
+    public class StoreDropdownViewComponent : ViewComponent
     {
         private readonly ICategoriesService _categoriesService;
 
-        public StoreMenuViewComponent(ICategoriesService categoriesService) =>
+        public StoreDropdownViewComponent(ICategoriesService categoriesService) =>
             _categoriesService = categoriesService;
 
         public async Task<IViewComponentResult> InvokeAsync()
