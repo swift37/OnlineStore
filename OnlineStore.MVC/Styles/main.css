@@ -5092,7 +5092,11 @@ form {
     }
 
 .reviewed:not(:nth-child(2)) {
-    margin: 16px 0px 0px;
+    margin: 1em 0px 0px;
+}
+
+.reviewed.prod-pg:not(:nth-child(2)) {
+    margin: 2em 0px 0px;
 }
 
 .reviewed .reviews-list-line {
@@ -5180,7 +5184,7 @@ form {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        margin-top: 12px;
+        margin-top: 8px;
         margin-left: -2px;
     }
 
@@ -5192,6 +5196,10 @@ form {
             line-height: 20px;
             color: #777;
         }
+
+            .reviewed .reviews-list-line .line-rating .stars .empty-star {
+                color: #ddd;
+            }
 
         .reviewed .reviews-list-line .line-rating .date {
             display: flex;
@@ -5214,8 +5222,10 @@ form {
         font-weight: 500;
         line-height: 20px;
         color: #444;
-        margin: 12px 0 0 2px;
+        margin-top: 8px;
+        word-wrap: break-word;
     }
+
         .reviewed .reviews-list-line .line-content .more {
             font-size: 14px;
             line-height: 20px;
