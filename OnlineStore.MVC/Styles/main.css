@@ -130,6 +130,10 @@ form {
     text-transform: none;
 }
 
+    .dividing-header.specs {
+        margin-bottom: 0.7em;
+    }
+
 .styled :where(input, select, textarea) {
     width: 100%;
     padding: 12px 16px;
