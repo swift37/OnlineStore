@@ -9,7 +9,7 @@
 <div class="acc-section">
     <div class="container">
         <div class="acc-wrapper">
-            <partial name="_AccountMenu" />
+            @await Component.InvokeAsync("AccountMenu", new { id = 4 })
             <div class="acc-content">
                 <div class="content-box">
                     <div class="acc-settings">

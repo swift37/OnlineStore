@@ -3,7 +3,7 @@
 <div class="acc-section">
     <div class="container">
         <div class="acc-wrapper">
-            <partial name="_AccountMenu" />
+            @await Component.InvokeAsync("AccountMenu", new { id = 1 })
             <div class="acc-content">
                 <div class="content-box">
                     <a class="back-to-menu" asp-controller="Account" asp-action="Orders">
