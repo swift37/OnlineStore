@@ -162,57 +162,7 @@
                 </button>
             </div>
             <div class="reviews-block-body">
-                <div class="reviews-list">
-                    @foreach (var review in Model.Reviews)
-                    {
-                        <div class="review-item">
-                            <div class="review-form">
-                                <p class="person">Review by John</p>
-                                <p class="paragraph-light">On @review.CreationDate.ToString("MMMM dd, yyyy")</p>
-                            </div>
-                            <div class="review-rating">
-                                @for (int i = 0; i < review.Rating; i++)
-                                {
-                                    <span class="rating-star">
-                                        <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                    </span>
-                                }
-                            </div>
-                            <div class="review-text">
-                                <p>@review.Content</p>
-                            </div>
-                        </div>
-                    }            
-                    <div class="review-item">
-                        <div class="review-form">
-                            <p class="person">Review by Alex</p>
-                            <p class="paragraph-light">On 21.08.2023</p>
-                        </div>
-                        <div class="review-rating">
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                            </span>
-                            <span class="rating-star">
-                                <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                            </span>
-                        </div>
-                        <div class="review-title">
-                            <p>Good!</p>
-                        </div>
-                        <div class="review-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("ReviewsList", new { productId = Model.Id })
             </div>
         </div>
     </div>
