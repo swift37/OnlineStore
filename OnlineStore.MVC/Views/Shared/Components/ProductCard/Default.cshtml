@@ -82,15 +82,15 @@
     </div>
     <div class="add-to-wishlist">
         <button class="add-to-wishlist-btn" data-itemid="@Model.Id">
-            <img src="~/resources/icons/like.png" alt="" />
+            <img src="~/resources/icons/heart-outlined.png" />
         </button>
     </div>
     @if (Model.IsAvailable)
     {
         <div class="add-to-cart">
-            <div class="add-to-cart-btn" data-itemid="@Model.Id">
+            <button class="add-to-cart-btn" data-itemid="@Model.Id">
                 <img src="~/resources/icons/shopping-cart.png" />
-            </div>
+            </button>
         </div>
     }
 </div>
