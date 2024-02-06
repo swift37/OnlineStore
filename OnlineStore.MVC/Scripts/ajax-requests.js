@@ -249,7 +249,7 @@ $(document).ready(function () {
         });
     });
 
-    const updWishlistSuccess = (productId, buttonContainer) => {
+    const updWishlistSuccess = (productId, button) => {
         checkWishlistQuantity();
 
         $.ajax({
@@ -260,12 +260,12 @@ $(document).ready(function () {
                 productId
             },
             success: function (data) {
-                $(buttonContainer).html(data);
+                $(button).replaceWith(data);
             }
         });
     };
 
-    const productToWishlist = (productId, buttonContainer) => {
+    const productToWishlist = (productId, button) => {
         $.ajax({
             url: '/wishlist/add',
             type: 'post',
@@ -284,13 +284,13 @@ $(document).ready(function () {
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
-                    updWishlistSuccess(productId, buttonContainer);
+                    updWishlistSuccess(productId, button);
                 }
             }
         });
     };
 
-    const itemFromWishlist = (itemId, productId, buttonContainer) => {
+    const itemFromWishlist = (itemId, productId, button) => {
         $.ajax({
             url: '/wishlist/remove',
             type: 'delete',
@@ -308,7 +308,7 @@ $(document).ready(function () {
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) - 1;
                     $('#wishlistQuantity').text(newQty);
-                    updWishlistSuccess(productId, buttonContainer);
+                    updWishlistSuccess(productId, button);
                 }
             }
         });
@@ -320,9 +320,9 @@ $(document).ready(function () {
         let productId = $(button).data('productid');
 
         if ($(button).hasClass('to-wl'))
-            productToWishlist(productId, $(this));
+            productToWishlist(productId, button);
         else
-            itemFromWishlist(itemId, productId, $(this));
+            itemFromWishlist(itemId, productId, button);
     });
 
     $('.to-wishlist').click(function () {

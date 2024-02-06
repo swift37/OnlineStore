@@ -1901,6 +1901,7 @@ form {
         align-items: center;
         width: fit-content;
         padding: 0.5em;
+        border-radius: 10px;
         border: 1px solid #e5e8ec;
         margin-right: 1.5em;
     }
@@ -1931,6 +1932,11 @@ form {
             background-color: transparent;
         }
 
+    .product-details-wrap .actions .to-cart {
+        font-size: 15px;
+        border-radius: 10px;
+    }
+
     .product-details-wrap .actions .wish-share {
         display: flex;
         align-items: center;
@@ -1938,20 +1944,30 @@ form {
         margin-top: 1.25em;
     }
 
-        .product-details-wrap .actions .wish-share a {
+        .product-details-wrap .actions .wish-share .wishlist-btn,
+        .product-details-wrap .actions .wish-share .share-btn {
             display: flex;
             align-items: center;
-            text-transform: uppercase;
+            gap: 0.7em;
             font-weight: 700;
-            cursor: pointer;
+            text-transform: uppercase;
             margin: 1em 0;
             transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .product-details-wrap .actions .wish-share button {
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            pointer-events: none;
         }
 
         .product-details-wrap .actions .wish-share img {
             width: 24px;
             height: 24px;
-            margin-right: 1em;
         }
 
 @media screen and (max-width: 991px) {
@@ -1959,7 +1975,7 @@ form {
         justify-content: center;
     }
 
-        .product-details-wrap .actions .add-to-cart-btn {
+        .product-details-wrap .actions .to-cart {
             width: calc(100% - 150px);
         }
 }

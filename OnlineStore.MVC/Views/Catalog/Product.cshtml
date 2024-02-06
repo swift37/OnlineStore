@@ -8,8 +8,7 @@
 <section class="product-details-section">
     <div class="container">
         <div class="wrapper flexitem">
-            <div style="background-image:url(@Model.Image?.Replace('\\','/'))" class="product-image">
-            </div>
+            <div style="background-image:url(@Model.Image?.Replace('\\','/'))" class="product-image"></div>
             <div class="product-details-wrap">
                 <div class="product-details-header">
                     <h1 class="product-details-name">@Model.Name</h1>
@@ -77,16 +76,20 @@
                         <input id="productQuantity" type="text" value="1" min="1" pattern="^[0-9]+$">
                         <button class="qty-plus">+</button>
                     </div>
-                    <button type="submit" data-itemid="@Model.Id" value="Add to Cart" class="button black to-cart">
+                    <button type="submit" data-itemid="@Model.Id" class="button black to-cart">
+                        Add to Cart
+                    </button>
                     <div class="wish-share">
-                        <a class="add-to-wishlist-btn" data-itemid="@Model.Id">
-                            <img src="~/resources/icons/like.png" alt="Wishlist">
+                        <div class="wishlist-btn">
+                            @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id })
                             <span>Wishlist</span>
-                        </a>
-                        <a>
-                            <img src="~/resources/icons/share.png" alt="Share">
+                        </div>
+                        <div class="share-btn">
+                            <button>
+                                <img src="~/resources/icons/share.png" alt="Share">
+                            </button>
                             <span>Share</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
