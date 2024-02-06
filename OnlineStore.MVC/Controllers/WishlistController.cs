@@ -106,6 +106,12 @@ namespace OnlineStore.MVC.Controllers
                 });
 
             return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+
         }
+
+        [HttpGet]
+        public IActionResult UpdateWishlistButton(int productId) => 
+            ViewComponent("WishlistButton", new { productId });
+            
     }
 }
