@@ -1718,15 +1718,24 @@ form {
         max-width: 750px;
     }
 
-    .get-in-touch-section button {
-        width: 110px;
-        border: 0;
-        padding: 1em 2em;
-        cursor: pointer;
+    .get-in-touch-section .field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2em;
     }
 
-    .get-in-touch-section :where(input, select, textarea) {
-        border-width: 1px 1px 3px 1px;
+        .get-in-touch-section .field label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: capitalize;
+            position: relative;
+            width: fit-content;
+        }
+
+    .get-in-touch-section .button {
+        width: 120px;
+        border-radius: 10px;
+        font-size: 16px;
     }
 
 .w-widget {
