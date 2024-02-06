@@ -17,6 +17,9 @@ namespace OnlineStore.Application.DTOs.Category
         public bool IsMainCategory { get; set; }
 
         public void Mapping(Profile profile) =>
-            profile.CreateMap<Domain.Entities.Category, UpdateCategoryDTO>().ReverseMap();
+            profile.CreateMap<Domain.Entities.Category, UpdateCategoryDTO>()
+            .ForMember(dest => dest.IsMainCategory, opt => opt.MapFrom(src => src.IsRootCategory))
+            .ReverseMap()
+            .ForMember(opt => opt.IsRootCategory, opt => opt.MapFrom(src => src.IsMainCategory));
     }
 }
