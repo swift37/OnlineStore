@@ -28,5 +28,9 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> RemoveItem(int itemId);
 
         Task<Response> RemoveItems(IEnumerable<int> itemIds);
+
+        Task<Response<bool>> CheckProductPresence(int productId);
+
+        Task<Response<int>> GetItemId(int productId);
     }
 }

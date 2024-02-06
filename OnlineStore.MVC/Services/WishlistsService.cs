@@ -28,11 +28,11 @@ namespace OnlineStore.MVC.Services
             }
         }
 
-        public async Task<Response<WishlistViewModel>> Get(int id)
+        public async Task<Response<WishlistViewModel>> Get(int productId)
         {
             try
             {
-                var wishlist = await _client.GetWishlistAsync(id, _usingVersion);
+                var wishlist = await _client.GetWishlistAsync(productId, _usingVersion);
                 return new Response<WishlistViewModel>
                 {
                     Success = true,
@@ -197,6 +197,40 @@ namespace OnlineStore.MVC.Services
             catch (ApiException e)
             {
                 return GenerateResponse(e);
+            }
+        }
+
+        public async Task<Response<bool>> CheckProductPresence(int productId)
+        {
+            try
+            {
+                var result = await _client.CheckProductPresenceAsync(productId, _usingVersion);
+                return new Response<bool>
+                {
+                    Success = true,
+                    Data = result
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<bool>(exception);
+            }
+        }
+
+        public async Task<Response<int>> GetItemId(int productId)
+        {
+            try
+            {
+                var itemId = await _client.GetItemIdAsync(productId, _usingVersion);
+                return new Response<int>
+                {
+                    Success = true,
+                    Data = itemId
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<int>(exception);
             }
         }
     }
