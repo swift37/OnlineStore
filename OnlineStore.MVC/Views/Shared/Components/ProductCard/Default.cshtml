@@ -80,15 +80,13 @@
             </div>
         </div>
     </div>
-    <div class="add-to-wishlist">
-        <button class="add-to-wishlist-btn" data-itemid="@Model.Id">
-            <img src="~/resources/icons/heart-outlined.png" />
-        </button>
+    <div class="wishlist-btn">
+        @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id })
     </div>
     @if (Model.IsAvailable)
     {
         <div class="add-to-cart">
-            <button class="add-to-cart-btn" data-itemid="@Model.Id">
+            <button class="to-cart" data-itemid="@Model.Id">
                 <img src="~/resources/icons/shopping-cart.png" />
             </button>
         </div>

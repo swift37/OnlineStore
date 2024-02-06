@@ -10,10 +10,11 @@ $(document).ready(function () {
 
     const checkWishlistQuantity = () => {
         let qty = parseInt($('#wishlistQuantity').text());
-        if (qty > 9) {
-            let counter = $('#wishlistQuantity').parent('.counter');
+        let counter = $('#wishlistQuantity').parent('.counter');
+        if (qty > 9)
             if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
-        }
+        else
+            if (counter.hasClass('two-counter')) counter.removeClass('two-counter');
     };
 
     const checkCartQuantity = () => {
@@ -34,7 +35,7 @@ $(document).ready(function () {
         $(modal).find('input, textarea').each((i, el) => $(el).val(''));
     }
 
-    $('.add-to-cart-btn, .item-add-to-cart').click(function () {
+    $('.to-cart').click(function () {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
@@ -309,7 +310,7 @@ $(document).ready(function () {
                     $('#wishlistQuantity').text(newQty);
                     updWishlistSuccess(productId, buttonContainer);
                 }
-                    }
+            }
         });
     };
 
