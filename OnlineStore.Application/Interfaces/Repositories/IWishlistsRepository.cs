@@ -31,5 +31,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
             Guid userId,
             ICollection<int> itemIds,
             CancellationToken cancellation = default);
+
+        Task<bool> CheckProductPresence(
+            Guid userId,
+            int productId,
+            CancellationToken cancellation = default);
     }
 }

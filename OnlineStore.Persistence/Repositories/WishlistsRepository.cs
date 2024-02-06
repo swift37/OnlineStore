@@ -119,5 +119,13 @@ namespace OnlineStore.DAL.Repositories
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
+
+        public async Task<bool> CheckProductPresence(
+            Guid userId,
+            int productId,
+            CancellationToken cancellation = default) =>
+            await Entities.AnyAsync(w => w.UserId == userId && w.Items
+                .Any(i => i.ProductId == productId), cancellation).
+            ConfigureAwait(false);
     }
 }
