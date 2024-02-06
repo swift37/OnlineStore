@@ -36,5 +36,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
             Guid userId,
             int productId,
             CancellationToken cancellation = default);
+
+        Task<int> GetItemId(
+            Guid userId,
+            int productId,
+            CancellationToken cancellation = default);
     }
 }

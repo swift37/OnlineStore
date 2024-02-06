@@ -127,5 +127,16 @@ namespace OnlineStore.DAL.Repositories
             await Entities.AnyAsync(w => w.UserId == userId && w.Items
                 .Any(i => i.ProductId == productId), cancellation).
             ConfigureAwait(false);
+
+        public async Task<int> GetItemId(
+            Guid userId,
+            int productId,
+            CancellationToken cancellation = default) =>
+            await Entities.Where(w => w.UserId == userId)
+            .SelectMany(w => w.Items)
+            .Where(i => i.ProductId == productId)
+            .Select(i => i.Id)
+            .FirstOrDefaultAsync(cancellation)
+            .ConfigureAwait(false);
     }
 }
