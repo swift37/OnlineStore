@@ -46,7 +46,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Sample request:
         /// GET /wishlists/exists/1
         /// </remarks>
-        /// <param name="id">Wishlist id</param>
+        /// <param name="productId">Wishlist id</param>
         /// <returns>Returns bool</returns>
         /// <response code="200">Success</response>
         /// <response code="401">If the user is unauthorized</response>
@@ -56,8 +56,8 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<bool>> Exist(int id) => 
-            Ok(await _repository.ExistsAsync(id));
+        public async Task<ActionResult<bool>> Exist(int productId) => 
+            Ok(await _repository.ExistsAsync(productId));
 
         /// <summary>
         /// Get the wishlist by id
@@ -305,5 +305,42 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.RemoveItems(UserId, itemIds);
             return NoContent();
         }
+
+        /// <summary>
+        /// Get true if wishlist item exists
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /wishlists/items/exists/product-id/1
+        /// </remarks>
+        /// <param name="productId">Product id (int)</param>
+        /// <returns>Returns bool</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("items/exists/product-id/{productId:int}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<bool>> CheckProductPresence(int productId) =>
+            Ok(await _repository.CheckProductPresence(UserId, productId));
+
+        /// <summary>
+        /// Get the wishlist item id by product id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /wishlists/items/product-id/1
+        /// </remarks>
+        /// <param name="productId">Product id (int)</param>
+        /// <returns>Returns WishlistItem id</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("items/product-id/{productId:int}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<int>> GetItemId(int productId) =>
+            Ok(await _repository.GetItemId(UserId, productId));
+
     }
 }
