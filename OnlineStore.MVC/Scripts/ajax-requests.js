@@ -248,14 +248,30 @@ $(document).ready(function () {
         });
     });
 
-    $('.add-to-wishlist-btn, .to-wishlist').click(function () {
+    const updWishlistSuccess = (productId, buttonContainer) => {
+        checkWishlistQuantity();
+
+        $.ajax({
+            url: '/wishlist/updatewishlistbutton',
+            type: 'get',
+            data:
+            {
+                productId
+            },
+            success: function (data) {
+                $(buttonContainer).html(data);
+            }
+        });
+    };
+
+    const productToWishlist = (productId, buttonContainer) => {
         $.ajax({
             url: '/wishlist/add',
             type: 'post',
             dataType: 'json',
             data:
             {
-                productId: $(this).data('itemid'),
+                productId,
                 quantity: 1
             },
             error: function () {
@@ -266,12 +282,83 @@ $(document).ready(function () {
                     alert(result.errors.toString());
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
-                    if (newQty > 9) {
-                        let counter = $('#wishlistQuantity').parent('.counter');
-                        if (!counter.hasClass('two-counter')) counter.addClass('two-counter');
+                    $('#wishlistQuantity').text(newQty);
+                    updWishlistSuccess(productId, buttonContainer);
+                }
+            }
+        });
+    };
+
+    const itemFromWishlist = (itemId, productId, buttonContainer) => {
+        $.ajax({
+            url: '/wishlist/remove',
+            type: 'delete',
+            dataType: 'json',
+            data:
+            {
+                itemId
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                if (result.success == false)
+                    alert(result.errors.toString());
+                else {
+                    let newQty = parseInt($('#wishlistQuantity').text()) - 1;
+                    $('#wishlistQuantity').text(newQty);
+                    updWishlistSuccess(productId, buttonContainer);
+                }
                     }
+        });
+    };
+
+    $('.wishlist-btn').click(function () {
+        let button = $(this).children('button');
+        let itemId = $(button).data('itemid');
+        let productId = $(button).data('productid');
+
+        if ($(button).hasClass('to-wl'))
+            productToWishlist(productId, $(this));
+        else
+            itemFromWishlist(itemId, productId, $(this));
+    });
+
+    $('.to-wishlist').click(function () {
+        let productId = $(this).data('itemid');
+        let button = $(this).parent();
+
+        $.ajax({
+            url: '/wishlist/add',
+            type: 'post',
+            dataType: 'json',
+            data:
+            {
+                productId,
+                quantity: 1
+            },
+            error: function () {
+                alert('Error occurred.');
+            },
+            success: function (result) {
+                if (result.success == false)
+                    alert(result.errors.toString());
+                else {
+                    let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
                     checkWishlistQuantity();
+
+                    $.ajax({
+                        url: '/wishlist/updatewishlistbutton',
+                        type: 'get',
+                        data:
+                        {
+                            productId
+                        },
+                        success: function (data) {
+                            $(button).html(data);
+                        }
+                    });
                 }
             }
         });
