@@ -18,30 +18,7 @@
                         <div class="filter">
                             @if (Model.FiltersGroup?.SpecificationTypes.Count > 0)
                                 foreach (var type in Model.FiltersGroup.SpecificationTypes)
-                                {
-                                    <div class="filter-block params">
-                                        <h4>@type.DisplayName</h4>
-                                        @if (type.Values.Count > 0)
-                                        {
-                                            <ul>
-                                                @foreach (var spec in type.Values)
-                                                {
-                                                    <li>
-                                                        <input type="checkbox" name="checkbox" 
-                                                            id="@($"spid{spec.SpecificationTypeId};sid{spec.Id}")" 
-                                                            @(Model.AppliedFilterIds
-                                                            .Contains(spec.Id) ? "checked" : null)>
-                                                        <label for="@($"spid{spec.SpecificationTypeId};sid{spec.Id}")">
-                                                            <span class="checked"></span>
-                                                            <span>@spec.Value</span>
-                                                        </label>
-                                                        <span class="count">@spec.ProductsCount</span>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        }
-                                    </div>
-                                }
+                                    @await Component.InvokeAsync("FilterBlock", new { model = type })
 
                             <div class="filter-block pricing">
                                 <h4>Price</h4>

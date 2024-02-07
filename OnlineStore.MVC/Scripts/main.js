@@ -221,7 +221,7 @@
         location.replace(url);
     });
 
-    $('.filter-block.params input').change(function () {
+    $('.filter').on('change', '.filter-block.params input', function () {
         let url = new window.URL(document.location);
 
         if ($(this).prop('checked')) {
@@ -232,6 +232,7 @@
             url.searchParams.delete("filters", $(this).prop('id'));
 
         location.replace(url);
+        /*window.history.replaceState(null, null, url);*/
     });
 
     $('#allItems').change(function () {

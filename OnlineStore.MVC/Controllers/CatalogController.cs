@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineStore.MVC.Extensions;
 using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Enums;
 using OnlineStore.MVC.Services.Interfaces;
@@ -35,13 +36,7 @@ namespace OnlineStore.MVC.Controllers
             };
            
             var specIds = HttpContext.Request.Query["filters"];
-            foreach (var stringId in specIds)
-            {
-                if (int.TryParse(stringId?.Split(';')[0][4..], out var specTypeId) &&
-                    int.TryParse(stringId?.Split(';')[1][3..], out var specId))
-                    if (!options.SpecificationIds.TryAdd(specTypeId, new List<int> { specId }))
-                        options.SpecificationIds[specTypeId].Add(specId);
-            }
+            options.SpecificationIds = specIds.GetAppliedFilters();
 
             var productsServiceResponse = await _productsService.GetFilteredProducts(options);
             if (!productsServiceResponse.Success) return StatusCode(productsServiceResponse.Status);
@@ -52,7 +47,7 @@ namespace OnlineStore.MVC.Controllers
             var model = new CatalogViewModel
             {
                 FiltersGroup = filterGroupsServiceResponse.Data,
-                AppliedFilterIds = options.SpecificationIds.Values.SelectMany(v => v).ToList(),
+                AppliedFilterIds = specIds.GetAppliedFilterIds(),
                 ProductsPage = productsServiceResponse.Data,
             };
 
