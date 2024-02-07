@@ -10,11 +10,14 @@ namespace OnlineStore.MVC.Controllers
     {
         private readonly IProductsService _productsService;
         private readonly IFilterGroupsService _filterGroupsService;
+        private readonly ISpecificationTypesService _specificationTypesService;
 
         public CatalogController(
             IProductsService productsService, 
-            IFilterGroupsService filterGroupsService) => 
-            (_productsService, _filterGroupsService) = (productsService, filterGroupsService);
+            IFilterGroupsService filterGroupsService,
+            ISpecificationTypesService specificationTypesService) => 
+            (_productsService, _filterGroupsService, _specificationTypesService) = 
+            (productsService, filterGroupsService, specificationTypesService);
 
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -60,6 +63,16 @@ namespace OnlineStore.MVC.Controllers
             var response = await _productsService.Get(id);
 
             if (response.Success) return View(response.Data);
+
+            return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateFilterBlock(int specificationTypeId, bool showAll)
+        {
+            var response = await _specificationTypesService.Get(specificationTypeId);
+
+            if (response.Success) return ViewComponent("FilterBlock", new { model = response.Data, showAll });
 
             return StatusCode(response.Status);
         }
