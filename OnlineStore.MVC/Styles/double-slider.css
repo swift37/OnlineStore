@@ -24,7 +24,7 @@
         .range-inputs .ds-field input {
             width: 100%;
             height: 100%;
-            border: 1px solid #aaaaaa;
+            border: 1px solid #ccc;
             border-radius: 7px;
             outline: none;
             padding: 10px 15px;
@@ -83,7 +83,8 @@ input::-webkit-inner-spin-button {
 input[type='range']::-webkit-slider-thumb {
     width: 12px;
     height: 18px;
-    background: #000;
+    background: #181818;
+    border-radius: 3px;
     appearance: none;
     pointer-events: auto;
     cursor: pointer;
