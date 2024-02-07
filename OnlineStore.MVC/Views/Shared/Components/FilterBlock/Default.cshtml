@@ -1,0 +1,47 @@
+﻿@model OnlineStore.MVC.Models.FilterBlockViewModel
+
+@if (!Model.IsEmpty)
+{
+    <div class="filter-block params">
+        <h4>@Model.SpecificationType!.DisplayName</h4>
+        <ul>
+            @for (int i = 0; Model.ShowAll ? (i < Model.Filters.Count) : (i < Model.Filters.Count && i < 5); i++)
+            {
+                <li>
+                    <input type="checkbox" name="checkbox"
+                           id="@($"spid{Model.SpecificationType.Id};sid{Model.Filters[i].Id}")"
+                           @(Model.AppliedFilterIds.Contains(Model.Filters[i].Id) ? "checked" : null)>
+                    <label for="@($"spid{Model.SpecificationType.Id};sid{Model.Filters[i].Id}")">
+                        <span class="checked"></span>
+                        <span>
+                            @Model.Filters[i].Value
+                            <span class="count">(@Model.Filters[i].ProductsCount)</span>
+                        </span>
+                    </label>
+                </li>
+            }
+        </ul>
+        @if (true)
+            if (Model.ShowAll)
+            {
+                <button class="less-btn" data-spec-type-id="@Model.SpecificationType.Id">
+                    <div class="img-container">
+                        <img src="/resources/icons/minus.png" />
+                    </div>
+                    <span>Less</span>
+                </button>
+            }
+            else
+            {
+                <button class="more-btn" data-spec-type-id="@Model.SpecificationType.Id">
+                    <div class="img-container">
+                        <img src="/resources/icons/plus.png" />
+                    </div>
+                    <span>
+                        More
+                        <span class="count">(@(Model.FilterCount - 5))</span>
+                    </span>
+                </button>
+            }
+    </div>
+}
