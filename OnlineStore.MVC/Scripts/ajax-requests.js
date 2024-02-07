@@ -664,4 +664,44 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.filter').on('click', '.more-btn', function () {
+        const searchParams = new URLSearchParams(window.location.search);
+        const filterBlock = $(this).closest('.filter-block');
+
+        $.ajax({
+            url: '/catalog/updatefilterblock',
+            type: 'get',
+            traditional: true,
+            data:
+            {
+                specificationTypeId: $(this).data('spec-type-id'),
+                showAll: true,
+                filters: searchParams.getAll('filters')
+            },
+            success: function (data) {
+                $(filterBlock).replaceWith(data);
+            }
+        });
+    });
+
+    $('.filter').on('click', '.less-btn', function () {
+        const searchParams = new URLSearchParams(window.location.search);
+        const filterBlock = $(this).closest('.filter-block');
+
+        $.ajax({
+            url: '/catalog/updatefilterblock',
+            type: 'get',
+            traditional: true,
+            data:
+            {
+                specificationTypeId: $(this).data('spec-type-id'),
+                showAll: false,
+                filters: searchParams.getAll('filters')
+            },
+            success: function (data) {
+                $(filterBlock).replaceWith(data);
+            }
+        });
+    });
 });
