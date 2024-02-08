@@ -2,4 +2,8 @@
         data-itemid="@ViewBag.ItemId"
         data-productid="@ViewBag.ProductId">
     <img src="~/resources/icons/heart@(ViewBag.ItemId > 0 ? null : "-outlined").png" />
+    @if (!string.IsNullOrEmpty(ViewBag.Text))
+    {
+        <span>@ViewBag.Text</span>
+    }
 </button>

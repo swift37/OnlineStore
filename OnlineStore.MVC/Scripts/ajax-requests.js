@@ -257,7 +257,8 @@ $(document).ready(function () {
             type: 'get',
             data:
             {
-                productId
+                productId,
+                text: $(button).find('span').text()
             },
             success: function (data) {
                 $(button).replaceWith(data);
@@ -314,8 +315,8 @@ $(document).ready(function () {
         });
     };
 
-    $('.wishlist-btn').click(function () {
-        let button = $(this).children('button');
+    $('.wishlist-btn').on('click', 'button', function () {
+        let button = $(this);
         let itemId = $(button).data('itemid');
         let productId = $(button).data('productid');
 

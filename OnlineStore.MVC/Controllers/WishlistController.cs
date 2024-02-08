@@ -110,8 +110,8 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateWishlistButton(int productId) => 
-            ViewComponent("WishlistButton", new { productId });
+        public IActionResult UpdateWishlistButton(int productId, string? text) => 
+            ViewComponent("WishlistButton", new { productId, text });
             
     }
 }

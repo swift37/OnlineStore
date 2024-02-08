@@ -81,14 +81,13 @@
                     </button>
                     <div class="wish-share">
                         <div class="wishlist-btn">
-                            @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id })
-                            <span>Wishlist</span>
+                            @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id, text = "Wishlist" })
                         </div>
                         <div class="share-btn">
                             <button>
                                 <img src="~/resources/icons/share.png" alt="Share">
+                                <span>Share</span>
                             </button>
-                            <span>Share</span>
                         </div>
                     </div>
                 </div>

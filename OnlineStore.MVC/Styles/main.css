@@ -1955,23 +1955,21 @@ form {
 
         .product-details-wrap .actions .wish-share .wishlist-btn,
         .product-details-wrap .actions .wish-share .share-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.7em;
-            font-weight: 700;
-            text-transform: uppercase;
             margin: 1em 0;
-            transition: color 0.3s;
-            cursor: pointer;
         }
 
         .product-details-wrap .actions .wish-share button {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            gap: 1em;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
             border: none;
             outline: none;
             background-color: transparent;
-            pointer-events: none;
+            transition: color 0.3s;
+            cursor: pointer;
         }
 
         .product-details-wrap .actions .wish-share img {

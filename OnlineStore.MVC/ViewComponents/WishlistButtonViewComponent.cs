@@ -10,7 +10,7 @@ namespace OnlineStore.MVC.ViewComponents
         public WishlistButtonViewComponent(IWishlistsService wishlistsService) => 
             _wishlistsService = wishlistsService;
 
-        public async Task<IViewComponentResult> InvokeAsync(int productId)
+        public async Task<IViewComponentResult> InvokeAsync(int productId, string? text)
         {
             var response = await _wishlistsService.CheckProductPresence(productId);
             var result = response.Data;
@@ -19,6 +19,7 @@ namespace OnlineStore.MVC.ViewComponents
                 ViewBag.ItemId = (await _wishlistsService.GetItemId(productId)).Data;
             
             ViewBag.ProductId = productId;
+            ViewBag.Text = text;
 
             return View();
         }
