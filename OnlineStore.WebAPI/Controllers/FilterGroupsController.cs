@@ -5,7 +5,6 @@ using OnlineStore.Application.DTOs.FiltersGroup;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
-using OnlineStore.Persistence.Repositories;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -32,7 +31,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /filtergroups
+        /// GET /filter-groups
         /// </remarks>
         /// <returns>Returns IEnumerable<FiltersGroupDTO></returns>
         /// <response code="200">Success</response>
@@ -46,7 +45,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /filtergroups/exists/1
+        /// GET /filter-groups/exists/1
         /// </remarks>
         /// <param name="id">FiltersGroup id</param>
         /// <returns>Returns bool</returns>
@@ -66,7 +65,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /filtergroups/1
+        /// GET /filter-groups/1
         /// </remarks>
         /// <param name="id">FiltersGroup id (int)</param>
         /// <returns>Returns FiltersGroupDTO</returns>
@@ -81,7 +80,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Create a filters group
         /// </summary>
         /// <remarks>
-        /// POST /filtergroups
+        /// POST /filter-groups
         /// {
         ///     name: "FiltersGroup name",
         ///     price: "2155"
@@ -119,7 +118,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Partially update the filters group
         /// </summary>
         /// <remarks>
-        /// PATCH /filtergroups
+        /// PATCH /filter-groups
         /// {
         ///     id: "1",
         ///     name: "Updated filters group name"
@@ -162,7 +161,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Delete the filters group by id
         /// </summary>
         /// <remarks>
-        /// DELETE /filtergroups/1
+        /// DELETE /filter-groups/1
         /// </remarks>
         /// <param name="id">FiltersGroup id (int)</param>
         /// <returns>Returns NoContent</returns>
@@ -185,15 +184,37 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /filtergroups/category/1
+        /// GET /filter-groups/category/1
         /// </remarks>
         /// <param name="categoryId">Category id (int)</param>
         /// <returns>Returns FiltersGroupDTO</returns>
         /// <response code="200">Success</response>
         [HttpGet("category/{categoryId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(int categoryId) => 
             Ok(_mapper.Map<FiltersGroupDTO>(await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId)));
+
+        /// <summary>
+        /// Get the filters group (consider applied filters) by category id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /filter-groups/category/1
+        /// </remarks>
+        /// <param name="categoryId">Category id (int)</param>
+        /// <param name="appliedFilters">
+        /// IDictionary<int, ICollection<int>> where key is the specification type id 
+        /// and values are specification ids
+        /// </param>
+        /// <returns>Returns FiltersGroupDTO</returns>
+        /// <response code="200">Success</response>
+        [HttpPost("category")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(
+            int categoryId, 
+            IDictionary<int, ICollection<int>> appliedFilters) =>
+            Ok(_mapper.Map<FiltersGroupDTO>(
+                await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId, appliedFilters)));
+
     }
 }
