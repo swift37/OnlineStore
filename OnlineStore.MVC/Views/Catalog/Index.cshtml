@@ -97,7 +97,9 @@
                                 </div>
                             </div>
                         </div>
-                        @await Component.InvokeAsync("ProductCardsList", new { model = Model.ProductsPage?.Products })
+                        <div class="products main">
+                            @await Component.InvokeAsync("ProductCardsList", new { model = Model.ProductsPage?.Products })
+                        </div>
                         <div class="pagination">
                             <button id="startBtn" class="page-btn" disabled>
                                 <i class="fa-solid fa-angles-left"></i>
@@ -145,5 +147,6 @@
 </div>
 
 @section scripts {
+    <script src="~/scripts/catalog.min.js" asp-append-version="true"></script>
     <script src="~/scripts/double-slider.min.js" asp-append-version="true"></script>
 }

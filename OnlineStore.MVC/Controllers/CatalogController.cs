@@ -38,8 +38,7 @@ namespace OnlineStore.MVC.Controllers
                 SortBy = sortBy
             };
            
-            var specIds = HttpContext.Request.Query["filters"];
-            options.SpecificationIds = specIds.GetAppliedFilters();
+            options.SpecificationIds = HttpContext.Request.Query["filters"].GetAppliedFilters();
 
             var productsServiceResponse = await _productsService.GetFilteredProducts(options);
             if (!productsServiceResponse.Success) return StatusCode(productsServiceResponse.Status);
@@ -50,7 +49,6 @@ namespace OnlineStore.MVC.Controllers
             var model = new CatalogViewModel
             {
                 FiltersGroup = filterGroupsServiceResponse.Data,
-                AppliedFilterIds = specIds.GetAppliedFilterIds(),
                 ProductsPage = productsServiceResponse.Data,
             };
 

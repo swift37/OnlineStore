@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<OnlineStore.MVC.Models.Product.ProductViewModel>
 
-<div class="products main">
-    @if (Model.Count() > 0)
-        foreach (var product in Model)
-            @await Component.InvokeAsync("ProductCard", new { model = product })
-</div>
+@if (Model.Count() > 0)
+    foreach (var product in Model)
+        @await Component.InvokeAsync("ProductCard", new { model = product })

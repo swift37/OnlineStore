@@ -7,8 +7,6 @@ namespace OnlineStore.MVC.Models
     {
         public FiltersGroupViewModel? FiltersGroup { get; set; }
 
-        public ICollection<int> AppliedFilterIds { get; set; } = new HashSet<int>();
-
         public ProductsPageViewModel? ProductsPage { get; set; }
     }
 }
