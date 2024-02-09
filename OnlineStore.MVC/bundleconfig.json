@@ -31,6 +31,12 @@
   },
   {
     "inputFiles": [
+      "Scripts/catalog.js"
+    ],
+    "outputFileName": "wwwroot/scripts/catalog.js"
+  },
+  {
+    "inputFiles": [
       "Scripts/double-slider.js"
     ],
     "outputFileName": "wwwroot/scripts/double-slider.js"
