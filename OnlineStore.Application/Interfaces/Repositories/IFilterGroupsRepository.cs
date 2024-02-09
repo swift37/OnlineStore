@@ -7,5 +7,10 @@ namespace OnlineStore.Application.Interfaces.Repositories
         Task<FiltersGroup> GetCategoryFiltersGroupAsync(
             int categoryId, 
             CancellationToken cancellation = default);
+
+        Task<FiltersGroup> GetCategoryFiltersGroupAsync(
+            int categoryId,
+            IDictionary<int, ICollection<int>> filters,
+            CancellationToken cancellation = default);
     }
 }
