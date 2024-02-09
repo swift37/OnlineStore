@@ -35,7 +35,7 @@ $(document).ready(function () {
         $(modal).find('input, textarea').each((i, el) => $(el).val(''));
     }
 
-    $('.to-cart').click(function () {
+    function productToCart() {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
@@ -66,7 +66,11 @@ $(document).ready(function () {
                 }
             }
         });
-    });
+    }
+
+    $('.to-cart').click(productToCart);
+
+    $('.products.main').on('click', '.to-cart', productToCart);
 
     $('.to-cart-from-wl').click(function () {
         let qtyControl = $(this).parent().find('.qty-value');
@@ -315,7 +319,7 @@ $(document).ready(function () {
         });
     };
 
-    $('.wishlist-btn').on('click', 'button', function () {
+    $('.products.main').on('click', '.wishlist-btn button', function () {
         let button = $(this);
         let itemId = $(button).data('itemid');
         let productId = $(button).data('productid');
@@ -662,46 +666,6 @@ $(document).ready(function () {
                     $(modal).find('.modal-error span').text(result.errors.toSting());
                     $(modal).find('.modal-error').css('display', 'block');
                 }
-            }
-        });
-    });
-
-    $('.filter').on('click', '.more-btn', function () {
-        const searchParams = new URLSearchParams(window.location.search);
-        const filterBlock = $(this).closest('.filter-block');
-
-        $.ajax({
-            url: '/catalog/updatefilterblock',
-            type: 'get',
-            traditional: true,
-            data:
-            {
-                specificationTypeId: $(this).data('spec-type-id'),
-                showAll: true,
-                filters: searchParams.getAll('filters')
-            },
-            success: function (data) {
-                $(filterBlock).replaceWith(data);
-            }
-        });
-    });
-
-    $('.filter').on('click', '.less-btn', function () {
-        const searchParams = new URLSearchParams(window.location.search);
-        const filterBlock = $(this).closest('.filter-block');
-
-        $.ajax({
-            url: '/catalog/updatefilterblock',
-            type: 'get',
-            traditional: true,
-            data:
-            {
-                specificationTypeId: $(this).data('spec-type-id'),
-                showAll: false,
-                filters: searchParams.getAll('filters')
-            },
-            success: function (data) {
-                $(filterBlock).replaceWith(data);
             }
         });
     });
