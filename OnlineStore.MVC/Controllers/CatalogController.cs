@@ -37,7 +37,7 @@ namespace OnlineStore.MVC.Controllers
                 ItemsPerPage = itemsPerPage,
                 SortBy = sortBy
             };
-           
+
             options.SpecificationIds = HttpContext.Request.Query["filters"].GetAppliedFilters();
 
             var productsServiceResponse = await _productsService.GetFilteredProducts(options);
@@ -53,6 +53,33 @@ namespace OnlineStore.MVC.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateProducts(
+            int categoryId,
+            int page = 1,
+            int itemsPerPage = 15,
+            int minPrice = 0,
+            int maxPrice = int.MaxValue,
+            SortParameter sortBy = SortParameter.Default)
+        {
+            var options = new ProductsFilteringOptions
+            {
+                CategoryId = categoryId,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                PageNumber = page,
+                ItemsPerPage = itemsPerPage,
+                SortBy = sortBy
+            };
+
+            options.SpecificationIds = HttpContext.Request.Query["filters"].GetAppliedFilters();
+
+            var response = await _productsService.GetFilteredProducts(options);
+            if (!response.Success) return StatusCode(response.Status);
+
+            return ViewComponent("ProductCardsList", new { model = response.Data.Products });
         }
 
         [HttpGet]
