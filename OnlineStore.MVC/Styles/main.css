@@ -2766,7 +2766,7 @@ form {
         transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s, background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
     }
 
-    .product-card .add-to-cart {
+    .product-card .to-cart-btn {
         position: absolute;
         bottom: 17px;
         right: 17px;
@@ -2775,7 +2775,7 @@ form {
     }
 
         .product-card .wishlist-btn button,
-        .product-card .add-to-cart button {
+        .product-card .to-cart-btn button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2792,46 +2792,46 @@ form {
             cursor: pointer;
         }
 
-        .product-card .add-to-cart button {
+        .product-card .to-cart-btn button {
             box-shadow: 0 0 0 0.5px #181818 inset;
         }
 
             .product-card .wishlist-btn button img,
-            .product-card .add-to-cart button img {
+            .product-card .to-cart-btn button img {
                 width: 17px;
                 height: 17px;
             }
 
-            .product-card .add-to-cart button img {
+            .product-card .to-cart-btn button img {
                 margin-left: -2px;
             }
 
             .product-card .wishlist-btn button:hover,
-            .product-card .add-to-cart button:hover {
+            .product-card .to-cart-btn button:hover {
                 background: rgb(235, 235, 235);
             }
 
     .product-card:hover .wishlist-btn,
-    .product-card:hover .add-to-cart {
+    .product-card:hover .to-cart-btn {
         opacity: 1;
     }
 
 @media screen and (min-width: 1080px) {
     .product-card .wishlist-btn button,
-    .product-card .add-to-cart button {
+    .product-card .to-cart-btn button {
         height: 34px;
         width: 34px;
         border-radius: 8px;
     }
 
         .product-card .wishlist-btn button img,
-        .product-card .add-to-cart button img {
+        .product-card .to-cart-btn button img {
             width: 16px;
             height: 16px;
             object-fit: contain;
         }
 
-        .product-card .add-to-cart button img {
+        .product-card .to-cart-btn button img {
             margin-left: -1px;
         }
 }
@@ -3505,27 +3505,6 @@ form {
 
 .products.cart table tbody tr {
     border-bottom: 1px solid #e5e8ec;
-}
-
-.products.cart .item-add-to-cart {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-    .products.cart .item-add-to-cart:hover {
-        background-color: #ebebeb;
-    }
-
-.products.cart .item-add-to-cart img {
-    width: 17px;
-    height: 17px;
-    object-fit: contain;
 }
 
 .cart-summary {
