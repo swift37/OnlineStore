@@ -13,51 +13,29 @@
     <div class="container">
         <div class="wrapper">
             <div class="column">
+                <header>
+                    <div class="breadcrumb">
+                        <ul class="flexitem">
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            @if (Model.ProductsPage?.Category != null)
+                            {
+                                <li>@Model.ProductsPage.Category.Name</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="page-title">
+                        <h1>@Model.ProductsPage?.Category?.Name</h1>
+                    </div>
+                </header>
                 <div class="holder">
                     <div class="row sidebar">
                         <div class="filter">
-                            @if (Model.FiltersGroup?.SpecificationTypes.Count > 0)
-                                foreach (var type in Model.FiltersGroup.SpecificationTypes)
-                                    @await Component.InvokeAsync("FilterBlock", new { model = type })
-
-                            <div class="filter-block pricing">
-                                <h4>Price</h4>
-                                <div class="ds-container">
-                                    <div class="range-inputs">
-                                        <div class="ds-field">
-                                            <input type="number" id="minPriceInput" min="0" max="15000" value="0" />
-                                        </div>
-                                        <div class="ds-separator">—</div>
-                                        <div class="ds-field">
-                                            <input type="number" id="maxPriceInput" min="0" max="15000" value="15000" />
-                                        </div>
-                                    </div>
-                                    <div class="double-slider">
-                                        <div class="range"></div>
-                                        <div class="range-sliders">
-                                            <input type="range" id="minPrice" min="0" max="15000" value="0" />
-                                            <input type="range" id="maxPrice" min="0" max="15000" value="15000" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @await Component.InvokeAsync("CatalogFilters", new { model = Model.FiltersGroup }) 
                         </div>
                     </div>
                     <div class="section">
                         <div class="row">
                             <div class="cat-head">
-                                <div class="breadcrumb">
-                                    <ul class="flexitem">
-                                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                        @if (Model.ProductsPage?.Category != null)
-                                        {
-                                            <li>@Model.ProductsPage.Category.Name</li>
-                                        }
-                                    </ul>
-                                </div>
-                                <div class="page-title">
-                                    <h1>@Model.ProductsPage?.Category?.Name</h1>
-                                </div>
                                 <div class="cat-navigation flexitem">
                                     <div class="item-filter desktop-hide">
                                         <a href="#" class="filter-trigger label">
@@ -69,7 +47,7 @@
                                         <div class="label">
                                             <span class="mobile-hide">Sort by <span class="selected-value">Default</span></span>
                                             <div class="desktop-hide selected-value">Default</div>
-                                            <i class="angle down icon"></i>
+                                            <i class='bx bx-chevron-down'></i>
                                         </div>
                                         <ul>
                                             <li data-option="0">Default</li>
@@ -78,20 +56,17 @@
                                             <li data-option="3">Price: from the most expensive</li>
                                         </ul>
                                     </div>
-                                    <div class="item-perpage mobile-hide">
-                                        <div class="label">Items @Model.ProductsPage?.Products.Count() per page</div>
-                                    </div>
                                     <div class="item-options">
                                         <div class="label">
                                             <span class="mobile-hide">Show <span class="selected-value">15</span> per page</span>
                                             <div class="desktop-hide selected-value">15</div>
-                                            <i class="angle down icon"></i>
+                                            <i class='bx bx-chevron-down'></i>
                                         </div>
                                         <ul>
-                                            <li data-option="15">15</li>
-                                            <li data-option="20">20</li>
-                                            <li data-option="25">25</li>
-                                            <li data-option="30">30</li>
+                                            <li data-option="15">15 items</li>
+                                            <li data-option="20">20 items</li>
+                                            <li data-option="25">25 items</li>
+                                            <li data-option="30">30 items</li>
                                         </ul>
                                     </div>
                                 </div>
