@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using OnlineStore.MVC.Extensions;
 using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Enums;
@@ -44,7 +45,7 @@ namespace OnlineStore.MVC.Controllers
             if (!productsServiceResponse.Success) return StatusCode(productsServiceResponse.Status);
 
             var filterGroupsServiceResponse = await _filterGroupsService.GetCategoryFiltersGroup(categoryId);
-            if (!filterGroupsServiceResponse.Success) return StatusCode(productsServiceResponse.Status);
+            if (!filterGroupsServiceResponse.Success) return StatusCode(filterGroupsServiceResponse.Status);
 
             var model = new CatalogViewModel
             {
@@ -80,6 +81,19 @@ namespace OnlineStore.MVC.Controllers
             if (!response.Success) return StatusCode(response.Status);
 
             return ViewComponent("ProductCardsList", new { model = response.Data.Products });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateFilters(int categoryId)
+        {
+            var options = new FiltersGroupOptions { CategoryId = categoryId };
+
+            options.AppliedFilters = HttpContext.Request.Query["filters"].GetAppliedFilters();
+
+            var response = await _filterGroupsService.GetCategoryFiltersGroup(options);
+            if (!response.Success) return StatusCode(response.Status);
+
+            return ViewComponent("CatalogFilters", new { model = response.Data });
         }
 
         [HttpGet]
