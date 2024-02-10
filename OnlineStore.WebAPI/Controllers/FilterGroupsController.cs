@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.FiltersGroup;
 using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Domain;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -199,22 +200,23 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /filter-groups/category/1
+        /// POST /filter-groups/category
         /// </remarks>
-        /// <param name="categoryId">Category id (int)</param>
-        /// <param name="appliedFilters">
-        /// IDictionary<int, ICollection<int>> where key is the specification type id 
-        /// and values are specification ids
-        /// </param>
+        /// <param name="filtersGroupOptionsDTO">FiltersGroupOptionsDTO</param>
         /// <returns>Returns FiltersGroupDTO</returns>
         /// <response code="200">Success</response>
         [HttpPost("category")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(
-            int categoryId, 
-            IDictionary<int, ICollection<int>> appliedFilters) =>
-            Ok(_mapper.Map<FiltersGroupDTO>(
-                await _filterGroupsRepository.GetCategoryFiltersGroupAsync(categoryId, appliedFilters)));
+            FiltersGroupOptionsDTO filtersGroupOptionsDTO)
+        {
+            var filtersGroupOptions = _mapper.Map<FiltersGroupOptions>(filtersGroupOptionsDTO);
+
+            var filtersGroup =
+                await _filterGroupsRepository.GetCategoryFiltersGroupAsync(filtersGroupOptions);
+
+            return Ok(_mapper.Map<FiltersGroupDTO>(filtersGroup));
+        }
 
     }
 }
