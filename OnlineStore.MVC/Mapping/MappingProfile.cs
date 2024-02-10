@@ -138,6 +138,8 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<UpdateFiltersGroupDTO, UpdateFiltersGroupViewModel>().ReverseMap();
             CreateMap<CreateFiltersGroupDTO, CreateFiltersGroupViewModel>().ReverseMap();
 
+            CreateMap<FiltersGroupOptions, FiltersGroupOptionsDTO>().ReverseMap();
+
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<RegisterViewModel, RegisterRequest>();
             CreateMap<Models.RefreshRequest, Services.ApiClient.RefreshRequest>();
