@@ -33,8 +33,12 @@
             color: #474747;
         }
 
+    .range-inputs .ds-separator {
+        color: #aaa;
+    }
+
 @media only screen and (min-width: 992px) and (max-width: 1180px) {
-    .ds-separator {
+    .range-inputs .ds-separator {
         display: none;
     }
 
