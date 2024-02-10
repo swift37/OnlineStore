@@ -36,6 +36,24 @@ $(document).ready(function () {
 
     setPriceFilters();
 
+    const updateFilters = () => {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        $.ajax({
+            url: '/catalog/updatefilters',
+            type: 'get',
+            traditional: true,
+            data:
+            {
+                categoryId: searchParams.get('categoryId'),
+                filters: searchParams.getAll('filters')
+            },
+            success: function (data) {
+                $('.row.sidebar .filter').html(data);
+            }
+        });
+    };
+
     const updateProducts = () => {
         const searchParams = new URLSearchParams(window.location.search);
 
@@ -55,6 +73,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $('.products.main').html(data);
+                updateFilters();
             }
         });
     };
