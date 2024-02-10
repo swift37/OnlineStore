@@ -1,4 +1,5 @@
-﻿using OnlineStore.MVC.Models.FiltersGroup;
+﻿using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.FiltersGroup;
 using OnlineStore.MVC.Services.Base;
 
 namespace OnlineStore.MVC.Services.Interfaces
@@ -18,5 +19,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Delete(int id);
 
         Task<Response<FiltersGroupViewModel>> GetCategoryFiltersGroup(int categoryId);
+
+        Task<Response<FiltersGroupViewModel>> GetCategoryFiltersGroup(FiltersGroupOptions filtersGroupOptions);
     }
 }

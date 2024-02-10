@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.FiltersGroup;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
@@ -115,6 +116,25 @@ namespace OnlineStore.MVC.Services
             try
             {
                 var filtersGroup = await _client.GetCategoryFiltersGroupAsync(categoryId, _usingVersion);
+                return new Response<FiltersGroupViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<FiltersGroupViewModel>(filtersGroup)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<FiltersGroupViewModel>(exception);
+            }
+        }
+
+        public async Task<Response<FiltersGroupViewModel>> GetCategoryFiltersGroup(FiltersGroupOptions filtersGroupOptions)
+        {
+            var requestBody = _mapper.Map<FiltersGroupOptionsDTO>(filtersGroupOptions);
+
+            try
+            {
+                var filtersGroup = await _client.GetCategoryFiltersGroupAsync(_usingVersion, requestBody);
                 return new Response<FiltersGroupViewModel>
                 {
                     Success = true,
