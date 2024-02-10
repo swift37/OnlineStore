@@ -1,4 +1,5 @@
-﻿using OnlineStore.Domain.Entities;
+﻿using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Interfaces.Repositories
 {
@@ -9,8 +10,7 @@ namespace OnlineStore.Application.Interfaces.Repositories
             CancellationToken cancellation = default);
 
         Task<FiltersGroup> GetCategoryFiltersGroupAsync(
-            int categoryId,
-            IDictionary<int, ICollection<int>> filters,
+            FiltersGroupOptions filtersGroupOptions,
             CancellationToken cancellation = default);
     }
 }

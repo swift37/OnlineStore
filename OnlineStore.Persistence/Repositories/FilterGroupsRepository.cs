@@ -4,6 +4,7 @@ using OnlineStore.Application.Exeptions;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Repositories;
+using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Persistence.Repositories
@@ -16,7 +17,9 @@ namespace OnlineStore.Persistence.Repositories
 
         public FilterGroupsRepository(IApplicationDbContext context) : base(context) { }
 
-        public async Task<FiltersGroup> GetCategoryFiltersGroupAsync(int categoryId, CancellationToken cancellation = default) 
+        public async Task<FiltersGroup> GetCategoryFiltersGroupAsync(
+            int categoryId, 
+            CancellationToken cancellation = default) 
         {
             var filtersGroup = await Entities
                 .FirstOrDefaultAsync(f => f.CategoryId == categoryId, cancellation)
@@ -32,30 +35,41 @@ namespace OnlineStore.Persistence.Repositories
             return filtersGroup;
         }
 
-        public async Task<FiltersGroup> GetCategoryFiltersGroupAsync(int categoryId, IDictionary<int, ICollection<int>> filters, CancellationToken cancellation = default)
+        public async Task<FiltersGroup> GetCategoryFiltersGroupAsync(
+            FiltersGroupOptions options, 
+            CancellationToken cancellation = default)
         {
             var filtersGroup = await Entities
-                .FirstOrDefaultAsync(f => f.CategoryId == categoryId, cancellation)
+                .FirstOrDefaultAsync(f => f.CategoryId == options.CategoryId, cancellation)
                 .ConfigureAwait(false)
-                ?? throw new NotFoundException(nameof(FiltersGroup), categoryId);
+                ?? throw new NotFoundException(nameof(FiltersGroup), options.CategoryId);
 
-            var productsQuery = _context.Products.Where(product =>
-                product.CategoryId == categoryId &&
-                product.Specifications.Select(spec => spec.SpecificationTypeId)
-                .Intersect(filters.Keys)
-                .Count() == filters.Keys.Count() &&
-                product.Specifications.Select(spec => spec.Id)
-                .Intersect(filters.Values.SelectMany(v => v))
-                .Count() >=
-                product.Specifications.Select(spec => spec.SpecificationTypeId)
-                .Intersect(filters.Keys)
-                .Count());
+            var productsQuery = _context.Products
+                .Where(product => product.CategoryId == options.CategoryId);
+
+            var specificationIds = options.AppliedFilters.Values.SelectMany(v => v);
 
             foreach (var specificationType in filtersGroup.SpecificationTypes)
+            {
+                var filters = options.AppliedFilters
+                        .Where(af => af.Key != specificationType.Id)
+                        .SelectMany(af => af.Value)
+                        .ToList();
+
                 foreach (var specification in specificationType.Values)
                     specification.ProductsCount = await productsQuery
+                        .Where(product => product.Specifications.Select(spec => spec.SpecificationTypeId)
+                            .Intersect(options.AppliedFilters.Keys)
+                            .Count() == options.AppliedFilters.Keys.Count &&
+                            product.Specifications.Select(spec => spec.Id)
+                            .Intersect(specificationIds)
+                            .Count() >=
+                            product.Specifications.Select(spec => spec.SpecificationTypeId)
+                            .Intersect(options.AppliedFilters.Keys)
+                            .Count())
                         .Where(p => p.Specifications.Any(s => s.Id == specification.Id))
                         .CountAsync(cancellation);
+            }
 
             return filtersGroup;
         }
