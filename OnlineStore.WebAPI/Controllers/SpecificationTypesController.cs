@@ -6,6 +6,7 @@ using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 using AutoMapper;
+using OnlineStore.Domain;
 
 namespace OnlineStore.WebAPI.Controllers
 {
@@ -14,11 +15,11 @@ namespace OnlineStore.WebAPI.Controllers
     [Route("api/{version:apiVersion}/specification-types")]
     public class SpecificationTypesController : BaseController
     {
-        private readonly IRepository<SpecificationType> _repository;
+        private readonly ISpecificationTypesRepository _repository;
 
         private readonly IMapper _mapper;
 
-        public SpecificationTypesController(IRepository<SpecificationType> repository, IMapper mapper) =>
+        public SpecificationTypesController(ISpecificationTypesRepository repository, IMapper mapper) =>
             (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /specificationtypes
+        /// GET /specification-types
         /// </remarks>
         /// <returns>Returns IEnumerable<SpecificationTypeDTO></returns>
         /// <response code="200">Success</response>
@@ -41,7 +42,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /specificationtypes/exists/1
+        /// GET /specification-types/exists/1
         /// </remarks>
         /// <param name="id">SpecificationType id</param>
         /// <returns>Returns bool</returns>
@@ -60,7 +61,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /specificationtypes/1
+        /// GET /specification-types/1
         /// </remarks>
         /// <param name="id">SpecificationType id (int)</param>
         /// <returns>Returns SpecificationTypeDTO</returns>
@@ -76,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Create a specification type
         /// </summary>
         /// <remarks>
-        /// POST /specificationtypes
+        /// POST /specification-types
         /// {
         ///     name: "SpecificationType name"
         /// }
@@ -104,7 +105,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Partially update the specification type
         /// </summary>
         /// <remarks>
-        /// PATCH /specificationtypes
+        /// PATCH /specification-types
         /// {
         ///     id: "1",
         ///     name: "Updated specification type name"
@@ -136,7 +137,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// Delete the specification type by id
         /// </summary>
         /// <remarks>
-        /// DELETE /specificationtypes/1
+        /// DELETE /specification-types/1
         /// </remarks>
         /// <param name="id">SpecificationType id (int)</param>
         /// <returns>Returns NoContent</returns>
@@ -152,6 +153,28 @@ namespace OnlineStore.WebAPI.Controllers
         {
             await _repository.DeleteAsync(id);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Get the specification type by id options
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /specification-types/by-options/
+        /// </remarks>
+        /// <param name="specificationTypeOptionsDTO">SpecificationTypeOptionsDTO</param>
+        /// <returns>Returns SpecificationTypeDTO</returns>
+        /// <response code="200">Success</response>
+        [HttpGet("by-options")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<SpecificationTypeDTO>> Get(
+            [FromBody] SpecificationTypeOptionsDTO specificationTypeOptionsDTO)
+        {
+            var specificationTypeOptions = _mapper.Map<SpecificationTypeOptions>(specificationTypeOptionsDTO);
+            var specificationType =
+                await _repository.GetAsync(specificationTypeOptions);
+
+            return Ok(_mapper.Map<SpecificationTypeDTO>(specificationType));
         }
     }
 }

@@ -13,11 +13,11 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class SpecificationsController : BaseController
     {
-        private readonly IRepository<Specification> _repository;
+        private readonly ISpecificationsRepository _repository;
 
         private readonly IMapper _mapper;
 
-        public SpecificationsController(IRepository<Specification> repository, IMapper mapper) =>
+        public SpecificationsController(ISpecificationsRepository repository, IMapper mapper) =>
             (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
@@ -157,5 +157,20 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.DeleteAsync(id);
             return NoContent();
         }
+
+        /// <summary>
+        /// Get the enumeration of specifications by ids
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /specifications/1,27,51,89
+        /// </remarks>
+        /// <param name="ids">Specification ids (int[])</param>
+        /// <returns>Returns IEnumerable<SpecificationDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("{ids}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<SpecificationDTO>>> GetMany([FromRoute] IEnumerable<int> ids) =>
+            Ok(_mapper.Map<IEnumerable<SpecificationDTO>>(await _repository.GetManyAsync(ids)));
     }
 }
