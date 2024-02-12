@@ -47,26 +47,27 @@ namespace OnlineStore.Persistence.Repositories
             var productsQuery = _context.Products
                 .Where(product => product.CategoryId == options.CategoryId);
 
-            var specificationIds = options.AppliedFilters.Values.SelectMany(v => v);
-
             foreach (var specificationType in filtersGroup.SpecificationTypes)
             {
-                var filters = options.AppliedFilters
+                var specificationTypeIds = options.AppliedFilters
                         .Where(af => af.Key != specificationType.Id)
-                        .SelectMany(af => af.Value)
-                        .ToList();
+                        .Select(af => af.Key);
+
+                var specificationIds = options.AppliedFilters
+                        .Where(af => af.Key != specificationType.Id)
+                        .SelectMany(af => af.Value);
 
                 foreach (var specification in specificationType.Values)
                     specification.ProductsCount = await productsQuery
-                        .Where(product => product.Specifications.Select(spec => spec.SpecificationTypeId)
-                            .Intersect(options.AppliedFilters.Keys)
-                            .Count() == options.AppliedFilters.Keys.Count &&
-                            product.Specifications.Select(spec => spec.Id)
-                            .Intersect(specificationIds)
-                            .Count() >=
-                            product.Specifications.Select(spec => spec.SpecificationTypeId)
-                            .Intersect(options.AppliedFilters.Keys)
-                            .Count())
+                        .Where(product => product.Specifications
+                        .IntersectBy(options.AppliedFilters.Keys, spec => spec.SpecificationTypeId)
+                        .Count().Equals(options.AppliedFilters.Keys.Count) &&
+                        product.Specifications
+                        .IntersectBy(specificationIds, spec => spec.Id)
+                        .Count() >=
+                        product.Specifications
+                        .IntersectBy(specificationTypeIds, spec => spec.SpecificationTypeId)
+                        .Count())
                         .Where(p => p.Specifications.Any(s => s.Id == specification.Id))
                         .CountAsync(cancellation);
             }
