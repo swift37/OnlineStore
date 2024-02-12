@@ -1,4 +1,5 @@
-﻿using OnlineStore.MVC.Models.SpecificationType;
+﻿using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.SpecificationType;
 using OnlineStore.MVC.Services.Base;
 
 namespace OnlineStore.MVC.Services.Interfaces
@@ -16,5 +17,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Update(SpecificationTypeViewModel specificationTypeViewModel);
 
         Task<Response> Delete(int id);
+
+        Task<Response<SpecificationTypeViewModel>> Get(SpecificationTypeOptions specificationTypeOptions);
     }
 }

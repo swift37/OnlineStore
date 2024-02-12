@@ -81,6 +81,8 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<UpdateSpecificationTypeDTO, SpecificationTypeViewModel>().ReverseMap();
             CreateMap<CreateSpecificationTypeDTO, CreateSpecificationTypeViewModel>().ReverseMap();
 
+            CreateMap<SpecificationTypeOptions, SpecificationTypeOptionsDTO>();
+
             CreateMap<ProductsPageDTO, ProductsPageViewModel>();
 
             CreateMap<ReviewDTO, ReviewViewModel>().ReverseMap();

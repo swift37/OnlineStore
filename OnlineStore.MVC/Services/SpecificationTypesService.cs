@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.SpecificationType;
 using OnlineStore.MVC.Services.ApiClient;
 using OnlineStore.MVC.Services.Base;
@@ -107,6 +108,25 @@ namespace OnlineStore.MVC.Services
             catch (ApiException e)
             {
                 return GenerateResponse(e);
+            }
+        }
+
+        public async Task<Response<SpecificationTypeViewModel>> Get(SpecificationTypeOptions specificationTypeOptions)
+        {
+            var requestBody = _mapper.Map<SpecificationTypeOptionsDTO>(specificationTypeOptions);
+
+            try
+            {
+                var specification = await _client.GetSpecificationTypeAsync(_usingVersion, requestBody);
+                return new Response<SpecificationTypeViewModel>
+                {
+                    Success = true,
+                    Data = _mapper.Map<SpecificationTypeViewModel>(specification)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<SpecificationTypeViewModel>(exception);
             }
         }
     }

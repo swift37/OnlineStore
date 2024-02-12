@@ -16,5 +16,7 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Update(SpecificationViewModel specificationViewModel);
 
         Task<Response> Delete(int id);
+
+        Task<Response<IEnumerable<SpecificationViewModel>>> GetMany(IEnumerable<int> ids);
     }
 }

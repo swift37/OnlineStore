@@ -109,5 +109,22 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse(e);
             }
         }
+
+        public async Task<Response<IEnumerable<SpecificationViewModel>>> GetMany(IEnumerable<int> ids)
+        {
+            try
+            {
+                var specifications = await _client.GetSpecificationsAsync(ids, _usingVersion);
+                return new Response<IEnumerable<SpecificationViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<SpecificationViewModel>>(specifications)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<SpecificationViewModel>>(exception);
+            }
+        }
     }
 }
