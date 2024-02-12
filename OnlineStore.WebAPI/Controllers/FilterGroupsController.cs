@@ -16,13 +16,13 @@ namespace OnlineStore.WebAPI.Controllers
     public class FilterGroupsController : BaseController
     {
         private readonly IFilterGroupsRepository _filterGroupsRepository;
-        private readonly IRepository<SpecificationType> _specificationTypesRepository;
+        private readonly ISpecificationTypesRepository _specificationTypesRepository;
 
         private readonly IMapper _mapper;
 
         public FilterGroupsController(
             IFilterGroupsRepository filterGroupsRepository,
-            IRepository<SpecificationType> specificationTypesRepository,
+            ISpecificationTypesRepository specificationTypesRepository,
             IMapper mapper) => 
             (_filterGroupsRepository, _specificationTypesRepository, _mapper) = 
             (filterGroupsRepository, specificationTypesRepository, mapper);
@@ -200,15 +200,15 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// POST /filter-groups/category
+        /// Get /filter-groups/category
         /// </remarks>
         /// <param name="filtersGroupOptionsDTO">FiltersGroupOptionsDTO</param>
         /// <returns>Returns FiltersGroupDTO</returns>
         /// <response code="200">Success</response>
-        [HttpPost("category")]
+        [HttpGet("category")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<FiltersGroupDTO>> GetCategoryFiltersGroup(
-            FiltersGroupOptionsDTO filtersGroupOptionsDTO)
+            [FromBody] FiltersGroupOptionsDTO filtersGroupOptionsDTO)
         {
             var filtersGroupOptions = _mapper.Map<FiltersGroupOptions>(filtersGroupOptionsDTO);
 

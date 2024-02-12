@@ -6,6 +6,7 @@ using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Repositories;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
+using System.Linq;
 
 namespace OnlineStore.Persistence.Repositories
 {
@@ -59,14 +60,14 @@ namespace OnlineStore.Persistence.Repositories
 
                 foreach (var specification in specificationType.Values)
                     specification.ProductsCount = await productsQuery
-                        .Where(product => product.Specifications
-                        .IntersectBy(options.AppliedFilters.Keys, spec => spec.SpecificationTypeId)
+                        .Where(product => product.Specifications.Select(spec => spec.SpecificationTypeId)
+                        .Intersect(options.AppliedFilters.Keys)
                         .Count().Equals(options.AppliedFilters.Keys.Count) &&
-                        product.Specifications
-                        .IntersectBy(specificationIds, spec => spec.Id)
+                        product.Specifications.Select(spec => spec.Id)
+                        .Intersect(specificationIds)
                         .Count() >=
-                        product.Specifications
-                        .IntersectBy(specificationTypeIds, spec => spec.SpecificationTypeId)
+                        product.Specifications.Select(spec => spec.SpecificationTypeId)
+                        .Intersect(specificationTypeIds)
                         .Count())
                         .Where(p => p.Specifications.Any(s => s.Id == specification.Id))
                         .CountAsync(cancellation);
