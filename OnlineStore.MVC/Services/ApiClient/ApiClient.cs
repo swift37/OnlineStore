@@ -10273,11 +10273,15 @@ namespace OnlineStore.MVC.Services.ApiClient
                     // Operation Path: "api/{version}/specifications/{ids}"
                     urlBuilder_.Append("api/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/specifications/");
+                    urlBuilder_.Append("/specifications/many");
                     for (var i = 0; i < idsArray.Length; i++)
                     {
-                        if (i > 0) urlBuilder_.Append(',');
-                        urlBuilder_.Append(ConvertToString(idsArray[i], System.Globalization.CultureInfo.InvariantCulture));
+                        if (i > 0) 
+                            urlBuilder_.Append('&');
+                        else
+                            urlBuilder_.Append('?');
+
+                        urlBuilder_.Append("ids=" + ConvertToString(idsArray[i], System.Globalization.CultureInfo.InvariantCulture));
                     }
 
                     PrepareRequest(client_, request_, urlBuilder_);

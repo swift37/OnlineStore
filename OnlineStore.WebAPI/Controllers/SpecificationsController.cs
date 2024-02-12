@@ -163,14 +163,14 @@ namespace OnlineStore.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /specifications/1,27,51,89
+        /// GET /specifications/many?ids=1&ids=27&ids=51&ids=89
         /// </remarks>
         /// <param name="ids">Specification ids (int[])</param>
         /// <returns>Returns IEnumerable<SpecificationDTO></returns>
         /// <response code="200">Success</response>
-        [HttpGet("{ids}")]
+        [HttpGet("many")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<SpecificationDTO>>> GetMany([FromRoute] IEnumerable<int> ids) =>
+        public async Task<ActionResult<IEnumerable<SpecificationDTO>>> GetMany([FromQuery] IEnumerable<int> ids) =>
             Ok(_mapper.Map<IEnumerable<SpecificationDTO>>(await _repository.GetManyAsync(ids)));
     }
 }
