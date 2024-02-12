@@ -97,21 +97,25 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Product(int id)
+        public async Task<IActionResult> UpdateFilterBlock(int specificationTypeId, bool showAll)
         {
-            var response = await _productsService.Get(id);
+            var options = new SpecificationTypeOptions { Id = specificationTypeId };
 
-            if (response.Success) return View(response.Data);
+            options.AppliedFilters = HttpContext.Request.Query["filters"].GetAppliedFilters();
+
+            var response = await _specificationTypesService.Get(options);
+
+            if (response.Success) return ViewComponent("FilterBlock", new { model = response.Data, showAll });
 
             return StatusCode(response.Status);
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateFilterBlock(int specificationTypeId, bool showAll)
+        public async Task<IActionResult> Product(int id)
         {
-            var response = await _specificationTypesService.Get(specificationTypeId);
+            var response = await _productsService.Get(id);
 
-            if (response.Success) return ViewComponent("FilterBlock", new { model = response.Data, showAll });
+            if (response.Success) return View(response.Data);
 
             return StatusCode(response.Status);
         }
