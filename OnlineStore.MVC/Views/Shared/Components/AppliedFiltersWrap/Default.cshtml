@@ -1,0 +1,33 @@
+﻿@model AppliedFilterWrapViewModel
+
+@if (!Model.IsEmpty)
+{
+    <button class="clear-filters">
+        <span>Clear all (@Model.Count)</span>
+        <i class='bx bx-x'></i>
+    </button>
+    
+    @foreach (var group in Model.AppliedFilters)
+        @if (group.Any())
+        {
+            <div class="filters-group-head">
+                <span class="filters-group-name">@group.Key:</span>
+                <button 
+                    class="remove-filter"
+                    data-id="@($"spid{group.Select(group => group).First().SpecificationTypeId};sid{group.Select(group => group).First().Id}")">
+                    <span>@group.Select(group => group).First().Value</span>
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            @foreach (var filter in group.Select(group => group).Skip(1))
+            {
+                <button 
+                    class="remove-filter"
+                    data-id="@($"spid{filter.SpecificationTypeId};sid{filter.Id}")">
+                    <span>@filter.Value</span>
+                    <i class='bx bx-x'></i>
+                </button>
+            }
+        }
+
+}
