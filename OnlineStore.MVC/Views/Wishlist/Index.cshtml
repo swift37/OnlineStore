@@ -11,6 +11,10 @@
             @await Component.InvokeAsync("AccountMenu", new { id = 3 })
             <div class="acc-content">
                 <div class="content-box">
+                    <a class="back-to-menu" asp-controller="Account" asp-action="Index">
+                        <i class='bx bx-chevron-left'></i>
+                        <span>Back</span>
+                    </a>
                     @if (!Model.IsEmpty)
                     {
                         <header class="box-header">

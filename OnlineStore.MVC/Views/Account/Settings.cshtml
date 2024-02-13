@@ -12,6 +12,10 @@
             @await Component.InvokeAsync("AccountMenu", new { id = 4 })
             <div class="acc-content">
                 <div class="content-box">
+                    <a class="back-to-menu" asp-controller="Account" asp-action="Index">
+                        <i class='bx bx-chevron-left'></i>
+                        <span>Back</span>
+                    </a>
                     <div class="acc-settings">
                         <div class="tab-switch">
                             <ul>

@@ -4736,6 +4736,12 @@ form {
     margin-top: 0;
 }
 
+@media screen and (min-width: 901px) {
+    .content-box .back-to-menu:not(.orders) {
+        display: none;
+    }
+}
+
 .content-box .acc-settings {
     display: flex;
     width: 100%;
@@ -5365,7 +5371,7 @@ form {
     width: 100%;
 }
 
-    .reviews-list:not(:nth-child(4)) {
+    .reviews-list:not(:nth-child(5)) {
         margin-top: 3em;
     }
 
