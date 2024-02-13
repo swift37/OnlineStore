@@ -2,7 +2,7 @@
 
 <div class="acc-section">
     <div class="container">
-        <div class="acc-wrapper">
+        <div class="acc-wrapper main">
             @await Component.InvokeAsync("AccountMenu", new { id = 0 })
             <div class="acc-content">
                 <div class="content-box">
@@ -40,6 +40,7 @@
                     </div>
 
                     <a class="account-wishlist-preview" asp-controller="Account" asp-action="Wishlist">
+                        <h3>Wishlist</h3>
                         <span class="last-change">Last change: January 13, 2024</span>
                         <div class="product-previews">
                             <div class="line-image">
