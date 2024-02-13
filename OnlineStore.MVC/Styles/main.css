@@ -325,7 +325,7 @@ form {
     justify-content: center;
     position: relative;
     appearance: none;
-    width: 40px;
+    min-width: 40px;
     height: 22px;
     background-color: #ccc;
     border-radius: 20px;
@@ -394,6 +394,13 @@ form {
     align-items: center;
     gap: 2em;
     width: 100%;
+}
+
+@media screen and (max-width: 720px) {
+    .double-field {
+        flex-direction: column;
+        gap: 1.5em;
+    }
 }
 
 .nav-main {
@@ -4651,6 +4658,10 @@ form {
         color: #676767;
         margin-top: 4px;
     }
+
+    .content-box.changed {
+        margin: 0 0 60px;
+}
 }
 
 .content-box .back-to-menu {
@@ -4699,7 +4710,7 @@ form {
 
 .acc-settings .tab-switch {
     position: relative;
-    width: 250px;
+    width: max-content;
     height: auto;
     margin-left: -8px;
     padding-right: 24px;
@@ -4735,10 +4746,11 @@ form {
         align-items: center;
         width: 100%;
         height: 100%;
-        padding: 0 18px;
+        padding: 0 16px;
         color: #181818;
         text-decoration: none;
         transition: 0.3s;
+        white-space: nowrap;
     }
 
     .acc-settings ul li:hover,
@@ -4776,8 +4788,9 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1em;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
 }
 
     .settings-group .settings-field p {
@@ -4801,7 +4814,7 @@ form {
 
     .settings-group .settings-field a {
         text-align: center;
-        width: 150px;
+        min-width: 150px;
         padding: 8px 16px;
         color: #000;
         background-color: rgba(0, 0, 0, 0.05);
@@ -4896,6 +4909,44 @@ form {
         color: rgba(0, 0, 0, 0.8);
         word-wrap: break-word;
     }
+
+@media screen and (max-width: 720px) {
+    .content-box .acc-settings {
+        flex-direction: column;
+    }
+
+    .acc-settings .tab-switch {
+        width: 100%;
+        padding: 0 0 12px;
+        margin: 0 0 28px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .acc-settings .tab-content {
+        padding: 0 12px;
+    }
+
+    .tab form .form-buttons {
+        top: unset;
+        bottom: 0;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .settings-group .settings-field {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+        .settings-group .settings-field:not(:last-child) {
+            margin-bottom: 1em;
+        }
+
+        .settings-group .settings-field p {
+            align-self: flex-start;
+        }
+}
 
 .products-list {
     padding-bottom: 2em;
