@@ -5866,6 +5866,17 @@ h4.order-details-header {
         box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 1px;
     }
 
+    .account-wishlist-preview h3 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: #181818;
+        margin: 0px 0px 4px;
+        padding: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
     .account-wishlist-preview .last-change {
         font-size: 14px;
         font-weight: 500;
