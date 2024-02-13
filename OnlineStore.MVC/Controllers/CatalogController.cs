@@ -12,13 +12,15 @@ namespace OnlineStore.MVC.Controllers
         private readonly IProductsService _productsService;
         private readonly IFilterGroupsService _filterGroupsService;
         private readonly ISpecificationTypesService _specificationTypesService;
+        private readonly ISpecificationsService _specificationsService;
 
         public CatalogController(
             IProductsService productsService, 
             IFilterGroupsService filterGroupsService,
-            ISpecificationTypesService specificationTypesService) => 
-            (_productsService, _filterGroupsService, _specificationTypesService) = 
-            (productsService, filterGroupsService, specificationTypesService);
+            ISpecificationTypesService specificationTypesService,
+            ISpecificationsService specificationsService) => 
+            (_productsService, _filterGroupsService, _specificationTypesService, _specificationsService) = 
+            (productsService, filterGroupsService, specificationTypesService, specificationsService);
 
         [HttpGet]
         public async Task<IActionResult> Index(
@@ -108,6 +110,17 @@ namespace OnlineStore.MVC.Controllers
             if (response.Success) return ViewComponent("FilterBlock", new { model = response.Data, showAll });
 
             return StatusCode(response.Status);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateFiltersWrap()
+        {
+            var appliedFilters = HttpContext.Request.Query["filters"].GetAppliedFilterIds();
+
+            var response = await _specificationsService.GetMany(appliedFilters);
+            if (!response.Success) return StatusCode(response.Status);
+
+            return ViewComponent("AppliedFiltersWrap", new { model = response.Data });
         }
 
         [HttpGet]
