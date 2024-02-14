@@ -20,27 +20,50 @@
                             <div class="actions">
                                 <button class="remove-selected">
                                     <i class='bx bx-trash-alt'></i>
-                                    Clear cart
+                                    <span>Clear cart</span>
                                 </button>
                             </div>
                         </div>
                         @foreach (var item in Model.Items)
                         {
                                 <div class="products-list-line">
-                                    <div class="left-part">
+                                    <div class="line-container">
+                                        <div class="left-part">
                                         <div class="line-image">
                                             <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
                                                 <img src="@item.Product?.Image" alt="Image">
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="middle-part">
+                                        <div class="middle-part">
                                         <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
                                             @item.Product?.Name
                                         </a>
                                         <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
                                     </div>
-                                    <div class="right-part">
+                                        <div class="right-part">
+                                            <div class="qty-control flexitem">
+                                                <button class="qty-minus">-</button>
+                                                <input class="qty-value cart"
+                                                       type="text"
+                                                       value="@item.Quantity"
+                                                       data-productid="@item.ProductId"
+                                                       min="1"
+                                                       pattern="^[0-9]+$">
+                                                <button class="qty-plus">+</button>
+                                            </div>
+                                            <button class="to-wishlist" data-itemid="@item.ProductId">
+                                                <i class='bx bx-heart'></i>
+                                            </button>
+                                            <button class="item-remove from-cart" data-itemid="@item.ProductId">
+                                                <i class='bx bx-trash-alt'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-part">
+                                        <button class="item-remove from-cart" data-itemid="@item.ProductId">
+                                            <i class='bx bx-trash-alt'></i>
+                                        </button>
                                         <div class="qty-control flexitem">
                                             <button class="qty-minus">-</button>
                                             <input class="qty-value cart"
@@ -53,9 +76,6 @@
                                         </div>
                                         <button class="to-wishlist" data-itemid="@item.ProductId">
                                             <i class='bx bx-heart'></i>
-                                        </button>
-                                        <button class="item-remove from-cart" data-itemid="@item.ProductId">
-                                            <i class='bx bx-trash-alt'></i>
                                         </button>
                                     </div>
                                 </div>

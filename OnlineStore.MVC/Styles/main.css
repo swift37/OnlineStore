@@ -5054,6 +5054,15 @@ form {
             transition: all 0.3s ease;
         }
 
+        .products-list-header.cart .actions button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            height: auto;
+            padding: 10px 20px;
+        }
+
             .products-list-header .actions button:hover {
                 background-color: #f2f2f2;
             }
@@ -5063,9 +5072,13 @@ form {
                 margin: 0;
             }
 
-            .products-list-header .actions button span {
-                display: none;
-            }
+    .products-list-header.cart .actions button i {
+        margin-right: 8px;
+    }
+
+    .products-list-header:not(.cart) .actions button span {
+        display: none;
+    }
 
 .products-list-line {
     display: flex;
