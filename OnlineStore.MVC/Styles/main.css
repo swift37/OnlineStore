@@ -5037,7 +5037,12 @@ form {
     }
 
         .products-list-header .actions button {
-            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 37px;
+            padding: 0;
             color: #000;
             background-color: transparent;
             font-size: 15px;
@@ -5054,15 +5059,27 @@ form {
             }
 
             .products-list-header .actions button i {
-                margin-right: 5px;
+                font-size: 17px;
+                margin: 0;
+            }
+
+            .products-list-header .actions button span {
+                display: none;
             }
 
 .products-list-line {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     padding: 8px 5px;
     border-bottom: 0.05em solid #ddd;
 }
+
+    .products-list-line .line-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
 
     .products-list-line .left-part,
     .products-list-line .middle-part,
@@ -5110,7 +5127,6 @@ form {
         color: #181818;
         font-weight: 500;
         text-decoration: none;
-        margin-right: 44px;
     }
 
         .products-list-line .middle-part a {
@@ -5165,35 +5181,57 @@ form {
         }
 
     .products-list-line .right-part {
+        display: none;
         justify-content: space-between;
         flex-wrap: wrap-reverse;
+        margin-left: auto;
     }
+
+    .products-list-line .bottom-part {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        width: 100%;
+        margin-top: 16px;
+        padding: 0;
+    }
+
+        .products-list-line .bottom-part .qty-control,
+        .products-list-line .right-part .qty-control {
+            margin: 0;
+        }
+
+        .products-list-line .right-part > button,
+        .products-list-line .bottom-part > button {
+            display: flex;
+            place-content: center;
+            align-items: center;
+            position: relative;
+            width: 32px;
+            height: 32px;
+            padding: 0px;
+            font-size: 18px;
+            line-height: 24px;
+            color: #000;
+            background-color: transparent;
+            border-radius: 8px;
+            border: 1px solid #000;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+        }
+
+            .products-list-line .right-part > button:hover,
+            .products-list-line .bottom-part > button:hover {
+                color: #fff;
+                background-color: #000;
+            }
 
     .products-list-line .right-part > button {
-        display: flex;
-        place-content: center;
-        align-items: center;
-        position: relative;
-        width: 32px;
-        height: 32px;
-        padding: 0px;
-        font-size: 18px;
-        line-height: 24px;
-        color: #000;
-        background-color: transparent;
-        border-radius: 8px;
-        border: 1px solid #000;
-        outline: none;
-        cursor: pointer;
-        transition: all 0.4s ease;
-        -webkit-box-align: center;
-        -webkit-box-pack: center;
+        display: none;
     }
-
-        .products-list-line .right-part > button:hover {
-            color: #fff;
-            background-color: #000;
-        }
 
         .products-list-line .right-part > button:last-child {
             margin-left: 16px
@@ -5302,11 +5340,6 @@ form {
             text-align: right;
         }
 
-    .products-list-line .right-part {
-        justify-content: unset;
-        flex-wrap: nowrap;
-    }
-
     .products-list-summary .products-count {
         display: block;
     }
@@ -5320,6 +5353,63 @@ form {
         padding-left: 16px;
         padding-right: 16px;
     }
+}
+
+@media screen and (min-width: 520px) {
+    .products-list-line {
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 5px;
+    }
+
+        .products-list-line .bottom-part {
+            display: none;
+        }
+
+        .products-list-line .right-part {
+            justify-content: unset;
+            flex-wrap: nowrap;
+        }
+
+            .products-list-line .right-part .qty-control {
+                margin-right: 2em;
+            }
+
+            .products-list-line .right-part > button {
+                display: flex;
+            }
+}
+
+@media screen and (min-width: 480px) {
+    .products-list-header .actions button {
+        padding: 10px 20px;
+        width: auto;
+        height: auto;
+    }
+
+    .products-list-header .actions button i {
+        margin-right: 8px;
+    }
+
+    .products-list-header .actions button span {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 450px) {
+    .products-list-line .right-part {
+        display: flex;
+    }
+
+    .products-list-line .bottom-part {
+        justify-content: flex-end;
+        margin-top: 4px;
+        padding-right: 4px;
+    }
+
+        .products-list-line .bottom-part .qty-control {
+            display: none;
+        }
 }
 
 .line-check {

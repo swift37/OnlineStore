@@ -35,18 +35,19 @@
                                 <div class="actions">
                                     <button class="selected-to-cart">
                                         <i class='bx bx-cart-add'></i>
-                                        Add to cart
+                                        <span>Add to cart</span>
                                     </button>
                                     <button class="remove-selected">
                                         <i class='bx bx-trash-alt'></i>
-                                        Remove
+                                        <span>Remove</span>
                                     </button>
                                 </div>
                             </div>
                             @foreach (var item in Model.Items)
                             {
                                 <div class="products-list-line">
-                                    <div class="left-part">
+                                    <div class="line-container">
+                                        <div class="left-part">
                                             <div class="line-check">
                                                 <input type="checkbox" id="@($"item{item.Id}")" />
                                                 <label class="check" for="@($"item{item.Id}")"></label>
@@ -82,7 +83,28 @@
                                             <button class="item-remove from-wishlist" data-itemid="@item.Id">
                                                 <i class='bx bx-trash-alt'></i>
                                             </button>
+                                        </div>
                                     </div>
+                                    <div class="bottom-part">
+                                            <button class="item-remove from-wishlist" data-itemid="@item.Id">
+                                                <i class='bx bx-trash-alt'></i>
+                                            </button>
+                                            <div class="qty-control flexitem">
+                                                <button class="qty-minus">-</button>
+                                                <input 
+                                                    class="qty-value wl" 
+                                                    type="text" 
+                                                    value="@item.Quantity" 
+                                                    data-itemid="@item.Id" 
+                                                    data-productid="@item.ProductId" 
+                                                    min="1" 
+                                                    pattern="^[0-9]+$">
+                                                <button class="qty-plus">+</button>
+                                            </div>
+                                            <button class="to-cart-from-wl">
+                                                <i class='bx bx-cart-add'></i>
+                                            </button>
+                                        </div>
                                 </div>
                             }
                             <div class="products-list-summary">
