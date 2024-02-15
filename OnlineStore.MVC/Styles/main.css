@@ -3461,16 +3461,23 @@ form {
 
     .mini-cart .item-remove {
         display: flex;
-        justify-content: flex-end;
-        margin-left: 1em;
-        flex: 1;
+        justify-content: center;
+        align-items: center;
+        width: 19px;
+        height: 19px;
+        font-size: 19px;
+        line-height: 1;
+        margin: 0 0.5em 0 1em;
+        color: #676767;
+        background: transparent;
+        border: none;
+        outline: none;
         cursor: pointer;
+        transition: all 0.3s ease;
     }
 
-        .mini-cart .item-remove img {
-            width: 10px;
-            height: 10px;
-            object-fit: cover;
+        .mini-cart .item-remove:hover {
+            color: #181818;
         }
 
     .mini-cart .price .fly-item {
