@@ -28,21 +28,15 @@
             <a class="rating-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id" asp-fragment="reviews">
                 @for (int i = 0; i < Math.Floor(Model.Rating); i++)
                 {
-                    <span class="rating-star">
-                        <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                    </span>
+                    <i class='bx bxs-star'></i>
                 }
                 @if (Model.Rating % 1.0 > 0.3)
                 {
-                    <span class="rating-star">
-                        <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                    </span>
+                    <i class='bx bxs-star-half'></i>
                 }
                 @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
                 {
-                    <span class="rating-star">
-                        <img src="~/resources/icons/empty-star.png" loading="lazy" alt="★">
-                    </span>
+                    <i class='bx bxs-star empty-star'></i>
                 }
                 <span class="reviews-quantity">
                     (@Model.ReviewsCount)

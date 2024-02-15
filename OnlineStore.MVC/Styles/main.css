@@ -2641,38 +2641,29 @@ form {
         }
 
             .product-card .card-content .product-rating .rating-link {
-                display: inline-block;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.1em;
                 white-space: nowrap;
-                font-size: 11px;
-                line-height: 12px;
-                color: rgb(148, 148, 148);
+                font-size: 17px;
+                line-height: 1;
+                color: #949494;
                 font-weight: normal;
                 text-decoration: none;
             }
 
-                .product-card .card-content .product-rating .rating-link .rating-star {
-                    display: inline-flex;
-                    position: relative;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0px;
-                    height: 13px;
-                    width: 13px;
-                    vertical-align: text-bottom;
-                    overflow: hidden;
+                .product-card .card-content .product-rating .rating-link i {
+                    color: #fabd02;
                 }
 
-                    .product-card .card-content .product-rating .rating-link .rating-star img {
-                        position: relative;
-                        height: 100%;
-                        width: 100%;
-                        object-fit: contain;
+                    .product-card .card-content .product-rating .rating-link i.empty-star {
+                        color: #ccc;
                     }
 
                 .product-card .card-content .product-rating .rating-link .reviews-quantity {
                     position: relative;
                     font-size: 13px;
-                    line-height: 13px;
+                    line-height: 1;
                     text-decoration: none;
                     padding-left: 4px;
                 }
