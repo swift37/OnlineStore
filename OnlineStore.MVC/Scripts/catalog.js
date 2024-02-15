@@ -105,6 +105,7 @@ $(document).ready(function () {
         let url = new window.URL(document.location);
         url.searchParams.set("sortBy", sortParam);
         window.history.pushState(null, null, url);
+        setSortBySlValue();
         updateProducts();
     });
 
@@ -115,6 +116,7 @@ $(document).ready(function () {
         let url = new window.URL(document.location);
         url.searchParams.set("itemsperpage", itemsPerPage);
         window.history.pushState(null, null, url);
+        setItemsPerPageSlValue();
         updateProducts();
     });
 
