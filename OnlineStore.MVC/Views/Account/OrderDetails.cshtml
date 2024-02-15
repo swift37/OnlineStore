@@ -70,7 +70,7 @@
                         <div class="products-list-header empty"></div>
                         @foreach (var item in Model.Items)
                         {
-                            <div class="products-list-line">
+                            <div class="products-list-line od">
                                 <div class="left-part">
                                     <div class="line-image">
                                         <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
@@ -82,6 +82,21 @@
                                     <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
                                         @item.Product?.Name
                                     </a>
+                                    <div class="unit-price-line">
+                                        <div class="unit-price">
+                                            @if (item.Discount > 0)
+                                            {
+                                                <span class="without-disc">@item.UnitPrice.ToString("C")</span>
+                                            }
+                                            <span>@((item.UnitPrice - item.Discount).ToString("C")) </span>
+                                        </div>
+                                        <div class="quantity">
+                                            <span>x @item.Quantity pcs.</span>
+                                        </div>
+                                    </div>
+                                    <div class="line-price">
+                                        <span>@((item.UnitPrice * item.Quantity).ToString("C"))</span>
+                                    </div>
                                 </div>
                                 <div class="right-part">
                                     <div class="unit-price">
