@@ -208,7 +208,17 @@ form {
 }
 
 @media screen and (max-width: 991px) {
-    .grid {
+    .basic-grid {
+        grid-template-areas:
+            "."
+            ".";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .basic-grid {
         grid-template-areas:
             "."
             "."
@@ -1675,8 +1685,8 @@ form {
 
 @media screen and (max-width: 991px) {
     .container {
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-right: 25px;
+        padding-left: 25px;
     }
 }
 
@@ -2516,8 +2526,12 @@ form {
 }
 
 @media screen and (max-width: 991px) {
+    .need-help-section {
+        padding-left: 25px;
+    }
+
     .need-help-paragraph {
-        width: 55%;
+        width: 70%;
     }
 }
 
