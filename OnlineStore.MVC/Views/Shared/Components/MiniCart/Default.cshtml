@@ -17,26 +17,24 @@
             {
                 <ul class="products mini">
                     @foreach (var cartItem in Model.Items)
-                    {
-                    if (cartItem.Product != null)
-                    {
-                    <li class="item">
-                        <div class="thumbnail object-contain">
-                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id"><img src="@cartItem.Product.Image" alt=""></a>
-                        </div>
-                        <div class="item-content">
-                            <p><a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id">@cartItem.Product.Name</a></p>
-                            <span class="price">
-                                <span>@cartItem.Product.UnitPrice.ToString("C")</span>
-                                <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
-                            </span>
-                        </div>
-                        <button class="item-remove from-minicart" data-itemid="@cartItem.ProductId">
-                            <i class='bx bx-trash-alt'></i>
-                        </button>
-                    </li>
-                    }
-                    }
+                        if (cartItem.Product != null)
+                        {
+                            <li class="item">
+                                <div class="thumbnail object-contain">
+                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id"><img src="@cartItem.Product.Image" alt=""></a>
+                                </div>
+                                <div class="item-content">
+                                    <p><a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id">@cartItem.Product.Name</a></p>
+                                    <span class="price">
+                                        <span>@cartItem.Product.UnitPrice.ToString("C")</span>
+                                        <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
+                                    </span>
+                                </div>
+                                <button class="item-remove from-minicart" data-itemid="@cartItem.ProductId">
+                                    <i class='bx bx-trash-alt'></i>
+                                </button>
+                            </li>
+                        }
                 </ul>
             }
             else

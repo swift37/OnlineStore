@@ -1831,40 +1831,31 @@ form {
     }
 
         .product-details-header .product-rating .rating-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.15em;
             white-space: nowrap;
-            font-size: 11px;
-            line-height: 12px;
-            color: rgb(148, 148, 148);
+            font-size: 20px;
+            line-height: 1;
+            color: #949494;
             font-weight: normal;
             text-decoration: none;
         }
 
-            .product-details-header .product-rating .rating-link .rating-star {
-                display: inline-flex;
-                position: relative;
-                align-items: center;
-                justify-content: center;
-                padding: 0px;
-                height: 16px;
-                width: 16px;
-                vertical-align: text-bottom;
-                overflow: hidden;
+            .product-details-header .product-rating .rating-link i {
+                color: #fabd02;
             }
 
-                .product-details-header .product-rating .rating-link .rating-star img {
-                    position: relative;
-                    height: 100%;
-                    width: 100%;
-                    object-fit: contain;
+                .product-details-header .product-rating .rating-link i.empty-star {
+                    color: #ccc;
                 }
 
             .product-details-header .product-rating .rating-link .reviews-quantity {
                 position: relative;
-                font-size: 13px;
-                line-height: 16px;
+                font-size: 15px;
+                line-height: 1;
+                padding-left: 8px;
                 text-decoration: none;
-                padding-left: 4px;
             }
 
                 .product-details-header .product-rating .rating-link .reviews-quantity:hover {
@@ -5803,7 +5794,7 @@ form {
         }
 
             .reviewed .reviews-list-line .line-rating .stars .empty-star {
-                color: #ddd;
+                color: #ccc;
             }
 
         .reviewed .reviews-list-line .line-rating .date {
