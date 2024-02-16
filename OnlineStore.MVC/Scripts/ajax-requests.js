@@ -59,7 +59,7 @@ $(document).ready(function () {
                     $.ajax({
                         url: '/cart/updateminicart',
                         success: function (data) {
-                            $("#miniCart").html(data);
+                            $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
                         }
                     });
@@ -95,7 +95,7 @@ $(document).ready(function () {
                     $.ajax({
                         url: '/cart/updateminicart',
                         success: function (data) {
-                            $("#miniCart").html(data);
+                            $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
                         }
                     });
@@ -133,7 +133,7 @@ $(document).ready(function () {
                     $.ajax({
                         url: '/cart/updateminicart',
                         success: function (data) {
-                            $("#miniCart").html(data);
+                            $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
                         }
                     });
@@ -245,7 +245,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: '/cart/updateminicart',
                     success: function (data) {
-                        $("#miniCart").html(data);
+                        $('#userHub .mini-cart-component').replaceWith(data);
                         checkCartQuantity();
                     }
                 });
