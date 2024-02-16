@@ -1,11 +1,11 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
 
 <div class="hub-component account-component">
-    <a class="component-trigger" asp-controller="Account" asp-action="Index">
+    <div class="component-trigger">
         <div class="icon-container">
             <img src="~/resources/icons/user.png" width="20" alt="Account">
         </div>
-    </a>
+    </div>
 
     <div class="dropdown-menu">
         @if (User.Identity?.IsAuthenticated ?? false)
