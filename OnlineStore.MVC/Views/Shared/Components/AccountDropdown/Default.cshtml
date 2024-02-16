@@ -1,63 +1,65 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
 
-<div class="icon-container">
-    <a asp-controller="Account" asp-action="Index">
-        <img src="~/resources/icons/user.png" width="20" alt="Account">
+<div class="hub-component account-component">
+    <a class="component-trigger" asp-controller="Account" asp-action="Index">
+        <div class="icon-container">
+            <img src="~/resources/icons/user.png" width="20" alt="Account">
+        </div>
     </a>
-</div>
 
-<div class="dropdown-menu">
-    @if (User.Identity?.IsAuthenticated ?? false)
-    {
-        <h3>
-            @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
-            @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br /> 
-            <span>Developer</span>
-        </h3>
-        <ul>
-            <li>
-                <a asp-controller="Account" asp-action="Index">
-                    <i class='bx bx-id-card'></i>
-                    Account
-                </a>
-            </li>
-            <li>
-                <a asp-controller="Account" asp-action="Orders">
-                    <i class='bx bx-layer'></i>
-                    Orders
-                </a>
-            </li>
-            <li>
-                <a asp-controller="Account" asp-action="Reviews">
-                    <i class='bx bx-message-square-dots'></i>
-                    Reviews
-                </a>
-            </li>
-            <li>
-                <a asp-controller="Wishlist" asp-action="Index">
-                    <i class='bx bx-heart'></i>
-                    Wishlist
-                </a>
-            </li>
-            <li>
-                
-                <a asp-controller="Account" asp-action="Settings">
-                    <i class='bx bx-cog'></i>
-                    Settings & Privacy
-                </a>
-            </li>
-            <li>
-                <a asp-controller="Auth" asp-action="Logout">
-                    <i class='bx bx-log-out'></i>
-                    Logout
-                </a>
-            </li>
-        </ul>
-    }
-    else
-    {
-        <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
-        <div class="separator">Or</div>
-        <a asp-controller="Auth" asp-action="Register" class="button black">Sign Up</a>
-    }
+    <div class="dropdown-menu">
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <h3>
+                @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
+                @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br />
+                <span>Developer</span>
+            </h3>
+            <ul>
+                <li>
+                    <a asp-controller="Account" asp-action="Index">
+                        <i class='bx bx-id-card'></i>
+                        Account
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Account" asp-action="Orders">
+                        <i class='bx bx-layer'></i>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Account" asp-action="Reviews">
+                        <i class='bx bx-message-square-dots'></i>
+                        Reviews
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Wishlist" asp-action="Index">
+                        <i class='bx bx-heart'></i>
+                        Wishlist
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Account" asp-action="Settings">
+                        <i class='bx bx-cog'></i>
+                        Settings & Privacy
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Auth" asp-action="Logout">
+                        <i class='bx bx-log-out'></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
+            <div class="separator">Or</div>
+            <a asp-controller="Auth" asp-action="Register" class="button black">Sign Up</a>
+        }
+    </div>
 </div>

@@ -46,17 +46,11 @@
                     </div>
                 </div>
             </nav>
-            <nav class="nav-buttons">
-                <div id="miniCart" class="header-icon cart-button">
-                    @await Component.InvokeAsync("MiniCart")
-                </div>
-                <div class="header-icon wishlist-button">
-                    @await Component.InvokeAsync("WishlistStatus")
-                </div>
-                <div class="header-icon account-button mobile-hide">
-                    @await Component.InvokeAsync("AccountDropdown")
-                </div>
-                <div class="header-icon side-menu-button desktop-hide">
+            <nav id="userHub" class="nav-hub">
+                @await Component.InvokeAsync("MiniCart")
+                @await Component.InvokeAsync("WishlistStatus")
+                @await Component.InvokeAsync("AccountDropdown")
+                <div class="hub-component side-menu-btn desktop-hide">
                     <img src="https://assets.website-files.com/5d9c8fcaca1c6c013b521b95/5d9c8fcaca1c6c435f521bfe_Menu%20Icon.png" width="20" alt="" class="side-menu-icon">
                 </div>
             </nav>
@@ -70,7 +64,7 @@
             <a asp-controller="Home" asp-action="Index" class="nav-brand">
                 <img src="/resources/images/store-logo.png" alt="">
             </a>
-            <div class="t-close">
+            <div class="sm-close">
                 <img src="~/resources/icons/close.png" alt=""/>
             </div>
         </div>
