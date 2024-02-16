@@ -510,14 +510,14 @@ form {
         float: left;
     }
 
-.nav-buttons {
+.nav-hub {
     display: inline-flex;
     margin-right: 0;
     float: left;
 }
 
 @media (max-width: 991px) {
-    .nav-buttons {
+    .nav-hub {
         margin-left: auto;
     }
 }
@@ -582,73 +582,79 @@ form {
             pointer-events: auto;
         }
 
-.header-icon {
+.hub-component {
     position: relative;
-    display: inline-block;
-    height: 100%;
     width: 42px;
-    cursor: pointer;
-    padding: 13px 12px;
+    height: 100%;
 }
 
-    .header-icon .icon-container {
-        position: relative;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 50%;
-        vertical-align: top;
-        text-align: left;
-        line-height: 20px;
-        padding: 0px;
-    }
-
-    .header-icon img {
-        opacity: 0.8;
-    }
-
-        .header-icon img:hover {
-            opacity: 1;
-        }
-
-    .header-icon .counter {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        height: 16px;
-        min-width: 16px;
-        z-index: 1;
-        border-radius: 20px;
-        /*background: #006ce1;*/
-        background: #000000;
+    .hub-component .component-trigger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        cursor: pointer;
+        text-decoration: none;
     }
 
-        .header-icon .counter .number {
-            display: flex;
-            height: 16px;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px !important;
-            color: #fff;
+    .hub-component .icon-container {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+    }
+
+        .hub-component .icon-container img {
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
         }
 
-        .header-icon .counter.two-counter {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            gap: 8px;
-            width: 23px;
-            height: 16px;
-            padding: 2px 4px;
-            right: -11px;
-        }
-
-            .header-icon .counter.two-counter .number {
-                height: 12px;
+            .hub-component .icon-container img:hover {
+                opacity: 1;
             }
 
-.side-menu-button {
+        .hub-component .icon-container .counter {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 16px;
+            min-width: 16px;
+            z-index: 1;
+            border-radius: 20px;
+            background: #000000;
+            text-align: center;
+        }
+
+            .hub-component .icon-container .counter .number {
+                display: flex;
+                height: 16px;
+                justify-content: center;
+                align-items: center;
+                font-size: 12px !important;
+                color: #fff;
+            }
+
+            .hub-component .icon-container .counter.two-counter {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
+                gap: 8px;
+                width: 23px;
+                height: 16px;
+                padding: 2px 4px;
+                right: -11px;
+            }
+
+                .hub-component .icon-container .counter.two-counter .number {
+                    height: 12px;
+                }
+
+.side-menu-btn {
     float: right;
     margin-left: 24px;
     font-size: 24px;
@@ -657,7 +663,7 @@ form {
     user-select: none;
 }
 
-    .side-menu-button:hover {
+    .side-menu-btn:hover {
         opacity: 1;
     }
 
@@ -706,7 +712,7 @@ form {
                 position: relative;
             }
 
-            .off-canvas .canvas-head .t-close {
+            .off-canvas .canvas-head .sm-close {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -717,12 +723,12 @@ form {
                 transition: background-color 0.3s;
             }
 
-                .off-canvas .canvas-head .t-close:hover {
+                .off-canvas .canvas-head .sm-close:hover {
                     background-color: #f4f4f4;
                     opacity: 0.75;
                 }
 
-                .off-canvas .canvas-head .t-close img {
+                .off-canvas .canvas-head .sm-close img {
                     width: 14px;
                     height: 14px;
                 }
@@ -3524,7 +3530,7 @@ form {
     }
 
 @media screen and (min-width: 992px) {
-    .cart-button:hover .mini-cart {
+    .mini-cart-component:hover .mini-cart {
         visibility: visible;
         opacity: 1;
     }
@@ -4380,7 +4386,7 @@ form {
     }
 
 @media screen and (min-width: 992px) {
-    .account-button:hover .dropdown-menu {
+    .account-component:hover .dropdown-menu {
         visibility: visible;
         opacity: 1;
     }
