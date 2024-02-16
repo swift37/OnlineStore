@@ -3370,13 +3370,52 @@ form {
     }
 
     .mini-cart .cart-head {
-        font-size: 24px;
-        font-weight: 500;
-        color: #7c899a;
-        padding-bottom: 0.5em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1.2em;
         margin-bottom: 1em;
         border-bottom: 1px solid #e5e8ec;
     }
+
+        .mini-cart .cart-head h3 {
+            display: flex;
+            gap: 0.3em;
+            font-size: 22px;
+            font-weight: 500;
+            color: #474747;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mini-cart .cart-head .mc-count {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1;
+            color: #777;
+        }
+
+        .mini-cart .cart-head .mc-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            line-height: 1;
+            color: #474747;
+            background-color: transparent;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            margin-right: 0.13em;
+            transition: background-color 0.3s;
+        }
+
+            .mini-cart .cart-head .mc-close:hover {
+                background-color: #efefef;
+                opacity: 0.8;
+            }
 
     .mini-cart .empty-cart-msg {
         font-size: 22px;
@@ -3489,6 +3528,10 @@ form {
         visibility: visible;
         opacity: 1;
     }
+
+    .mini-cart .cart-head .mc-close {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 991px) {
@@ -3509,6 +3552,14 @@ form {
             overflow: auto;
             transform: translateX(0);
             transition: transform 0.4s 0s, visibility 0s 0s;
+        }
+
+        .mini-cart .cart-footer {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            padding: 0 1.5em;
         }
 }
 
