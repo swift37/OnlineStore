@@ -8,6 +8,12 @@
     </div>
 
     <div class="dropdown-menu">
+        <header class="dropdown-head">
+            <h3>Your account</h3>
+            <button class="ac-close">
+                <i class='bx bx-x'></i>
+            </button>
+        </header>
         @if (User.Identity?.IsAuthenticated ?? false)
         {
             <h3>
