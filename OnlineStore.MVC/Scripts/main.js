@@ -16,46 +16,24 @@
         }
     };
 
-    const copyMenu = () => {
-        let dptCategories = $('.dpt-categories').html();
-        $('.departments').html(dptCategories);
-
-        let rightMenu = $('.nav-menu.right').html();
-        $('.off-canvas nav').html(rightMenu);
-    }
-
     checkCartQuantity();
 
     checkWishlistQuantity();
 
-    copyMenu();
-
-    $('.side-menu-btn').click(function () {
-        $('.site-off').addClass('show-menu');
+    $('#userHub').on('click', '.side-menu-component .component-trigger', function () {
+        setTimeout(function () {
+            $('#userHub .side-menu-component .site-off').addClass('show-menu');
+        }, 250);
     });
 
-    $('.sm-close').click(function () {
-        $('.site-off').removeClass('show-menu');
+    $('#userHub').on('click', '.side-menu-component .sm-close', function () {
+        $('#userHub .side-menu-component .site-off').removeClass('show-menu');
     })
 
-    $('.link-item.has-child').click(function () {
-        $(this).siblings().removeClass('expand');
-        if ($(this).hasClass('expand')) {
-            $(this).removeClass('expand');
-        }
-        else {
-            $(this).addClass('expand');
-        }
-    });
-
-    $('.has-child .icon-small').click(function () {
-        $(this).parent('.has-child').siblings().removeClass('expand');
-        if ($(this).parent('.has-child').hasClass('expand')) {
-            $(this).parent('.has-child').removeClass('expand');
-        }
-        else {
-            $(this).parent('.has-child').addClass('expand');
-        }
+    $('#userHub').on('click', '.side-menu-component .expand-btn', function () {
+        let item = $(this).parents('.link-item');
+        $(item).siblings().removeClass('expand');
+        $(item).hasClass('expand') ? $(item).removeClass('expand') : $(item).addClass('expand');
     });
 
     $('#userHub').on('click', '.mini-cart-component .component-trigger', function () {
