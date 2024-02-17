@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Category.CategoryViewModel>
+
+<div class="hub-component side-menu-component desktop-hide">
+    <div class="component-trigger">
+        <div class="icon-container">
+            <img src="/resources/icons/menu.png" alt="Menu" class="side-menu-icon">
+        </div>
+    </div>
+
+    <aside class="site-off desktop-hide">
+        <div class="off-canvas">
+            <div class="canvas-head">
+                <a asp-controller="Home" asp-action="Index" class="nav-brand">
+                    <img src="/resources/images/store-logo.png" alt="">
+                </a>
+                <button class="sm-close">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+</div>
