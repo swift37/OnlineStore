@@ -17,6 +17,132 @@
                     <i class='bx bx-x'></i>
                 </button>
             </div>
+            <nav class="store-menu">
+                <div class="link-item">
+                    <div class="link-head">
+                        <a href="#">Subcategory</a>
+                        <button class="expand-btn">
+                            <i class='bx bx-chevron-down'></i>
+                        </button>
+                    </div>
+                    <div class="child-menu">
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                        </div>
+                </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a href="#">Subcategory</a>
+                        <button class="expand-btn">
+                            <i class='bx bx-chevron-down'></i>
+                        </button>
+                    </div>
+                        <div class="child-menu">
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                        </div>
+                    </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a href="#">Subcategory</a>
+                        <button class="expand-btn">
+                            <i class='bx bx-chevron-down'></i>
+                        </button>
+                    </div>
+                        <div class="child-menu">
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                            <a href="/">Item</a>
+                        </div>
+                    </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a href="#">Subcategory</a>
+                    </div>
+                </div>
+            </nav>
+            <nav class="account-menu">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Index">My Account</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Orders">Orders</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Reviews">Reviews</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Wishlist" asp-action="Index">Wishlist</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Settings">Settings & Privacy</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Logout">Logout</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Auth" asp-action="Login">Sign In</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Auth" asp-action="Register">Sign Up</a>
+                        </div>
+                    </div>
+                }
+            </nav>
+            <nav class="info-menu">
+                <div class="link-item">
+                    <div class="link-head">
+                        <a asp-controller="Home" asp-action="Support">Support</a>
+                    </div>
+                </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a asp-controller="Home" asp-action="Support" asp-fragment="get-in-touch">Contact</a>
+                    </div>
+                </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a asp-controller="Home" asp-action="About">About</a>
+                    </div>
+                </div>
+            </nav>
         </div>
     </aside>
 </div>
