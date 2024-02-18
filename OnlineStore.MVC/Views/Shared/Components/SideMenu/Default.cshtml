@@ -18,65 +18,34 @@
                 </button>
             </div>
             <nav class="store-menu">
-                <div class="link-item">
-                    <div class="link-head">
-                        <a href="#">Subcategory</a>
-                        <button class="expand-btn">
-                            <i class='bx bx-chevron-down'></i>
-                        </button>
-                    </div>
-                    <div class="child-menu">
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
+                @foreach (var category in Model)
+                    if (category.IsMainCategory)
+                    {
+                        <div class="link-item">
+                            <div class="link-head">
+                                <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@category.Id">
+                                    @category.Name
+                                </a>
+                                @if (category.HasChildCategories)
+                                {
+                                    <button class="expand-btn">
+                                        <i class='bx bx-chevron-down'></i>
+                                    </button>
+                                }
+                            </div>
+                            @if (category.HasChildCategories)
+                            {
+                                <div class="child-menu">
+                                    @foreach (var childCategory in category.ChildCategories)
+                                    {
+                                        <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@childCategory.Id">
+                                            @childCategory.Name
+                                        </a>
+                                    }
+                                </div>
+                            }
                         </div>
-                </div>
-                <div class="link-item">
-                    <div class="link-head">
-                        <a href="#">Subcategory</a>
-                        <button class="expand-btn">
-                            <i class='bx bx-chevron-down'></i>
-                        </button>
-                    </div>
-                        <div class="child-menu">
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                        </div>
-                    </div>
-                <div class="link-item">
-                    <div class="link-head">
-                        <a href="#">Subcategory</a>
-                        <button class="expand-btn">
-                            <i class='bx bx-chevron-down'></i>
-                        </button>
-                    </div>
-                        <div class="child-menu">
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                            <a href="/">Item</a>
-                        </div>
-                    </div>
-                <div class="link-item">
-                    <div class="link-head">
-                        <a href="#">Subcategory</a>
-                    </div>
-                </div>
+                    }
             </nav>
             <nav class="account-menu">
                 @if (User.Identity?.IsAuthenticated ?? false)
