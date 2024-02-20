@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    const setAsyncTimeout = (fn, timeInMs) =>
+        new Promise((resolve) => setTimeout(() => resolve(fn()), timeInMs))
+
     const validateEmail = (email) => {
         return String(email)
             .toLowerCase()
