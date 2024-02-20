@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/boxicons/css/boxicons.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast-notification.min.css" asp-append-version="true" />
     @await RenderSectionAsync("styles", required: false)
 </head>
 <body>
     <partial name="_Header" />
+
+    <partial name="_ToastNotification" />
 
     <main>
         @RenderBody()
@@ -26,6 +29,7 @@
     <script src="~/scripts/main.min.js" asp-append-version="true"></script>
     <script src="~/scripts/sliders.min.js" asp-append-version="true"></script>
     <script src="~/scripts/ajax-requests.min.js" asp-append-version="true"></script>
+    <script src="~/scripts/toast-notification.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
