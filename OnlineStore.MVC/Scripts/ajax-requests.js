@@ -25,6 +25,24 @@ $(document).ready(function () {
         }
     };
 
+    const showToast = (headline, details) => {
+        if (!headline || !details) return;
+
+        $('#toastNotif .headline').text(headline);
+        $('#toastNotif .details').text(details);
+
+        $('#toastNotif').addClass('active');
+        $('#toastNotif .progress').addClass('active');
+
+        setTimeout(() => {
+            $('#toastNotif').removeClass('active');
+        }, 5000);
+
+        setTimeout(() => {
+            $('#toastNotif .progress').removeClass('active');
+        }, 5300);
+    }
+
     const resetModal = (modal) => {
         $(modal).find('.errors-area').each((i, el) => {
             $(el).css('display', 'none');
@@ -35,7 +53,7 @@ $(document).ready(function () {
         $(modal).find('input, textarea').each((i, el) => $(el).val(''));
     }
 
-    function productToCart() {
+    const productToCart = () => {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
