@@ -49,12 +49,6 @@
   },
   {
     "inputFiles": [
-      "Scripts/toast-notification.js"
-    ],
-    "outputFileName": "wwwroot/scripts/toast-notification.js"
-  },
-  {
-    "inputFiles": [
       "Scripts/account.js"
     ],
     "outputFileName": "wwwroot/scripts/account.js"
