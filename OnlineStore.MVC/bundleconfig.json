@@ -13,6 +13,12 @@
   },
   {
     "inputFiles": [
+      "Styles/toast-notification.css"
+    ],
+    "outputFileName": "wwwroot/css/toast-notification.css"
+  },
+  {
+    "inputFiles": [
       "Scripts/main.js"
     ],
     "outputFileName": "wwwroot/scripts/main.js"
