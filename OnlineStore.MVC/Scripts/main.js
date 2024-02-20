@@ -20,6 +20,20 @@
 
     checkWishlistQuantity();
 
+    $(document).click(function (e) {
+        if (!$('.site-off').has(e.target).length && $('.site-off').hasClass('show-menu'))
+            $('.site-off').removeClass('show-menu');
+
+        if (!$('.filter').has(e.target).length && $('.filter').hasClass('show'))
+            $('.filter').removeClass('show');
+
+        if (!$('.mini-cart-component .mini-cart').has(e.target).length && $('.mini-cart-component .mini-cart').hasClass('show'))
+            $('.mini-cart-component .mini-cart').removeClass('show');
+
+        if (!$('.account-component .dropdown-menu').has(e.target).length && $('.account-component .dropdown-menu').hasClass('show'))
+            $('.account-component .dropdown-menu').removeClass('show');
+    });
+
     $('#userHub').on('click', '.side-menu-component .component-trigger', function () {
         setTimeout(function () {
             $('#userHub .side-menu-component .site-off').addClass('show-menu');
@@ -56,18 +70,12 @@
         $('#userHub .account-component .dropdown-menu').removeClass('show');
     })
 
-    $(document).click(function (e) {
-        if (!$('.site-off').has(e.target).length && $('.site-off').hasClass('show-menu'))
-            $('.site-off').removeClass('show-menu');
+    $('#toastNotif').on('click', '.t-close', function () {
+        $('#toastNotif').removeClass('active');
 
-        if (!$('.filter').has(e.target).length && $('.filter').hasClass('show'))
-            $('.filter').removeClass('show');
-
-        if (!$('.mini-cart-component .mini-cart').has(e.target).length && $('.mini-cart-component .mini-cart').hasClass('show'))
-            $('.mini-cart-component .mini-cart').removeClass('show');
-
-        if (!$('.account-component .dropdown-menu').has(e.target).length && $('.account-component .dropdown-menu').hasClass('show'))
-            $('.account-component .dropdown-menu').removeClass('show');
+        setTimeout(() => {
+            $('#toastNotif .progress').removeClass('active');
+        }, 300);
     });
 
     $('.filter-trigger').click(function () {
