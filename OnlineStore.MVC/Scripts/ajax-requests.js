@@ -28,23 +28,30 @@ $(document).ready(function () {
         }
     };
 
-    const showToast = (headline, details) => {
+    const showToast = async (headline, details) => {
         if (!headline || !details) return;
 
-        $('#toastNotif .headline').text(headline);
-        $('#toastNotif .details').text(details);
-
-        $('#toastNotif').addClass('active');
-        $('#toastNotif .progress').addClass('active');
-
-        setTimeout(() => {
-            $('#toastNotif').removeClass('active');
-        }, 5000);
-
-        setTimeout(() => {
-            $('#toastNotif .progress').removeClass('active');
-        }, 5300);
-    }
+        if ($('#toastNotif').hasClass('active')) {
+            $('#toastNotif .progress-line')
+                .queue((next) => {
+                    prepareToast(headline, details);
+                    next();
+                })
+                .animate({ right: '100%' }, 3000)
+                .queue(async (next) => {
+                    await resetToast();
+                    next();
+                });
+        } else {
+            prepareToast(headline, details);
+            $('#toastNotif .progress-line')
+                .animate({ right: '100%' }, 3000)
+                .queue(async (next) => {
+                    await resetToast();
+                    next();
+                });
+        }
+    };
 
     const resetModal = (modal) => {
         $(modal).find('.errors-area').each((i, el) => {
@@ -82,6 +89,8 @@ $(document).ready(function () {
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
+
+                            showToast('Success', 'The item has been added to your cart.');
                         }
                     });
                 }
@@ -89,7 +98,7 @@ $(document).ready(function () {
         });
     }
 
-    $('.to-cart').click(productToCart);
+    $('.actions .to-cart').click(productToCart);
 
     $('.products.main').on('click', '.to-cart', productToCart);
 
@@ -118,6 +127,8 @@ $(document).ready(function () {
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
+
+                            showToast('Success', 'The item has been added to your cart.');
                         }
                     });
                 }
@@ -156,6 +167,8 @@ $(document).ready(function () {
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
+
+                            showToast('Success', 'Items have been added to your cart.');
                         }
                     });
                 }
