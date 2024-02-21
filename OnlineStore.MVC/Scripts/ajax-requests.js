@@ -97,11 +97,11 @@ $(document).ready(function () {
                 quantity: qty
             },
             error: function () {
-                alert('Error occurred.');
+                showToast('Failure', 'An error occurred while adding an item to your cart.', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    alert("An error occurred.");
+                    showToast('Failure', 'An error occurred while adding an item to your cart.', true);
                 }
                 else {
                     $.ajax({
@@ -135,11 +135,11 @@ $(document).ready(function () {
                 quantity: $(qtyControl).val()
             },
             error: function () {
-                alert('Error occurred.');
+                showToast('Failure', 'An error occurred while adding an item to your cart.', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    alert("An error occurred.");
+                    showToast('Failure', 'An error occurred while adding an item to your cart.', true);
                 }
                 else {
                     $.ajax({
@@ -175,11 +175,11 @@ $(document).ready(function () {
                 items: items
             },
             error: function () {
-                alert('Error occurred.');
+                showToast('Failure', 'An error occurred while adding items to your cart.', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    alert("An error occurred.");
+                    showToast('Failure', 'An error occurred while adding items to your cart.', true);
                 }
                 else {
                     $.ajax({
