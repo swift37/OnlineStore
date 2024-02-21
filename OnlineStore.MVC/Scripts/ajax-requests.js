@@ -343,6 +343,7 @@ $(document).ready(function () {
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
+                    showToast('Success', 'The item has been added to your wishlist.');
                     updWishlistSuccess(productId, button);
                 }
             }
@@ -398,15 +399,16 @@ $(document).ready(function () {
                 quantity: 1
             },
             error: function () {
-                alert('Error occurred.');
+                showToast('Failure', 'An error occurred while adding an item to your wishlist.', true);
             },
             success: function (result) {
                 if (result.success == false)
-                    alert(result.errors.toString());
+                    showToast('Failure', result.errors.toString(), true);
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
                     checkWishlistQuantity();
+                    showToast('Success', 'The item has been added to your wishlist.');
 
                     $.ajax({
                         url: '/wishlist/updatewishlistbutton',
