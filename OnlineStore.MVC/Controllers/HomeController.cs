@@ -38,48 +38,30 @@ namespace OnlineStore.MVC.Controllers
 
         [HttpPost]
         [ValidateAjax]
-        public async Task<JsonResult> Subscribe(CreateSubscriberViewModel model)
+        public async Task<IActionResult> Subscribe(CreateSubscriberViewModel model)
         {
             var response = await _subscribersService.Create(model);
 
-            if (response.Success) return Json(new { success = true });
+            if (response.Success) return Ok();
 
-            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
-                return Json(new 
-                { 
-                    success = false, 
-                    errors = response.ValidationErrors
-                        .Select(error => error.ErrorMessage)
-                        .ToArray()
-                });
+            if (response.Status == 400 && response.ValidationErrors.Any())
+                return BadRequest(new { errors = response.ValidationErrors });
 
-            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+            return StatusCode(response.Status, new { errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
         [HttpPost]
         [ValidateAjax]
-        public async Task<JsonResult> SendContactRequest(CreateContactRequestViewModel model)
+        public async Task<IActionResult> SendContactRequest(CreateContactRequestViewModel model)
         {
             var response = await _contactRequestsService.Create(model);
 
-            if (response.Success) return Json(new { success = true });
+            if (response.Success) return Ok();
 
-            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
-                return Json(new
-                {
-                    success = false,
-                    errors = response.ValidationErrors
-                        .Select(error => error.ErrorMessage)
-                        .ToArray()
-                });
+            if (response.Status == 400 && response.ValidationErrors.Any())
+                return BadRequest(new { errors = response.ValidationErrors });
 
-            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return StatusCode(response.Status, new { errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
     }
 }
