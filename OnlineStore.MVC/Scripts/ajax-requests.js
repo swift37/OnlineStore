@@ -28,7 +28,12 @@ $(document).ready(function () {
         }
     };
 
-    const prepareToast = (headline, details) => {
+    const prepareToast = (headline, details, isFail) => {
+        if (isFail)
+            $('#toastNotif .t-icon').removeClass('bx-check').addClass('bx-x');
+        else
+            $('#toastNotif .t-icon').removeClass('bx-x').addClass('bx-check');
+
         $('#toastNotif .headline').text(headline);
         $('#toastNotif .details').text(details);
         $('#toastNotif').addClass('active');
@@ -40,16 +45,16 @@ $(document).ready(function () {
             $('#toastNotif .progress-line').removeAttr('style');
             $('#toastNotif .headline').text('');
             $('#toastNotif .details').text('');
-        }, 5000);
+        }, 500);
     };
 
-    const showToast = async (headline, details) => {
+    const showToast = async (headline, details, isFail) => {
         if (!headline || !details) return;
 
         if ($('#toastNotif').hasClass('active')) {
             $('#toastNotif .progress-line')
                 .queue((next) => {
-                    prepareToast(headline, details);
+                    prepareToast(headline, details, isFail);
                     next();
                 })
                 .animate({ right: '100%' }, 3000)
@@ -58,7 +63,7 @@ $(document).ready(function () {
                     next();
                 });
         } else {
-            prepareToast(headline, details);
+            prepareToast(headline, details, isFail);
             $('#toastNotif .progress-line')
                 .animate({ right: '100%' }, 3000)
                 .queue(async (next) => {
