@@ -28,6 +28,12 @@ $(document).ready(function () {
         }
     };
 
+    const prepareToast = (headline, details) => {
+        $('#toastNotif .headline').text(headline);
+        $('#toastNotif .details').text(details);
+        $('#toastNotif').addClass('active');
+    };
+
     const showToast = async (headline, details) => {
         if (!headline || !details) return;
 
