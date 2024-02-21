@@ -44,8 +44,7 @@
         background-color: #ddd;
     }
 
-        .toast .progress::before {
-            content: '';
+        .toast .progress .progress-line {
             position: absolute;
             bottom: 0;
             right: 0;
@@ -53,16 +52,6 @@
             height: 100%;
             background-color: #000;
         }
-
-        .toast .progress.active::before {
-            animation: progress 5s linear forwards;
-        }
-
-@keyframes progress {
-    100% {
-        right: 100%;
-    }
-}
 
 .toast-content {
     display: flex;
