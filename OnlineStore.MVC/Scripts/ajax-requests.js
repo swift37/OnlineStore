@@ -34,6 +34,15 @@ $(document).ready(function () {
         $('#toastNotif').addClass('active');
     };
 
+    const resetToast = () => {
+        $('#toastNotif').removeClass('active');
+        return setAsyncTimeout(() => {
+            $('#toastNotif .progress-line').removeAttr('style');
+            $('#toastNotif .headline').text('');
+            $('#toastNotif .details').text('');
+        }, 5000);
+    };
+
     const showToast = async (headline, details) => {
         if (!headline || !details) return;
 
