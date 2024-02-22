@@ -465,7 +465,7 @@ $(document).ready(function () {
                 showToast('Failure', response.responseJSON.errors[0].errorMessage, true);
             },
             success: function (result) {
-                    input.val('');
+                input.val('');
                 showToast('Success', 'Newsletter subscription has been succeeded');
             }
         });
@@ -521,7 +521,7 @@ $(document).ready(function () {
             success: function () {
                 fields.each((i, el) => $(el).val(''));
                 showToast('Success', 'Your contact request has been sent successfully');
-                }
+            }
         });
     });
 
@@ -536,7 +536,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/account/reviews/create-review',
             type: 'post',
-            dataType: 'json',
             data:
             {
                 OrderId: $(modal).find('.review-order').val(),
@@ -546,37 +545,26 @@ $(document).ready(function () {
                 Rating: rating
             },
             error: function (response) {
-                response.responseJSON.data.forEach((el) => {
-                    switch (el.key) {
+                response.responseJSON.errors.forEach((el) => {
+                    switch (el.propertyName) {
                         case "Name":
-                            $(modal).find('.review-name-error').css('display', 'block');
-                            $(modal).find('.review-name-error span').text(el.errors);
+                            $(modal).find('.review-name-error').addClass('visible');
+                            $(modal).find('.review-name-error span').text(el.errorMessage);
                             break;
                         case "Content":
-                            $(modal).find('.review-content-error').css('display', 'block');
-                            $(modal).find('.review-content-error span').text(el.errors);
+                            $(modal).find('.review-content-error').addClass('visible');
+                            $(modal).find('.review-content-error span').text(el.errorMessage);
                             break;
                         default:
-                            $(modal).find('.modal-error').css('display', 'block');
-                            $(modal).find('.modal-error span').text(el.errors);
+                            showToast('Failure', el.errorMessage, true);
                             break;
                     }
                 })
             },
-            success: function (result) {
-                if (result.success == true) {
-                    $(modal).find('.modal-succes').css('display', 'block');
-                    setTimeout(function () {
-                        $(modal).find('.modal-succes').css('display', 'none');
-                    }, 2000);
-
-                    $(modal).removeClass('show');
-                    resetModal($(modal));
-                }
-                else {
-                    $(modal).find('.modal-error span').text(result.errors.toSting());
-                    $(modal).find('.modal-error').css('display', 'block');
-                }
+            success: function () {
+                $(modal).removeClass('show');
+                resetModal($(modal));
+                showToast('Success', 'Your review has been posted successfully');
             }
         });
     });
@@ -592,7 +580,6 @@ $(document).ready(function () {
         $.ajax({
             url: '/account/reviews/update-review',
             type: 'put',
-            dataType: 'json',
             data:
             {
                 Id: $(modal).find('.review-identifier').val(),
@@ -600,33 +587,22 @@ $(document).ready(function () {
                 Rating: rating
             },
             error: function (response) {
-                response.responseJSON.data.forEach((el) => {
-                    switch (el.key) {
+                response.responseJSON.errors.forEach((el) => {
+                    switch (el.propertyName) {
                         case "Content":
-                            $(modal).find('.review-content-error').css('display', 'block');
-                            $(modal).find('.review-content-error span').text(el.errors);
+                            $(modal).find('.review-content-error').addClass('visible');
+                            $(modal).find('.review-content-error span').text(el.errorMessage);
                             break;
                         default:
-                            $(modal).find('.modal-error').css('display', 'block');
-                            $(modal).find('.modal-error span').text(el.errors);
+                            showToast('Failure', el.errorMessage, true);
                             break;
                     }
                 })
             },
-            success: function (result) {
-                if (result.success == true) {
-                    $(modal).find('.modal-succes').css('display', 'block');
-                    setTimeout(function () {
-                        $(modal).find('.modal-succes').css('display', 'none');
-                    }, 2000);
-
-                    $(modal).removeClass('show');
-                    resetModal($(modal));
-                }
-                else {
-                    $(modal).find('.modal-error span').text(result.errors.toSting());
-                    $(modal).find('.modal-error').css('display', 'block');
-                }
+            success: function () {
+                $(modal).removeClass('show');
+                resetModal($(modal));
+                showToast('Success', 'Your review has been changed successfully');
             }
         });
     });
