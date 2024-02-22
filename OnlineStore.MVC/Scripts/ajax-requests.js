@@ -451,27 +451,22 @@ $(document).ready(function () {
         let input = $(this).parent().find('input');
         let email = input.val();
         let validatedEmail = validateEmail(email);
-        if (!validatedEmail) return alert('Invalid email address.');
+        if (!validatedEmail)
+            return showToast('Failure', 'Invalid email address', true);
 
         $.ajax({
             url: '/home/subscribe',
             type: 'post',
-            dataType: 'json',
             data:
             {
                 Email: validatedEmail
             },
             error: function (response) {
-                if (response.responseJSON.data[0].key === "Email")
-                    $('#subscribeResponse').text(response.responseJSON.data[0].errors);
-                else
-                    $('#subscribeResponse').text("An error occurred.");
+                showToast('Failure', response.responseJSON.errors[0].errorMessage, true);
             },
             success: function (result) {
-                if (result.success == false)
-                    $('#subscribeResponse').text(result.errors);
-                else
                     input.val('');
+                showToast('Success', 'Newsletter subscription has been succeeded');
             }
         });
     });
@@ -482,30 +477,20 @@ $(document).ready(function () {
         let message = $('#contactMessage').val();
         let validatedEmail = validateEmail(email);
 
-        let error = $('#contactFormError span');
-        let errorName = $('#contactFormNameError span');
-        let errorEmail = $('#contactFormEmailError span');
-        let errorMessage = $('#contactFormMessageError span');
+        let errorAreas = $(this).parent().find('.errors-area');
+        let fields = $(this).parent().find('input, textarea');
 
-        $('#contactFormError').css('display', 'none');
-        $('#contactFormNameError').css('display', 'none');
-        $('#contactFormEmailError').css('display', 'none');
-        $('#contactFormErrorError').css('display', 'none');
-        error.text('');
-        errorName.text('');
-        errorEmail.text('');
-        errorMessage.text('');
+        errorAreas.each((i, el) => {
+            $(el).removeClass('visible');
+            $(el).children('span').text('');
+        });
 
-        if (!validatedEmail || !name || !message) {
-
-            $('#contactFormError').css('display', 'block');
-            return error.text('Invalid data.');
-        }
+        if (!validatedEmail || !name || !message)
+            return showToast('Failure', 'Invalid data has been entered', true);
 
         $.ajax({
             url: '/home/sendcontactrequest',
             type: 'post',
-            dataType: 'json',
             data:
             {
                 ContactName: name,
@@ -513,43 +498,30 @@ $(document).ready(function () {
                 Message: message
             },
             error: function (response) {
-                response.responseJSON.data.forEach((el) => {
-                    switch (el.key) {
+                response.responseJSON.errors.forEach((el) => {
+                    switch (el.propertyName) {
                         case "ContactName":
-                            $('#contactFormNameError').css('display', 'block');
-                            errorName.text(el.errors);
+                            $(errorAreas[0]).addClass('visible');
+                            $(errorAreas[0]).children('span').text(el.errorMessage);
                             break;
                         case "Email":
-                            $('#contactFormEmailError').css('display', 'block');
-                            errorEmail.text(el.errors);
+                            $(errorAreas[1]).addClass('visible');
+                            $(errorAreas[1]).children('span').text(el.errorMessage);
                             break;
                         case "Message":
-                            $('#contactFormMessageError').css('display', 'block');
-                            errorMessage.text(el.errors);
+                            $(errorAreas[2]).addClass('visible');
+                            $(errorAreas[2]).children('span').text(el.errorMessage);
                             break;
                         default:
-                            $('#contactFormError').css('display', 'block');
-                            error.text(el.errors);
+                            showToast('Failure', el.errorMessage, true);
                             break;
                     }
                 })
             },
-            success: function (result) {
-                if (result.success == true) {
-                    $('#contactName').val('');
-                    $('#contactEmail').val('');
-                    $('#contactMessage').val('');
-
-                    $('#contactFormSuccess').css('display', 'block');
-                    setTimeout(function () {
-                        $('#contactFormSuccess').css('display', 'none');
-                    }, 2000);
+            success: function () {
+                fields.each((i, el) => $(el).val(''));
+                showToast('Success', 'Your contact request has been sent successfully');
                 }
-                else {
-                    error.text(result.errors.toSting());
-                    $('#contactFormError').css('display', 'block');
-                }
-            }
         });
     });
 
