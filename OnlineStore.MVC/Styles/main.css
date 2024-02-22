@@ -231,17 +231,25 @@ form {
 
 .errors-area {
     display: none;
-    margin: 10px 0;
+    margin: 5px 0;
     color: #cc0000;
     font-size: 14px;
+    line-height: 24px;
 }
 
-    .errors-area span {
-        margin-left: 5px;
+    .errors-area.visible {
+        display: inline-flex;
+        align-items: flex-start;
+    }
+
+    .errors-area i {
+        font-size: 16px;
+        line-height: 24px;
+        margin-right: 5px;
     }
 
 .field .errors-area {
-    margin: 0;
+    margin: 5px 0 0;
 }
 
 .success-msg {
@@ -1733,12 +1741,6 @@ form {
             .subscribe-section .subscribe-form button:hover {
                 background-color: #27292a;
             }
-
-        .subscribe-section .subscribe-form span {
-            margin: 0.5em 0 0 0.4em;
-            align-self: flex-start;
-            text-align: left;
-        }
 
 @media screen and (max-width: 991px) {
     .subscribe-paragraph {
