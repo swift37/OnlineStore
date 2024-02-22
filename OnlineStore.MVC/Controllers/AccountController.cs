@@ -135,18 +135,12 @@ namespace OnlineStore.MVC.Controllers
         {
             var response = await _reviewsService.Create(model);
 
-            if (response.Success) return Json(new { success = true });
+            if (response.Success) return Ok();
 
-            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
-                return Json(new
-                {
-                    success = false,
-                    errors = response.ValidationErrors
-                        .Select(error => error.ErrorMessage)
-                        .ToArray()
-                });
+            if (response.Status == 400 && response.ValidationErrors.Any())
+                return BadRequest(new { errors = response.ValidationErrors });
 
-            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+            return StatusCode(response.Status, new { errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
         [HttpPut("account/reviews/update-review")]
@@ -156,18 +150,12 @@ namespace OnlineStore.MVC.Controllers
         {
             var response = await _reviewsService.Update(model);
 
-            if (response.Success) return Json(new { success = true });
+            if (response.Success) return Ok();
 
-            if (response.Status == 400 && response.ValidationErrors.Count() > 0)
-                return Json(new
-                {
-                    success = false,
-                    errors = response.ValidationErrors
-                        .Select(error => error.ErrorMessage)
-                        .ToArray()
-                });
+            if (response.Status == 400 && response.ValidationErrors.Any())
+                return BadRequest(new { errors = response.ValidationErrors });
 
-            return Json(new { success = false, errors = new[] { $"An error occurred. Status code: {response.Status}" } });
+            return StatusCode(response.Status, new { errors = new[] { $"An error occurred. Status code: {response.Status}" } });
         }
 
         [HttpGet]
