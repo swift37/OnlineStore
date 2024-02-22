@@ -169,7 +169,7 @@
 
     const resetModal = (modal) => {
         $(modal).find('.errors-area').each((i, el) => {
-            $(el).css('display', 'none');
+            $(el).removeClass('visible');
             $(el).children('span').text('');
         });
 
@@ -193,7 +193,7 @@
             if ($(el).prop('id').slice(6) == $(this).data('rating'))
                 $(el).prop('checked', true);
         });
-        $(modal).find('.review-content').val($(this).closest('.reviewed').find('.full-review').text());
+        $(modal).find('.review-content').val($(this).closest('.reviewed').find('.full-review:first').text());
         $(modal).addClass('show');
     });
 

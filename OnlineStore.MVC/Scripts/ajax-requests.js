@@ -75,7 +75,7 @@ $(document).ready(function () {
 
     const resetModal = (modal) => {
         $(modal).find('.errors-area').each((i, el) => {
-            $(el).css('display', 'none');
+            $(el).removeClass('visible');
             $(el).children('span').text('');
         });
 
@@ -97,11 +97,11 @@ $(document).ready(function () {
                 quantity: qty
             },
             error: function () {
-                showToast('Failure', 'An error occurred while adding an item to your cart.', true);
+                showToast('Failure', 'An error occurred while adding an item to your cart', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    showToast('Failure', 'An error occurred while adding an item to your cart.', true);
+                    showToast('Failure', 'An error occurred while adding an item to your cart', true);
                 }
                 else {
                     $.ajax({
@@ -110,7 +110,7 @@ $(document).ready(function () {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
 
-                            showToast('Success', 'The item has been added to your cart.');
+                            showToast('Success', 'The item has been added to your cart');
                         }
                     });
                 }
@@ -135,11 +135,11 @@ $(document).ready(function () {
                 quantity: $(qtyControl).val()
             },
             error: function () {
-                showToast('Failure', 'An error occurred while adding an item to your cart.', true);
+                showToast('Failure', 'An error occurred while adding an item to your cart', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    showToast('Failure', 'An error occurred while adding an item to your cart.', true);
+                    showToast('Failure', 'An error occurred while adding an item to your cart', true);
                 }
                 else {
                     $.ajax({
@@ -148,7 +148,7 @@ $(document).ready(function () {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
 
-                            showToast('Success', 'The item has been added to your cart.');
+                            showToast('Success', 'The item has been added to your cart');
                         }
                     });
                 }
@@ -175,11 +175,11 @@ $(document).ready(function () {
                 items: items
             },
             error: function () {
-                showToast('Failure', 'An error occurred while adding items to your cart.', true);
+                showToast('Failure', 'An error occurred while adding items to your cart', true);
             },
             success: function (result) {
                 if (result.success == false) {
-                    showToast('Failure', 'An error occurred while adding items to your cart.', true);
+                    showToast('Failure', 'An error occurred while adding items to your cart', true);
                 }
                 else {
                     $.ajax({
@@ -188,7 +188,7 @@ $(document).ready(function () {
                             $('#userHub .mini-cart-component').replaceWith(data);
                             checkCartQuantity();
 
-                            showToast('Success', 'Items have been added to your cart.');
+                            showToast('Success', 'Items have been added to your cart');
                         }
                     });
                 }
@@ -343,7 +343,7 @@ $(document).ready(function () {
                 else {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
-                    showToast('Success', 'The item has been added to your wishlist.');
+                    showToast('Success', 'The item has been added to your wishlist');
                     updWishlistSuccess(productId, button);
                 }
             }
@@ -399,7 +399,7 @@ $(document).ready(function () {
                 quantity: 1
             },
             error: function () {
-                showToast('Failure', 'An error occurred while adding an item to your wishlist.', true);
+                showToast('Failure', 'An error occurred while adding an item to your wishlist', true);
             },
             success: function (result) {
                 if (result.success == false)
@@ -408,7 +408,7 @@ $(document).ready(function () {
                     let newQty = parseInt($('#wishlistQuantity').text()) + 1;
                     $('#wishlistQuantity').text(newQty);
                     checkWishlistQuantity();
-                    showToast('Success', 'The item has been added to your wishlist.');
+                    showToast('Success', 'The item has been added to your wishlist');
 
                     $.ajax({
                         url: '/wishlist/updatewishlistbutton',
