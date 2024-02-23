@@ -129,6 +129,14 @@ namespace OnlineStore.MVC.Controllers
             return View(model);
         }
 
+        [HttpGet("account/reviews/reload-list")]
+        public IActionResult UpdateUserReviews() => 
+            ViewComponent("UserReviewsList");
+
+        [HttpGet("account/reviews/reload-awaiting-list")]
+        public IActionResult UpdateOrdersAwaitingReview() => 
+            ViewComponent("OrdersAwaitingReviewList");
+
         [HttpPost("account/reviews/create-review")]
         [ValidateAjax]
         public async Task<IActionResult> CreateReview(CreateReviewViewModel model)
