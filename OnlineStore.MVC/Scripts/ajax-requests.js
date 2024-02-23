@@ -83,7 +83,7 @@ $(document).ready(function () {
         $(modal).find('input, textarea').each((i, el) => $(el).val(''));
     }
 
-    const productToCart = () => {
+    const productToCart = (e) => {
         let qty = $('#productQuantity').val();
         if (!qty) qty = 1;
 
@@ -93,7 +93,7 @@ $(document).ready(function () {
             dataType: 'json',
             data:
             {
-                productId: $(this).data('itemid'),
+                productId: $(e.currentTarget).data('itemid'),
                 quantity: qty
             },
             error: function () {
