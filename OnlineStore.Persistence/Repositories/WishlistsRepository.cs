@@ -47,7 +47,7 @@ namespace OnlineStore.DAL.Repositories
             var wishlist = await GetOrCreateAsync(userId, cancellation).ConfigureAwait(false);
             if (wishlist is null)
                 throw new Exception("An error occurred when obtaining the wishlist.");
-            if (wishlist.Items.Any(item => item.ProductId == item.ProductId))
+            if (wishlist.Items.Any(i => i.ProductId == item.ProductId))
                 throw new Exception("This product is already in your wishlist.");
 
             wishlist.LastChangeDate = DateTime.UtcNow;
