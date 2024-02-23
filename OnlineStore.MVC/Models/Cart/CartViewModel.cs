@@ -12,7 +12,9 @@ namespace OnlineStore.MVC.Models.Cart
 
         public decimal Discount => Items.Sum(i => i.Discount);
 
-        public bool IsEmpty => Items.Count < 1;
+        public decimal Total => Subtotal - Discount;
+
+        public bool IsEmpty => !Items.Any();
     }
 
     public class CartItemViewModel
@@ -24,7 +26,7 @@ namespace OnlineStore.MVC.Models.Cart
         public int Quantity { get; set; }
 
         public decimal Subtotal => 
-            Product is { } ? Product.PriceAfterDiscount * Quantity : default;
+            Product is { } ? Product.UnitPrice * Quantity : default;
 
         public decimal Discount =>
             Product is { } ? Product.Discount * Quantity : default;

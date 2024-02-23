@@ -73,5 +73,9 @@ namespace OnlineStore.MVC.Models.Order
         public decimal UnitPrice { get; set; }
 
         public decimal Discount { get; set; }
+
+        public decimal Subtotal => UnitPrice * Quantity;
+
+        public decimal Total => (UnitPrice - Discount) * Quantity;
     }
 }
