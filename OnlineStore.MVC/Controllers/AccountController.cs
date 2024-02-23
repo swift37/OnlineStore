@@ -165,12 +165,15 @@ namespace OnlineStore.MVC.Controllers
 
             if (!response.Success) return StatusCode(response.Status);
 
-            var orders = response.Data.GroupBy(o => o.CreationDate.ToString("MMMM yyyy")).AsEnumerable();
+            var orders = response.Data
+                .OrderByDescending(g => g.CreationDate)
+                .GroupBy(o => o.CreationDate.ToString("MMMM yyyy"))
+                .AsEnumerable();
 
             return View(orders);
         }
 
-        [HttpGet]
+        [HttpGet("account/order-details/{orderNumber}")]
         public async Task<IActionResult> OrderDetails(string orderNumber)
         {
             var response = await _ordersService.Get(orderNumber);
