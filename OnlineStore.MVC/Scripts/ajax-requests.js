@@ -525,7 +525,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#createReviewBtn').click(function () {
+    $('.content-box.reviews').on('click', '#createReviewBtn', function () {
         let modal = $(this).closest('.modal-container');
         let rating = 0;
         $(modal).find('.review-rating input').each((i, el) => {
@@ -564,12 +564,27 @@ $(document).ready(function () {
             success: function () {
                 $(modal).removeClass('show');
                 resetModal($(modal));
+
                 showToast('Success', 'Your review has been posted successfully');
+
+                $.ajax({
+                    url: '/account/reviews/reload-awaiting-list',
+                    success: function (data) {
+                        $('#awaitRevList').replaceWith(data);
+                    }
+                });
+
+                $.ajax({
+                    url: '/account/reviews/reload-list',
+                    success: function (data) {
+                        $('#userRevList').replaceWith(data);
+                    }
+                });
             }
         });
     });
 
-    $('#updateReviewBtn').click(function () {
+    $('.content-box.reviews').on('click', '#updateReviewBtn', function () {
         let modal = $(this).closest('.modal-container');
         let rating = 0;
         $(modal).find('.review-rating input').each((i, el) => {
@@ -602,7 +617,15 @@ $(document).ready(function () {
             success: function () {
                 $(modal).removeClass('show');
                 resetModal($(modal));
+
                 showToast('Success', 'Your review has been changed successfully');
+
+                $.ajax({
+                    url: '/account/reviews/reload-list',
+                    success: function (data) {
+                        $('#userRevList').replaceWith(data);
+                    }
+                });
             }
         });
     });
