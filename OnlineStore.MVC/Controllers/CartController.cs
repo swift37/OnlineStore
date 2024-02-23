@@ -98,13 +98,12 @@ namespace OnlineStore.MVC.Controllers
         public async Task<IActionResult> Checkout(bool useUnauthCart = false)
         {
             var cart = useUnauthCart ? _cartStorage.GetUnauthCart() : _cartStorage.Cart;
-
             if (cart is null) return NotFound();
 
             foreach (var item in cart.Items)
                 item.Product = (await _productsService.Get(item.ProductId)).Data;
 
-            var model = new CheckoutViewModel() { Cart = cart };
+            var model = new CheckoutViewModel() { Cart = cart, UseUnauthCart = useUnauthCart };
 
             return View(model);
         }
@@ -114,7 +113,9 @@ namespace OnlineStore.MVC.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var cart = _cartStorage.Cart!;
+            var cart = model.UseUnauthCart ? _cartStorage.GetUnauthCart() : _cartStorage.Cart;
+            if (cart is null) return NotFound();
+
             var order = model.Order;
 
             foreach (var item in cart.Items)
