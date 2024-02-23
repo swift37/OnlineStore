@@ -47,7 +47,8 @@ namespace OnlineStore.DAL.Repositories
         public async Task<IEnumerable<Order>> GetUserOrdersAwaitingReviewAsync(
             Guid userId,
             CancellationToken cancellation = default) => await Entities
-            .Where(o => o.UserId == userId)
+            .Where(o => o.UserId == userId && o.Items
+                .Any(i => !i.Product!.Reviews.Any(r => r.UserId == userId)))
             .Include(o => o.Items
                 .Where(i => !i.Product!.Reviews.Any(r => r.UserId == userId)))
             .ToArrayAsync(cancellation)
