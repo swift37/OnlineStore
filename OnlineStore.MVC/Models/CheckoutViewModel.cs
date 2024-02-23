@@ -8,5 +8,7 @@ namespace OnlineStore.MVC.Models
         public CartViewModel Cart { get; set; } = new();
 
         public CreateOrderViewModel Order { get; set; } = new();
+
+        public bool UseUnauthCart { get; set; }
     }
 }
