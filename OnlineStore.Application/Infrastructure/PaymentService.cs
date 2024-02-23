@@ -31,15 +31,18 @@ namespace OnlineStore.Application.Infrastructure
 
             foreach (var item in order.Items)
             {
+                if (item.Product is null)
+                    throw new MissingMemberException("One of the ordered products has been missed during payment preparation. The operation has been canceled.");
+
                 options.LineItems.Add(new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmountDecimal = item.Product?.UnitPrice * 100,
+                        UnitAmountDecimal = (item.Product.UnitPrice - item.Discount) * 100,
                         Currency = "USD",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = item.Product?.Name,
+                            Name = item.Product.Name,
                         }
                     },
                     Quantity = item.Quantity
