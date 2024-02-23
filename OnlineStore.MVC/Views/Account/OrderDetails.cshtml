@@ -110,7 +110,7 @@
                                         <span>x @item.Quantity pcs.</span>
                                     </div>
                                     <div class="line-price">
-                                        <span>@((item.UnitPrice * item.Quantity).ToString("C"))</span>
+                                        <span>@item.Total.ToString("C")</span>
                                     </div>
                                 </div>
                             </div>

@@ -79,6 +79,7 @@
                                 </p>
                             </div>
                         </div>
+                        <input type="hidden" asp-for="UseUnauthCart" />
                         <div class="primary-checkout">
                             <button class="button black" type="submit">Place And Pay</button>
                         </div>
@@ -99,11 +100,11 @@
                                 </li>
                                 <li>
                                     <span>Shipping: Flat</span>
-                                    <span>$10.00</span>
+                                    <span>$0.00</span>
                                 </li>
                                 <li>
                                     <span>Total</span>
-                                    <strong>@Model.Cart.Subtotal.ToString("C")</strong>
+                                    <strong>@Model.Cart.Total.ToString("C")</strong>
                                 </li>
                             </ul>
                         </div>
