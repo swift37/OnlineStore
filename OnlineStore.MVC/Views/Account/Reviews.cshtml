@@ -10,7 +10,7 @@
         <div class="acc-wrapper">
             @await Component.InvokeAsync("AccountMenu", new { id = 2 })
             <div class="acc-content">
-                <div class="content-box">
+                <div class="content-box reviews">
                     <a class="back-to-menu" asp-controller="Account" asp-action="Index">
                         <i class='bx bx-chevron-left'></i>
                         <span>Back</span>
@@ -24,150 +24,9 @@
                         <partial name="_CreateReviewModal" />
                         <partial name="_UpdateReviewModal" />
 
-                        @if (Model.HasOrdersAwaitingReview)
-                        {
-                            <div class="reviews-list">
-                                <div class="reviews-list-header">
-                                    Awaiting review <span>(@Model.OrdersAwaitingReview.Count())</span>
-                                </div>
-                                @foreach (var order in Model.OrdersAwaitingReview)
-                                    foreach (var item in order.Items)
-                                    {
-                                        <div class="awaiting-review">
-                                            <div class="reviews-list-line">
-                                                <div class="left-part">
-                                                    <div class="line-image">
-                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
-                                                            <img src="@item.Product?.Image" alt="Image">
-                                                        </a>
-                                                    </div>
-                                                    <div class="line-content">
-                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
-                                                            @item.Product?.Name
-                                                        </a>
-                                                        <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id">
-                                                            Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="right-part">
-                                                    <div class="line-content">
-                                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
-                                                            @item.Product?.Name
-                                                        </a>
-                                                        <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id">
-                                                            Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
-                                                        </a>
-                                                    </div>
-                                                    <button class="button black outlined create-review-btn"
-                                                            data-orderid="@order.Id"
-                                                            data-productid="@item.ProductId">
-                                                        Write review
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                            </div>
-                        }
+                        @await Component.InvokeAsync("OrdersAwaitingReviewList")
 
-                        @if (Model.HasReviews)
-                        { 
-                            <div class="reviews-list">
-                                <div class="reviews-list-header">
-                                    Your reviews <span>(@Model.Reviews.Count())</span>
-                                </div>
-                                @foreach (var review in Model.Reviews)
-                                {
-                                    <div class="reviewed acc">
-                                        <div class="reviews-list-line">
-                                            <div class="left-part">
-                                                <div class="box-image">
-                                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
-                                                        <img src="@review.Product?.Image" alt="Image">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="right-part">
-                                                <div class="line-head">
-                                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
-                                                        @review.Product?.Name
-                                                    </a>
-                                                    @if (review.OrderId > 0)
-                                                    {
-                                                        <span class="from-us">
-                                                            Purchased from us
-                                                            <i class='bx bxs-badge-check'></i>
-                                                        </span>
-                                                    }
-                                                </div>
-                                                <div class="line-rating">
-                                                    <div class="stars">
-                                                        @for (int i = 0; i < review.Rating; i++)
-                                                        {
-                                                            <i class='bx bxs-star'></i>
-                                                        }
-                                                        @for (int i = 5; i > review.Rating; i--)
-                                                        {
-                                                            <i class='bx bxs-star empty-star'></i>
-                                                        }
-                                                    </div>
-                                                    <span class="date">
-                                                        @review.CreationDate.ToString("MMMM dd, yyyy")
-                                                    </span>
-                                                </div>
-                                                <div class="line-content">
-                                                    @if (review.Content?.Length < 285)
-                                                    {
-                                                        <span class="full-review">@review.Content</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="full-review" hidden>@review.Content</span>
-                                                        <span class="short-review">@review.Content?.Substring(0, 285)</span>
-                                                        <span class="more">... More</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div class="bottom-content">
-                                                <div class="line-rating">
-                                                    <div class="stars">
-                                                        @for (int i = 0; i < review.Rating; i++)
-                                                        {
-                                                            <i class='bx bxs-star'></i>
-                                                        }
-                                                        @for (int i = 5; i > review.Rating; i--)
-                                                        {
-                                                            <i class='bx bxs-star empty-star'></i>
-                                                        }
-                                                    </div>
-                                                    <span class="date">
-                                                        @review.CreationDate.ToString("MMMM dd, yyyy")
-                                                    </span>
-                                                </div>
-                                                <div class="line-content">
-                                                    @if (review.Content?.Length < 285)
-                                                    {
-                                                        <span class="full-review">@review.Content</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="full-review" hidden>@review.Content</span>
-                                                        <span class="short-review">@review.Content?.Substring(0, 285)</span>
-                                                        <span class="more">... More</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <button class="button black outlined update-review-btn"
-                                                    data-reviewid="@review.Id"
-                                                    data-rating="@review.Rating">
-                                                Edit Review
-                                            </button>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        }
+                        @await Component.InvokeAsync("UserReviewsList")
                     }
                     else
                     {
