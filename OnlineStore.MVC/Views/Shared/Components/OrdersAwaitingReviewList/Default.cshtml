@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Order.OrderViewModel>
+
+@if (Model.Any())
+{
+    <div id="awaitRevList" class="reviews-list">
+        <div class="reviews-list-header">
+            Awaiting review <span>(@Model.Count())</span>
+        </div>
+        @foreach (var order in Model)
+            foreach (var item in order.Items)
+            {
+                <div class="awaiting-review">
+                    <div class="reviews-list-line">
+                        <div class="left-part">
+                            <div class="line-image">
+                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                    <img src="@item.Product?.Image" alt="Image">
+                                </a>
+                            </div>
+                            <div class="line-content">
+                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                    @item.Product?.Name
+                                </a>
+                                <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number">
+                                    Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
+                                </a>
+                            </div>
+                        </div>
+                        <div class="right-part">
+                            <div class="line-content">
+                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Product?.Id">
+                                    @item.Product?.Name
+                                </a>
+                                <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number">
+                                    Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
+                                </a>
+                            </div>
+                            <button 
+                                class="button black outlined create-review-btn"
+                                data-orderid="@order.Id"
+                                data-productid="@item.ProductId">
+                                Write review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+    </div>
+}
