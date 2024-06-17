@@ -15,9 +15,9 @@ namespace OnlineStore.Domain.Entities
 
         public Order? Order { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+        public DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
 
         public string? Name { get; set; }
 

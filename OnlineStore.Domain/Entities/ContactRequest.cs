@@ -10,9 +10,9 @@ namespace OnlineStore.Domain.Entities
 
         public string? Message { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime? ResponseDate { get; set; }
+        public DateTimeOffset? ResponseDate { get; set; }
 
         public bool IsConsidered { get; set; }
     }

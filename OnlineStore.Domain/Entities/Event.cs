@@ -4,9 +4,9 @@ namespace OnlineStore.Domain.Entities
 {
     public class Event : NamedEntity
     {
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        public DateTime FinishDate { get; set; }
+        public DateTimeOffset FinishDate { get; set; }
 
         public string? Description { get; set; }
 

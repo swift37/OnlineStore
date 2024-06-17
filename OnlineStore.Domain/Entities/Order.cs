@@ -14,15 +14,19 @@ namespace OnlineStore.Domain.Entities
 
         public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>();
 
-        public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
+        public OrderStatus Status { get; set; } = OrderStatus.ToPay;
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreatingDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime? PayDate { get; set; }
+        public DateTimeOffset? PaymentDate { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
 
-        public string? PaymentMethod { get; set; }
+        public DateTimeOffset? DeliveryDate { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public PaymentMethod? PaymentMethod { get; set; }
 
         public string? PaymentSession { get; set; }
 
@@ -36,7 +40,9 @@ namespace OnlineStore.Domain.Entities
 
         public decimal Total { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public int? ShippingMethodId { get; set; }
+
+        public ShippingMethod? ShippingMethod { get; set; }
 
         public string? TrackingNumber { get; set; }
 

@@ -6,9 +6,9 @@ namespace OnlineStore.Domain.Entities
     {
         public Guid UserId { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+        public DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
 
         public ICollection<WishlistItem> Items { get; set; } = new HashSet<WishlistItem>();
     }

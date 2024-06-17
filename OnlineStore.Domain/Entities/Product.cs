@@ -1,9 +1,12 @@
-﻿using OnlineStore.Domain.Base;
+using OnlineStore.Domain.Base;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Domain.Entities
 {
     public class Product : NamedEntity
     {
+        public decimal UnitCost { get; set; }
+
         public decimal UnitPrice { get; set; }
 
         public decimal Discount { get; set; }
@@ -19,6 +22,8 @@ namespace OnlineStore.Domain.Entities
         public Category? Category { get; set; }
 
         public ICollection<Specification> Specifications { get; set; } = new HashSet<Specification>();
+        
+        public ICollection<ProductTag> Tags { get; set; } = new HashSet<ProductTag>();
 
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
@@ -28,12 +33,8 @@ namespace OnlineStore.Domain.Entities
 
         public string? StoreCode { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public ProductStatus Status { get; set; }
 
-        public bool IsNewProduct { get; set; }
-
-        public bool IsSale { get; set; }
-
-        public bool IsFeaturedProduct { get; set; }
+        public ProductAvailability Availability { get; set; }
     }
 }
