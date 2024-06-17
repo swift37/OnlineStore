@@ -3,69 +3,92 @@
 <div class="hub-component account-component">
     <div class="component-trigger">
         <div class="icon-container">
-            <img src="~/resources/icons/user.png" width="20" alt="Account">
+            <img src="~/resources/svg-icons/user.svg" alt="Account">
         </div>
     </div>
 
-    <div class="dropdown-menu">
-        <header class="dropdown-head">
-            <h3>Your account</h3>
-            <button class="ac-close">
-                <i class='bx bx-x'></i>
-            </button>
-        </header>
-        @if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <h3>
-                @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
-                @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br />
-                <span>Developer</span>
-            </h3>
-            <ul>
-                <li>
-                    <a asp-controller="Account" asp-action="Index">
-                        <i class='bx bx-id-card'></i>
-                        Account
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Account" asp-action="Orders">
-                        <i class='bx bx-layer'></i>
-                        Orders
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Account" asp-action="Reviews">
-                        <i class='bx bx-message-square-dots'></i>
-                        Reviews
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Wishlist" asp-action="Index">
-                        <i class='bx bx-heart'></i>
-                        Wishlist
-                    </a>
-                </li>
-                <li>
+    <div class="dropdown-container">
+        <div class="dropdown-menu">
+            <header class="dropdown-head">
+                <h3>Your account</h3>
 
-                    <a asp-controller="Account" asp-action="Settings">
-                        <i class='bx bx-cog'></i>
-                        Settings & Privacy
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Auth" asp-action="Logout">
-                        <i class='bx bx-log-out'></i>
+                <button class="ac-close">
+                    <i class="icon" data-feather="x"></i>
+                </button>
+            </header>
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="current-user">
+                    <span>Hello,</span>
+
+                    <h3>
+                        @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value
+                        @User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value <br />
+                    </h3>
+                </div>
+
+                <div class="menu-links">
+                    <ul>
+                        <li>
+                            <a asp-controller="Account" asp-action="Index">
+                                <img class="icon" src="~/resources/svg-icons/user.svg" />
+
+                                <p class="text">Account</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Orders">
+                                <img class="icon" src="~/resources/svg-icons/orders.svg" />
+
+                                <p class="text">Orders</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Reviews">
+                                <img class="icon" src="~/resources/svg-icons/review.svg" />
+
+                                <p class="text">Reviews</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Wishlist" asp-action="Index">
+                                <img class="icon" src="~/resources/svg-icons/heart.svg" />
+
+                                <p class="text">Wishlist</p>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a asp-controller="Account" asp-action="Settings">
+                                <img class="icon" src="~/resources/svg-icons/cog.svg" />
+
+                                <p class="text">Settings & Privacy</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bottom-content">
+                    <a class="logout-btn" asp-controller="Auth" asp-action="Logout">
                         Logout
                     </a>
-                </li>
-            </ul>
-        }
-        else
-        {
-            <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
-            <div class="separator">Or</div>
-            <a asp-controller="Auth" asp-action="Register" class="button black">Sign Up</a>
-        }
+                </div>
+            }
+            else
+            {
+                <div class="unauth">
+                    <a asp-controller="Auth" asp-action="Login" class="button black">Sign In</a>
+
+                    <div class="separator">Don't have an account?</div>
+
+                    <a asp-controller="Auth" asp-action="Register" class="button">Sign Up</a>
+                </div>
+            }
+        </div>
     </div>
 </div>
