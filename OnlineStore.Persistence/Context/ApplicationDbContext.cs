@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿ using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.DAL.EntityTypeConfigurations;
 using OnlineStore.Domain.Entities;
@@ -8,7 +8,10 @@ namespace OnlineStore.DAL.Context
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        {
+            ChangeTracker.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -26,6 +29,9 @@ namespace OnlineStore.DAL.Context
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
         public DbSet<FiltersGroup> FilterGroups { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; } 
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<ShippingMethod> ShippingMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,6 +50,9 @@ namespace OnlineStore.DAL.Context
             builder.ApplyConfiguration(new MenuItemConfiguration());
             builder.ApplyConfiguration(new NestedMenuItemConfiguration());
             builder.ApplyConfiguration(new FiltersGroupConfiguration());
+            builder.ApplyConfiguration(new ProductTagConfiguration());
+            builder.ApplyConfiguration(new ShippingMethodConfiguration());
+            builder.ApplyConfiguration(new PaymentMethodConfiguration());
             base.OnModelCreating(builder);
         }
     }

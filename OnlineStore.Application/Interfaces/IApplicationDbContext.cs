@@ -21,6 +21,9 @@ namespace OnlineStore.Application.Interfaces
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
         public DbSet<FiltersGroup> FilterGroups { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<ShippingMethod> ShippingMethods { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class; 
 
