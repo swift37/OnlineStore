@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using OnlineStore.Application.Interfaces.Repositories;
+using OnlineStore.Domain.Enums;
 using System.Text.RegularExpressions;
 
 namespace OnlineStore.Application.DTOs.Order.Validation
@@ -20,9 +21,6 @@ namespace OnlineStore.Application.DTOs.Order.Validation
             RuleFor(o => o.Phone)
                 .MaximumLength(15)
                 .Matches(new Regex("^\\+?[1-9][0-9]{7,14}$"));
-
-            RuleFor(o => o.ShippingCost)
-                .GreaterThanOrEqualTo(0);
 
             RuleFor(o => o.Country)
                 .MaximumLength(32);
@@ -82,7 +80,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
             context.MessageFormatter
                 .AppendArgument("ProductName", product.Name);
 
-            return product.IsAvailable;
+            return product.Availability == ProductAvailability.Available;
         }
 
         public async Task<bool> CheckItemAvailability(
