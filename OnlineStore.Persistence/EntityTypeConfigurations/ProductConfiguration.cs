@@ -11,6 +11,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
         {
             base.Configure(builder);
             builder.Property(product => product.Name).HasMaxLength(32);
+            builder.Property(product => product.UnitCost).HasColumnType("decimal(18,2)");
             builder.Property(product => product.UnitPrice).HasColumnType("decimal(18,2)");
             builder.Property(product => product.Discount).HasColumnType("decimal(18,2)");
             builder.Property(product => product.Manufacturer).HasMaxLength(32);
@@ -24,7 +25,11 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder
                 .HasMany(product => product.Specifications)
                 .WithMany(specification => specification.Products);
+            builder
+                .HasMany(product => product.Tags)
+                .WithMany(tag => tag.Products);
             builder.Navigation(product => product.Specifications).AutoInclude();
+            builder.Navigation(product => product.Tags).AutoInclude();
         }
     }
 }

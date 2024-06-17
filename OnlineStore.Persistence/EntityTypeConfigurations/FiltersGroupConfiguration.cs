@@ -10,6 +10,10 @@ namespace OnlineStore.Persistence.EntityTypeConfigurations
         public override void Configure(EntityTypeBuilder<FiltersGroup> builder)
         {
             base.Configure(builder);
+            builder.Ignore(filtersGroup => filtersGroup.MinPrice);
+            builder.Ignore(filtersGroup => filtersGroup.MaxPrice);
+            builder.Ignore(filtersGroup => filtersGroup.AppliedMinPrice);
+            builder.Ignore(filtersGroup => filtersGroup.AppliedMaxPrice);
             builder
                 .HasOne(filtersGroup => filtersGroup.Category)
                 .WithOne()
