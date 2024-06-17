@@ -1,7 +1,7 @@
 ﻿<button class="@(ViewBag.ItemId > 0 ? "from-wl" : "to-wl")"
         data-itemid="@ViewBag.ItemId"
         data-productid="@ViewBag.ProductId">
-    <img src="~/resources/icons/heart@(ViewBag.ItemId > 0 ? null : "-outlined").png" />
+    <img src="~/resources/svg-icons/@(ViewBag.ItemId > 0 ? "in" : "to")-wishlist.svg" />
     @if (!string.IsNullOrEmpty(ViewBag.Text))
     {
         <span>@ViewBag.Text</span>
