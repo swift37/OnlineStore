@@ -23,7 +23,7 @@ namespace OnlineStore.DAL.Repositories
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellation = default) => 
-            await Entities.ToArrayAsync(cancellation).ConfigureAwait(false);
+            await Entities.AsNoTracking().ToArrayAsync(cancellation).ConfigureAwait(false);
 
 
         public async Task<bool> ExistsAsync(int id, CancellationToken cancellation = default) => 
