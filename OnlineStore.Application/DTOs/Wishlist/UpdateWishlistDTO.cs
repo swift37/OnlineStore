@@ -6,7 +6,7 @@ namespace OnlineStore.Application.DTOs.Wishlist
 {
     public class UpdateWishlistDTO : BaseDTO, IMapWith<Domain.Entities.Wishlist>
     {
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+        public DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
 
         public ICollection<UpdateWishlistItemDTO> Items { get; set; } = new HashSet<UpdateWishlistItemDTO>();
 

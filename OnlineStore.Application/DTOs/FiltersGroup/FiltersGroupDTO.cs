@@ -12,6 +12,14 @@ namespace OnlineStore.Application.DTOs.FiltersGroup
 
         public CategoryDTO? Category { get; set; }
 
+        public int MinPrice { get; set; }
+
+        public int MaxPrice { get; set; }
+
+        public int AppliedMinPrice { get; set; }
+
+        public int AppliedMaxPrice { get; set; }
+
         public ICollection<SpecificationTypeDTO> SpecificationTypes { get; set; } = new HashSet<SpecificationTypeDTO>();
 
         public void Mapping(Profile profile) =>

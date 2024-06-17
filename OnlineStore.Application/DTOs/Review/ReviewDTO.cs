@@ -16,9 +16,9 @@ namespace OnlineStore.Application.DTOs.Review
 
         public OrderDTO? Order { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
 
-        public DateTime LastChangeDate { get; set; }
+        public DateTimeOffset LastChangeDate { get; set; }
 
         public string? Name { get; set; }
 

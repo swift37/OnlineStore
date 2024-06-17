@@ -8,9 +8,9 @@ namespace OnlineStore.Application.DTOs.Coupon
     {
         public string? Number { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        public DateTime? FinishDate { get; set; }
+        public DateTimeOffset? FinishDate { get; set; }
 
         public decimal DiscountSize { get; set; }
 

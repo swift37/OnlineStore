@@ -8,7 +8,7 @@ namespace OnlineStore.Application.DTOs.Subscriber
     {
         public string? Email { get; set; }
 
-        public DateTime SubscribeDate { get; set; }
+        public DateTimeOffset SubscribeDate { get; set; }
 
         public bool IsActive { get; set; }
 

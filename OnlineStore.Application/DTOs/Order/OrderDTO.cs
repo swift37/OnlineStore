@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.PaymentMethod;
 using OnlineStore.Application.DTOs.Product;
+using OnlineStore.Application.DTOs.ShippingMethod;
 using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Enums;
 
@@ -12,15 +14,19 @@ namespace OnlineStore.Application.DTOs.Order
 
         public ICollection<OrderItemDTO> Items { get; set; } = new HashSet<OrderItemDTO>();
 
-        public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
+        public OrderStatus Status { get; set; } = OrderStatus.ToPay;
 
-        public DateTime CreationDate { get; set; }
+        public DateTimeOffset CreatingDate { get; set; }
 
-        public DateTime? PayDate { get; set; }
+        public DateTimeOffset? PaymentDate { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
 
-        public string? PaymentMethod { get; set; }
+        public DateTimeOffset? DeliveryDate { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public PaymentMethodDTO? PaymentMethod { get; set; }
 
         public string? PaymentSession { get; set; }
 
@@ -34,7 +40,9 @@ namespace OnlineStore.Application.DTOs.Order
 
         public decimal Total { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public int? ShippingMethodId { get; set; }
+
+        public ShippingMethodDTO? ShippingMethod { get; set; }
 
         public string? TrackingNumber { get; set; }
 

@@ -8,7 +8,7 @@ namespace OnlineStore.Application.DTOs.Order
     {
         public ICollection<CreateOrderItemDTO> Items { get; set; } = new HashSet<CreateOrderItemDTO>();
 
-        public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
+        public OrderStatus Status { get; set; } = OrderStatus.ToPay;
 
         public string? FirstName { get; set; }
 
@@ -18,7 +18,9 @@ namespace OnlineStore.Application.DTOs.Order
 
         public string? Email { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public int? PaymentMethodId { get; set; }
+
+        public int? ShippingMethodId { get; set; }
 
         public string? Country { get; set; }
 

@@ -12,9 +12,9 @@ namespace OnlineStore.Application.DTOs.ContactRequest
 
         public string? Message { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
 
-        public DateTime? ResponseDate { get; set; }
+        public DateTimeOffset? ResponseDate { get; set; }
 
         public bool IsConsidered { get; set; }
 

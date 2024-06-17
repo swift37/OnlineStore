@@ -7,9 +7,9 @@ namespace OnlineStore.Application.DTOs.Wishlist
 {
     public class WishlistDTO : BaseDTO, IMapWith<Domain.Entities.Wishlist>
     {
-        public DateTime CreationDate { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
 
-        public DateTime LastChangeDate { get; set; }
+        public DateTimeOffset LastChangeDate { get; set; }
 
         public ICollection<WishlistItemDTO> Items { get; set; } = new HashSet<WishlistItemDTO>();
 

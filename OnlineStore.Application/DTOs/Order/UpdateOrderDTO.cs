@@ -9,7 +9,9 @@ namespace OnlineStore.Application.DTOs.Order
     {
         public OrderStatus Status { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
+
+        public DateTimeOffset? DeliveryDate { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -21,7 +23,9 @@ namespace OnlineStore.Application.DTOs.Order
 
         public decimal Total { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public int? PaymentMethodId { get; set; }
+
+        public int? ShippingMethodId { get; set; }
 
         public string? TrackingNumber { get; set; }
 
