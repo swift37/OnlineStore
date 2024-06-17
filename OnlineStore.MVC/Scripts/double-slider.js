@@ -1,6 +1,13 @@
-﻿const rangeInputs = document.querySelectorAll('.range-inputs input')
-const rangeSliders = document.querySelectorAll('.range-sliders input')
-const rangeBar = document.querySelector('.double-slider .range')
+﻿const sliderContainer = document.querySelector('.d-slider-container');
+let rangeInputs = document.querySelectorAll('.range-inputs input');
+let rangeSliders = document.querySelectorAll('.range-sliders input');
+let rangeBar = document.querySelector('.double-slider .range');
+
+const updateSelectors = () => {
+	rangeInputs = document.querySelectorAll('.range-inputs input');
+	rangeSliders = document.querySelectorAll('.range-sliders input');
+	rangeBar = document.querySelector('.double-slider .range');
+}
 
 const validateInputs = e => {
 	let minValue = parseInt(rangeInputs[0].value)
@@ -15,30 +22,37 @@ const validateInputs = e => {
 		rangeInputs.forEach(input => input.style.borderColor = '#aaa');
 }
 
-rangeInputs.forEach(input =>
-	input.addEventListener('input', e => {
-		validateInputs(e)
+const rangeInputsCallback = (e) => {
+	validateInputs(e)
 
-		if (e.target.id === 'minPriceInput') {
-			rangeSliders[0].value = rangeInputs[0].value
-			rangeBar.style.left =
-				(rangeInputs[0].value / rangeSliders[0].max) * 100 + '%'
-		} else {
-			rangeSliders[1].value = rangeInputs[1].value
-			rangeBar.style.right =
-				100 - (rangeInputs[1].value / rangeSliders[1].max) * 100 + '%'
-		}
-	})
-)
+	if (e.target.id === 'minPriceInput') {
+		rangeSliders[0].value = rangeInputs[0].value
+		rangeBar.style.left =
+			(rangeInputs[0].value / rangeSliders[0].max) * 100 + '%'
+	} else {
+		rangeSliders[1].value = rangeInputs[1].value
+		rangeBar.style.right =
+			100 - (rangeInputs[1].value / rangeSliders[1].max) * 100 + '%'
+	}
+};
 
-rangeSliders.forEach(slider =>
-	slider.addEventListener('input', e => {
-		if (e.target.id === 'minPrice') {
-			rangeInputs[0].value = rangeSliders[0].value
-			rangeInputs[0].dispatchEvent(new Event('input'))
-		} else {
-			rangeInputs[1].value = rangeSliders[1].value
-			rangeInputs[1].dispatchEvent(new Event('input'))
-		}
-	})
-)
+const rangeSlidersCallback = (e) => {
+	if (e.target.id === 'minPrice') {
+		rangeInputs[0].value = rangeSliders[0].value
+		rangeInputs[0].dispatchEvent(new Event('input'))
+	} else {
+		rangeInputs[1].value = rangeSliders[1].value
+		rangeInputs[1].dispatchEvent(new Event('input'))
+	}
+};
+
+sliderContainer.addEventListener('input', function (e) {
+	updateSelectors();
+
+	if (e.target.matches('.range-inputs input')) {
+		rangeInputsCallback(e);
+	}
+	else if (e.target.matches('.range-sliders input')) {
+		rangeSlidersCallback(e);
+	}
+});
