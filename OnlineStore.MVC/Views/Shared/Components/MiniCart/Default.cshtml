@@ -3,71 +3,82 @@
 <div class="hub-component mini-cart-component">
     <div class="component-trigger">
         <div class="icon-container">
-            <img src="~/resources/icons/shopping-cart.png" width="20" alt="Cart">
+            <img src="~/resources/svg-icons/shopping-cart.svg" alt="Cart">
+
             <div class="counter">
                 <span id="cartQuantity" class="number">@Model.ItemsQuantity</span>
             </div>
         </div>
     </div>
     
+    <div class="mini-cart-container">
+        <div class="mini-cart">
+            <div class="content">
+                <header class="cart-head">
+                    <h3>
+                        Cart
+                        <span class="mc-count">
+                            @(Model.ItemsQuantity > 0 ? $"({Model.ItemsQuantity})" : null)
+                        </span>
+                    </h3>
 
-    <div class="mini-cart">
-        <div class="content">
-            <header class="cart-head">
-                <h3>
-                    Cart
-                    <span class="mc-count">
-                        @(Model.ItemsQuantity > 0 ? $"({Model.ItemsQuantity})" : null)
-                    </span>
-                </h3>
-                <button class="mc-close">
-                    <i class='bx bx-x'></i>
-                </button>
-            </header>
-            <div class="cart-body">
+                    <button class="mc-close">
+                        <i class="icon" data-feather="x"></i>
+                    </button>
+                </header>
+                <div class="cart-body">
+                    @if (!Model.IsEmpty)
+                    {
+                        <ul class="products mini">
+                            @foreach (var cartItem in Model.Items)
+                                if (cartItem.Product != null)
+                                {
+                                    <li class="item">
+                                        <div class="thumbnail object-contain">
+                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id"><img src="@cartItem.Product.Image" alt=""></a>
+                                        </div>
+
+                                        <div class="item-content">
+                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id">@cartItem.Product.Name</a>
+
+                                            <span class="price">
+                                                <span>@cartItem.Product.UnitPrice.ToString("C")</span>
+
+                                                <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
+                                            </span>
+                                        </div>
+
+                                        <button class="item-remove from-minicart" data-itemid="@cartItem.ProductId">
+                                            <img src="~/resources/svg-icons/trash.svg" />
+                                        </button>
+                                    </li>
+                                }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="empty-cart-msg">Your cart is empty</p>
+
+                        <p class="empty-cart-sub">Looks like you haven't added any items to your cart yet.</p>
+                    }
+                </div>
                 @if (!Model.IsEmpty)
                 {
-                    <ul class="products mini">
-                        @foreach (var cartItem in Model.Items)
-                            if (cartItem.Product != null)
-                            {
-                                <li class="item">
-                                    <div class="thumbnail object-contain">
-                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id"><img src="@cartItem.Product.Image" alt=""></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <p><a asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.Product.Id">@cartItem.Product.Name</a></p>
-                                        <span class="price">
-                                            <span>@cartItem.Product.UnitPrice.ToString("C")</span>
-                                            <span class="fly-item"><span>@cartItem.Quantity</span>x</span>
-                                        </span>
-                                    </div>
-                                    <button class="item-remove from-minicart" data-itemid="@cartItem.ProductId">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </button>
-                                </li>
-                            }
-                    </ul>
-                }
-                else
-                {
-                    <p class="empty-cart-msg">Your cart is empty</p>
-                    <p class="empty-cart-sub">Looks like you haven't added any items to your cart yet.</p>
+                    <div class="cart-footer">
+                        <div class="subtotal">
+                            <p>Subtotal</p>
+
+                            <p><strong>@Model.Subtotal.ToString("C")</strong></p>
+                        </div>
+
+                        <div class="actions">
+                            <a asp-controller="Cart" asp-action="Details" class="button black">View Cart</a>
+
+                            <a asp-controller="Cart" asp-action="Login" class="button black outlined">Checkout</a>
+                        </div>
+                    </div>
                 }
             </div>
-            @if (!Model.IsEmpty)
-            {
-                <div class="cart-footer">
-                    <div class="subtotal">
-                        <p>Subtotal</p>
-                        <p><strong>@Model.Subtotal.ToString("C")</strong></p>
-                    </div>
-                    <div class="actions">
-                        <a asp-controller="Cart" asp-action="Details" class="button black">View Cart</a>
-                        <a asp-controller="Cart" asp-action="Login" class="button black outlined">Checkout</a>
-                    </div>
-                </div>
-            }
         </div>
     </div>
 </div>
