@@ -6,7 +6,7 @@ using OnlineStore.Application.Interfaces.Repositories;
 using OnlineStore.DAL.Repositories;
 using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
-using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace OnlineStore.Persistence.Repositories
 {
@@ -28,10 +28,21 @@ namespace OnlineStore.Persistence.Repositories
                 ?? throw new NotFoundException(nameof(FiltersGroup), categoryId);
 
             foreach (var specificationType in filtersGroup.SpecificationTypes)
+            {
                 foreach (var specification in specificationType.Values)
                     specification.ProductsCount = await _context.Products
                         .Where(p => p.CategoryId == categoryId && p.Specifications.Any(s => s.Id == specification.Id))
                         .CountAsync(cancellation);
+
+                specificationType.Values = specificationType.Values.OrderByDescending(v => v.ProductsCount).ToArray();
+            }
+
+            var productsQuery = _context.Products.Where(p => p.CategoryId == categoryId);
+
+            filtersGroup.MinPrice = (int) Math.Floor(await productsQuery.Select(p => p.UnitPrice - p.Discount).MinAsync());
+            filtersGroup.MaxPrice = (int) Math.Ceiling(await productsQuery.Select(p => p.UnitPrice - p.Discount).MaxAsync());
+            filtersGroup.AppliedMinPrice = filtersGroup.MinPrice;
+            filtersGroup.AppliedMaxPrice = filtersGroup.MaxPrice;
 
             return filtersGroup;
         }
@@ -45,8 +56,17 @@ namespace OnlineStore.Persistence.Repositories
                 .ConfigureAwait(false)
                 ?? throw new NotFoundException(nameof(FiltersGroup), options.CategoryId);
 
-            var productsQuery = _context.Products
-                .Where(product => product.CategoryId == options.CategoryId);
+            var productsRawQuery = _context.Products.Where(product => product.CategoryId == options.CategoryId);
+
+            int minPrice = (int)Math.Floor(await productsRawQuery.Select(p => p.UnitPrice - p.Discount).MinAsync());
+            int maxPrice = (int)Math.Ceiling(await productsRawQuery.Select(p => p.UnitPrice - p.Discount).MaxAsync());
+
+            int appliedMinPrice = options.AppliedMinPrice > minPrice ? options.AppliedMinPrice : minPrice;
+            int appliedMaxPrice = options.AppliedMaxPrice < maxPrice ? options.AppliedMaxPrice : maxPrice;
+
+            var productsQuery = productsRawQuery.Where(
+                product => product.UnitPrice - product.Discount >= appliedMinPrice && 
+                product.UnitPrice - product.Discount <= appliedMaxPrice);
 
             foreach (var specificationType in filtersGroup.SpecificationTypes)
             {
@@ -71,7 +91,15 @@ namespace OnlineStore.Persistence.Repositories
                         .Count())
                         .Where(p => p.Specifications.Any(s => s.Id == specification.Id))
                         .CountAsync(cancellation);
+
+                specificationType.Values = specificationType.Values.OrderByDescending(v => v.ProductsCount).ToArray();
             }
+
+            filtersGroup.MinPrice = minPrice;
+            filtersGroup.MaxPrice = maxPrice;
+
+            filtersGroup.AppliedMinPrice = appliedMinPrice;
+            filtersGroup.AppliedMaxPrice = appliedMaxPrice;
 
             return filtersGroup;
         }
