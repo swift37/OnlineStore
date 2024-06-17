@@ -7,7 +7,7 @@
         <ul>
             @for (int i = 0; Model.ShowAll ? (i < Model.Filters.Count) : (i < Model.Filters.Count && i < 5); i++)
             {
-                <li>
+                <li class="@(Model.Filters[i].ProductsCount < 1 ? "unavailable" : string.Empty)">
                     <input type="checkbox" name="checkbox"
                            id="@($"spid{Model.SpecificationType.Id};sid{Model.Filters[i].Id}")"
                            @(Model.AppliedFilterIds.Contains(Model.Filters[i].Id) ? "checked" : null)>
@@ -21,7 +21,7 @@
                 </li>
             }
         </ul>
-        @if (true)
+        @if (Model.FilterCount > 5)
             if (Model.ShowAll)
             {
                 <button class="less-btn" data-spec-type-id="@Model.SpecificationType.Id">
