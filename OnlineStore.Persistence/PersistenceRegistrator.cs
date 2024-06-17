@@ -30,6 +30,9 @@ namespace OnlineStore.DAL
             .AddScoped<IRepository<ContactRequest>, Repository<ContactRequest>>()
             .AddScoped<IRepository<MenuItem>, Repository<MenuItem>>()
             .AddScoped<IRepository<NestedMenuItem>, Repository<NestedMenuItem>>()
+            .AddScoped<IRepository<ProductTag>, Repository<ProductTag>>()
+            .AddScoped<IRepository<PaymentMethod>, Repository<PaymentMethod>>()
+            .AddScoped<IRepository<ShippingMethod>, Repository<ShippingMethod>>()
             ;
     }
 }
