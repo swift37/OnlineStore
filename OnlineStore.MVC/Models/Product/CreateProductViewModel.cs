@@ -1,10 +1,14 @@
-﻿using OnlineStore.MVC.Models.Specification;
+﻿using OnlineStore.MVC.Models.Enums;
+using OnlineStore.MVC.Models.ProductTag;
+using OnlineStore.MVC.Models.Specification;
 
 namespace OnlineStore.MVC.Models.Product
 {
     public class CreateProductViewModel
     {
         public string? Name { get; set; }
+
+        public decimal UnitCost { get; set; }
 
         public decimal UnitPrice { get; set; }
 
@@ -20,18 +24,16 @@ namespace OnlineStore.MVC.Models.Product
 
         public ICollection<SpecificationViewModel> Specifications { get; set; } = new HashSet<SpecificationViewModel>();
 
+        public ICollection<ProductTagViewModel> Tags { get; set; } = new HashSet<ProductTagViewModel>();
+
         public string? Manufacturer { get; set; }
 
         public string? ManufacturersCode { get; set; }
 
         public string? StoreCode { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public ProductStatus Status { get; set; }
 
-        public bool IsNewProduct { get; set; }
-
-        public bool IsSale { get; set; }
-
-        public bool IsFeaturedProduct { get; set; }
+        public ProductAvailability Availability { get; set; }
     }
 }

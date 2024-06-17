@@ -11,6 +11,14 @@ namespace OnlineStore.MVC.Models.FiltersGroup
 
         public CategoryViewModel? Category { get; set; }
 
+        public int MinPrice { get; set; }
+
+        public int MaxPrice { get; set; }
+
+        public int AppliedMinPrice { get; set; }
+
+        public int AppliedMaxPrice { get; set; }
+
         public ICollection<SpecificationTypeViewModel> SpecificationTypes { get; set; } = new HashSet<SpecificationTypeViewModel>();
     }
 }

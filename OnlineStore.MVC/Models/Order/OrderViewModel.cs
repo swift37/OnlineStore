@@ -1,5 +1,7 @@
 ﻿using OnlineStore.MVC.Models.Enums;
+using OnlineStore.MVC.Models.PaymentMethod;
 using OnlineStore.MVC.Models.Product;
+using OnlineStore.MVC.Models.ShippingMethod;
 
 namespace OnlineStore.MVC.Models.Order
 {
@@ -13,13 +15,15 @@ namespace OnlineStore.MVC.Models.Order
 
         public OrderStatus Status { get; set; }
 
-        public DateTimeOffset CreationDate { get; set; }
+        public DateTimeOffset CreatingDate { get; set; }
 
-        public DateTimeOffset? PayDate { get; set; }
+        public DateTimeOffset? PaymentDate { get; set; }
 
-        public DateTimeOffset? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
 
-        public string? PaymentMethod { get; set; }
+        public DateTimeOffset? DeliveryDate { get; set; }
+
+        public PaymentMethodViewModel? PaymentMethod { get; set; }
 
         public string? PaymentSession { get; set; }
 
@@ -33,7 +37,7 @@ namespace OnlineStore.MVC.Models.Order
 
         public decimal Total { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public ShippingMethodViewModel? ShippingMethod { get; set; }
 
         public string? TrackingNumber { get; set; }
 
@@ -56,6 +60,10 @@ namespace OnlineStore.MVC.Models.Order
         public decimal Discount => Items.Sum(i => i.Discount);
 
         public decimal Subtotal => Items.Sum(i => i.UnitPrice * i.Quantity);
+
+        public decimal CalculatedTotal => Total == default 
+            ? Subtotal - Discount + (ShippingMethod?.Price ?? default) 
+            : Total;
     }
 
     public class OrderItemViewModel

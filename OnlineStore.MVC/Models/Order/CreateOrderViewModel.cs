@@ -16,7 +16,9 @@ namespace OnlineStore.MVC.Models.Order
 
         public string? Email { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public int? PaymentMethodId { get; set; }
+
+        public int? ShippingMethodId { get; set; }
 
         public string? Country { get; set; }
 

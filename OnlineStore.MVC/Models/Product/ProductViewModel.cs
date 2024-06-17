@@ -1,4 +1,6 @@
 ﻿using OnlineStore.MVC.Models.Category;
+using OnlineStore.MVC.Models.Enums;
+using OnlineStore.MVC.Models.ProductTag;
 using OnlineStore.MVC.Models.Review;
 using OnlineStore.MVC.Models.Specification;
 
@@ -9,6 +11,8 @@ namespace OnlineStore.MVC.Models.Product
         public int Id { get; set; }
 
         public string? Name { get; set; }
+
+        public decimal UnitCost { get; set; }
 
         public decimal UnitPrice { get; set; }
 
@@ -26,6 +30,8 @@ namespace OnlineStore.MVC.Models.Product
 
         public ICollection<SpecificationViewModel> Specifications { get; set; } = new HashSet<SpecificationViewModel>();
 
+        public ICollection<ProductTagViewModel> Tags { get; set; } = new HashSet<ProductTagViewModel>();
+
         public double Rating { get; set; }
 
         public int ReviewsCount { get; set; }
@@ -38,13 +44,9 @@ namespace OnlineStore.MVC.Models.Product
 
         public string? StoreCode { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public ProductStatus Status { get; set; }
 
-        public bool IsNewProduct { get; set; }
-
-        public bool IsSale { get; set; }
-
-        public bool IsFeaturedProduct { get; set; }
+        public ProductAvailability Availability { get; set; }
 
 
         public decimal PriceAfterDiscount => UnitPrice - Discount;

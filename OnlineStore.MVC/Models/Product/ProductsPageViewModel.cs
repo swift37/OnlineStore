@@ -8,6 +8,10 @@ namespace OnlineStore.MVC.Models.Product
 
         public CategoryViewModel? Category { get; set; }
 
+        public int MinPrice { get; set; }
+
+        public int MaxPrice { get; set; }
+
         public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }
