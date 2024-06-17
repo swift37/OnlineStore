@@ -2,11 +2,12 @@
 {
     public enum OrderStatus
     {
-        NotPaid,
-        Paid,
-        Processed,
+        ToPay,
+        Pending,
+        InProgress,
         Shipped,
         Completed,
-        Canceled
+        Canceled,
+        Returned
     }
 }
