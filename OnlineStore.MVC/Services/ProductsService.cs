@@ -133,5 +133,81 @@ namespace OnlineStore.MVC.Services
                 return GenerateResponse<ProductsPageViewModel>(exception);
             }
         }
+
+        public async Task<Response<IEnumerable<ProductViewModel>>> GetAllByTag(int tagId)
+        {
+            try
+            {
+                var product = await _client.GetProductsByTagAsync(tagId, _usingVersion);
+
+                return new Response<IEnumerable<ProductViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(product)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ProductViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<IEnumerable<ProductViewModel>>> GetAllByTag(string tagName)
+        {
+            try
+            {
+                var product = await _client.GetProductsByTagAsync(tagName, _usingVersion);
+
+                return new Response<IEnumerable<ProductViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(product)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ProductViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<IEnumerable<ProductViewModel>>> GetAllByAvailability(Models.Enums.ProductAvailability availability)
+        {
+            var productAvailability = _mapper.Map<ProductAvailability>(availability);
+
+            try
+            {
+                var product = await _client.GetProductsByAvailabilityAsync(productAvailability, _usingVersion);
+
+                return new Response<IEnumerable<ProductViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(product)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ProductViewModel>>(exception);
+            }
+        }
+
+        public async Task<Response<IEnumerable<ProductViewModel>>> GetAllByStatus(Models.Enums.ProductStatus status)
+        {
+            var productStatus = _mapper.Map<ProductStatus>(status);
+
+            try
+            {
+                var product = await _client.GetProductsByStatusAsync(productStatus, _usingVersion);
+
+                return new Response<IEnumerable<ProductViewModel>>
+                {
+                    Success = true,
+                    Data = _mapper.Map<IEnumerable<ProductViewModel>>(product)
+                };
+            }
+            catch (ApiException exception)
+            {
+                return GenerateResponse<IEnumerable<ProductViewModel>>(exception);
+            }
+        }
     }
 }

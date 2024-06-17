@@ -1,4 +1,5 @@
 ﻿using OnlineStore.MVC.Models;
+using OnlineStore.MVC.Models.Enums;
 using OnlineStore.MVC.Models.Product;
 using OnlineStore.MVC.Services.Base;
 
@@ -19,5 +20,13 @@ namespace OnlineStore.MVC.Services.Interfaces
         Task<Response> Delete(int id);
 
         Task<Response<ProductsPageViewModel>> GetFilteredProducts(ProductsFilteringOptions options);
+
+        Task<Response<IEnumerable<ProductViewModel>>> GetAllByTag(int tagId);
+
+        Task<Response<IEnumerable<ProductViewModel>>> GetAllByTag(string tagName);
+
+        Task<Response<IEnumerable<ProductViewModel>>> GetAllByAvailability(ProductAvailability availability);
+
+        Task<Response<IEnumerable<ProductViewModel>>> GetAllByStatus(ProductStatus status);
     }
 }

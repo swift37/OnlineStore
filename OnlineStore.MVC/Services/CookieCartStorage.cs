@@ -2,7 +2,6 @@
 using OnlineStore.MVC.Models.Cart;
 using OnlineStore.MVC.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 
 namespace OnlineStore.MVC.Services
