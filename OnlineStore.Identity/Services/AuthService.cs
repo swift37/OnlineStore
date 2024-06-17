@@ -74,11 +74,11 @@ namespace OnlineStore.Identity.Services
             var user = await _userManager.FindByNameAsync(request.UsernameOrEmail) 
                 ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
             if (user is null)
-                throw new NotFoundException($"User {request.UsernameOrEmail} not found.", nameof(ApplicationUser));
+                throw new Exception($"Such a user doesn't exist");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!result.Succeeded)
-                throw new NotFoundException($"Credentials for {request.UsernameOrEmail} are not valid.", nameof(ApplicationUser));
+                throw new Exception($"Invalid password");
 
             var refreshToken = _jwtProvider.GenerateRefreshToken();
 
