@@ -174,8 +174,8 @@ namespace OnlineStore.MVC.Controllers
             if (!response.Success) return StatusCode(response.Status);
 
             var orders = response.Data
-                .OrderByDescending(g => g.CreationDate)
-                .GroupBy(o => o.CreationDate.ToString("MMMM yyyy"))
+                .OrderByDescending(g => g.CreatingDate)
+                .GroupBy(o => o.CreatingDate.ToString("MMMM yyyy"))
                 .AsEnumerable();
 
             return View(orders);

@@ -85,9 +85,17 @@ namespace OnlineStore.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateFilters(int categoryId)
+        public async Task<IActionResult> UpdateFilters(
+            int categoryId,
+            int minPrice = 0,
+            int maxPrice = int.MaxValue)
         {
-            var options = new FiltersGroupOptions { CategoryId = categoryId };
+            var options = new FiltersGroupOptions 
+            { 
+                CategoryId = categoryId, 
+                AppliedMinPrice = minPrice, 
+                AppliedMaxPrice = maxPrice 
+            };
 
             options.AppliedFilters = HttpContext.Request.Query["filters"].GetAppliedFilters();
 
