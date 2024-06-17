@@ -142,16 +142,15 @@ namespace OnlineStore.WebAPI.Controllers
             product.Description = updateProductDTO.Description;
             product.Image = updateProductDTO.Image;
             product.CategoryId = updateProductDTO.CategoryId;
+            product.UnitCost = updateProductDTO.UnitCost;
             product.UnitPrice = updateProductDTO.UnitPrice;
             product.UnitsInStock = updateProductDTO.UnitsInStock;
             product.Discount = updateProductDTO.Discount;
             product.Manufacturer = updateProductDTO.Manufacturer;
             product.ManufacturersCode = updateProductDTO.ManufacturersCode;
             product.StoreCode = updateProductDTO.StoreCode;
-            product.IsSale = updateProductDTO.IsSale;
-            product.IsNewProduct = updateProductDTO.IsNewProduct;
-            product.IsFeaturedProduct = updateProductDTO.IsFeaturedProduct;
-            product.IsAvailable = updateProductDTO.IsAvailable;
+            product.Availability = updateProductDTO.Availability;
+            product.Status = updateProductDTO.Status;
 
             var removedItems = product.Specifications
                 .ExceptBy(updateProductDTO.Specifications.Select(t => t.Id), t => t.Id);
@@ -237,5 +236,65 @@ namespace OnlineStore.WebAPI.Controllers
                     return products.OrderByDescending(p => p.UnitPrice).ToArray();
             }
         }
+
+        /// <summary>
+        /// Get products by tag id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/tag/1
+        /// </remarks>
+        /// <param name="id">Product tag id (int)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("tag/{tagId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByTag(int tagId) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByTagAsync(tagId)));
+
+        /// <summary>
+        /// Get products by tag name
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/tag/name/sale
+        /// </remarks>
+        /// <param name="id">Product tag name (string)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("tag/name/{tagName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByTag(string tagName) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByTagAsync(tagName)));
+
+        /// <summary>
+        /// Get products by status
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/status/1
+        /// </remarks>
+        /// <param name="id">Product status (ProductStatus)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("status/{productStatus}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByStatus(ProductStatus productStatus) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByStatusAsync(productStatus)));
+
+        /// <summary>
+        /// Get products by availability
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/availability/1
+        /// </remarks>
+        /// <param name="id">Product availability (ProductAvailability)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("availability/{productAvailability}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByAvailability(ProductAvailability productAvailability) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByAvailabilityAsync(productAvailability)));
     }
 }
