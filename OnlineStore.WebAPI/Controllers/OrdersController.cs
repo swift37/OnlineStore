@@ -111,7 +111,7 @@ namespace OnlineStore.WebAPI.Controllers
             var order = _mapper.Map<Order>(createOrderDTO);
             order.UserId = UserId;
             order.Number = await _orderNumbersProvider.GenerateNumberAsync(order);
-            order.CreationDate = DateTime.Now;
+            order.CreatingDate = DateTimeOffset.Now;
             foreach (var item in order.Items)
             {
                 var product = await _productsRepository.GetAsync(item.ProductId);
@@ -151,13 +151,15 @@ namespace OnlineStore.WebAPI.Controllers
         {
             var order = await _ordersRepository.GetAsync(updateOrderDTO.Id);
             order.Status = updateOrderDTO.Status;
-            order.ShippedDate = updateOrderDTO.ShippedDate;
+            order.ShippingDate = updateOrderDTO.ShippingDate;
+            order.DeliveryDate = updateOrderDTO.DeliveryDate;
             order.FirstName = updateOrderDTO.FirstName;
             order.LastName = updateOrderDTO.LastName;
             order.Phone = updateOrderDTO.Phone;
             order.Email = updateOrderDTO.Email;
             order.Total = updateOrderDTO.Total;
-            order.ShippingCost = updateOrderDTO.ShippingCost;
+            order.PaymentMethodId = updateOrderDTO.PaymentMethodId;
+            order.ShippingMethodId = updateOrderDTO.ShippingMethodId;
             order.TrackingNumber = updateOrderDTO.TrackingNumber;
             order.Country = updateOrderDTO.Country;
             order.City = updateOrderDTO.City;
