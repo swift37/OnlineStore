@@ -8,42 +8,49 @@
             <span>Developer</span>
         </h3>
     </header>
-    <ul>
-        <li class="@(ViewBag.Current == 0 ? "active" : string.Empty)">
-            <a asp-controller="Account" asp-action="Index">
-                <i class='bx bx-id-card'></i>
-                Account
-            </a>
-        </li>
-        <li class="@(ViewBag.Current == 1 ? "active" : string.Empty)">
-            <a asp-controller="Account" asp-action="Orders">
-                <i class='bx bx-layer'></i>
-                Orders
-            </a>
-        </li>
-        <li class="@(ViewBag.Current == 2 ? "active" : string.Empty)">
-            <a asp-controller="Account" asp-action="Reviews">
-                <i class='bx bx-message-square-dots'></i>
-                Reviews
-            </a>
-        </li>
-        <li class="@(ViewBag.Current == 3 ? "active" : string.Empty)">
-            <a asp-controller="Wishlist" asp-action="Index">
-                <i class='bx bx-heart'></i>
-                Wishlist
-            </a>
-        </li>
-        <li class="@(ViewBag.Current == 4 ? "active" : string.Empty)">
-            <a asp-controller="Account" asp-action="Settings">
-                <i class='bx bx-cog'></i>
-                Settings & Privacy
-            </a>
-        </li>
-        <li class="@(ViewBag.Current == 5 ? "active" : string.Empty)">
-            <a asp-controller="Auth" asp-action="Logout">
-                <i class='bx bx-log-out'></i>
-                Logout
-            </a>
-        </li>
-    </ul>
+
+    <div class="acc-links">
+        <ul>
+            <li class="@(ViewBag.Current == 0 ? "active" : string.Empty)">
+                <a asp-controller="Account" asp-action="Index">
+                    <img class="icon" src="~/resources/svg-icons/user.svg" />
+                    Account
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Current == 1 ? "active" : string.Empty)">
+                <a asp-controller="Account" asp-action="Orders">
+                    <img class="icon" src="~/resources/svg-icons/orders.svg" />
+                    Orders
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Current == 2 ? "active" : string.Empty)">
+                <a asp-controller="Account" asp-action="Reviews">
+                    <img class="icon" src="~/resources/svg-icons/review.svg" />
+                    Reviews
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Current == 3 ? "active" : string.Empty)">
+                <a asp-controller="Wishlist" asp-action="Index">
+                    <img class="icon" src="~/resources/svg-icons/heart.svg" />
+                    Wishlist
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Current == 4 ? "active" : string.Empty)">
+                <a asp-controller="Account" asp-action="Settings">
+                    <img class="icon" src="~/resources/svg-icons/cog.svg" />
+                    Settings & Privacy
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="bottom-content">
+        <a class="logout-btn" href="/auth/logout">
+            Logout
+        </a>
+    </div>
 </div>
