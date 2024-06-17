@@ -4,17 +4,19 @@ namespace OnlineStore.MVC.Models.Enums
 {
     public enum OrderStatus
     {
-        [StringValue("Not paid")]
-        NotPaid,
-        [StringValue("Paid")]
-        Paid,
-        [StringValue("Processed")]
-        Processed,
+        [StringValue("To Pay")]
+        ToPay,
+        [StringValue("Pending")]
+        Pending,
+        [StringValue("In-Progress")]
+        InProgress,
         [StringValue("Shipped")]
         Shipped,
         [StringValue("Completed")]
         Completed,
         [StringValue("Canceled")]
-        Canceled
+        Canceled,
+        [StringValue("Returned")]
+        Returned
     }
 }
