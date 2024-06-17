@@ -28,6 +28,12 @@ $(document).ready(function () {
         }
     };
 
+    const setMiniCartHegiht = () => {
+        const loadHeight = document.querySelector('.mini-cart .content').clientHeight;
+        document.querySelector('.mini-cart-container').style.height = (loadHeight + 6) + 'px';
+        feather.replace();
+    };
+
     const prepareToast = (headline, details, isFail) => {
         if (isFail)
             $('#toastNotif .t-icon').removeClass('bx-check').addClass('bx-x');
@@ -108,6 +114,7 @@ $(document).ready(function () {
                         url: '/cart/updateminicart',
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
+                            setMiniCartHegiht();
                             checkCartQuantity();
 
                             showToast('Success', 'The item has been added to your cart');
@@ -124,7 +131,6 @@ $(document).ready(function () {
 
     $('.to-cart-from-wl').click(function () {
         let qtyControl = $(this).parent().find('.qty-value');
-        console.log($(qtyControl));
         $.ajax({
             url: '/cart/add',
             type: 'post',
@@ -146,6 +152,7 @@ $(document).ready(function () {
                         url: '/cart/updateminicart',
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
+                            setMiniCartHegiht();
                             checkCartQuantity();
 
                             showToast('Success', 'The item has been added to your cart');
@@ -186,6 +193,7 @@ $(document).ready(function () {
                         url: '/cart/updateminicart',
                         success: function (data) {
                             $('#userHub .mini-cart-component').replaceWith(data);
+                            setMiniCartHegiht();
                             checkCartQuantity();
 
                             showToast('Success', 'Items have been added to your cart');
@@ -300,6 +308,7 @@ $(document).ready(function () {
                     url: '/cart/updateminicart',
                     success: function (data) {
                         $('#userHub .mini-cart-component').replaceWith(data);
+                        setMiniCartHegiht();
                         checkCartQuantity();
                     }
                 });
@@ -374,7 +383,7 @@ $(document).ready(function () {
         });
     };
 
-    $('.products.main').on('click', '.wishlist-btn button', function () {
+    $('.product-card').on('click', '.wishlist-btn button', function () {
         let button = $(this);
         let itemId = $(button).data('itemid');
         let productId = $(button).data('productid');

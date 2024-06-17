@@ -18,11 +18,13 @@ $(document).ready(function () {
 
     const setPriceFilters = () => {
         let url = new window.URL(document.location);
+
         let minPriceParam = url.searchParams.get("minPrice");
         if (minPriceParam != null) {
             $('#minPrice').val(minPriceParam);
             $('#minPriceInput').val(minPriceParam);
         }
+
         let maxPriceParam = url.searchParams.get("maxPrice");
         if (maxPriceParam != null) {
             $('#maxPrice').val(maxPriceParam);
@@ -63,6 +65,8 @@ $(document).ready(function () {
             data:
             {
                 categoryId: searchParams.get('categoryId'),
+                minPrice: searchParams.get('minPrice'),
+                maxPrice: searchParams.get('maxPrice'),
                 filters: searchParams.getAll('filters')
             },
             success: function (data) {
@@ -120,24 +124,47 @@ $(document).ready(function () {
         updateProducts();
     });
 
-    $('#minPriceInput, #minPrice').change(function () {
-        let minPrice = parseInt($(this).val());
-        if (!minPrice || minPrice < parseInt($(this).prop('min'))) minPrice = $(this).prop('min');
+    const debounce = (callback, waitTime) => {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                callback(...args);
+            }, waitTime);
+        };
+    }
+
+    const minPriceChanged = (input) => {
+        console.log(input);
+        let minPrice = parseInt(input.val());
+        if (!minPrice || minPrice < parseInt(input.prop('min'))) minPrice = input.prop('min');
 
         let url = new window.URL(document.location);
         url.searchParams.set("minPrice", minPrice);
         window.history.pushState(null, null, url);
         updateProducts();
-    });
+    }
 
-    $('#maxPriceInput, #maxPrice').change(function () {
-        let maxPrice = parseInt($(this).val());
-        if (!maxPrice || maxPrice > parseInt($(this).prop('max'))) maxPrice = $(this).prop('max');
+    const minPriceDebounceHandler = debounce(minPriceChanged, 1000);
+
+    const maxPriceChanged = (input) => {
+        let maxPrice = parseInt(input.val());
+        if (!maxPrice || maxPrice > parseInt(input.prop('max'))) maxPrice = input.prop('max');
 
         let url = new window.URL(document.location);
         url.searchParams.set("maxPrice", maxPrice);
         window.history.pushState(null, null, url);
         updateProducts();
+    }
+
+    const maxPriceDebounceHandler = debounce(maxPriceChanged, 1000);
+
+    $('.d-slider-container').on('input', '#minPriceInput, #minPrice', function () {
+        minPriceDebounceHandler($(this));
+    });
+
+    $('.d-slider-container').on('input', '#maxPriceInput, #maxPrice', function () {
+        maxPriceDebounceHandler($(this));
     });
 
     $('.filter').on('change', '.filter-block.params input', function () {
