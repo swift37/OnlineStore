@@ -7,6 +7,12 @@
   },
   {
     "inputFiles": [
+      "Styles/controls.css"
+    ],
+    "outputFileName": "wwwroot/css/controls.css"
+  },
+  {
+    "inputFiles": [
       "Styles/double-slider.css"
     ],
     "outputFileName": "wwwroot/css/double-slider.css"
