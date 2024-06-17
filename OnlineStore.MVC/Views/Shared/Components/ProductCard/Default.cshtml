@@ -4,73 +4,82 @@
     <div class="card-content">
         <div class="special-status">
             <div class="flags">
-                @if (Model.IsNewProduct)
+                @foreach (var tag in Model.Tags)
                 {
-                    <div class="new-flag">NEW</div>
-                }
-                @if (Model.IsSale)
-                {
-                    <div class="sale-flag">SALE</div>
+                    <div class="new-flag">@tag.DisplayName</div>
                 }
             </div>
         </div>
+
         <div class="product-image">
             <a class="image-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id">
                 <img src="@Model.Image" loading="lazy" alt="Image">
             </a>
         </div>
+
         <div class="product-name">
             <a class="product-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id">
                 @Model.Name
             </a>
         </div>
-        <div class="product-rating">
-            <a class="rating-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id" asp-fragment="reviews">
-                @for (int i = 0; i < Math.Floor(Model.Rating); i++)
-                {
-                    <i class='bx bxs-star'></i>
-                }
-                @if (Model.Rating % 1.0 > 0.3)
-                {
-                    <i class='bx bxs-star-half'></i>
-                }
-                @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
-                {
-                    <i class='bx bxs-star empty-star'></i>
-                }
-                <span class="reviews-quantity">
-                    (@Model.ReviewsCount)
-                </span>
-            </a>
-        </div>
-        <ul class="product-main-specs">
-            @if (Model.Specifications != null)
-                foreach (var spec in Model.Specifications)
-                    if (spec.SpecificationType?.IsMain ?? false)
+
+        @if (!ViewBag.isLight)
+        {
+            <div class="product-rating">
+                <a class="rating-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@Model.Id" asp-fragment="reviews">
+                    @for (int i = 0; i < Math.Floor(Model.Rating); i++)
                     {
-                        <li class="product-spec">
-                            @spec.SpecificationType.DisplayName: @spec.Value
-                        </li>
+                        <i class='bx bxs-star'></i>
                     }
-        </ul>
+                    @if (Model.Rating % 1.0 > 0.3)
+                    {
+                        <i class='bx bxs-star-half'></i>
+                    }
+                    @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                    {
+                        <i class='bx bxs-star empty-star'></i>
+                    }
+                    <span class="reviews-quantity">
+                        (@Model.ReviewsCount)
+                    </span>
+                </a>
+            </div>
+
+            <ul class="product-main-specs">
+                @if (Model.Specifications != null)
+                    foreach (var spec in Model.Specifications)
+                        if (spec.SpecificationType?.IsMain ?? false)
+                        {
+                            <li class="product-spec">
+                                @spec.SpecificationType.DisplayName: @spec.Value
+                            </li>
+                        }
+            </ul>
+        }
+
         <div class="product-info">
             <div class="info-container">
                 <div class="product-price">
                     @if (Model.Discount > 0)
                     {
-                        <span class="discount">$@Model.UnitPrice</span>
+                        <span class="discount">@Model.UnitPrice.ToString("C")</span>
                     }
-                    <span class="price">$@(Model.UnitPrice - Model.Discount)</span>
+                    <span class="price">@((Model.UnitPrice - Model.Discount).ToString("C"))</span>
                 </div>
-                <div class="product-status">
-                    @if (Model.IsAvailable)
-                    {
-                        <span>Available</span>
-                    } else
-                    {
-                        <span>Not Available</span>
-                    }
-                </div>
+
+                @if (!ViewBag.isLight)
+                {
+                    <div class="product-status">
+                        @if (Model.Availability is OnlineStore.MVC.Models.Enums.ProductAvailability.Available)
+                        {
+                            <span>Available</span>
+                        }
+                        else
+                        {
+                            <span>Not Available</span>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -80,11 +89,11 @@
             @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id })
         </div>
     }
-    @if (Model.IsAvailable)
+    @if (Model.Availability is OnlineStore.MVC.Models.Enums.ProductAvailability.Available)
     {
         <div class="to-cart-btn">
             <button class="to-cart" data-itemid="@Model.Id">
-                <img src="~/resources/icons/shopping-cart.png" />
+                <img src="~/resources/svg-icons/add-to-cart.svg" />
             </button>
         </div>
     }

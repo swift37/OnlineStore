@@ -5,7 +5,11 @@ namespace OnlineStore.MVC.ViewComponents
 {
     public class ProductCardViewComponent : ViewComponent
     {
-        public Task<IViewComponentResult> InvokeAsync(ProductViewModel model) => 
-            Task.FromResult<IViewComponentResult>(View(model));
+        public Task<IViewComponentResult> InvokeAsync(ProductViewModel model, bool isLight = false)
+        {
+            ViewBag.isLight = isLight;
+
+            return Task.FromResult<IViewComponentResult>(View(model));
+        }
     }
 }
