@@ -14,18 +14,18 @@
     <div class="ds-container">
         <div class="range-inputs">
             <div class="ds-field">
-                <input type="number" id="minPriceInput" min="0" max="15000" value="0" />
+                <input type="number" id="minPriceInput" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMinPrice" />
             </div>
             <div class="ds-separator">—</div>
             <div class="ds-field">
-                <input type="number" id="maxPriceInput" min="0" max="15000" value="15000" />
+                <input type="number" id="maxPriceInput" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMaxPrice" />
             </div>
         </div>
         <div class="double-slider">
             <div class="range"></div>
             <div class="range-sliders">
-                <input type="range" id="minPrice" min="0" max="15000" value="0" />
-                <input type="range" id="maxPrice" min="0" max="15000" value="15000" />
+                <input type="range" id="minPrice" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMinPrice" />
+                <input type="range" id="maxPrice" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMaxPrice" />
             </div>
         </div>
     </div>
