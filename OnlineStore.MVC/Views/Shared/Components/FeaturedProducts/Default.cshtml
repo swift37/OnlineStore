@@ -1,0 +1,30 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Product.ProductViewModel>
+
+<section class="featured-products-section">
+    <div class="container">
+        <div class="products-header">
+            <h3>Featured Products</h3>
+            <div class="paragraph-header opacity-light">
+                Check out new and popular products
+            </div>
+        </div>
+
+        <div class="product-cards-area">
+            <div class="products-slider-container">
+                <div class="products-slider">
+                    <div class="swiper-wrapper">
+                        @foreach (var product in Model)
+                        {
+                            <div class="slide swiper-slide">
+                                @await Component.InvokeAsync("ProductCard", new { model = product, isLight = true })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div id="ftProductsSlNext" class="swiper-button-next slider-nav-btn"></div>
+                <div id="ftProductsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
+            </div>
+        </div>
+    </div>
+</section>
