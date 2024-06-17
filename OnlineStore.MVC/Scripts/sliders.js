@@ -58,3 +58,37 @@ var swiper = new Swiper(".events-slider", {
         }
     }
 });
+
+var swiper = new Swiper(".brands-slider", {
+    slidesPerView: 7,
+    spaceBetween: 50,
+    grabCursor: true,
+    speed: 500,
+    navigation: {
+        nextEl: "#brandsSlNext",
+        prevEl: "#brandsSlPrev"
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 1,
+        },
+        440: {
+            slidesPerView: 2,
+        },
+        600: {
+            slidesPerView: 3,
+        },
+        760: {
+            slidesPerView: 4,
+        },
+        960: {
+            slidesPerView: 5,
+        },
+        1160: {
+            slidesPerView: 6,
+        },
+        1360: {
+            slidesPerView: 7,
+        }
+    }
+});
