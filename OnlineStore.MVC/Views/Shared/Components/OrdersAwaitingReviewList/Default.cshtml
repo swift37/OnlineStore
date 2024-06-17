@@ -22,7 +22,7 @@
                                     @item.Product?.Name
                                 </a>
                                 <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number">
-                                    Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
+                                    Purchased @((DateTimeOffset.Now.Month - order.CreatingDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreatingDate.Year)) months ago
                                 </a>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                                     @item.Product?.Name
                                 </a>
                                 <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number">
-                                    Purchased @((DateTimeOffset.Now.Month - order.CreationDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreationDate.Year)) months ago
+                                    Purchased @((DateTimeOffset.Now.Month - order.CreatingDate.Month) + 12 * (DateTimeOffset.Now.Year - order.CreatingDate.Year)) months ago
                                 </a>
                             </div>
                             <button 
