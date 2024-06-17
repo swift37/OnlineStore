@@ -25,6 +25,11 @@
     {
       "library": "Swiper@11.0.5",
       "destination": "wwwroot/lib/swiper/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "feather-icons@4.29.2",
+      "destination": "wwwroot/lib/feather-icons/"
     }
   ]
 }
