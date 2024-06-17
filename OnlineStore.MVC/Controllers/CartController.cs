@@ -2,6 +2,7 @@
 using OnlineStore.MVC.Models;
 using OnlineStore.MVC.Models.Cart;
 using OnlineStore.MVC.Models.Order;
+using OnlineStore.MVC.Services.Base;
 using OnlineStore.MVC.Services.Interfaces;
 
 namespace OnlineStore.MVC.Controllers
@@ -12,14 +13,16 @@ namespace OnlineStore.MVC.Controllers
         private readonly ICartService _cartService;
         private readonly IProductsService _productsService;
         private readonly IOrdersService _ordersService;
+        private readonly IPaymentMethodsService _paymentMethodsService;
 
         public CartController(
             ICartStorage cartStorage, 
             ICartService cartService, 
             IProductsService productsService,
-            IOrdersService ordersService) => 
-            (_cartStorage, _cartService, _productsService, _ordersService) = 
-            (cartStorage, cartService, productsService, ordersService);
+            IOrdersService ordersService,
+            IPaymentMethodsService paymentMethodsService) => 
+            (_cartStorage, _cartService, _productsService, _ordersService, _paymentMethodsService) = 
+            (cartStorage, cartService, productsService, ordersService, paymentMethodsService);
 
         [HttpGet]
         public async Task<IActionResult> Details()
@@ -136,7 +139,8 @@ namespace OnlineStore.MVC.Controllers
             if (orderCreateResponse.Success)
             {
                 _cartService.Clear();
-                return RedirectToAction("Payment", new { orderNumber = orderCreateResponse.Data });
+
+                return await RedirectByPaymentMethod(order.PaymentMethodId.GetValueOrDefault(), orderCreateResponse.Data);
             }
 
             if (orderCreateResponse.Status == 400 && orderCreateResponse.ValidationErrors.Count() > 0)
@@ -202,6 +206,31 @@ namespace OnlineStore.MVC.Controllers
         {
             ViewBag.OrderNumber = orderNumber;
             return View();
+        }
+
+        [HttpGet("cart/order-is-pending")]
+        public IActionResult OrderIsPending(string orderNumber)
+        {
+            ViewBag.OrderNumber = orderNumber;
+            return View();
+        }
+
+        private async Task<IActionResult> RedirectByPaymentMethod(int paymentMethodId, string orderNumber)
+        {
+            var response = await _paymentMethodsService.Get(paymentMethodId);
+            if (!response.Success) return StatusCode(response.Status);
+
+            var paymentMethod = response.Data;
+
+            switch (paymentMethod.Name)
+            {
+                case "online":
+                    return RedirectToAction("Payment", new { orderNumber });
+                case "cash":
+                    return RedirectToAction("OrderIsPending", new { orderNumber });
+                default:
+                    return RedirectToAction("PaymentFailure", new { orderNumber });
+            }
         }
     }
 }
