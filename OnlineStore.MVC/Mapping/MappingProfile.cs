@@ -8,8 +8,11 @@ using OnlineStore.MVC.Models.FiltersGroup;
 using OnlineStore.MVC.Models.MenuItem;
 using OnlineStore.MVC.Models.NestedMenuItem;
 using OnlineStore.MVC.Models.Order;
+using OnlineStore.MVC.Models.PaymentMethod;
 using OnlineStore.MVC.Models.Product;
+using OnlineStore.MVC.Models.ProductTag;
 using OnlineStore.MVC.Models.Review;
+using OnlineStore.MVC.Models.ShippingMethod;
 using OnlineStore.MVC.Models.Specification;
 using OnlineStore.MVC.Models.SpecificationType;
 using OnlineStore.MVC.Models.Subscriber;
@@ -37,6 +40,14 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<EventDTO, EventViewModel>().ReverseMap();
             CreateMap<UpdateEventDTO, EventViewModel>().ReverseMap();
             CreateMap<CreateEventDTO, CreateEventViewModel>().ReverseMap();
+
+            CreateMap<PaymentMethodDTO, PaymentMethodViewModel>().ReverseMap();
+            CreateMap<UpdatePaymentMethodDTO, PaymentMethodViewModel>().ReverseMap();
+            CreateMap<CreatePaymentMethodDTO, CreatePaymentMethodViewModel>().ReverseMap();
+
+            CreateMap<ShippingMethodDTO, ShippingMethodViewModel>().ReverseMap();
+            CreateMap<UpdateShippingMethodDTO, ShippingMethodViewModel>().ReverseMap();
+            CreateMap<CreateShippingMethodDTO, CreateShippingMethodViewModel>().ReverseMap();
 
             // Cast Models.Enums.OrderStatus to ApiClient.OrderStatus and vice versa
             // to separate automatically generated models from controllers and views.
@@ -69,9 +80,45 @@ namespace OnlineStore.MVC.Mapping
             CreateMap<Services.ApiClient.PaymentStatusResponse, Models.PaymentStatusResponse>()
                 .ReverseMap();
 
-            CreateMap<ProductDTO, ProductViewModel>().ReverseMap();
-            CreateMap<UpdateProductDTO, ProductViewModel>().ReverseMap();
-            CreateMap<CreateProductDTO, CreateProductViewModel>().ReverseMap();
+            CreateMap<ProductTagDTO, ProductTagViewModel>().ReverseMap();
+            CreateMap<UpdateProductTagDTO, ProductTagViewModel>().ReverseMap();
+            CreateMap<CreateProductTagDTO, CreateProductTagViewModel>().ReverseMap();
+
+            // Cast Models.Enums.ProductStatus to ApiClient.ProductStatus
+            // and Models.Enums.ProductAvailability to ApiClient.ProductAvailability
+            // and vice versa
+            // to separate automatically generated models from controllers and views.
+            // Leaving auto-generated models only inside the services.
+            CreateMap<ProductDTO, ProductViewModel>()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductStatus)(int)src.Status))
+                .ReverseMap()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (ProductStatus)(int)src.Status));
+            CreateMap<UpdateProductDTO, ProductViewModel>()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductStatus)(int)src.Status))
+                .ReverseMap()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (ProductStatus)(int)src.Status));
+            CreateMap<CreateProductDTO, CreateProductViewModel>()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (Models.Enums.ProductStatus)(int)src.Status))
+                .ReverseMap()
+                .ForMember(dest => dest.Availability,
+                    opt => opt.MapFrom(src => (ProductAvailability)(int)src.Availability))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => (ProductStatus)(int)src.Status));
 
             CreateMap<SpecificationDTO, SpecificationViewModel>().ReverseMap();
             CreateMap<UpdateSpecificationDTO, SpecificationViewModel>().ReverseMap();
