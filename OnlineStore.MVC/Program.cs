@@ -54,6 +54,9 @@ builder.Services.AddScoped<ISubscribersService, SubscribersService>();
 builder.Services.AddScoped<IContactRequestsService, ContactRequestsService>();
 builder.Services.AddScoped<IMenuItemsService, MenuItemsService>();
 builder.Services.AddScoped<IFilterGroupsService, FilterGroupsService>();
+builder.Services.AddScoped<IProductTagsService, ProductTagsService>();
+builder.Services.AddScoped<IShippingMethodsService, ShippingMethodsService>();
+builder.Services.AddScoped<IPaymentMethodsService, PaymentMethodsService>();
 
 builder.Services.AddScoped<ICartStorage, CookieCartStorage>();
 builder.Services.AddScoped<ICartService, CartService>();
