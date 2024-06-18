@@ -1,4 +1,6 @@
-﻿@model IEnumerable<IGrouping<string, OnlineStore.MVC.Models.Order.OrderViewModel>>?
+﻿@using System.Text.RegularExpressions
+@using OnlineStore.MVC.Extensions
+@model IEnumerable<IGrouping<string, OnlineStore.MVC.Models.Order.OrderViewModel>>?
 
 <div class="acc-section">
     <div class="container">
@@ -27,10 +29,10 @@
                                 {
                                     <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number" class="orders-list-line">
                                         <div class="left-part">
-                                            <h3>@order.Status.ToString()</h3>
-                                            <span>@order.CreationDate.ToString("dd MMMM yyyy")</span>
+                                            <h3>@order.Status.GetStringValue()</h3>
+                                            <span>@order.CreatingDate.ToString("dd MMMM yyyy")</span>
                                             <span>@order.Number</span>
-                                            @if (order.Status > OnlineStore.MVC.Models.Enums.OrderStatus.NotPaid)
+                                            @if (order.Status > OnlineStore.MVC.Models.Enums.OrderStatus.ToPay)
                                             {
                                                 <span class="price">@order.Total.ToString("C")</span>
                                             }

@@ -11,7 +11,7 @@
         <div class="acc-wrapper">
             @await Component.InvokeAsync("AccountMenu", new { id = 4 })
             <div class="acc-content">
-                <div class="content-box">
+                <div class="content-box settings">
                     <a class="back-to-menu" asp-controller="Account" asp-action="Index">
                         <i class='bx bx-chevron-left'></i>
                         <span>Back</span>
@@ -45,65 +45,90 @@
                                     <h3>General Information</h3>
                                     <span>Here you can change your personal information.</span>
                                 </header>
+
                                 <form asp-controller="Account" asp-action="UpdateUser" method="post">
                                     <div class="double-field">
-                                        <div class="single-field">
-                                            <label>First Name</label>
-                                            <input asp-for="FirstName"
-                                                   type="text"
-                                                   value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value"
-                                                   placeholder="Unspecified"
-                                                   required />
-                                        </div>
-                                        <div class="single-field">
-                                            <label>Last Name</label>
+                                        <label class="control" asp-for="FirstName">
+                                            <input asp-for="FirstName" 
+                                                type="text" 
+                                                value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName)?.Value" 
+                                                placeholder="Unspecified" 
+                                                required>
+                                            <span class="label">
+                                                <span>First Name</span>
+                                            </span>
+                                        </label>
+
+                                        <label class="control" asp-for="LastName">
                                             <input asp-for="LastName"
                                                    type="text"
                                                    value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName)?.Value"
                                                    placeholder="Unspecified"
-                                                   required />
-                                        </div>
+                                                   required>
+                                            <span class="label">
+                                                <span>Last Name</span>
+                                            </span>
+                                        </label>
                                     </div>
-                                    <div class="single-field">
-                                        <label>Email Address</label>
-                                        <input type="email"
-                                               value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value"
-                                               placeholder="Unspecified"
-                                               readonly />
-                                    </div>
+
+                                    <label class="control">
+                                        <input type="email" 
+                                            inputmode="email"
+                                            value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value"
+                                            placeholder="" 
+                                            required>
+                                        <span class="label">
+                                            <span>Email</span>
+                                        </span>
+                                    </label>
+
                                     <div class="double-field">
-                                        <div class="single-field">
-                                            <label>Login</label>
+                                        <label class="control" asp-for="Username">
                                             <input asp-for="Username"
                                                    type="text"
                                                    value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.UniqueName)?.Value"
                                                    placeholder="Unspecified"
-                                                   required />
-                                        </div>
-                                        <div class="single-field">
-                                            <label>Phone Number</label>
+                                                   required>
+                                            <span class="label">
+                                                <span>Login</span>
+                                            </span>
+                                        </label>
+
+                                        <label class="control" asp-for="PhoneNumber">
                                             <input asp-for="PhoneNumber"
-                                                   type="tel"
+                                                   type="number"
                                                    value="@User.Claims.FirstOrDefault(c => c.Type == "tel")?.Value"
-                                                   placeholder="Unspecified" />
-                                        </div>
+                                                   inputmode="tel"
+                                                   placeholder="Unspecified">
+                                            <span class="label">
+                                                <span>Phone Number</span>
+                                            </span>
+                                        </label>
                                     </div>
+
                                     <div class="double-field">
-                                        <div class="single-field">
-                                            <label>Date of Birth</label>
+                                        <label class="control" asp-for="DateOfBirth">
                                             <input asp-for="DateOfBirth"
                                                    type="date"
                                                    value="@User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Birthdate)?.Value"
-                                                   placeholder="Unspecified" />
-                                        </div>
-                                        <div class="single-field">
-                                            <label>Date of Registration</label>
-                                            <input type="date"
+                                                   placeholder="Unspecified">
+                                            <span class="label">
+                                                <span>Date of Birth</span>
+                                            </span>
+                                        </label>
+
+                                        <label class="control">
+                                            <input
+                                                   type="date"
                                                    value="@User.Claims.FirstOrDefault(c => c.Type == "regdate")?.Value"
                                                    placeholder="Undefined"
-                                                   readonly />
-                                        </div>
+                                                   readonly>
+                                            <span class="label">
+                                                <span>Date of Registration</span>
+                                            </span>
+                                        </label>
                                     </div>
+
                                     <div class="form-buttons">
                                         <button class="button black" type="submit">Save</button>
                                         <button class="button black outlined" type="reset">Cancel</button>

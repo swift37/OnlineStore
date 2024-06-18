@@ -1,4 +1,6 @@
-﻿@model OnlineStore.MVC.Models.Order.OrderViewModel
+﻿@using System.Text.RegularExpressions
+@using OnlineStore.MVC.Extensions
+@model OnlineStore.MVC.Models.Order.OrderViewModel
 
 <div class="acc-section">
     <div class="container">
@@ -13,20 +15,23 @@
                     <header class="box-header stretch">
                         <div class="left-part">
                             <h3>Order number <span>@Model.Number</span></h3>
-                            <p>placed @Model.CreationDate.ToString("MMMM dd, yyyy")</p>
+                            <p>placed @Model.CreatingDate.ToString("MMMM dd, yyyy")</p>
                         </div>
                         <div class="right-part">
-                            <h3>@Model.Status.ToString()</h3>
+                            <h3>@Model.Status.GetStringValue()</h3>
                         </div>
                     </header>
 
                     <h3 class="order-details-header">Delivery</h3>
                     <div class="order-detail-stretch-box">
                         <div class="stretch-box-content">
-                            <i class='bx bx-package'></i>
+                            <span class="icon">
+                                <img src="@Model.ShippingMethod?.Image" />
+                            </span>
+
                             <div class="info">
-                                <p>Courier - DHL</p>
-                                <span>Fast delivery</span>
+                                <p>@Model.ShippingMethod?.DisplayName</p>
+                                @* <span>@Model.ShippingMethod?.Name</span> *@
                             </div>
                         </div>
                     </div>
@@ -58,9 +63,12 @@
                     <h3 class="order-details-header">Payment method</h3>
                     <div class="order-detail-stretch-box">
                         <div class="stretch-box-content">
-                            <i class='bx bx-wallet'></i>
+                            <span class="icon">
+                                <img src="@Model.PaymentMethod?.Image" />
+                            </span>
+
                             <div class="info">
-                                <p>@Model.PaymentMethod</p>
+                                <p>@Model.PaymentMethod?.DisplayName</p>
                             </div>
                         </div>
                     </div>
@@ -131,12 +139,12 @@
                                     </div>
                                     <div class="total-line">
                                         <span>Delivery:</span>
-                                        <span>@Model.ShippingCost.ToString("C")</span>
+                                        <span>@((Model.ShippingMethod?.Price ?? default).ToString("C"))</span>
                                     </div>
                                 </div>
                                 <div class="total-sum">
                                     <span>Total:</span>
-                                    <span>@Model.Total.ToString("C")</span>
+                                    <span>@Model.CalculatedTotal.ToString("C")</span>
                                 </div>
                             </div>
                         </div>
