@@ -74,31 +74,40 @@
         </div>
     </div>
     <div class="container">
-        <div class="styled">
-            <div class="field">
-                <label>Name</label>
-                <input id="contactName" type="text" placeholder="Enter your name">
+        <div class="get-in-touch-form">
+            <label class="control">
+                <input id="contactName" type="text" placeholder="">
+                <span class="label">
+                    <span>First Name</span>
+                </span>
                 <div id="contactFormNameError" class="errors-area">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span></span>
                 </div>
-            </div>
-            <div class="field">
-                <label>Email</label>
-                <input id="contactEmail" type="email" placeholder="Enter your email">
+            </label>
+
+            <label class="control">
+                <input id="contactEmail" type="email" inputmode="email" placeholder="">
+                <span class="label">
+                    <span>Email</span>
+                </span>
                 <div id="contactFormEmailError" class="errors-area">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span></span>
                 </div>
-            </div>
-            <div class="field">
-                <label>Message</label>
-                <textarea id="contactMessage" rows="5" maxlength="5000" placeholder="Enter your message"></textarea>
+            </label>
+
+            <label class="control message">
+                <textarea id="contactMessage" rows="5" maxlength="5000" placeholder=""></textarea>
+                <span class="label">
+                    <span>Message</span>
+                </span>
                 <div id="contactFormMessageError" class="errors-area">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span></span>
                 </div>
-            </div>
+            </label>
+
             <button class="button black contact-btn" type="submit">Submit</button>
         </div>
     </div>

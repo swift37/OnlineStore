@@ -7,48 +7,60 @@
     <div class="slider-wrapper swiper-wrapper">
         <div class="slide swiper-slide">
             <img class="slide-img" src="~/resources/images/main-slide-1.jpg" />
+
             <div class="slide-data">
-                <div class="slide-text">Do whatever you want when you want to.</div>
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
                 <h2>
-                    Enjoy Our Exclusive<br />
-                    Coffee and Cocktails
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
                 </h2>
+
                 <a asp-action="About" class="slide-button">About Us</a>
             </div>
         </div>
 
         <div class="slide swiper-slide">
             <img class="slide-img" src="~/resources/images/main-slide-2.jpg" />
+
             <div class="slide-data">
-                <div class="slide-text">Do whatever you want when you want to.</div>
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
                 <h2>
-                    Enjoy Our Exclusive<br />
-                    Coffee and Cocktails
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
                 </h2>
+
                 <a asp-action="About" class="slide-button">About Us</a>
             </div>
         </div>
 
         <div class="slide swiper-slide">
             <img class="slide-img" src="~/resources/images/main-slide-3.jpg" />
+
             <div class="slide-data">
-                <div class="slide-text">Do whatever you want when you want to.</div>
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
                 <h2>
-                    Enjoy Our Exclusive<br />
-                    Coffee and Cocktails
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
                 </h2>
+
                 <a asp-action="About" class="slide-button">About Us</a>
             </div>
         </div>
 
         <div class="slide swiper-slide">
             <img class="slide-img" src="~/resources/images/main-slide-4.jpg" />
+
             <div class="slide-data">
-                <div class="slide-text">Do whatever you want when you want to.</div>
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
                 <h2>
-                    Enjoy Our Exclusive<br />
-                    Coffee and Cocktails
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
                 </h2>
+
                 <a asp-action="About" class="slide-button">About Us</a>
             </div>
         </div>
@@ -57,111 +69,7 @@
     <div class="swiper-scrollbar"></div>
 </section>
 
-<section class="featured-products-section">
-    <div class="container">
-        <div class="products-header">
-            <h3>Featured Products</h3>
-            <div class="paragraph-header opacity-light">
-                Check out new and popular products
-            </div>
-        </div>
-
-        <div class="product-cards-area">
-            <div class="products-slider-container">
-                <div class="products-slider">
-                    <div class="swiper-wrapper">
-                        @for (int i = 0; i < 5; i++)
-                        {
-                            <div class="slide swiper-slide">
-                                <div class="product-card">
-                                    <div class="card-content">
-                                        <div class="special-status">
-                                            <div class="flags">
-                                                <div class="new-flag">NEW</div>
-                                                <div class="sale-flag">SALE</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-image">
-                                            <a class="image-link" href="/">
-                                                <img src="\resources\productsImages\asus-laptop-g513-r7-16gb-1tb-3070-no-os,117928751377_3.jpg" loading="lazy" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="product-name">
-                                            <a class="product-link" href="/">
-                                                ASUS ROG G15 15.6'
-                                            </a>
-                                        </div>
-                                        <div class="product-rating">
-                                            <a class="rating-link" href="/">
-                                                <span class="rating-star">
-                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                                </span>
-                                                <span class="rating-star">
-                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                                </span>
-                                                <span class="rating-star">
-                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                                </span>
-                                                <span class="rating-star">
-                                                    <img src="~/resources/icons/star.png" loading="lazy" alt="★">
-                                                </span>
-                                                <span class="rating-star">
-                                                    <img src="~/resources/icons/half-star.png" loading="lazy" alt="★">
-                                                </span>
-                                                <span class="reviews-quantity">
-                                                    (58)
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <hr class="card-divider">
-                                        <ul class="product-main-specs">
-                                            <li class="product-spec">
-                                                Spec name: spec value
-                                            </li>
-                                            <li class="product-spec">
-                                                Spec name: spec value
-                                            </li>
-                                            <li class="product-spec">
-                                                Spec name: spec value
-                                            </li>
-                                            <li class="product-spec">
-                                                Spec name: spec value
-                                            </li>
-                                        </ul>
-                                        <div class="product-info">
-                                            <div class="info-container">
-                                                <div class="product-price">
-                                                    <span class="discount">$1199</span>
-                                                    <span class="price">$999</span>
-                                                </div>
-                                                <div class="product-status">
-                                                    Available
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="add-to-wishlist">
-                                        <button class="add-to-wishlist-btn" data-itemid="1">
-                                            <img src="~/resources/icons/like.png" alt="" />
-                                        </button>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <div class="add-to-cart-btn" data-itemid="1">
-                                            <img src="~/resources/icons/shopping-cart.png" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-
-                <div id="ftProductsSlNext" class="swiper-button-next slider-nav-btn"></div>
-                <div id="ftProductsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("FeaturedProducts")
 
 <section class="events-section">
     <div class="container">
@@ -233,6 +141,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="eventsSlNext" class="swiper-button-next slider-nav-btn"></div>
             <div id="eventsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
         </div>
@@ -242,39 +151,80 @@
 <section class="brands-section">
     <div class="container">
         <div class="brands-header">
-            <h3>Our Brands</h3>
+            <h3>Our partners</h3>
         </div>
-        <div class="brands-wrapper">
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/asus.png" alt=""/>
-                </a>
+
+        <div class="brands-slider-container">
+            <div class="brands-slider">
+                <div class="swiper-wrapper">
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/asus_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/nvidia_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/sony_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/xiaomi_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/samsung_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/microsoft-surface_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/apple_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/dji_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/sony.png" alt="" />
-                </a>
-            </div>
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/play-station.png" alt="" />
-                </a>
-            </div>
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/apple.png" alt="" />
-                </a>
-            </div>
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/xiaomi.png" alt="" />
-                </a>
-            </div>
-            <div class="brand-item">
-                <a href="/">
-                    <img src="~/resources/images/spaceX.png" alt="" />
-                </a>
-            </div>
+
+            <div id="brandsSlNext" class="swiper-button-next slider-nav-btn"></div>
+            <div id="brandsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
         </div>
     </div>
 </section>
