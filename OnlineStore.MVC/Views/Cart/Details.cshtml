@@ -10,163 +10,124 @@
         <div class="wrapper">
             @if (!Model.IsEmpty)
             {
-                <div class="page-title">
-            <h1>Cart (@Model.ItemsQuantity)</h1>
-            </div>
                 <div class="products one cart">
-                <div class="flexwrap">
-                    <div class="products-list cart">
-                        <div class="products-list-header cart">
-                            <div class="actions">
-                                <button class="remove-selected">
-                                    <i class='bx bx-trash-alt'></i>
-                                    <span>Clear cart</span>
-                                </button>
+                    <div class="flexwrap">
+                        <div class="products-list cart">
+                            <div class="products-list-header cart">
+                                <h2 class="title">
+                                    Cart 
+                                    <span>(@Model.ItemsQuantity)</span>
+                                </h2>
+
+                                <div class="actions">
+                                    <button class="remove-selected">
+                                        <img src="~/resources/svg-icons/trash.svg" />
+
+                                        <span>Clear cart</span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        @foreach (var item in Model.Items)
-                        {
-                                <div class="products-list-line">
-                                    <div class="line-container">
-                                        <div class="left-part">
-                                        <div class="line-image">
-                                            <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
-                                                <img src="@item.Product?.Image" alt="Image">
-                                            </a>
+
+                            <div class="products-list-content">
+                                @foreach (var item in Model.Items)
+                                {
+                                    <div class="products-list-line">
+                                        <div class="line-container">
+                                            <div class="left-part">
+                                                <div class="line-image">
+                                                    <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
+                                                        <img src="@item.Product?.Image" alt="Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="middle-part">
+                                                <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
+                                                    @item.Product?.Name
+                                                </a>
+
+                                                <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
+                                            </div>
+
+                                            <div class="right-part">
+                                                <div class="qty-control flexitem">
+                                                    <button class="qty-minus">-</button>
+
+                                                    <input class="qty-value cart"
+                                                           type="text"
+                                                           value="@item.Quantity"
+                                                           data-productid="@item.ProductId"
+                                                           min="1"
+                                                           pattern="^[0-9]+$">
+
+                                                    <button class="qty-plus">+</button>
+                                                </div>
+
+                                                <button class="to-wishlist" data-itemid="@item.ProductId">
+                                                    <img src="~/resources/svg-icons/to-wishlist.svg" />
+                                                </button>
+
+                                                <button class="item-remove from-cart" data-itemid="@item.ProductId">
+                                                    <img src="~/resources/svg-icons/trash.svg" />
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                        <div class="middle-part">
-                                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.ProductId">
-                                            @item.Product?.Name
-                                        </a>
-                                        <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
-                                    </div>
-                                        <div class="right-part">
+
+                                        <div class="bottom-part">
+                                            <button class="item-remove from-cart" data-itemid="@item.ProductId">
+                                                <img src="~/resources/svg-icons/trash.svg" />
+                                            </button>
+
                                             <div class="qty-control flexitem">
                                                 <button class="qty-minus">-</button>
+
                                                 <input class="qty-value cart"
                                                        type="text"
                                                        value="@item.Quantity"
                                                        data-productid="@item.ProductId"
                                                        min="1"
                                                        pattern="^[0-9]+$">
+
                                                 <button class="qty-plus">+</button>
                                             </div>
+
                                             <button class="to-wishlist" data-itemid="@item.ProductId">
-                                                <i class='bx bx-heart'></i>
-                                            </button>
-                                            <button class="item-remove from-cart" data-itemid="@item.ProductId">
-                                                <i class='bx bx-trash-alt'></i>
+                                                <img src="~/resources/svg-icons/to-wishlist.svg" />
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="bottom-part">
-                                        <button class="item-remove from-cart" data-itemid="@item.ProductId">
-                                            <i class='bx bx-trash-alt'></i>
-                                        </button>
-                                        <div class="qty-control flexitem">
-                                            <button class="qty-minus">-</button>
-                                            <input class="qty-value cart"
-                                                   type="text"
-                                                   value="@item.Quantity"
-                                                   data-productid="@item.ProductId"
-                                                   min="1"
-                                                   pattern="^[0-9]+$">
-                                            <button class="qty-plus">+</button>
-                                        </div>
-                                        <button class="to-wishlist" data-itemid="@item.ProductId">
-                                            <i class='bx bx-heart'></i>
-                                        </button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="cart-summary">
+                            <div class="checkout-box summary">
+                                <div class="checkout-summary">
+                                    <div class="summary-line">
+                                        Subtotal
+                                        <span class="line-value">@Model.Subtotal.ToString("C")</span>
+                                    </div>
+
+                                    <div class="summary-line">
+                                        Discount
+                                        <span class="line-value">-@Model.Discount.ToString("C")</span>
                                     </div>
                                 </div>
-                        }
-                    </div>
-                    <div class="cart-summary styled">
-                        <div class="item">
-                            <div class="coupon">
-                                <input type="text" placeholder="Enter coupon">
-                                <button>Apply</button>
-                            </div>
-                            <div class="shipping-rate collapse">
-                                <div class="has-child expand">
-                                    <a href="#" class="icon-small">Estimate Shipping and Tax</a>
-                                    <div class="content">
-                                        <div class="countries">
-                                            <div class="item-content">
-                                                <label for="country">Country</label>
-                                                <div class="select-container">
-                                                    <select name="country" id="country">
-                                                        <option value=""></option>
-                                                        <option value="1" selected="selected">United States</option>
-                                                        <option value="2">Canada</option>
-                                                        <option value="3">Australia</option>
-                                                        <option value="4">Japan</option>
-                                                        <option value="5">Others</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="states">
-                                            <div class="item-content">
-                                                <label for="state">State/Province</label>
-                                                <div class="select-container">
-                                                    <select name="state" id="state">
-                                                        <option value="">Select a region, satate or province</option>
-                                                        <option value="1">New York</option>
-                                                        <option value="2">Texas</option>
-                                                        <option value="3">Arizona</option>
-                                                        <option value="4">Alaska</option>
-                                                        <option value="5">Others</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="rate-options variant">
-                                            <div class="item-content">
-                                                <p>
-                                                    <span>Flat: $10.00</span>
-                                                    <input type="radio" name="rate-option" id="flat" checked>
-                                                    <label for="flat" class="circle"></label>
-                                                </p>
-                                                <p>
-                                                    <span>Best: $0.00</span>
-                                                    <input type="radio" name="rate-option" id="best">
-                                                    <label for="best" class="circle"></label>
-                                                </p>
-                                            </div>
-                                        </div>
+
+                                <hr class="checkout-divider" />
+
+                                <div class="checkout-total">
+                                    <div class="total-line">
+                                        Total
+                                        <span class="line-value">@Model.Total.ToString("C")</span>
                                     </div>
+
+                                    <a asp-controller="Cart" asp-action="Login" class="button black">Proceed to checkout</a>
                                 </div>
-                            </div>
-                            <div class="cart-total">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <th>Subtotal</th>
-                                            <td><span class="subtotal-price">@Model.Subtotal.ToString("C")</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Discount</th>
-                                            <td><span class="total-discount">@Model.Discount.ToString("C")</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping<span class="mini-text">(Flat)</span></th>
-                                            <td>$0.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL</th>
-                                            <td><strong class="total-price">@Model.Total.ToString("C")</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <a asp-controller="Cart" asp-action="Login" class="button black">
-                                    Checkout
-                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             }
             else
             {

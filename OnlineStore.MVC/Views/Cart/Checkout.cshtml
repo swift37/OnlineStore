@@ -5,132 +5,176 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="single-checkout">
+<div class="checkout">
     <div class="container">
-        <div class="wrapper">
-            <div class="checkout flexwrap">
-                <div class="item left styled">
-                    <h1>Recipient Data</h1>
-                    <form asp-controller="Cart" asp-action="Checkout" method="post">
-                        <div class="field">
-                            <label asp-for="Order.Email">Email Address <span></span></label>
-                            <input asp-for="Order.Email" type="email" placeholder="Enter your email" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.FirstName">First Name <span></span></label>
-                            <input asp-for="Order.FirstName" type="text" placeholder="Enter your first name" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.LastName">Last Name <span></span></label>
-                            <input asp-for="Order.LastName" type="text" placeholder="Enter your last name" required>
-                        </div>
-                        <div class="field address">
-                            <label asp-for="Order.StreetAddress">Street Address <span></span></label>
-                            <div class="fields">
-                                <input asp-for="Order.StreetAddress" type="text" placeholder="Enter your street address" required>
-                                <input asp-for="Order.Apartment" type="text" placeholder="Apt.">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.City">City <span></span></label>
-                            <input asp-for="Order.City" type="text" placeholder="Enter your city" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.State">State / Province <span></span></label>
-                            <input asp-for="Order.State" type="text" placeholder="Enter your apartment state" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.Postcode">Zip / Postal Code <span></span></label>
-                            <input asp-for="Order.Postcode" type="number" placeholder="Enter your zip/postal code" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.Country">Country <span></span></label>
-                            <div class="select-container">
-                                <select asp-for="Order.Country">
-                                    <option value=""></option>
-                                    <option value="1" selected="selected">United States</option>
-                                    <option value="2">Canada</option>
-                                    <option value="3">Australia</option>
-                                    <option value="4">Japan</option>
-                                    <option value="5">Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.Phone">Phone Number <span></span></label>
-                            <input asp-for="Order.Phone" type="number" placeholder="Enter your phone" required>
-                        </div>
-                        <div class="field">
-                            <label asp-for="Order.Notes">Order Notes (optional)</label>
-                            <input asp-for="Order.Notes" type="text" placeholder="Enter your notes">
-                        </div>
-                        <div class="shipping-methods">
-                            <h2>Shipping Methods</h2>
-                            <div class="field rate-options">
-                                <p>
-                                    <span>Flat: $10.00</span>
-                                    @Html.RadioButtonFor(model => model.Order.ShippingCost, 10)
-                                    <label for="flat" class="circle"></label>
-                                </p>
-                                <p>
-                                    <span>Best: $0.00</span>
-                                    @Html.RadioButtonFor(model => model.Order.ShippingCost, 0)
-                                    <label for="best" class="circle"></label>
-                                </p>
-                            </div>
-                        </div>
-                        <input type="hidden" asp-for="UseUnauthCart" />
-                        <div class="primary-checkout">
-                            <button class="button black" type="submit">Place And Pay</button>
-                        </div>
-                    </form>
+        <form class="checkout-wrapper" asp-controller="Cart" asp-action="Checkout" method="post">
+            <header class="header">
+                <h1>Delivery and payment</h1>
+            </header>
+
+            <div class="checkout-col">
+                <div class="checkout-box">
+                    <h3>Delivery method</h3>
+
+                    @await Component.InvokeAsync("ShippingMethods")
                 </div>
-                <div class="item right">
-                    <h2>Order Summary</h2>
-                    <div class="summary-order">
-                        <div class="summary-totals">
-                            <ul>
-                                <li>
-                                    <span>Subtotal</span>
-                                    <span>@Model.Cart.Subtotal.ToString("C")</span>
-                                </li>
-                                <li>
-                                    <span>Discount</span>
-                                    <span>-@Model.Cart.Discount.ToString("C")</span>
-                                </li>
-                                <li>
-                                    <span>Shipping: Flat</span>
-                                    <span>$0.00</span>
-                                </li>
-                                <li>
-                                    <span>Total</span>
-                                    <strong>@Model.Cart.Total.ToString("C")</strong>
-                                </li>
-                            </ul>
+
+                <div class="checkout-box">
+                    <h3 class="box-title">Delivery address</h3>
+
+                    <div class="box-form">
+                        <label class="control" asp-for="Order.Email">
+                            <input asp-for="Order.Email" type="email" inputmode="email" placeholder="" required>
+                            <span class="label">
+                                <span>Email</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.FirstName">
+                            <input asp-for="Order.FirstName" type="text" placeholder="" required>
+                            <span class="label">
+                                <span>First Name</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.LastName">
+                            <input asp-for="Order.LastName" type="text" placeholder="" required>
+                            <span class="label">
+                                <span>Last Name</span>
+                            </span>
+                        </label>
+
+                        <div class="field address">
+                            <label class="control field-item" asp-for="Order.StreetAddress">
+                                <input asp-for="Order.StreetAddress" type="text" placeholder="" required>
+                                <span class="label">
+                                    <span>Street Address</span>
+                                </span>
+                            </label>
+
+                            <label class="control field-item" asp-for="Order.Apartment">
+                                <input asp-for="Order.Apartment" type="text" maxlength="8" placeholder="" required>
+                                <span class="label">
+                                    <span>Apartment</span>
+                                </span>
+                            </label>
                         </div>
-                        <ul class="products mini">
-                            @if (!Model.Cart.IsEmpty)
-                                foreach (var cartItem in Model.Cart.Items)
-                                    if (cartItem.Product is { })
-                                    {
-                                        <li class="item">
-                                            <div class="thumbnail object-contain">
-                                                <img src="@cartItem.Product.Image" alt="Image">
-                                            </div>
-                                            <div class="item-content">
-                                                <p>@cartItem.Product.Name</p>
-                                                <span class="price">
-                                                    <span>$@cartItem.Product.UnitPrice</span>
-                                                    <span>x @cartItem.Quantity</span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                    }
-                        </ul>
+
+                        <label class="control" asp-for="Order.City">
+                            <input asp-for="Order.City" type="text" placeholder="" required>
+                            <span class="label">
+                                <span>City</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.State">
+                            <input asp-for="Order.State" type="text" placeholder="" required>
+                            <span class="label">
+                                <span>State / Province</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.Postcode">
+                            <input asp-for="Order.Postcode" type="text" maxlength="10" placeholder="" required>
+                            <span class="label">
+                                <span>Zip / Postal Code</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.Country">
+                            <select asp-for="Order.Country">
+                                <option value="1" selected="selected">United States</option>
+                                <option value="2">Canada</option>
+                                <option value="3">Australia</option>
+                                <option value="4">Japan</option>
+                                <option value="5">Others</option>
+                            </select>
+                            <span class="label">
+                                <span>Country</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.Phone">
+                            <input asp-for="Order.Phone" type="text" inputmode="tel" placeholder="" required>
+                            <span class="label">
+                                <span>Phone</span>
+                            </span>
+                        </label>
+
+                        <label class="control" asp-for="Order.Notes">
+                            <textarea asp-for="Order.Notes" placeholder="" maxlength="64"></textarea>
+                            <span class="label">
+                                <span>Notes (optional)</span>
+                            </span>
+                        </label>
+
+                        <input type="hidden" asp-for="UseUnauthCart" />
+                    </div>
+                </div>
+
+                <div class="checkout-box">
+                    <h3>Delivery method</h3>
+
+                    @await Component.InvokeAsync("PaymentMethods")
+                </div>
+            </div>
+
+            <div class="checkout-col">
+                <div class="checkout-box summary">
+                    <div class="checkout-products">
+                        @if (!Model.Cart.IsEmpty)
+                            foreach (var cartItem in Model.Cart.Items)
+                                if (cartItem.Product is { })
+                                {
+                                    <div class="item-line">
+                                        <a class="img-container" asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.ProductId">
+                                            <img src="@cartItem.Product.Image" alt="Image">
+                                        </a>
+
+                                        <div class="item-content">
+                                            <a class="item-link" asp-controller="Catalog" asp-action="Product" asp-route-id="@cartItem.ProductId">
+                                                @cartItem.Product.Name
+                                            </a>
+
+                                            <span class="item-details">
+                                                <span>@cartItem.Quantity pcs.</span>
+                                                <span>@cartItem.Product.UnitPrice.ToString("C")</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                    </div>
+
+                    <div class="checkout-summary">
+                        <div class="summary-line">
+                            Subtotal
+                            <span class="line-value">@Model.Cart.Subtotal.ToString("C")</span>
+                        </div>
+
+                        <div class="summary-line">
+                            Discount
+                            <span class="line-value">-@Model.Cart.Discount.ToString("C")</span>
+                        </div>
+
+                        <div class="summary-line">
+                            Delivery and service
+                            <span class="line-value">$10.00</span>
+                        </div>
+                    </div>
+
+                    <hr class="checkout-divider" />
+
+                    <div class="checkout-total">
+                        <div class="total-line">
+                            Total
+                            <span class="line-value">@Model.Cart.Total.ToString("C")</span>
+                        </div>
+
+                        <button class="button black" type="submit">Place</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
