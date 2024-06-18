@@ -13,32 +13,42 @@
                 <div class="content-box">
                     <a class="back-to-menu" asp-controller="Account" asp-action="Index">
                         <i class='bx bx-chevron-left'></i>
+
                         <span>Back</span>
                     </a>
                     @if (!Model.IsEmpty)
                     {
                         <header class="box-header">
+
                         <h2>Wishlist</h2>
+
                         @if (Model.LastChangeDate != default) 
                         {
                             <span>Last change: @Model.LastChangeDate.ToString("MMMM dd, yyyy")</span>
                         }
+
                         </header>
 
                         <div class="products-list">
                             <div class="products-list-header">
                                 <div class="line-check">
                                     <input type="checkbox" id="allItems" />
+
                                     <label class="check" for="allItems"></label>
+
                                     <label class="text" for="allItems">Select all</label>
                                 </div>
+
                                 <div class="actions">
                                     <button class="selected-to-cart">
-                                        <i class='bx bx-cart-add'></i>
+                                        <img src="~/resources/svg-icons/add-to-cart.svg" />
+
                                         <span>Add to cart</span>
                                     </button>
+
                                     <button class="remove-selected">
-                                        <i class='bx bx-trash-alt'></i>
+                                        <img src="~/resources/svg-icons/trash.svg" />
+
                                         <span>Remove</span>
                                     </button>
                                 </div>
@@ -50,8 +60,10 @@
                                         <div class="left-part">
                                             <div class="line-check">
                                                 <input type="checkbox" id="@($"item{item.Id}")" />
+
                                                 <label class="check" for="@($"item{item.Id}")"></label>
                                             </div>
+
                                             <div class="line-image">
                                                 <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
                                                     <img src="@item.Product?.Image" alt="Image">
@@ -62,11 +74,14 @@
                                             <a asp-controller="Catalog" asp-action="Product" asp-route-id="@item.Id">
                                                 @item.Product?.Name
                                             </a>
+
                                             <p>@item.Product?.PriceAfterDiscount.ToString("C")</p>
                                         </div>
+
                                         <div class="right-part">
                                             <div class="qty-control flexitem">
                                                 <button class="qty-minus">-</button>
+
                                                 <input 
                                                     class="qty-value wl" 
                                                     type="text" 
@@ -75,22 +90,28 @@
                                                     data-productid="@item.ProductId" 
                                                     min="1" 
                                                     pattern="^[0-9]+$">
+
                                                 <button class="qty-plus">+</button>
                                             </div>
+
                                             <button class="to-cart-from-wl">
-                                                <i class='bx bx-cart-add'></i>
+                                                <img src="~/resources/svg-icons/add-to-cart.svg" />
                                             </button>
+
                                             <button class="item-remove from-wishlist" data-itemid="@item.Id">
-                                                <i class='bx bx-trash-alt'></i>
+                                                <img src="~/resources/svg-icons/trash.svg" />
                                             </button>
                                         </div>
                                     </div>
+
                                     <div class="bottom-part">
                                             <button class="item-remove from-wishlist" data-itemid="@item.Id">
-                                                <i class='bx bx-trash-alt'></i>
+                                                <img src="~/resources/svg-icons/trash.svg" />
                                             </button>
+
                                             <div class="qty-control flexitem">
                                                 <button class="qty-minus">-</button>
+
                                                 <input 
                                                     class="qty-value wl" 
                                                     type="text" 
@@ -99,10 +120,12 @@
                                                     data-productid="@item.ProductId" 
                                                     min="1" 
                                                     pattern="^[0-9]+$">
+
                                                 <button class="qty-plus">+</button>
                                             </div>
+
                                             <button class="to-cart-from-wl">
-                                                <i class='bx bx-cart-add'></i>
+                                            <img src="~/resources/svg-icons/add-to-cart.svg" />
                                             </button>
                                         </div>
                                 </div>
@@ -111,17 +134,22 @@
                                 <div class="products-count">
                                     @Model.ProductsCount products
                                 </div>
+
                                 <div class="products-total">
                                     <div class="total-lines">
                                         <div class="total-line">
                                             <span>Subtotal:</span>
+
                                             <span>@Model.Subtotal.ToString("C")</span>
                                         </div>
+
                                         <div class="total-line">
                                             <span>Discount:</span>
+
                                             <span>-@Model.Discount.ToString("C")</span>
                                         </div>
                                     </div>
+
                                     <div class="total-sum">
                                         <span>Total:</span>
                                         <span>@Model.Total.ToString("C")</span>
