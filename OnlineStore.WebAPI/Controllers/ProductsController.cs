@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Product;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
+using OnlineStore.Domain;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.Domain.Enums;
 using OnlineStore.WebAPI.Controllers.Base;
 
@@ -13,10 +15,18 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class ProductsController : BaseController
     {
-        private readonly IProductsRepository _repository;
+        private readonly IProductsRepository _productsRepository;
 
-        public ProductsController(IProductsRepository repository) => 
-            _repository = repository;
+        private readonly IReviewsRepository _reviewsRepository;
+
+        private readonly IMapper _mapper;
+
+        public ProductsController(
+            IProductsRepository productsRepository, 
+            IReviewsRepository reviewsRepository,
+            IMapper mapper) => 
+            (_productsRepository, _reviewsRepository, _mapper) = 
+            (productsRepository, reviewsRepository, mapper);
 
         /// <summary>
         /// Get the enumeration of products
@@ -35,7 +45,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll() => 
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllAsync()));
 
         /// <summary>
         /// Get true if product exists
@@ -50,12 +60,11 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpGet("exists/{id:int}")]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<bool>> Exist(int id) => 
-            Ok(await _repository.ExistsAsync(id));
+            Ok(await _productsRepository.ExistsAsync(id));
 
         /// <summary>
         /// Get the product by id
@@ -69,8 +78,13 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="200">Success</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProductDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+        public async Task<ActionResult<ProductDTO>> Get(int id)
+        {
+            var productDTO = _mapper.Map<ProductDTO>(await _productsRepository.GetAsync(id));
+            productDTO.Rating = await _reviewsRepository.GetProductRatingAsync(id);
+            productDTO.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(id);
+            return Ok(productDTO);
+        }
 
         /// <summary>
         /// Create a product
@@ -96,17 +110,18 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateProductDTO createProductDTO)
         {
-            var product = await _repository.CreateAsync(createProductDTO.FromDTO());
+            var product = await _productsRepository.CreateAsync(_mapper.Map<Product>(createProductDTO));
             if (product is null) return UnprocessableEntity();
             return Ok(product.Id);
         }
 
         /// <summary>
-        /// Update the product
+        /// Partially update the product
         /// </summary>
         /// <remarks>
-        /// PUT /products
+        /// PATCH /products
         /// {
+        ///     id: "1",
         ///     name: "Updated product name"
         /// }
         /// </remarks>
@@ -115,14 +130,40 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize(Roles = Roles.ManagerOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            await _repository.UpdateAsync(updateProductDTO.FromDTO());
+            var product = await _productsRepository.GetAsync(updateProductDTO.Id);
+            product.Name = updateProductDTO.Name;
+            product.Description = updateProductDTO.Description;
+            product.Image = updateProductDTO.Image;
+            product.CategoryId = updateProductDTO.CategoryId;
+            product.UnitCost = updateProductDTO.UnitCost;
+            product.UnitPrice = updateProductDTO.UnitPrice;
+            product.UnitsInStock = updateProductDTO.UnitsInStock;
+            product.Discount = updateProductDTO.Discount;
+            product.Manufacturer = updateProductDTO.Manufacturer;
+            product.ManufacturersCode = updateProductDTO.ManufacturersCode;
+            product.StoreCode = updateProductDTO.StoreCode;
+            product.Availability = updateProductDTO.Availability;
+            product.Status = updateProductDTO.Status;
+
+            var removedItems = product.Specifications
+                .ExceptBy(updateProductDTO.Specifications.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                product.Specifications.Remove(item);
+
+            var addedItems = updateProductDTO.Specifications
+                .ExceptBy(product.Specifications.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                product.Specifications.Add(item);
+
+            await _productsRepository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -144,7 +185,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Delete(int id)
         {
-            await _repository.DeleteAsync(id);
+            await _productsRepository.DeleteAsync(id);
             return NoContent();
         }
 
@@ -152,23 +193,108 @@ namespace OnlineStore.WebAPI.Controllers
         /// Get the products page by category id
         /// </summary>
         /// <remarks>
-        /// GET /products/page?categoryId=1&page=3&itemsPerPage=20
+        /// POST /products/page
+        /// {
+        ///     categoryId: 1,
+        ///     pageNumber: 1,
+        ///     itemsPerPage: 15
+        /// }
         /// </remarks>
-        /// <param name="categoryId">Category id (int)</param>
-        /// <param name="page">Page number</param>
-        /// <param name="itemsPerPage">Number of items per page</param>
-        /// <param name="sortBy">Sort by statement</param>
+        /// <param name="options">Options for product filtering</param>
         /// <returns>Returns ProductsPageDTO</returns>
         /// <response code="200">Success</response>
-        [HttpGet("page")]
+        [HttpPost("page")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProductsPageDTO>> GetProductsByCategory(
-            int categoryId, 
-            int page = 1, 
-            int itemsPerPage = 15, 
-            SortParameters sortBy = SortParameters.Default) => 
-            Ok((await _repository.GetProductsByCategoryAsync(categoryId, page, itemsPerPage, sortBy))
-                .ToDTO());
+        public async Task<ActionResult<ProductsPageDTO>> GetFilteredProducts(
+            ProductsFilteringOptionsDTO options)
+        {
+            var optionsModel = _mapper.Map<ProductsFilteringOptions>(options);
+            var pageDTO = _mapper.Map<ProductsPageDTO>(await _productsRepository.GetFilteredProductsAsync(optionsModel));
 
+            pageDTO.Products = SortProducts(pageDTO.Products, options.SortBy);
+
+            foreach (var product in pageDTO.Products)
+            {
+                product.Rating = await _reviewsRepository.GetProductRatingAsync(product.Id);
+                product.ReviewsCount = await _reviewsRepository.GetReviewsCountByProductAsync(product.Id);
+            }
+
+            return Ok(pageDTO);
+        }
+
+        private ICollection<ProductDTO> SortProducts(ICollection<ProductDTO> products, SortParameter sortBy)
+        {
+            switch (sortBy)
+            {
+                default:
+                    return products;
+                case SortParameter.RatingDescending:
+                    return products.OrderByDescending(p => p.Rating).ToArray();
+                case SortParameter.PriceAscending:
+                    return products.OrderBy(p => p.UnitPrice).ToArray();
+                case SortParameter.PriceDescending:
+                    return products.OrderByDescending(p => p.UnitPrice).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Get products by tag id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/tag/1
+        /// </remarks>
+        /// <param name="id">Product tag id (int)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("tag/{tagId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByTag(int tagId) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByTagAsync(tagId)));
+
+        /// <summary>
+        /// Get products by tag name
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/tag/name/sale
+        /// </remarks>
+        /// <param name="id">Product tag name (string)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("tag/name/{tagName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByTag(string tagName) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByTagAsync(tagName)));
+
+        /// <summary>
+        /// Get products by status
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/status/1
+        /// </remarks>
+        /// <param name="id">Product status (ProductStatus)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("status/{productStatus}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByStatus(ProductStatus productStatus) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByStatusAsync(productStatus)));
+
+        /// <summary>
+        /// Get products by availability
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /products/availability/1
+        /// </remarks>
+        /// <param name="id">Product availability (ProductAvailability)</param>
+        /// <returns>Returns IEnumerable<ProductDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("availability/{productAvailability}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllByAvailability(ProductAvailability productAvailability) =>
+            Ok(_mapper.Map<IEnumerable<ProductDTO>>(await _productsRepository.GetAllByAvailabilityAsync(productAvailability)));
     }
 }

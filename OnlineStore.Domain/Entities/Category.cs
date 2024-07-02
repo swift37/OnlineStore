@@ -14,6 +14,8 @@ namespace OnlineStore.Domain.Entities
 
         public Category? Parent { get; set; }
 
+        public ICollection<Category> ChildCategories { get; set; } = new HashSet<Category>();
+
         public bool IsRootCategory { get; set; }
     }
 }

@@ -1,13 +1,23 @@
-﻿using OnlineStore.Application.DTOs.Product;
+﻿using AutoMapper;
+using OnlineStore.Application.Mapping;
 
 namespace OnlineStore.Application.DTOs.Wishlist
 {
-    public class CreateWishlistDTO
+    public class CreateWishlistDTO : IMapWith<Domain.Entities.Wishlist>
     {
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public ICollection<CreateWishlistItemDTO> Items { get; set; } = new HashSet<CreateWishlistItemDTO>();
 
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Wishlist, CreateWishlistDTO>().ReverseMap();
+    }
 
-        public ICollection<ProductDTO> Products { get; set; } = new HashSet<ProductDTO>();
+    public class CreateWishlistItemDTO : IMapWith<Domain.Entities.WishlistItem>
+    {
+        public int ProductId { get; set; }
+
+        public int Quantity { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.WishlistItem, CreateWishlistItemDTO>().ReverseMap();
     }
 }

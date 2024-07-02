@@ -15,6 +15,9 @@ namespace OnlineStore.Application.DTOs.Product.Validation
             RuleFor(p => p.Discount)
                 .GreaterThanOrEqualTo(0);
 
+            RuleFor(p => p.UnitCost)
+                .GreaterThan(0);
+
             RuleFor(p => p.UnitPrice)
                 .GreaterThan(0);
 
@@ -28,18 +31,6 @@ namespace OnlineStore.Application.DTOs.Product.Validation
                 .MaximumLength(32);
 
             RuleFor(p => p.StoreCode)
-                .MaximumLength(32);
-        }
-    }
-
-    public class CreateSpecificationDTOValidator : AbstractValidator<CreateSpecificationDTO>
-    {
-        public CreateSpecificationDTOValidator()
-        {
-            RuleFor(s => s.Name)
-                .MaximumLength(32);
-
-            RuleFor(s => s.Value)
                 .MaximumLength(32);
         }
     }

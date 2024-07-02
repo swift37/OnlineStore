@@ -1,22 +1,34 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.DTOs.PaymentMethod;
 using OnlineStore.Application.DTOs.Product;
+using OnlineStore.Application.DTOs.ShippingMethod;
+using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {
-    public class OrderDTO : BaseDTO
+    public class OrderDTO : BaseDTO, IMapWith<Domain.Entities.Order>
     {
         public string? Number { get; set; }
 
         public ICollection<OrderItemDTO> Items { get; set; } = new HashSet<OrderItemDTO>();
 
-        public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
+        public OrderStatus Status { get; set; } = OrderStatus.ToPay;
 
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatingDate { get; set; }
 
-        public DateTime? PayDate { get; set; }
+        public DateTimeOffset? PaymentDate { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
+
+        public DateTimeOffset? DeliveryDate { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public PaymentMethodDTO? PaymentMethod { get; set; }
+
+        public string? PaymentSession { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -26,7 +38,11 @@ namespace OnlineStore.Application.DTOs.Order
 
         public string? Email { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public decimal Total { get; set; }
+
+        public int? ShippingMethodId { get; set; }
+
+        public ShippingMethodDTO? ShippingMethod { get; set; }
 
         public string? TrackingNumber { get; set; }
 
@@ -43,13 +59,14 @@ namespace OnlineStore.Application.DTOs.Order
         public string? Apartment { get; set; }
 
         public string? Notes { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Order, OrderDTO>().ReverseMap();
     }
 
-    public class OrderItemDTO : BaseDTO
+    public class OrderItemDTO : BaseDTO, IMapWith<Domain.Entities.OrderItem>
     {
         public int OrderId { get; set; }
-
-        public OrderDTO? Order { get; set; }
 
         public int ProductId { get; set; }
 
@@ -60,5 +77,8 @@ namespace OnlineStore.Application.DTOs.Order
         public decimal UnitPrice { get; set; }
 
         public decimal Discount { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.OrderItem, OrderItemDTO>().ReverseMap();
     }
 }

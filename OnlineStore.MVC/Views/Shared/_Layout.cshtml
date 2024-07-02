@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OnlineStore</title>
+    <link rel="stylesheet" href="~/lib/swiper/swiper-bundle.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/boxicons/css/boxicons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/controls.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast-notification.min.css" asp-append-version="true" />
+    @await RenderSectionAsync("styles", required: false)
+</head>
+<body>
+    <partial name="_Header" />
+
+    <partial name="_ToastNotification" />
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <partial name="_Footer" />
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+    <script src="~/scripts/main.min.js" asp-append-version="true"></script>
+    <script src="~/scripts/sliders.min.js" asp-append-version="true"></script>
+    <script src="~/lib/feather-icons/dist/feather.min.js"></script>
+    <script src="~/scripts/ajax-requests.min.js" asp-append-version="true"></script>
+    <script>
+        feather.replace();
+    </script>
+    @await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

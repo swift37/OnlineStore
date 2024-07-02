@@ -16,5 +16,6 @@ namespace OnlineStore.Application.Interfaces.Repositories
 
         Task DeleteAsync(int id, CancellationToken cancellation = default);
 
+        Task<int> SaveChangesAsync(CancellationToken cancellation = default);
     }
 }

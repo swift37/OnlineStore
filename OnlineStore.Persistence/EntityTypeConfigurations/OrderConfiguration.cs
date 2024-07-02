@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineStore.DAL.EntityTypeConfigurations.Base;
-using OnlineStore.Domain;
+using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.DAL.EntityTypeConfigurations
 {
@@ -18,7 +18,7 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder.Property(order => order.FirstName).HasMaxLength(32);
             builder.Property(order => order.LastName).HasMaxLength(32);
             builder.Property(order => order.Phone).HasMaxLength(16);
-            builder.Property(order => order.ShippingCost).HasColumnType("decimal(18,2)");
+            builder.Property(order => order.Total).HasColumnType("decimal(18,2)");
             builder.Property(order => order.TrackingNumber).HasMaxLength(32);
             builder.Property(order => order.Country).HasMaxLength(32);
             builder.Property(order => order.City).HasMaxLength(32);
@@ -27,6 +27,16 @@ namespace OnlineStore.DAL.EntityTypeConfigurations
             builder.Property(order => order.StreetAddress).HasMaxLength(32);
             builder.Property(order => order.Apartment).HasMaxLength(8);
             builder.Property(order => order.Notes).HasMaxLength(64);
+            builder.HasOne(order => order.PaymentMethod)
+                .WithMany(paymentMethod => paymentMethod.Orders)
+                .HasForeignKey(order => order.PaymentMethodId)
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(order => order.ShippingMethod)
+                .WithMany(paymentMethod => paymentMethod.Orders)
+                .HasForeignKey(order => order.ShippingMethodId)
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.Navigation(order => order.PaymentMethod).AutoInclude();
+            builder.Navigation(order => order.ShippingMethod).AutoInclude();
             builder.Navigation(order => order.Items).AutoInclude();
         }
     }

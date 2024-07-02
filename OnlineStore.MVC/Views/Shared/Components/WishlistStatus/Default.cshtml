@@ -1,0 +1,13 @@
+﻿<div class="hub-component">
+    <a class="component-trigger" href="/wishlist">
+        <div class="icon-container">
+            <img src="~/resources/svg-icons/heart.svg" alt="">
+            @if (ViewBag.UserAuthenticated)
+            {
+                <div class="counter">
+                    <span id="wishlistQuantity" class="number">@ViewBag.WishlistItems</span>
+                </div>
+            }
+        </div>
+    </a>
+</div>

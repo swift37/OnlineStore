@@ -1,15 +1,29 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using OnlineStore.Application;
+using OnlineStore.Application.Interfaces;
+using OnlineStore.Application.Mapping;
 using OnlineStore.DAL;
 using OnlineStore.DAL.Context;
 using OnlineStore.Identity;
+using OnlineStore.Identity.Context;
 using OnlineStore.WebAPI.Middleware;
 using OnlineStore.WebAPI.OptionsSetup;
+using Stripe;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
 // Add services to the container.
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+    config.AddProfile(new AssemblyMappingProfile(typeof(IApplicationDbContext).Assembly));
+});
+
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddApplication();
@@ -20,7 +34,11 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
@@ -50,6 +68,9 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
+        var identityContext = scope.ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>();
+        IdentityDbInitializer.Initialize(identityContext);
+
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         DbInitializer.Initialize(context);
     }

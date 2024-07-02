@@ -1,0 +1,41 @@
+﻿<div id="updateReviewModal" class="modal-container">
+    <div class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Your a review</h2>
+                <i class="bx bx-x close-modal"></i>
+            </header>
+            <form>
+                <div class="modal-field rating">
+                    <p>Are you satisfied enough?</p>
+                    <div class="rate-this review-rating">
+                        <input type="radio" name="rating" id="urStar5">
+                        <label for="urStar5"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="urStar4">
+                        <label for="urStar4"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="urStar3">
+                        <label for="urStar3"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="urStar2">
+                        <label for="urStar2"><img src="~/resources/icons/empty-star.png"></label>
+
+                        <input type="radio" name="rating" id="urStar1">
+                        <label for="urStar1"><img src="~/resources/icons/empty-star.png"></label>
+                    </div>
+                </div>
+                <div class="modal-field">
+                    <label>Review</label>
+                    <textarea class="review-content" type="text"></textarea>
+                    <div class="errors-area review-content-error">
+                        <i class='bx bx-error-circle'></i>
+                        <span></span>
+                    </div>
+                </div>
+                <input class="review-identifier" type="number" hidden />
+                <button id="updateReviewBtn" class="button black" type="button">Save changes</button>
+            </form>
+        </div>
+    </div>
+</div>

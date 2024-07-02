@@ -1,0 +1,48 @@
+﻿@model ReviewsPageViewModel
+
+@{
+    ViewData["Title"] = "Reviews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="acc-section">
+    <div class="container">
+        <div class="acc-wrapper">
+            @await Component.InvokeAsync("AccountMenu", new { id = 2 })
+            <div class="acc-content">
+                <div class="content-box reviews">
+                    <a class="back-to-menu" asp-controller="Account" asp-action="Index">
+                        <i class='bx bx-chevron-left'></i>
+                        <span>Back</span>
+                    </a>
+                    @if (!Model.IsEmpty)
+                    {
+                        <header class="box-header">
+                            <h2>Reviews</h2>
+                        </header>
+
+                        <partial name="_CreateReviewModal" />
+                        <partial name="_UpdateReviewModal" />
+
+                        @await Component.InvokeAsync("OrdersAwaitingReviewList")
+
+                        @await Component.InvokeAsync("UserReviewsList")
+                    }
+                    else
+                    {
+                        <div class="content-block no-reviews">
+                            <div class="text-block">
+                                <h3>No reviews</h3>
+                                <p>There are no reviews or purchased products awaiting reviews.</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/scripts/account.min.js" asp-append-version="true"></script>
+}

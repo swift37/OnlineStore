@@ -1,12 +1,16 @@
-﻿using OnlineStore.Application.DTOs.Base;
-using OnlineStore.Application.DTOs.Category;
-using OnlineStore.Application.DTOs.Review;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.ProductTag;
+using OnlineStore.Application.DTOs.Specification;
+using OnlineStore.Application.Mapping;
+using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Product
 {
-    public class CreateProductDTO
+    public class CreateProductDTO : IMapWith<Domain.Entities.Product>
     {
         public string? Name { get; set; }
+
+        public decimal UnitCost { get; set; }
 
         public decimal UnitPrice { get; set; }
 
@@ -20,7 +24,9 @@ namespace OnlineStore.Application.DTOs.Product
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<CreateSpecificationDTO> Specifications { get; set; } = Enumerable.Empty<CreateSpecificationDTO>();
+        public IEnumerable<SpecificationDTO> Specifications { get; set; } = Enumerable.Empty<SpecificationDTO>();
+
+        public IEnumerable<ProductTagDTO> Tags { get; set; } = new HashSet<ProductTagDTO>();
 
         public string? Manufacturer { get; set; }
 
@@ -28,21 +34,11 @@ namespace OnlineStore.Application.DTOs.Product
 
         public string? StoreCode { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public ProductStatus Status { get; set; }
 
-        public bool IsNewProduct { get; set; }
+        public ProductAvailability Availability { get; set; }
 
-        public bool IsSale { get; set; }
-
-        public bool IsFeaturedProduct { get; set; }
-    }
-
-    public class CreateSpecificationDTO
-    {
-        public string? Name { get; set; }
-
-        public string? Value { get; set; }
-
-        public bool IsMain { get; set; }
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Product, CreateProductDTO>().ReverseMap();
     }
 }

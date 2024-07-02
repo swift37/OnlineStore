@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Coupon;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -15,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<Coupon> _repository;
 
-        public CouponsController(IRepository<Coupon> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public CouponsController(IRepository<Coupon> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of coupons
@@ -35,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<CouponDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<CouponDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if coupon exists
@@ -75,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CouponDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<CouponDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a coupon
@@ -101,17 +103,22 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCouponDTO createCouponDTO)
         {
-            var coupon = await _repository.CreateAsync(createCouponDTO.FromDTO());
-            if (coupon is null) return UnprocessableEntity();
+            var coupon = _mapper.Map<Coupon>(createCouponDTO);
+            coupon.CreationDate = DateTime.Now;
+            
+            if (await _repository.CreateAsync(coupon) is null) 
+                return UnprocessableEntity();
+
             return Ok(coupon.Id);
         }
 
         /// <summary>
-        /// Update the coupon
+        /// Partially update the coupon
         /// </summary>
         /// <remarks>
-        /// PUT /coupons
+        /// PATCH /coupons
         /// {
+        ///     id: "1",
         ///     name: "Updated coupon name"
         /// }
         /// </remarks>
@@ -120,14 +127,26 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize(Roles = Roles.ManagerOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCouponDTO updateCouponDTO)
         {
-            await _repository.UpdateAsync(updateCouponDTO.FromDTO());
+            var coupon = await _repository.GetAsync(updateCouponDTO.Id);
+            coupon.Number = updateCouponDTO.Number;
+            coupon.StartDate = updateCouponDTO.StartDate;
+            coupon.FinishDate = updateCouponDTO.FinishDate;
+            coupon.DiscountSize = updateCouponDTO.DiscountSize;
+            coupon.PercentDiscountSize = updateCouponDTO.PercentDiscountSize;
+            coupon.MaxUsesCount = updateCouponDTO.MaxUsesCount;
+            coupon.CurrentUsesCount = updateCouponDTO.CurrentUsesCount;
+            coupon.IsNotUsesLimit = updateCouponDTO.IsNotUsesLimit;
+            coupon.IsActive = updateCouponDTO.IsActive;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 

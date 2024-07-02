@@ -1,0 +1,112 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Category.CategoryViewModel>
+
+<div class="hub-component side-menu-component desktop-hide">
+    <div class="component-trigger">
+        <div class="icon-container">
+            <img src="/resources/icons/menu.png" alt="Menu" class="side-menu-icon">
+        </div>
+    </div>
+
+    <aside class="site-off desktop-hide">
+        <div class="off-canvas">
+            <div class="canvas-head">
+                <a asp-controller="Home" asp-action="Index" class="nav-brand">
+                    <img src="/resources/images/store-logo.png" alt="">
+                </a>
+                <button class="sm-close">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <nav class="store-menu">
+                @foreach (var category in Model)
+                    if (category.IsMainCategory)
+                    {
+                        <div class="link-item">
+                            <div class="link-head">
+                                <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@category.Id">
+                                    @category.Name
+                                </a>
+                                @if (category.HasChildCategories)
+                                {
+                                    <button class="expand-btn">
+                                        <i class='bx bx-chevron-down'></i>
+                                    </button>
+                                }
+                            </div>
+                            @if (category.HasChildCategories)
+                            {
+                                <div class="child-menu">
+                                    @foreach (var childCategory in category.ChildCategories)
+                                    {
+                                        <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@childCategory.Id">
+                                            @childCategory.Name
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+            </nav>
+            <nav class="account-menu">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Index">My Account</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Orders">Orders</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Reviews">Reviews</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Wishlist" asp-action="Index">Wishlist</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Settings">Settings & Privacy</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Account" asp-action="Logout">Logout</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Auth" asp-action="Login">Sign In</a>
+                        </div>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-head">
+                            <a asp-controller="Auth" asp-action="Register">Sign Up</a>
+                        </div>
+                    </div>
+                }
+            </nav>
+            <nav class="info-menu">
+                <div class="link-item">
+                    <div class="link-head">
+                        <a asp-controller="Home" asp-action="Contact">Support</a>
+                    </div>
+                </div>
+                <div class="link-item">
+                    <div class="link-head">
+                        <a asp-controller="Home" asp-action="About">About</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </aside>
+</div>

@@ -6,11 +6,29 @@ namespace OnlineStore.Application.Interfaces.Repositories
 {
     public interface IProductsRepository : IRepository<Product>
     {
-        Task<ProductsPage> GetProductsByCategoryAsync(
-            int catId,
-            int page = 1,
-            int itemsPerPage = 15,
-            SortParameters sortBy = SortParameters.Default,
+        Task<ProductsPage> GetFilteredProductsAsync(
+            ProductsFilteringOptions options,
+            CancellationToken cancellation = default);
+
+        Task<int> GetCountByFilterAsync(
+            int categoryId,
+            int specificationId,
+            CancellationToken cancellation = default);
+
+        Task<IEnumerable<Product>> GetAllByTagAsync(
+            int tagId,
+            CancellationToken cancellation = default);
+
+        Task<IEnumerable<Product>> GetAllByTagAsync(
+            string tagName,
+            CancellationToken cancellation = default);
+
+        Task<IEnumerable<Product>> GetAllByAvailabilityAsync(
+            ProductAvailability productAvailability,
+            CancellationToken cancellation = default);
+
+        Task<IEnumerable<Product>> GetAllByStatusAsync(
+            ProductStatus productStatus,
             CancellationToken cancellation = default);
     }
 }

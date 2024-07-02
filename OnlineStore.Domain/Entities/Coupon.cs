@@ -6,11 +6,11 @@ namespace OnlineStore.Domain.Entities
     {
         public string? Number { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        public DateTime? FinishDate { get; set; }
+        public DateTimeOffset? FinishDate { get; set; }
 
         public decimal DiscountSize { get; set; }
 

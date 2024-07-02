@@ -1,0 +1,47 @@
+﻿@model LoginViewModel;
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-wrapper cart-checkout">
+    <div class="auth-form cart-checkout">
+        <form asp-controller="Auth" asp-action="Login">
+            <h2>Already have an account?</h2>
+
+            <div class="auth-field">
+                <input asp-for="UsernameOrEmail" type="email" placeholder="Login or email" required />
+                <i class='bx bx-user auth-icon'></i>
+            </div>
+            <span asp-validation-for="UsernameOrEmail" class="failure"></span>
+            <div class="auth-field">
+                <input asp-for="Password" type="password" placeholder="Password" required />
+                <i class='bx bx-lock-alt auth-icon'></i>
+                <i class='bx bx-hide pswd-hide'></i>
+            </div>
+            <span asp-validation-for="Password" class="failure"></span>
+            <div class="options-field">
+                <a asp-controller="Auth" asp-action="#" class="forgot_pswd">Forgot password?</a>
+            </div>
+            <input asp-for="RedirectUrl" type="hidden" />
+            <button class="button black">Sign In</button>
+        </form>
+    </div>
+    <div class="auth-other">
+        <div class="auth-block">
+            <h2>Don't have an OnlineStore account?</h2>
+            <span>Create an account for a faster, easier shopping experience.</span>
+            <a asp-action="Register" asp-controller="Auth" asp-route-redirectUrl="~/cart/checkout" class="button black">
+                Sign Up
+            </a>
+        </div>
+        <div class="auth-block">
+            <h2>Order as a guest</h2>
+            <span>Don't have a customer account? Make a purchase as a guest.</span>
+            <a asp-action="Checkout" asp-controller="Cart" class="button black">
+                Continue as guest
+            </a>
+        </div>
+    </div>
+</div>

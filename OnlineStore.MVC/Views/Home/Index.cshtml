@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="main-slider">
+    <div class="slider-wrapper swiper-wrapper">
+        <div class="slide swiper-slide">
+            <img class="slide-img" src="~/resources/images/main-slide-1.jpg" />
+
+            <div class="slide-data">
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
+                <h2>
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
+                </h2>
+
+                <a asp-action="About" class="slide-button">About Us</a>
+            </div>
+        </div>
+
+        <div class="slide swiper-slide">
+            <img class="slide-img" src="~/resources/images/main-slide-2.jpg" />
+
+            <div class="slide-data">
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
+                <h2>
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
+                </h2>
+
+                <a asp-action="About" class="slide-button">About Us</a>
+            </div>
+        </div>
+
+        <div class="slide swiper-slide">
+            <img class="slide-img" src="~/resources/images/main-slide-3.jpg" />
+
+            <div class="slide-data">
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
+                <h2>
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
+                </h2>
+
+                <a asp-action="About" class="slide-button">About Us</a>
+            </div>
+        </div>
+
+        <div class="slide swiper-slide">
+            <img class="slide-img" src="~/resources/images/main-slide-4.jpg" />
+
+            <div class="slide-data">
+                <div class="slide-text">Innovate and illuminate your space.</div>
+
+                <h2>
+                    Discover Our Cutting-Edge<br>
+                    Technical Innovations
+                </h2>
+
+                <a asp-action="About" class="slide-button">About Us</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="swiper-scrollbar"></div>
+</section>
+
+@await Component.InvokeAsync("FeaturedProducts")
+
+<section class="events-section">
+    <div class="container">
+        <div class="events-header">
+            <h3>Special events and sales</h3>
+            <div class="paragraph-header opacity-light">
+                <a asp-controller="Home" asp-action="Events">
+                    Check out our event and hot sales <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="events-slider-container">
+            <div class="events-slider">
+                <div class="swiper-wrapper">
+                    <div class="slide swiper-slide">
+                        <div class="slide-img">
+                            <a href="/">
+                                <img src="~/resources/images/event-slide-1.jpg" />
+                            </a>
+                        </div>
+                        <div class="slide-data">
+                            Information about your event or sale.
+                        </div>
+                    </div>
+
+                    <div class="slide swiper-slide">
+                        <div class="slide-img">
+                            <a href="/">
+                                <img src="~/resources/images/event-slide-2.jpg" />
+                            </a>
+                        </div>
+                        <div class="slide-data">
+                            Information about your event or sale.
+                        </div>
+                    </div>
+
+                    <div class="slide swiper-slide">
+                        <div class="slide-img">
+                            <a href="/">
+                                <img src="~/resources/images/event-slide-3.jpg" />
+                            </a>
+                        </div>
+                        <div class="slide-data">
+                            Information about your event or sale.
+                        </div>
+                    </div>
+
+                    <div class="slide swiper-slide">
+                        <div class="slide-img">
+                            <a href="/">
+                                <img src="~/resources/images/event-slide-4.jpg" />
+                            </a>
+                        </div>
+                        <div class="slide-data">
+                            Information about your event or sale.
+                        </div>
+                    </div>
+
+                    <div class="slide swiper-slide">
+                        <div class="slide-img">
+                            <a href="/">
+                                <img src="~/resources/images/event-slide-5.jpg" />
+                            </a>
+                        </div>
+                        <div class="slide-data">
+                            Information about your event or sale.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eventsSlNext" class="swiper-button-next slider-nav-btn"></div>
+            <div id="eventsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
+        </div>
+    </div>
+</section>
+
+<section class="brands-section">
+    <div class="container">
+        <div class="brands-header">
+            <h3>Our partners</h3>
+        </div>
+
+        <div class="brands-slider-container">
+            <div class="brands-slider">
+                <div class="swiper-wrapper">
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/asus_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/nvidia_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/sony_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/xiaomi_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/samsung_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/microsoft-surface_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/apple_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="brand-item swiper-slide">
+                        <a class="brand-link" href="/">
+                            <span class="brand-img">
+                                <img src="~/resources/svg-partner-logos/dji_logo.svg" />
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="brandsSlNext" class="swiper-button-next slider-nav-btn"></div>
+            <div id="brandsSlPrev" class="swiper-button-prev slider-nav-btn"></div>
+        </div>
+    </div>
+</section>
+
+<partial name="_Newsletter"/>

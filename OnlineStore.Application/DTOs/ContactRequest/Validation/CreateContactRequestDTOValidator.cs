@@ -10,11 +10,11 @@ namespace OnlineStore.Application.DTOs.ContactRequest.Validation
                 .NotEmpty()
                 .EmailAddress();
 
+            RuleFor(c => c.ContactName)
+                .MaximumLength(32);
+
             RuleFor(c => c.Message)
                 .MaximumLength(256);
-
-            RuleFor(c => c.CreationDate)
-                .NotEqual(default(DateTime));
         }
     }
 }

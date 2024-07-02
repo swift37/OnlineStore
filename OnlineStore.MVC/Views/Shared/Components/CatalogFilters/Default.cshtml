@@ -1,0 +1,32 @@
+﻿@model OnlineStore.MVC.Models.FiltersGroup.FiltersGroupViewModel
+
+<header>
+    <h3>Filters</h3>
+    <button class="clear-filters">Clear all</button>
+</header>
+
+@if (Model.SpecificationTypes.Any())
+    foreach (var type in Model.SpecificationTypes)
+        @await Component.InvokeAsync("FilterBlock", new { model = type })
+
+<div class="filter-block pricing">
+    <h4>Price</h4>
+    <div class="ds-container">
+        <div class="range-inputs">
+            <div class="ds-field">
+                <input type="number" id="minPriceInput" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMinPrice" />
+            </div>
+            <div class="ds-separator">—</div>
+            <div class="ds-field">
+                <input type="number" id="maxPriceInput" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMaxPrice" />
+            </div>
+        </div>
+        <div class="double-slider">
+            <div class="range"></div>
+            <div class="range-sliders">
+                <input type="range" id="minPrice" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMinPrice" />
+                <input type="range" id="maxPrice" min="@Model.MinPrice" max="@Model.MaxPrice" value="@Model.AppliedMaxPrice" />
+            </div>
+        </div>
+    </div>
+</div>

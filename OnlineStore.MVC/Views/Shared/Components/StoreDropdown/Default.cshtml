@@ -1,0 +1,67 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Category.CategoryViewModel>
+
+@if (Model.Any())
+{
+    <div class="dropdown-container cat">
+        <div class="dropdown-menu categories">
+            <div class="menu-links">
+                <ul>
+                    <li>
+                        <p class="menu-title">Categories</p>
+                    </li>
+                    @foreach (var category in Model)
+                        if (category.IsMainCategory)
+                        {
+                            <li>
+                                <a class="@(category.HasChildCategories ? "has-child" : string.Empty)" asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@category.Id">
+                                    <p class="text">@category.Name</p>
+                                    @if (category.HasChildCategories)
+                                    {
+                                        <i class="arrow" data-feather="chevron-right"></i>
+                                    }
+                                </a>
+
+                                <div class="child-menu">
+                                    <ul>
+                                        <li>
+                                            <p class="menu-title">@category.Name</p>
+                                        </li>
+                                            
+                                        @if (category.HasChildCategories)
+                                        {
+                                            @foreach (var childCategory in category.ChildCategories.Take(11))
+                                            {
+                                                <li>
+                                                    <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@childCategory.Id">
+                                                        <p class="text">@childCategory.Name</p>
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <div class="view-btn">
+                                                <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@category.Id">View @category.Name</a>
+                                            </div>
+                                        }
+
+                                        @if (category.ChildCategories.Count > 11)
+                                        {
+                                            <li>
+                                                <a class="more-link" asp-controller="Catalog" asp-action="Index" asp-route-categoryId="1">
+                                                    <p class="text">More...</p>
+
+                                                    <span class="more-count">+7</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

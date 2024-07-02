@@ -23,7 +23,7 @@ namespace OnlineStore.DAL.Repositories
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellation = default) => 
-            await Entities.ToArrayAsync(cancellation).ConfigureAwait(false);
+            await Entities.AsNoTracking().ToArrayAsync(cancellation).ConfigureAwait(false);
 
 
         public async Task<bool> ExistsAsync(int id, CancellationToken cancellation = default) => 
@@ -47,8 +47,8 @@ namespace OnlineStore.DAL.Repositories
         public async Task<T> CreateAsync(T? entity, CancellationToken cancellation = default)
         {
             if (entity is null) throw new ArgumentNullException(nameof(T));
-
-            DbSet.Entry(entity).State = EntityState.Added;
+            
+            await DbSet.AddAsync(entity, cancellation);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
             return entity;
@@ -60,7 +60,7 @@ namespace OnlineStore.DAL.Repositories
 
             if (!await ExistsAsync(entity.Id)) throw new NotFoundException(nameof(T), entity.Id);
 
-            DbSet.Entry(entity).State = EntityState.Modified;
+            DbSet.Update(entity);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
@@ -72,12 +72,12 @@ namespace OnlineStore.DAL.Repositories
                 .ConfigureAwait(false);
             if (entity is not { }) throw new NotFoundException(nameof(T), id);
 
-            DbSet.Entry(entity).State = EntityState.Deleted;
+            DbSet.Remove(entity);
             if (AutoSaveChanges)
                 await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }
 
-        public async Task<int> SaveChanges(CancellationToken cancellation = default)
+        public async Task<int> SaveChangesAsync(CancellationToken cancellation = default)
         {
             return await _context.SaveChangesAsync(cancellation).ConfigureAwait(false);
         }

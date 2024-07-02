@@ -1,0 +1,62 @@
+[
+  {
+    "inputFiles": [
+      "Styles/main.css"
+    ],
+    "outputFileName": "wwwroot/css/main.css"
+  },
+  {
+    "inputFiles": [
+      "Styles/controls.css"
+    ],
+    "outputFileName": "wwwroot/css/controls.css"
+  },
+  {
+    "inputFiles": [
+      "Styles/double-slider.css"
+    ],
+    "outputFileName": "wwwroot/css/double-slider.css"
+  },
+  {
+    "inputFiles": [
+      "Styles/toast-notification.css"
+    ],
+    "outputFileName": "wwwroot/css/toast-notification.css"
+  },
+  {
+    "inputFiles": [
+      "Scripts/main.js"
+    ],
+    "outputFileName": "wwwroot/scripts/main.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/sliders.js"
+    ],
+    "outputFileName": "wwwroot/scripts/sliders.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/ajax-requests.js"
+    ],
+    "outputFileName": "wwwroot/scripts/ajax-requests.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/catalog.js"
+    ],
+    "outputFileName": "wwwroot/scripts/catalog.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/double-slider.js"
+    ],
+    "outputFileName": "wwwroot/scripts/double-slider.js"
+  },
+  {
+    "inputFiles": [
+      "Scripts/account.js"
+    ],
+    "outputFileName": "wwwroot/scripts/account.js"
+  }
+]

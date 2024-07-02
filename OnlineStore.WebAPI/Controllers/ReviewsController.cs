@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Review;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace OnlineStore.WebAPI.Controllers
 {
@@ -14,8 +16,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IReviewsRepository _repository;
 
-        public ReviewsController(IReviewsRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public ReviewsController(IReviewsRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of reviews
@@ -34,7 +38,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if review exists
@@ -74,7 +78,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ReviewDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<ReviewDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a review
@@ -92,14 +96,19 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="422">If the incorrect review DTO was passed</response>
         /// <response code="401">If the user is unauthorized</response>
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateReviewDTO createReviewDTO)
         {
-            var review = createReviewDTO.FromDTO();
-            review.UserId = UserId;
+            var review = _mapper.Map<Review>(createReviewDTO);
+            review.CreationDate = DateTime.Now;
+            review.LastChangeDate = DateTime.Now;
+            if (User.Identity?.IsAuthenticated is true)
+            {
+                review.UserId = UserId;
+                review.Name = User.FindFirst(JwtRegisteredClaimNames.GivenName)?.Value;
+            }
 
             var createdReview = await _repository.CreateAsync(review);
             if (createdReview is null) return UnprocessableEntity();
@@ -107,11 +116,12 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the review
+        /// Partially update the review
         /// </summary>
         /// <remarks>
-        /// PUT /reviews
+        /// PATCH /reviews
         /// {
+        ///     id: "1",
         ///     name: "Updated review name"
         /// }
         /// </remarks>
@@ -120,23 +130,24 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user tries to update the review that does not belong to him</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateReviewDTO updateReviewDTO)
         {
-            if (!User.IsInRole(Roles.Administrator) || 
-                !User.IsInRole(Roles.Manager) || 
-                !User.IsInRole(Roles.Employee))
-            {
-                var review = await _repository.GetAsync(updateReviewDTO.Id);
-                if (review.UserId != UserId)
-                    return Forbid();
-            }
+            var review = await _repository.GetAsync(updateReviewDTO.Id);
 
-            await _repository.UpdateAsync(updateReviewDTO.FromDTO());
+            if (User.IsInRole(Roles.User) && review.UserId != UserId)
+                return Forbid();
+
+            review.Rating = updateReviewDTO.Rating;
+            review.Content = updateReviewDTO.Content;
+            review.LastChangeDate = DateTime.Now;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -174,6 +185,56 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet("product/{productId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviewsByProduct(int productId) => 
-            Ok((await _repository.GetReviewsByProductAsync(productId)).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetReviewsByProductAsync(productId)));
+
+        /// <summary>
+        /// Get the reviews enumeration by user id
+        /// </summary>
+        /// <remarks>
+        /// GET /reviews/user/current
+        /// </remarks>
+        /// <returns>Returns IEnumerable<ReviewDTO></returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("user/{userId:guid}")]
+        [Authorize(Roles.EmployeeOrHigher)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetUserReviews(Guid userId) =>
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetUserReviewsAsync(userId)));
+
+        /// <summary>
+        /// Get the user's reviews enumeration
+        /// </summary>
+        /// <remarks>
+        /// GET /reviews/user/current
+        /// </remarks>
+        /// <returns>Returns IEnumerable<ReviewDTO></returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("user/current")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetUserReviews() =>
+            Ok(_mapper.Map<IEnumerable<ReviewDTO>>(await _repository.GetUserReviewsAsync(UserId)));
+
+        /// <summary>
+        /// Get the order belonging to the current user by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /reviews/user/current/1
+        /// </remarks>
+        /// <param name="id">Review id (int)</param>
+        /// <returns>Returns ReviewDTO</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("user/current/{id:int}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ReviewDTO>> GetUserReview(int id) =>
+            Ok(_mapper.Map<ReviewDTO>(await _repository.GetUserReviewAsync(id, UserId)));
     }
 }

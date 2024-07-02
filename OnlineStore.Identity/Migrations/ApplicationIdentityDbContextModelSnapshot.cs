@@ -17,7 +17,7 @@ namespace OnlineStore.Identity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -215,6 +215,12 @@ namespace OnlineStore.Identity.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfRegistration")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -284,7 +290,8 @@ namespace OnlineStore.Identity.Migrations
                         {
                             Id = "E301AF60-A2CD-457B-A337-3B5BB73208DA",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3ec436d-6da7-4c07-829e-e9af89b853fa",
+                            ConcurrencyStamp = "975fdd5a-0025-42c9-9b13-691ce9775c1b",
+                            DateOfRegistration = new DateTime(2024, 1, 17, 20, 36, 21, 359, DateTimeKind.Local).AddTicks(7785),
                             Email = "admin@onlinestore.com",
                             EmailConfirmed = true,
                             FirstName = "Developer",
@@ -292,9 +299,9 @@ namespace OnlineStore.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ONLINESTORE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ8Lr9Ajgj/Ej3U8MIFiVDL4V0NUYvvGuua8FQThivO+UTIz0DlPCb/EVdO/8NU26g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEZPZocjRUWpDAtCZ5swA+fD/VSS8xfqTeLDSUY66QP8V6scqMgPQCSPgD1lEc2qlg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f31a9b3-80df-46bb-b054-2bbbbfb370b6",
+                            SecurityStamp = "eb825911-dfb2-4c05-95b6-8cbc46b6862c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -302,7 +309,8 @@ namespace OnlineStore.Identity.Migrations
                         {
                             Id = "0AD36A86-F6CA-4AE5-AC56-C24C2D8DBFCC",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "78d4dbb4-dde3-4846-a4b5-199c9b7ad446",
+                            ConcurrencyStamp = "f4323f88-5026-40e4-a80b-3ffa7dd78a85",
+                            DateOfRegistration = new DateTime(2024, 1, 17, 20, 36, 21, 405, DateTimeKind.Local).AddTicks(4166),
                             Email = "manager@onlinestore.com",
                             EmailConfirmed = true,
                             FirstName = "Developer",
@@ -310,9 +318,9 @@ namespace OnlineStore.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MANAGER@ONLINESTORE.COM",
                             NormalizedUserName = "MANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEkPBI5govfClUfESeQNGy3cAmGaNnABM4lhvr6MfCZe4BWNKrVO5ErZ/Tn2DfOB4g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKkd5+k6o42R6WDAMnh5/9IaQUX8Yxa7jgiWmP35ttFD8iFh4Im0jcHaPHKN+nd5kA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "acec17a7-9237-4361-8bae-8e7ead800d95",
+                            SecurityStamp = "4a148524-aafc-4c8f-b374-bcbaa8de5365",
                             TwoFactorEnabled = false,
                             UserName = "manager"
                         },
@@ -320,7 +328,8 @@ namespace OnlineStore.Identity.Migrations
                         {
                             Id = "A9127F04-292B-4A13-BFD9-F510BC2E2769",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "19d29602-333e-4fc0-a1e4-22bce2964569",
+                            ConcurrencyStamp = "901a622e-0dd0-4088-832f-6516e4311396",
+                            DateOfRegistration = new DateTime(2024, 1, 17, 20, 36, 21, 451, DateTimeKind.Local).AddTicks(1560),
                             Email = "employee@onlinestore.com",
                             EmailConfirmed = true,
                             FirstName = "Developer",
@@ -328,9 +337,9 @@ namespace OnlineStore.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYEE@ONLINESTORE.COM",
                             NormalizedUserName = "EMPLOYEE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKyVCuCabXYzIiFy5F6mD8O8q/Agv9RWtLq2ML4EfYHMEmB11FjGtIo+Og0RKSsqRg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK9P9avR+S7jVxdyNpc6xKk7rE0ZFDzoimI/l8aVHbMeQY5UGZX+v1rQp4wXDBYnlg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c6b18998-7cb8-42a0-81cd-29f58983fb12",
+                            SecurityStamp = "25fdd092-ee45-433d-a929-b3718ff01726",
                             TwoFactorEnabled = false,
                             UserName = "employee"
                         },
@@ -338,7 +347,8 @@ namespace OnlineStore.Identity.Migrations
                         {
                             Id = "F457DC2A-9480-43C3-8136-288098C87117",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c65611e8-ef2b-415d-9f98-f8c2c87dbbfd",
+                            ConcurrencyStamp = "7b0bd9d1-2c89-4d38-8d8e-4948bb0b5c94",
+                            DateOfRegistration = new DateTime(2024, 1, 17, 20, 36, 21, 497, DateTimeKind.Local).AddTicks(2373),
                             Email = "user@onlinestore.com",
                             EmailConfirmed = true,
                             FirstName = "Developer",
@@ -346,9 +356,9 @@ namespace OnlineStore.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@ONLINESTORE.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENhtKFQrTm4p9WGueCHNdAbL3CyNrmyA4C6n03ig/ybzWtmDBt9PeRUZO8nzoTgz3w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHBRlOHK9zBnOY45GSCSKbqxXIFkuQk/Th83Gkl94xUkGFyekbz539QEdFVNSL+XBg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c6277422-2f8e-4d71-a46a-a141f8564f5f",
+                            SecurityStamp = "5b6253c1-e55d-4070-9c27-aec7d020588c",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });

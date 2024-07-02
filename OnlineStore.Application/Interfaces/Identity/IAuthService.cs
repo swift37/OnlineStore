@@ -8,8 +8,22 @@ namespace OnlineStore.Application.Interfaces.Identity
         
         Task Register(RegisterRequest request);
 
-        Task<IdentityResponse> Refresh(RefreshRequest refreshRequest, Guid userId);
+        Task<IdentityResponse> Refresh(RefreshRequest refreshRequest);
 
         Task Logout(Guid userId);
+
+        Task ConfirmEmail(ConfirmEmailRequest request);
+
+        Task UpdateUser(UpdateUserRequest request);
+
+        Task ChangeEmail(ChangeEmailRequest request);
+
+        Task ConfirmEmailChanging(ConfirmEmailChangingRequest request);
+
+        Task ChangePassword(ChangePasswordRequest request);
+
+        Task ResetPasswordRequest(string email);
+
+        Task ResetPassword(ResetPasswordRequest request);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.DAL.Context;
-using OnlineStore.Domain;
 using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Controllers
@@ -55,7 +54,7 @@ namespace OnlineStore.Controllers
                 default:
                     return products;
                 case SortParameter.RatingDescending:
-                    return products.OrderByDescending(p => p.Rating);
+                    return products.OrderByDescending(p => p.Id);
                 case SortParameter.PriceAscending:
                     return products.OrderBy(p => p.UnitPrice);
                 case SortParameter.PriceDescending:

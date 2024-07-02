@@ -1,0 +1,93 @@
+﻿<div class="nav-main active-nav">
+    <div class="nav-wrap">
+        <a asp-controller="Home" asp-action="Index" class="nav-brand">
+            <img src="~/resources/images/store-logo.png" alt="">
+        </a>
+        <div class="nav-menu-wrap">
+            <nav class="nav-menu mobile-hide">
+                @await Component.InvokeAsync("MenuItemsGroup")
+            </nav>
+
+            <nav id="userHub" class="nav-hub">
+                @await Component.InvokeAsync("MiniCart")
+                @await Component.InvokeAsync("WishlistStatus")
+
+                <div class="hub-component support-component">
+                    <div class="component-trigger">
+                        <div class="icon-container">
+                            <img src="~/resources/svg-icons/headset.svg" alt="Support">
+                        </div>
+                    </div>
+
+                    <div class="dropdown-container">
+                        <div class="dropdown-menu">
+                            <div class="menu-links">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Home" asp-action="Contact" asp-fragment="main-contacts">
+                                            <i class="icon" data-feather="headphones"></i>
+
+                                            <p class="text">Contacts</p>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a asp-controller="Home" asp-action="Contact" asp-fragment="our-shops">
+                                            <i class="icon" data-feather="map-pin"></i>
+
+                                            <p class="text">Stores</p>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="mailto:admin@online.store.com">
+                                            <i class="icon" data-feather="mail"></i>
+
+                                            <p class="text">admin@online.store.com</p>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="with-extra" href="tel:123456789">
+                                            <div class="main-data">
+                                                <i class="icon" data-feather="phone"></i>
+
+                                                <p class="text">12 345 67 89</p>
+                                            </div>
+
+                                            <div class="extra-data">
+                                                <div class="data-col">
+                                                    <span>Mon. - Fri.</span>
+
+                                                    <span>Sat. - Sun.</span>
+                                                </div>
+
+                                                <div class="data-col">
+                                                    <span>08:00 - 22:00</span>
+
+                                                    <span>10:00 - 17:00</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+
+                                        <a asp-controller="Home" asp-action="Contact" asp-fragment="get-in-touch">
+                                            <i class="icon" data-feather="send"></i>
+
+                                            <p class="text">Request Feedback</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @await Component.InvokeAsync("AccountDropdown")
+                @await Component.InvokeAsync("SideMenu")
+            </nav>
+        </div>
+    </div>
+</div>

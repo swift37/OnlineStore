@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.ContactRequest;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -11,12 +11,15 @@ namespace OnlineStore.WebAPI.Controllers
 {
     [ApiVersionNeutral]
     [Produces("application/json")]
+    [Route("api/{version:apiVersion}/contact-requests")]
     public class ContactRequestsController : BaseController
     {
         private readonly IRepository<ContactRequest> _repository;
 
-        public ContactRequestsController(IRepository<ContactRequest> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public ContactRequestsController(IRepository<ContactRequest> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of contact requests
@@ -35,7 +38,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<ContactRequestDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<ContactRequestDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if contact request exists
@@ -75,7 +78,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ContactRequestDTO>> Get(int id) =>
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<ContactRequestDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a contact request
@@ -96,17 +99,22 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<int>> Create([FromBody] CreateContactRequestDTO createContactRequestDTO)
         {
-            var contactRequest = await _repository.CreateAsync(createContactRequestDTO.FromDTO());
-            if (contactRequest is null) return UnprocessableEntity();
+            var contactRequest = _mapper.Map<ContactRequest>(createContactRequestDTO);
+            contactRequest.CreationDate = DateTime.Now;
+
+            if (await _repository.CreateAsync(contactRequest) is null) 
+                return UnprocessableEntity();
+
             return Ok(contactRequest.Id);
         }
 
         /// <summary>
-        /// Update the contact request
+        /// Partially update the contact request
         /// </summary>
         /// <remarks>
-        /// PUT /contactrequests
+        /// PATCH /contactrequests
         /// {
+        ///     id: "1",
         ///     name: "Updated contact request name"
         /// }
         /// </remarks>
@@ -115,14 +123,22 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize(Roles = Roles.EmployeeOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateContactRequestDTO updateContactRequestDTO)
         {
-            await _repository.UpdateAsync(updateContactRequestDTO.FromDTO());
+            var contactRequest = await _repository.GetAsync(updateContactRequestDTO.Id);
+            contactRequest.ContactName = contactRequest.ContactName;
+            contactRequest.Email = contactRequest.Email;
+            contactRequest.Message = contactRequest.Message;
+            contactRequest.ResponseDate = updateContactRequestDTO.ResponseDate;
+            contactRequest.IsConsidered = contactRequest.IsConsidered;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -138,7 +154,7 @@ namespace OnlineStore.WebAPI.Controllers
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = Roles.EmployeeOrHigher)]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

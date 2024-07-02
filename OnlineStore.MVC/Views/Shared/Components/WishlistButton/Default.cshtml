@@ -1,0 +1,9 @@
+﻿<button class="@(ViewBag.ItemId > 0 ? "from-wl" : "to-wl")"
+        data-itemid="@ViewBag.ItemId"
+        data-productid="@ViewBag.ProductId">
+    <img src="~/resources/svg-icons/@(ViewBag.ItemId > 0 ? "in" : "to")-wishlist.svg" />
+    @if (!string.IsNullOrEmpty(ViewBag.Text))
+    {
+        <span>@ViewBag.Text</span>
+    }
+</button>

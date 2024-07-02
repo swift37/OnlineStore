@@ -2,7 +2,7 @@
 using OnlineStore.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStore.Domain
+namespace OnlineStore.Domain.Entities
 {
     public class Order : Entity
     {
@@ -14,13 +14,21 @@ namespace OnlineStore.Domain
 
         public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>();
 
-        public OrderStatus Status { get; set; } = OrderStatus.NotPaid;
+        public OrderStatus Status { get; set; } = OrderStatus.ToPay;
 
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatingDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime? PayDate { get; set; }
+        public DateTimeOffset? PaymentDate { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
+
+        public DateTimeOffset? DeliveryDate { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public PaymentMethod? PaymentMethod { get; set; }
+
+        public string? PaymentSession { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -30,7 +38,11 @@ namespace OnlineStore.Domain
 
         public string? Email { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public decimal Total { get; set; }
+
+        public int? ShippingMethodId { get; set; }
+
+        public ShippingMethod? ShippingMethod { get; set; }
 
         public string? TrackingNumber { get; set; }
 

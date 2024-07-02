@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Wishlist;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
+using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
 
 namespace OnlineStore.WebAPI.Controllers
@@ -14,8 +15,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IWishlistsRepository _repository;
 
-        public WishlistsController(IWishlistsRepository repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public WishlistsController(IWishlistsRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of wishlists
@@ -34,7 +37,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<WishlistDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<WishlistDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if wishlist exists
@@ -74,7 +77,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<WishlistDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<WishlistDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a wishlist
@@ -98,8 +101,10 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<int>> Create([FromBody] CreateWishlistDTO createWishlistDTO)
         {
-            var wishlist = createWishlistDTO.FromDTO();
+            var wishlist = _mapper.Map<Wishlist>(createWishlistDTO);
             wishlist.UserId = UserId;
+            wishlist.CreationDate = DateTime.UtcNow;
+            wishlist.LastChangeDate = DateTime.UtcNow;
 
             var createdWishlist = await _repository.CreateAsync(wishlist);
             if (createdWishlist is null) return UnprocessableEntity();
@@ -107,11 +112,12 @@ namespace OnlineStore.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update the wishlist
+        /// Partially update the wishlist
         /// </summary>
         /// <remarks>
-        /// PUT /wishlists
+        /// PATCH /wishlists
         /// {
+        ///     id: "1",
         ///     name: "Updated wishlist name"
         /// }
         /// </remarks>
@@ -119,19 +125,27 @@ namespace OnlineStore.WebAPI.Controllers
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
-        /// <response code="403">If the user tries to update the wishlist that does not belong to him</response>
-        [HttpPut]
-        [Authorize]
+        [HttpPatch]
+        [Authorize(Roles = Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateWishlistDTO updateWishlistDTO)
         {
             var wishlist = await _repository.GetAsync(updateWishlistDTO.Id);
-            if (wishlist.UserId != UserId)
-                return Forbid();
+            wishlist.LastChangeDate = DateTime.Now;
 
-            await _repository.UpdateAsync(updateWishlistDTO.FromDTO());
+            var removedItems = wishlist.Items
+                .ExceptBy(updateWishlistDTO.Items.Select(t => t.Id), t => t.Id);
+            foreach (var item in removedItems)
+                wishlist.Items.Remove(item);
+
+            var addedItems = updateWishlistDTO.Items
+                .ExceptBy(wishlist.Items.Select(t => t.Id), t => t.Id);
+            foreach (var item in addedItems)
+                wishlist.Items.Add(_mapper.Map<WishlistItem>(item));
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -174,7 +188,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<WishlistDTO>> GetUserWishlist(Guid userId) => 
-            Ok((await _repository.GetUserWishlistAsync(userId)).ToDTO());
+            Ok(_mapper.Map<WishlistDTO>(await _repository.GetUserWishlistAsync(userId)));
 
         /// <summary>
         /// Get the current user wishlist
@@ -190,7 +204,143 @@ namespace OnlineStore.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<WishlistDTO>> GetUserWishlist() => 
-            Ok((await _repository.GetUserWishlistAsync(UserId)).ToDTO());
+        public async Task<ActionResult<WishlistDTO>> GetUserWishlist()
+        {
+            var temp = _mapper.Map<WishlistDTO>(await _repository.GetOrCreateAsync(UserId));
+            return Ok(temp);
+        }
+            
+
+        /// <summary>
+        /// Add an item to the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists/items
+        /// {
+        ///     productId: 1,
+        ///     quantity: 1
+        /// }
+        /// </remarks>
+        /// <param name="model">CreateWishlistItemDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpPost("items")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> AddItem(CreateWishlistItemDTO model)
+        {
+            await _repository.AddItem(UserId, _mapper.Map<WishlistItem>(model));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Update the item of the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists/items
+        /// {
+        ///     id: 1,
+        ///     productId: 1,
+        ///     quantity: 1
+        /// }
+        /// </remarks>
+        /// <param name="model">UpdateWishlistItemDTO</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpPut("items")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> UpdateItem(UpdateWishlistItemDTO model)
+        {
+            await _repository.UpdateItem(UserId, _mapper.Map<WishlistItem>(model));
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Remove the item by id from the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists/items
+        /// {
+        ///     id: 1
+        /// }
+        /// </remarks>
+        /// <param name="itemId">WishlistItem Id</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpDelete("items")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> RemoveItem(int itemId)
+        {
+            await _repository.RemoveItem(UserId, itemId);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Remove the items by id from the wishlist
+        /// </summary>
+        /// <remarks>
+        /// PATCH /wishlists/items
+        /// {
+        ///     itemIds: [1]
+        /// }
+        /// </remarks>
+        /// <param name="itemIds">WishlistItem Ids</param>
+        /// <returns>Returns NoContent</returns>
+        /// <response code="204">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpDelete("items/many")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> RemoveItems(ICollection<int> itemIds)
+        {
+            await _repository.RemoveItems(UserId, itemIds);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Get true if wishlist item exists
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /wishlists/items/exists/product-id/1
+        /// </remarks>
+        /// <param name="productId">Product id (int)</param>
+        /// <returns>Returns bool</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("items/exists/product-id/{productId:int}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<bool>> CheckProductPresence(int productId) =>
+            Ok(await _repository.CheckProductPresence(UserId, productId));
+
+        /// <summary>
+        /// Get the wishlist item id by product id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /wishlists/items/product-id/1
+        /// </remarks>
+        /// <param name="productId">Product id (int)</param>
+        /// <returns>Returns WishlistItem id</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
+        [HttpGet("items/product-id/{productId:int}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<int>> GetItemId(int productId) =>
+            Ok(await _repository.GetItemId(UserId, productId));
+
     }
 }

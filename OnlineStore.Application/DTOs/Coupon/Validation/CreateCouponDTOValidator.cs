@@ -10,9 +10,6 @@ namespace OnlineStore.Application.DTOs.Coupon.Validation
                 .NotEmpty()
                 .MaximumLength(16);
 
-            RuleFor(c => c.CreationDate)
-                .NotEqual(default(DateTime));
-
             RuleFor(c => c.StartDate)
                 .NotEqual(default(DateTime));
 

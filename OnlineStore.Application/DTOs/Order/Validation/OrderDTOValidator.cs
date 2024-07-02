@@ -14,13 +14,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
                 .Length(16)
                 .Matches(new Regex("^[0-9]{16}$"));
 
-            RuleFor(o => o.CreatedDate)
-                .NotEqual(default(DateTime));
-
-            RuleFor(o => o.PayDate)
-                .NotEqual(default(DateTime));
-
-            RuleFor(o => o.ShippedDate)
+            RuleFor(o => o.CreatingDate)
                 .NotEqual(default(DateTime));
 
             RuleFor(o => o.FirstName)
@@ -36,7 +30,7 @@ namespace OnlineStore.Application.DTOs.Order.Validation
                 .MaximumLength(16)
                 .Matches(new Regex("^\\+?[1-9][0-9]{7,14}$"));
 
-            RuleFor(o => o.ShippingCost)
+            RuleFor(o => o.Total)
                 .GreaterThanOrEqualTo(0);
 
             RuleFor(o => o.TrackingNumber)

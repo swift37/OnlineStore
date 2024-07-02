@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Category;
 using OnlineStore.Application.Interfaces.Repositories;
-using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Constants;
 using OnlineStore.Domain.Entities;
 using OnlineStore.WebAPI.Controllers.Base;
@@ -13,10 +13,12 @@ namespace OnlineStore.WebAPI.Controllers
     [Produces("application/json")]
     public class CategoriesController : BaseController
     {
-        private readonly IRepository<Category> _repository;
+        private readonly ICategoriesRepository _repository;
 
-        public CategoriesController(IRepository<Category> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public CategoriesController(ICategoriesRepository repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of categories
@@ -30,7 +32,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<CategoryDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if category exists
@@ -66,7 +68,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CategoryDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<CategoryDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a category
@@ -90,31 +92,40 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateCategoryDTO createCategoryDTO)
         {
-            var category = await _repository.CreateAsync(createCategoryDTO.FromDTO());
+            var category = await _repository.CreateAsync(_mapper.Map<Category>(createCategoryDTO));
             if (category is null) return UnprocessableEntity();
             return Ok(category.Id);
         }
 
         /// <summary>
-        /// Update the category
+        /// Partially update the category
         /// </summary>
         /// <remarks>
-        /// PUT /categories
+        /// PATCH /categories
         /// {
+        ///     id: "1",
         ///     name: "Updated category name"
         /// }
         /// </remarks>
         /// <param name="updateCategoryDTO">UpdateCategoryDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize(Roles = Roles.ManagerOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
-            await _repository.UpdateAsync(updateCategoryDTO.FromDTO());
+            var category = await _repository.GetAsync(updateCategoryDTO.Id);
+            category.Name = updateCategoryDTO.Name;
+            category.Description = updateCategoryDTO.Description;
+            category.RootId = updateCategoryDTO.RootId;
+            category.ParentId = updateCategoryDTO.ParentId;
+            category.IsRootCategory = updateCategoryDTO.IsMainCategory;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -137,5 +148,19 @@ namespace OnlineStore.WebAPI.Controllers
             await _repository.DeleteAsync(id);
             return NoContent();
         }
+
+        /// <summary>
+        /// Get the enumeration of main categories with child categories
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /categories/main
+        /// </remarks>
+        /// <returns>Returns IEnumerable<CategoryDTO></returns>
+        /// <response code="200">Success</response>
+        [HttpGet("main")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetMainCategories() =>
+            Ok(_mapper.Map<IEnumerable<CategoryDTO>>(await _repository.GetMainCategoriesAsync()));
     }
 }

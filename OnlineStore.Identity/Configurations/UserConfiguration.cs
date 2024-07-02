@@ -20,6 +20,7 @@ namespace OnlineStore.Identity.Configurations
                     PasswordHash = hasher.HashPassword(null, "admin981"),
                     FirstName = "Developer",
                     LastName = "Admin",
+                    DateOfRegistration = DateTime.Now,
                     Email = "admin@onlinestore.com",
                     NormalizedEmail = "ADMIN@ONLINESTORE.COM",
                     EmailConfirmed = true
@@ -32,6 +33,7 @@ namespace OnlineStore.Identity.Configurations
                     PasswordHash = hasher.HashPassword(null, "manager981"),
                     FirstName = "Developer",
                     LastName = "Manager",
+                    DateOfRegistration = DateTime.Now,
                     Email = "manager@onlinestore.com",
                     NormalizedEmail = "MANAGER@ONLINESTORE.COM",
                     EmailConfirmed = true
@@ -44,6 +46,7 @@ namespace OnlineStore.Identity.Configurations
                     PasswordHash = hasher.HashPassword(null, "employee981"),
                     FirstName = "Developer",
                     LastName = "Employee",
+                    DateOfRegistration = DateTime.Now,
                     Email = "employee@onlinestore.com",
                     NormalizedEmail = "EMPLOYEE@ONLINESTORE.COM",
                     EmailConfirmed = true
@@ -56,6 +59,7 @@ namespace OnlineStore.Identity.Configurations
                     PasswordHash = hasher.HashPassword(null, "user981"),
                     FirstName = "Developer",
                     LastName = "User",
+                    DateOfRegistration = DateTime.Now,
                     Email = "user@onlinestore.com",
                     NormalizedEmail = "USER@ONLINESTORE.COM",
                     EmailConfirmed = true

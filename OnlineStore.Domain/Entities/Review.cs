@@ -5,15 +5,21 @@ namespace OnlineStore.Domain.Entities
 {
     public class Review : Entity
     {
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public int ProductId { get; set; }
 
         public Product? Product { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public int? OrderId { get; set; }
 
-        public string? Title { get; set; }
+        public Order? Order { get; set; }
+
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
+
+        public DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
+
+        public string? Name { get; set; }
 
         [Range(1, 5)]
         public int Rating { get; set; }

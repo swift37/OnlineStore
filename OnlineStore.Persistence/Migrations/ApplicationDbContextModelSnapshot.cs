@@ -17,10 +17,40 @@ namespace OnlineStore.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CategoryNestedMenuItem", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NestedMenuItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesId", "NestedMenuItemId");
+
+                    b.HasIndex("NestedMenuItemId");
+
+                    b.ToTable("CategoryNestedMenuItem");
+                });
+
+            modelBuilder.Entity("FiltersGroupSpecificationType", b =>
+                {
+                    b.Property<int>("FiltersGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpecificationTypesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FiltersGroupId", "SpecificationTypesId");
+
+                    b.HasIndex("SpecificationTypesId");
+
+                    b.ToTable("FiltersGroupSpecificationType");
+                });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
                 {
@@ -37,9 +67,6 @@ namespace OnlineStore.Data.Migrations
                     b.Property<bool>("IsRootCategory")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MenuItemId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
@@ -55,8 +82,6 @@ namespace OnlineStore.Data.Migrations
 
                     b.HasIndex("Id")
                         .IsUnique();
-
-                    b.HasIndex("MenuItemId");
 
                     b.HasIndex("ParentId");
 
@@ -77,18 +102,21 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsConsidered")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("ResponseDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("ResponseDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -106,8 +134,8 @@ namespace OnlineStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CurrentUsesCount")
                         .HasColumnType("int");
@@ -115,8 +143,8 @@ namespace OnlineStore.Data.Migrations
                     b.Property<decimal>("DiscountSize")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("FinishDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("FinishDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -135,8 +163,8 @@ namespace OnlineStore.Data.Migrations
                     b.Property<double>("PercentDiscountSize")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -160,8 +188,8 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FinishDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("FinishDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -171,8 +199,8 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -180,6 +208,28 @@ namespace OnlineStore.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.FiltersGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("FilterGroups");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.MenuItem", b =>
@@ -196,68 +246,7 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("MenuItems");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsModerated")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.Specification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsMain")
+                    b.Property<bool>("IsMegaMenu")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -265,75 +254,47 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("Value")
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("MenuItems");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.NestedMenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("HasTwoColumns")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Specifications");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.Subscriber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("SubscribeDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Subscribers");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.Entities.Wishlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastChangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ParentId");
 
-                    b.ToTable("Wishlists");
+                    b.ToTable("NestedMenuItems");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.Order", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -353,8 +314,11 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreatingDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DeliveryDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -376,8 +340,14 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.Property<DateTime?>("PayDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("PaymentDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentSession")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(16)
@@ -387,11 +357,11 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime?>("ShippedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("ShippingDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal>("ShippingCost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("ShippingMethodId")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .HasMaxLength(32)
@@ -403,6 +373,9 @@ namespace OnlineStore.Data.Migrations
                     b.Property<string>("StreetAddress")
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TrackingNumber")
                         .HasMaxLength(32)
@@ -418,6 +391,10 @@ namespace OnlineStore.Data.Migrations
 
                     b.HasIndex("Number");
 
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("ShippingMethodId");
+
                     b.HasIndex("TrackingNumber");
 
                     b.HasIndex("UserId");
@@ -425,7 +402,7 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.OrderItem", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -460,13 +437,50 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.Product", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.PaymentMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("PaymentMethods");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Availability")
+                        .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -479,18 +493,6 @@ namespace OnlineStore.Data.Migrations
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFeaturedProduct")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNewProduct")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSale")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Manufacturer")
                         .HasMaxLength(32)
@@ -505,12 +507,15 @@ namespace OnlineStore.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("StoreCode")
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
+
+                    b.Property<decimal>("UnitCost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
@@ -528,44 +533,328 @@ namespace OnlineStore.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.Entities.ProductTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ColorHex")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProductTags");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsModerated")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastChangeDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.ShippingMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ShippingMethods");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Specification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SpecificationTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SpecificationTypeId");
+
+                    b.ToTable("Specifications");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.SpecificationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("SpecificationTypes");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Subscriber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("SubscribeDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Subscribers");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Wishlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("LastChangeDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Wishlists");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.WishlistItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WishlistId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WishlistId");
+
+                    b.ToTable("WishlistItems");
+                });
+
+            modelBuilder.Entity("ProductProductTag", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("ProductProductTag");
+                });
+
             modelBuilder.Entity("ProductSpecification", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
                     b.Property<int>("SpecificationsId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "SpecificationsId");
+                    b.HasKey("ProductsId", "SpecificationsId");
 
                     b.HasIndex("SpecificationsId");
 
                     b.ToTable("ProductSpecification");
                 });
 
-            modelBuilder.Entity("ProductWishlist", b =>
+            modelBuilder.Entity("CategoryNestedMenuItem", b =>
                 {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
+                    b.HasOne("OnlineStore.Domain.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("WishlistId")
-                        .HasColumnType("int");
+                    b.HasOne("OnlineStore.Domain.Entities.NestedMenuItem", null)
+                        .WithMany()
+                        .HasForeignKey("NestedMenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.HasKey("ProductsId", "WishlistId");
+            modelBuilder.Entity("FiltersGroupSpecificationType", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.FiltersGroup", null)
+                        .WithMany()
+                        .HasForeignKey("FiltersGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasIndex("WishlistId");
-
-                    b.ToTable("ProductWishlist");
+                    b.HasOne("OnlineStore.Domain.Entities.SpecificationType", null)
+                        .WithMany()
+                        .HasForeignKey("SpecificationTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.Entities.MenuItem", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("MenuItemId");
-
                     b.HasOne("OnlineStore.Domain.Entities.Category", "Parent")
-                        .WithMany()
+                        .WithMany("ChildCategories")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.NoAction);
 
@@ -579,7 +868,76 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Root");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.Entities.FiltersGroup", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Category", "Category")
+                        .WithOne()
+                        .HasForeignKey("OnlineStore.Domain.Entities.FiltersGroup", "CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.Entities.MenuItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Category", "Category")
+                        .WithOne()
+                        .HasForeignKey("OnlineStore.Domain.Entities.MenuItem", "CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.NestedMenuItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.MenuItem", "Parent")
+                        .WithMany("NestedItems")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.PaymentMethod", "PaymentMethod")
+                        .WithMany("Orders")
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("OnlineStore.Domain.Entities.ShippingMethod", "ShippingMethod")
+                        .WithMany("Orders")
+                        .HasForeignKey("ShippingMethodId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("PaymentMethod");
+
+                    b.Navigation("ShippingMethod");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.OrderItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineStore.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Product", b =>
                 {
                     b.HasOne("OnlineStore.Domain.Entities.Category", "Category")
                         .WithMany()
@@ -592,25 +950,13 @@ namespace OnlineStore.Data.Migrations
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Review", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.Product", "Product")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OnlineStore.Domain.OrderItem", b =>
-                {
-                    b.HasOne("OnlineStore.Domain.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineStore.Domain.Product", "Product")
+                    b.HasOne("OnlineStore.Domain.Entities.Order", "Order")
                         .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("OnlineStore.Domain.Entities.Product", "Product")
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -620,22 +966,56 @@ namespace OnlineStore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.Product", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Specification", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("OnlineStore.Domain.Entities.SpecificationType", "SpecificationType")
+                        .WithMany("Values")
+                        .HasForeignKey("SpecificationTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("SpecificationType");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.WishlistItem", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineStore.Domain.Entities.Wishlist", "Wishlist")
+                        .WithMany("Items")
+                        .HasForeignKey("WishlistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Wishlist");
+                });
+
+            modelBuilder.Entity("ProductProductTag", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineStore.Domain.Entities.ProductTag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductSpecification", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.Product", null)
+                    b.HasOne("OnlineStore.Domain.Entities.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -646,34 +1026,44 @@ namespace OnlineStore.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductWishlist", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("OnlineStore.Domain.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineStore.Domain.Entities.Wishlist", null)
-                        .WithMany()
-                        .HasForeignKey("WishlistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ChildCategories");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.MenuItem", b =>
                 {
-                    b.Navigation("Categories");
+                    b.Navigation("NestedItems");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.Order", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("OnlineStore.Domain.Product", b =>
+            modelBuilder.Entity("OnlineStore.Domain.Entities.PaymentMethod", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.ShippingMethod", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.SpecificationType", b =>
+                {
+                    b.Navigation("Values");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Wishlist", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

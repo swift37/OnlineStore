@@ -1,0 +1,55 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.Review.ReviewViewModel>
+
+<div class="reviews-list">
+    <div class="reviews-list-header">
+        User reviews <span>(@Model.Count())</span>
+    </div>
+    @foreach (var review in Model)
+    {
+        <div class="reviewed prod-pg">
+            <div class="reviews-list-line">
+                <div class="right-part">
+                    <div class="line-head">
+                        <a asp-controller="Catalog" asp-action="Product" asp-route-id="@review.ProductId">
+                            @review.Name
+                        </a>
+                        @if (review.OrderId > 0)
+                        {
+                            <span class="from-us">
+                                Purchased from us
+                                <i class='bx bxs-badge-check'></i>
+                            </span>
+                        }
+                    </div>
+                    <div class="line-rating">
+                        <div class="stars">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <i class='bx bxs-star'></i>
+                            }
+                            @for (int i = 5; i > review.Rating; i--)
+                            {
+                                <i class='bx bxs-star empty-star'></i>
+                            }
+                        </div>
+                        <span class="date">
+                            @review.CreationDate.ToString("MMMM dd, yyyy")
+                        </span>
+                    </div>
+                    <div class="line-content">
+                        @if (review.Content?.Length < 285)
+                        {
+                            <span class="full-review">@review.Content</span>
+                        }
+                        else
+                        {
+                            <span class="full-review" hidden>@review.Content</span>
+                            <span class="short-review">@review.Content?.Substring(0, 285)</span>
+                            <span class="more">... More</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

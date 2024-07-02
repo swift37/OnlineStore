@@ -1,0 +1,32 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.PaymentMethod.PaymentMethodViewModel>
+
+<div class="select-switch">
+    @foreach (var method in Model)
+    {
+        <div class="option-line">
+            <div class="option-content">
+                <input type="radio"
+                    id="@("paymentMethod" + method.Id)" 
+                    name="Order.PaymentMethodId" 
+                    value="@method.Id" 
+                    required 
+                    @(method.Id == 2 ? "checked" : string.Empty) />
+
+                <span class="option-check"></span>
+
+                <div class="option-data">
+                    <div class="option-info">
+                        <p class="main-line">@method.DisplayName</p>
+                    </div>
+
+                    <div class="option-price">
+                        <span class="icon">
+                            <img src="@method.Image" />
+                        </span>
+                        @* <p class="price">@method.Price.ToString("C")</p> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

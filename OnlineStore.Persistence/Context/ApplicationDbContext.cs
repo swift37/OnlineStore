@@ -1,32 +1,43 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿ using Microsoft.EntityFrameworkCore;
 using OnlineStore.Application.Interfaces;
 using OnlineStore.DAL.EntityTypeConfigurations;
-using OnlineStore.Domain;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Persistence.EntityTypeConfigurations;
 
 namespace OnlineStore.DAL.Context
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        {
+            ChangeTracker.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<SpecificationType> SpecificationTypes { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<WishlistItem> WishlistItems { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ContactRequest> ContactRequests { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<NestedMenuItem> NestedMenuItems { get; set; }
+        public DbSet<FiltersGroup> FilterGroups { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; } 
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<ShippingMethod> ShippingMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new SpecificationConfiguration());
+            builder.ApplyConfiguration(new SpecificationTypeConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new OrderItemConfiguration());
@@ -36,6 +47,12 @@ namespace OnlineStore.DAL.Context
             builder.ApplyConfiguration(new CouponConfiguration());
             builder.ApplyConfiguration(new EventConfiguration());
             builder.ApplyConfiguration(new SubscriberConfiguration());
+            builder.ApplyConfiguration(new MenuItemConfiguration());
+            builder.ApplyConfiguration(new NestedMenuItemConfiguration());
+            builder.ApplyConfiguration(new FiltersGroupConfiguration());
+            builder.ApplyConfiguration(new ProductTagConfiguration());
+            builder.ApplyConfiguration(new ShippingMethodConfiguration());
+            builder.ApplyConfiguration(new PaymentMethodConfiguration());
             base.OnModelCreating(builder);
         }
     }

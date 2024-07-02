@@ -1,0 +1,76 @@
+﻿@using System.Text.RegularExpressions
+@using OnlineStore.MVC.Extensions
+@model IEnumerable<IGrouping<string, OnlineStore.MVC.Models.Order.OrderViewModel>>?
+
+<div class="acc-section">
+    <div class="container">
+        <div class="acc-wrapper">
+            @await Component.InvokeAsync("AccountMenu", new { id = 1 })
+            <div class="acc-content">
+                <div class="content-box">
+                    <a class="back-to-menu" asp-controller="Account" asp-action="Index">
+                        <i class='bx bx-chevron-left'></i>
+                        <span>Back</span>
+                    </a>
+                    @if (Model?.Any() is true)
+                    {
+                        <header class="box-header">
+                            <h2>Orders</h2>
+                        </header>
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="orders-list">
+                                <div class="orders-list-header">
+                                    @item.Key
+                                </div>
+
+                                @foreach (var order in item)
+                                {
+                                    <a asp-controller="Account" asp-action="OrderDetails" asp-route-orderNumber="@order.Number" class="orders-list-line">
+                                        <div class="left-part">
+                                            <h3>@order.Status.GetStringValue()</h3>
+                                            <span>@order.CreatingDate.ToString("dd MMMM yyyy")</span>
+                                            <span>@order.Number</span>
+                                            @if (order.Status > OnlineStore.MVC.Models.Enums.OrderStatus.ToPay)
+                                            {
+                                                <span class="price">@order.Total.ToString("C")</span>
+                                            }
+                                        </div>
+                                        <div class="right-part">
+                                            @if (order.Items.Count() > 1)
+                                            {
+                                                foreach (var orderItem in order.Items)
+                                                {
+                                                    <div class="line-image">
+                                                        <img src="@orderItem.Product?.Image" alt="Image">
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="line-image">
+                                                    <img src="@order.Items.First().Product?.Image" alt="Image">
+                                                </div>
+                                                <p>@order.Items.First().Product?.Name</p>
+                                            }
+                                        </div>
+                                    </a>
+                                }
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="content-block no-orders">
+                            <div class="text-block">
+                                <h3>No orders</h3>
+                                <p>You have not placed any orders yet.</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

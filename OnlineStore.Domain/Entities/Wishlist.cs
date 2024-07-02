@@ -6,12 +6,23 @@ namespace OnlineStore.Domain.Entities
     {
         public Guid UserId { get; set; }
 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.Now;
 
-        public DateTime LastChangeDate { get; set; } = DateTime.Now;
+        public DateTimeOffset LastChangeDate { get; set; } = DateTimeOffset.Now;
 
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        public ICollection<WishlistItem> Items { get; set; } = new HashSet<WishlistItem>();
+    }
 
-        public int ProductsQuantity => Products.Count;
+    public class WishlistItem : Entity
+    {
+        public int WishlistId { get; set; }
+
+        public Wishlist? Wishlist { get; set; }
+
+        public int ProductId { get; set; }
+
+        public Product? Product { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

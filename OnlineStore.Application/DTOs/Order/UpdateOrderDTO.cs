@@ -1,19 +1,17 @@
-﻿using OnlineStore.Application.DTOs.Base;
+﻿using AutoMapper;
+using OnlineStore.Application.DTOs.Base;
+using OnlineStore.Application.Mapping;
 using OnlineStore.Domain.Enums;
 
 namespace OnlineStore.Application.DTOs.Order
 {
-    public class UpdateOrderDTO : BaseDTO
+    public class UpdateOrderDTO : BaseDTO, IMapWith<Domain.Entities.Order>
     {
-        public string? Number { get; set; }
-
-        public ICollection<UpdateOrderItemDTO> Items { get; set; } = new HashSet<UpdateOrderItemDTO>();
-
         public OrderStatus Status { get; set; }
 
-        public DateTime? PayDate { get; set; }
+        public DateTimeOffset? ShippingDate { get; set; }
 
-        public DateTime? ShippedDate { get; set; }
+        public DateTimeOffset? DeliveryDate { get; set; }
 
         public string? FirstName { get; set; }
 
@@ -23,7 +21,11 @@ namespace OnlineStore.Application.DTOs.Order
 
         public string? Email { get; set; }
 
-        public decimal ShippingCost { get; set; }
+        public decimal Total { get; set; }
+
+        public int? PaymentMethodId { get; set; }
+
+        public int? ShippingMethodId { get; set; }
 
         public string? TrackingNumber { get; set; }
 
@@ -40,14 +42,8 @@ namespace OnlineStore.Application.DTOs.Order
         public string? Apartment { get; set; }
 
         public string? Notes { get; set; }
-    }
 
-    public class UpdateOrderItemDTO : BaseDTO
-    {
-        public int Quantity { get; set; }
-
-        public decimal UnitPrice { get; set; }
-
-        public decimal Discount { get; set; }
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<Domain.Entities.Order, UpdateOrderDTO>().ReverseMap();
     }
 }

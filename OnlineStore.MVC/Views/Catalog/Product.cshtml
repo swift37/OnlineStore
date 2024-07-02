@@ -1,0 +1,162 @@
+﻿@model OnlineStore.MVC.Models.Product.ProductViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="product-details-section">
+    <div class="container">
+        <div class="wrapper flexitem">
+            <div style="background-image:url(@Model.Image?.Replace('\\','/'))" class="product-image"></div>
+            <div class="product-details-wrap">
+                <div class="product-details-header">
+                    <h1 class="product-details-name">@Model.Name</h1>
+                    <div class="product-rating">
+                        <a class="rating-link" asp-fragment="reviews">
+                            @for (int i = 0; i < Math.Floor(Model.Rating); i++)
+                            {
+                                <i class='bx bxs-star'></i>
+                            }
+                            @if (Model.Rating % 1.0 > 0.3)
+                            {
+                                <i class='bx bxs-star-half'></i>
+                            }
+                            @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                            {
+                                <i class='bx bxs-star empty-star'></i>
+                            }
+                            <span class="reviews-quantity">(@Model.ReviewsCount)</span>
+                        </a>
+                    </div>
+                    <div class="product-details-price">@Model.UnitPrice.ToString("C")</div>
+                    <div class="paragraph-light">
+                        @if (Model.Manufacturer != null)
+                        {
+                            <span>Manufacturer: @Model.Manufacturer | </span>
+                        }
+                        @if (Model.ManufacturersCode != null)
+                        {
+                            <span>ManufacturersCode: @Model.ManufacturersCode | </span>
+
+                            <br />
+                        }
+                        @if (Model.StoreCode != null)
+                        {
+                            <span>Code: @Model.StoreCode</span>
+                        }
+                    </div>
+                </div>
+                <div class="divider dark-divider"></div>
+                <div class="product-specs">
+                    <ul role="list" class="w-list-unstyled">
+                        @if (Model.Specifications != null)
+                            foreach (var spec in Model.Specifications)
+                                if (spec.SpecificationType?.IsMain ?? false)
+                                {
+                                    <li class="list-item">
+                                        <div class="product-detail">@spec.SpecificationType.DisplayName</div>
+                                        <div class="product-detail-value">
+                                            @spec.Value
+                                        </div>
+                                    </li>
+                                }
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class="actions">
+                    <div class="qty-control">
+                        <button class="qty-minus">-</button>
+                        <input id="productQuantity" type="text" value="1" min="1" pattern="^[0-9]+$">
+                        <button class="qty-plus">+</button>
+                    </div>
+                    <button type="submit" data-itemid="@Model.Id" class="button black to-cart">
+                        Add to Cart
+                    </button>
+                    <div class="wish-share">
+                        @if (!User.Identity?.IsAuthenticated is false)
+                        {
+                            <div class="wishlist-btn">
+                                @await Component.InvokeAsync("WishlistButton", new { productId = Model.Id, text = "Wishlist" })
+                            </div>
+                        }
+                        <div class="share-btn">
+                            <button>
+                                <img src="~/resources/icons/share.png" alt="Share">
+                                <span>Share</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="description-section">
+    <div class="container">
+        <h3 class="dividing-header">Description</h3>
+        <p class="description-paragraph">@Model.Description</p>
+    </div>
+</section>
+
+@if (Model.Specifications != null && Model.Specifications.Count > 0)
+{
+    <section class="full-specs-section">
+        <div class="container">
+            <h3 class="dividing-header specs">Specifications</h3>
+            <div class="specs-list">
+            @foreach (var spec in Model.Specifications)
+                if (spec.SpecificationType?.DisplayName is not null)
+                {
+                    <div class="spec-row">
+                        <div class="spec-left-col">@spec.SpecificationType.DisplayName</div>
+                        <div class="spec-right-col">@spec.Value</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<partial name="_CreateReviewModal" />
+
+<a name="reviews"></a>
+<section class="reviews-section">
+    <div class="container">
+        <h3 class="dividing-header">Reviews</h3>
+        <div class="reviews-block">
+            <div class="reviews-block-head">
+                <div class="left-part">
+                    <div class="rate-block">
+                        <span class="rate-sum">@Model.Rating </span>
+                        <span class="full-rate"> / 5.0</span>
+                    </div>
+                    <div class="product-rating">
+                        @for (int i = 0; i < Math.Floor(Model.Rating); i++)
+                        {
+                            <i class='bx bxs-star'></i>
+                        }
+                        @if (Model.Rating % 1.0 > 0.3)
+                        {
+                            <i class='bx bxs-star-half'></i>
+                        }
+                        @for (int i = (int)Math.Ceiling(Model.Rating); i < 5; i++)
+                        {
+                            <i class='bx bxs-star empty-star'></i>
+                        }
+                    </div>
+                    <span class="reviews-quantity">@Model.ReviewsCount reviews</span>
+                </div>
+                <button 
+                    class="button black create-review-btn" 
+                    data-productid="@Model.Id">
+                    Write review
+                </button>
+            </div>
+            <div class="reviews-block-body">
+                @await Component.InvokeAsync("ReviewsList", new { productId = Model.Id })
+            </div>
+        </div>
+    </div>
+</section>

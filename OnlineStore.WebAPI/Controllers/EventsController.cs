@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.DTOs.Event;
 using OnlineStore.Application.Interfaces.Repositories;
@@ -15,8 +16,10 @@ namespace OnlineStore.WebAPI.Controllers
     {
         private readonly IRepository<Event> _repository;
 
-        public EventsController(IRepository<Event> repository) =>
-            _repository = repository;
+        private readonly IMapper _mapper;
+
+        public EventsController(IRepository<Event> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Get the enumeration of events
@@ -30,7 +33,7 @@ namespace OnlineStore.WebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<EventDTO>>> GetAll() =>
-            Ok((await _repository.GetAllAsync()).ToDTO());
+            Ok(_mapper.Map<IEnumerable<EventDTO>>(await _repository.GetAllAsync()));
 
         /// <summary>
         /// Get true if event exists
@@ -67,7 +70,7 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<EventDTO>> Get(int id) => 
-            Ok((await _repository.GetAsync(id)).ToDTO());
+            Ok(_mapper.Map<EventDTO>(await _repository.GetAsync(id)));
 
         /// <summary>
         /// Create a event
@@ -93,33 +96,42 @@ namespace OnlineStore.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<int>> Create([FromBody] CreateEventDTO createEventDTO)
         {
-            var @event = await _repository.CreateAsync(createEventDTO.FromDTO());
+            var @event = await _repository.CreateAsync(_mapper.Map<Event>(createEventDTO));
             if (@event is null) return UnprocessableEntity();
             return Ok(@event.Id);
         }
 
         /// <summary>
-        /// Update the event
+        /// Partially update the event
         /// </summary>
         /// <remarks>
-        /// PUT /events
+        /// PATCH /events
         /// {
+        ///     id: "1",
         ///     name: "Updated event name"
         /// }
         /// </remarks>
-        /// <param name="UpdateEventDTO">UpdateEventDTO</param>
+        /// <param name="updateEventDTO">UpdateEventDTO</param>
         /// <returns>Returns NoContent</returns>
         /// <response code="204">Success</response>
         /// <response code="401">If the user is unauthorized</response>
         /// <response code="403">If the user does not have the required access level</response>
-        [HttpPut]
+        [HttpPatch]
         [Authorize(Roles = Roles.ManagerOrHigher)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] UpdateEventDTO UpdateEventDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateEventDTO updateEventDTO)
         {
-            await _repository.UpdateAsync(UpdateEventDTO.FromDTO());
+            var @event = await _repository.GetAsync(updateEventDTO.Id);
+            @event.Name = updateEventDTO.Name;
+            @event.Image = updateEventDTO.Image;
+            @event.Description = updateEventDTO.Description;
+            @event.StartDate = updateEventDTO.StartDate;
+            @event.FinishDate = updateEventDTO.FinishDate;
+
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 

@@ -1,0 +1,4 @@
+﻿@model IEnumerable<OnlineStore.MVC.Models.MenuItem.MenuItemViewModel>
+
+@foreach (var item in Model)
+    @await Component.InvokeAsync("MenuItem", new { model = item })
